@@ -1,0 +1,15 @@
+.submenu{
+    padding: 0;
+    margin-left: 15px;
+}
+
+.iconmenu {
+    min-width: 32px;
+}
+
+.listmenu{
+    padding:8px;
+}
+.textmenu span{
+    font-size: 0.9rem;
+}

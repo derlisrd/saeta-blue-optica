@@ -19,6 +19,7 @@ import styles from './styles.module.css'
 import { useMenu } from "./MenuProvider";
 import SimpleBar from "simplebar-react";
 
+
 function MenuList({isMobile}) {
   const { BASEURL,APPNAME } = env;
   let location = useLocation();
@@ -37,8 +38,8 @@ function MenuList({isMobile}) {
     setLista(array);
   }
 
-  return (<>
-    <Toolbar>
+  return (<SimpleBar forceVisible="y" autoHide={false} style={{ maxHeight: "100vh" }}>
+    <Toolbar >
       <Stack direction='row' alignItems='center' justifyContent='space-between' width='100%'>
         {isMobile && <IconButton onClick={closeMobileMenu} ><Icon icon='ri:menu-fold-line' height={24} /></IconButton>}
         <Typography variant="button">{APPNAME}</Typography>
@@ -46,7 +47,7 @@ function MenuList({isMobile}) {
         </Stack>
       </Toolbar>
       <List >
-        <SimpleBar >
+
         {lista.map((e, i) => (
           <Fragment key={i}>
             {e.sub ? (
@@ -90,9 +91,9 @@ function MenuList({isMobile}) {
             )}
           </Fragment>
         ))}
-    </SimpleBar>
+
       </List>
-      </>
+      </SimpleBar>
   );
 }
 

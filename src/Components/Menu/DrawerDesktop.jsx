@@ -1,13 +1,19 @@
 import { Drawer } from "@mui/material";
 import { env } from "../../app/config";
 import MenuList from "./MenuList";
+import { useMenu } from "./MenuProvider";
 
 function DrawerDesktop() {
   const { DRAWER_WIDTH } = env;
+  const {isOpenMenu,setIsOpenMenu} = useMenu()
+
+  const changeMenu = ()=> setIsOpenMenu(!isOpenMenu)
 
   return (
     <Drawer
-      variant="permanent"
+      variant="persistent"
+      open={isOpenMenu}
+      onClose={changeMenu}
       sx={{
         display: { xs: "none", md: "block" },
         "& .MuiDrawer-paper": {
@@ -16,7 +22,7 @@ function DrawerDesktop() {
           borderRight: "1px dashed rgba(145, 158, 171, 0.24)",
         },
       }}
-      open
+      
     >
       <MenuList />
     </Drawer>

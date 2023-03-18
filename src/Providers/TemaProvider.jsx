@@ -20,7 +20,7 @@ function TemaProvider({children}) {
 
   const checkTheme = ()=>{
     const storage = JSON.parse(localStorage.getItem('tema'))
-    console.log(storage);
+    //console.log(storage);
     if(!storage){
       let tema = {mode:'light'}
       localStorage.setItem('tema',JSON.stringify(tema))

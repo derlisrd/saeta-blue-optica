@@ -27,7 +27,7 @@ const Base = () => {
       <DrawerMainMenu />
       <ToolbarMain />
         <Box component="main" 
-            sx={{px:2, mt:'70px', ml:{ md: margin_left}, width: { md: width_main},bgcolor:'background.paper',minHeight:"100vh" }} >
+            sx={{px:2, mt:'70px', ml:{ md: margin_left}, width: { md: width_main},bgcolor:'background.paper',minHeight:"calc(100vh - 80px)" }} >
           <Outlet />
         </Box>
     </SimpleBar>

@@ -1,8 +1,12 @@
-import {  IconButton, Toolbar,Icon, Stack, Box } from "@mui/material";
+import { Icon } from "@iconify/react";
+import {  IconButton, Toolbar, Stack, Box } from "@mui/material";
 import { env } from "../../app/config";
 import { useMenu } from "./MenuProvider";
 import ProfileMenu from "./ProfileMenu";
 import ThemeToggle from "./ThemeToggle";
+
+
+const Icono = ()=>( <Icon icon='mingcute:menu-fill' height={24} ></Icon>)
 
 function ToolbarMain() {
 
@@ -12,6 +16,9 @@ function ToolbarMain() {
   const DesktopMenu = ()=>{ setIsOpenMenu(!isOpenMenu)}
 
   let margin_left = isOpenMenu ? `${DRAWER_WIDTH}px` : '0';
+
+
+    
 
   return (
 
@@ -24,14 +31,14 @@ function ToolbarMain() {
       >
         <Box display='flex' justifyContent='space-between' width='100%' alignItems="center" >
           <Box>
-              <IconButton onClick={handleDrawerToggle} sx={{ minWidth:'56px', display:{xs:'block',md:'none'} }}>
-              <Icon>menu</Icon>
+              <IconButton onClick={handleDrawerToggle} sx={{ minWidth:'50px', display:{xs:'block',md:'none'} }}>
+              <Icono />
             </IconButton>
-            <IconButton onClick={DesktopMenu} sx={{  minWidth:'56px', marginLeft: margin_left, display:{xs:'none', md:'block'} }}>
-              <Icon>menu</Icon>
+            <IconButton onClick={DesktopMenu} sx={{  minWidth:'50px', marginLeft: margin_left, display:{xs:'none', md:'block'} }}>
+              <Icono />
             </IconButton>
           </Box>
-          <Stack direction='row' spacing={1} >
+          <Stack direction='row' spacing={1} marginRight={1} >
             <ThemeToggle />
             <ProfileMenu />
           </Stack>

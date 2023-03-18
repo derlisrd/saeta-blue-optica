@@ -38,6 +38,8 @@ function MenuList({isMobile}) {
     setLista(array);
   }
 
+  const SELECTED = { "&:hover, &.Mui-selected":{borderRadius:'0 18px 18px 0', margin:'0 5px',borderLeftStyle:'solid',borderLeftWidth:'4px',borderLeftColor:'primary.main', "div":{color:'primary.main'},'span':{fontWeight:'bold'}}  }
+
   return (<SimpleBar forceVisible="y" autoHide={false} style={{ maxHeight: "100vh" }}>
     <Toolbar >
       <Stack direction='row' alignItems='center' justifyContent='space-between' width='100%'>
@@ -53,7 +55,7 @@ function MenuList({isMobile}) {
             {e.sub ? (
               <Fragment>
               <ListItem disablePadding >
-                <ListItemButton selected={pathname === e.url}   onClick={()=>openCollapseMenu(e.open,e.id)} className={styles.listmenu}>
+                <ListItemButton  onClick={()=>openCollapseMenu(e.open,e.id)} className={styles.listmenu}>
                   <ListItemIcon className={styles.iconmenu}>
                     <Icon icon={e.icon} height={24} />
                   </ListItemIcon>
@@ -67,7 +69,7 @@ function MenuList({isMobile}) {
                   {
                     e.submenu.map((elem,indexsub)=>(
                       <ListItem disablePadding key={indexsub}>
-                        <ListItemButton selected={pathname === elem.url}  onClick={closeMobileMenu} component={Link} to={BASEURL + elem.url} className={styles.listmenu}>
+                        <ListItemButton selected={pathname === elem.url} sx={SELECTED}  onClick={closeMobileMenu} component={Link} to={BASEURL + elem.url} className={styles.listmenu}>
                           <ListItemIcon className={styles.iconmenu}>
                           <Icon icon={elem.icon} height={20} />
                           </ListItemIcon>
@@ -81,7 +83,9 @@ function MenuList({isMobile}) {
               </Fragment>
             ) : (
               <ListItem disablePadding>
-                <ListItemButton selected={pathname === e.url}  onClick={closeMobileMenu} className={styles.listmenu}  component={Link} to={BASEURL + e.url}>
+                <ListItemButton selected={pathname === e.url}  
+                  sx={SELECTED}
+                onClick={closeMobileMenu} className={styles.listmenu}  component={Link} to={BASEURL + e.url}>
                   <ListItemIcon className={styles.iconmenu}>
                     <Icon icon={e.icon} height={24} />
                   </ListItemIcon>

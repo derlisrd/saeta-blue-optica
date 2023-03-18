@@ -31,6 +31,7 @@ function MainPages() {
         <Route path="/admin" element={<Base />}>
           <Route path="home" element={<Home />} />
           <Route path="clientes" element={<Clientes />} />
+          <Route path="productos" element={<Productos />} />
         </Route>
         
         <Route path="*" element={<NotFound />} />
@@ -44,4 +45,5 @@ const Home = Loadable(lazy(() => import('./Home')));
 const Base = Loadable(lazy(() => import('./Base')));
 const Clientes = Loadable(lazy(() => import('./Clientes')));
 const NotFound = Loadable(lazy(() => import('./Status/NotFound')));
+const Productos = Loadable(lazy(() => import('./Productos')));
 export default MainPages;

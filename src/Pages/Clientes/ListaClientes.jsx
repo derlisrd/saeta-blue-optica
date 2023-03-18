@@ -20,8 +20,9 @@ function ListaClientes() {
 
     return ( <Tablas
         title="Clientes"
+        subtitle="Módulo de listado de clientes"
         datas={datas}
-        icon={{ name:'people' }}
+        icon={{ name:'bi:people' }}
         Accions={Acciones}
         columns={columns}
          /> );

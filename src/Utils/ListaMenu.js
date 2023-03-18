@@ -152,7 +152,7 @@ export const ListaMenu = [
             {
                 id:41,
                 title:'Productos',
-                url:'/ventas',
+                url:'/productos',
                 icon:'ic:twotone-sell'
             },
             {

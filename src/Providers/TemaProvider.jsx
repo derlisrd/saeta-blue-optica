@@ -2,6 +2,7 @@ import { CssBaseline } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { createContext, useContext,  useState,useEffect } from 'react';
 import typography from '../app/styles/typography';
+import components from '../app/styles/components';
 
 const TemaContext = createContext()
 
@@ -38,29 +39,7 @@ function TemaProvider({children}) {
         mode: mode,
       },
       typography,
-      components:{
-        MuiOutlinedInput:{
-          styleOverrides:{
-            root: {
-              borderRadius: "12px",
-              borderWidth: 0,
-            },
-          }
-        }
-        ,
-        MuiCssBaseline:{
-          styleOverrides:{
-            body: {
-              margin:0,
-              padding:0,
-              boxSizing:"border-box",
-              background:'background.paper',
-              transition:'all 0.2s',
-            },
-            
-          }
-        }
-      }
+      components,
     });
     //customTheme.components = ComponentsOverrides(customTheme)
     const values = { toggleTheme,mode }

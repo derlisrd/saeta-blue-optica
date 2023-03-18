@@ -18,6 +18,8 @@ const Base = () => {
   let margin_left = isOpenMenu ? `${DRAWER_WIDTH}px` : '0';
   let width_main = isOpenMenu ? `calc(100% - ${DRAWER_WIDTH}px)` : '100%';
 
+  let stylesMain = {px:2, mt:'70px', ml:{ md: margin_left}, width: { md: width_main},bgcolor:'background.paper',minHeight:"calc(100vh - 80px)",transition:'all 0.2s' }
+
   if(!userData.login){
     return <Navigate to="/" />
   }
@@ -27,7 +29,7 @@ const Base = () => {
       <DrawerMainMenu />
       <ToolbarMain />
         <Box component="main" 
-            sx={{px:2, mt:'70px', ml:{ md: margin_left}, width: { md: width_main},bgcolor:'background.paper',minHeight:"calc(100vh - 80px)" }} >
+            sx={stylesMain} >
           <Outlet />
         </Box>
     </SimpleBar>

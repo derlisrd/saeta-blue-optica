@@ -39,6 +39,15 @@ function TemaProvider({children}) {
       },
       typography,
       components:{
+        MuiOutlinedInput:{
+          styleOverrides:{
+            root: {
+              borderRadius: "12px",
+              borderWidth: 0,
+            },
+          }
+        }
+        ,
         MuiCssBaseline:{
           styleOverrides:{
             body: {

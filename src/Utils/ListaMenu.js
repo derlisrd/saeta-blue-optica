@@ -124,7 +124,7 @@ export const ListaMenu = [
             {
                 id:41,
                 title:'Pedidos',
-                url:'/ventas',
+                url:'/pedidos',
                 icon:'ic:baseline-receipt-long'
             },
             {

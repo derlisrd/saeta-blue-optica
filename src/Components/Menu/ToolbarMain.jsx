@@ -34,7 +34,7 @@ function ToolbarMain() {
               <IconButton onClick={handleDrawerToggle} sx={{ minWidth:'50px', display:{xs:'block',md:'none'} }}>
               <Icono />
             </IconButton>
-            <IconButton onClick={DesktopMenu} sx={{  minWidth:'50px', marginLeft: margin_left, display:{xs:'none', md:'block'} }}>
+            <IconButton onClick={DesktopMenu} sx={{  minWidth:'50px', marginLeft: margin_left, display:{xs:'none', md:'block',transition:'all 0.2s'} }}>
               <Icono />
             </IconButton>
           </Box>

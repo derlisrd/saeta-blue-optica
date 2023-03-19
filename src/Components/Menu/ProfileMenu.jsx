@@ -1,11 +1,19 @@
 import { Icon } from "@iconify/react";
-import { Avatar,  Divider, IconButton, ListItemIcon, Menu, MenuItem } from "@mui/material";
+import { Button,  Divider, IconButton,  Menu, MenuItem } from "@mui/material";
 import { useState } from "react";
 import { useAuth } from "../../Providers/AuthProvider";
+import DialogPregunta from "../Dialogo/DialogPregunta";
 
 function ProfileMenu() {
 
     const {logOut} = useAuth()
+    const [openDialog,setOpenDialog] = useState(false)
+    const toggleDialog = ()=>{setOpenDialog(!openDialog)}
+    const confirmLogOut= ()=>{
+      toggleDialog()
+    }
+
+
 
     const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -17,6 +25,14 @@ function ProfileMenu() {
   };
     return (
     <>
+
+
+      <DialogPregunta 
+      title="Cerrar" text="Estás seguro que desea cerrar la sesión?" 
+      open={openDialog} onClose={toggleDialog} icon={{ name:'uim:exclamation-triangle',color:'orange' }} >
+          <Button variant="outlined" onClick={toggleDialog} >No, cancelar</Button>
+          <Button variant="contained"  onClick={logOut}>Sí, cerrar sesión</Button>
+      </DialogPregunta>
 
 
 
@@ -74,7 +90,7 @@ function ProfileMenu() {
            My account
         </MenuItem>
         <Divider />
-        <MenuItem onClick={logOut}>
+        <MenuItem onClick={confirmLogOut}>
            Salir
         </MenuItem>
       </Menu>  </>);

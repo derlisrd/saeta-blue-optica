@@ -22,7 +22,7 @@ function ListaClientes() {
         title="Clientes"
         subtitle="Módulo de listado de clientes"
         datas={datas}
-        icon={{ name:'bi:people' }}
+        icon={{ name:'ic:twotone-people' }}
         Accions={Acciones}
         columns={columns}
          /> );

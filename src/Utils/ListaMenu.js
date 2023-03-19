@@ -10,7 +10,7 @@ export const ListaMenu = [
         id:3,
         url:'/clientes',
         title:'Clientes',
-        icon:'fluent:people-16-regular',
+        icon:'ic:twotone-people',
         sub:false
     },
 
@@ -153,7 +153,7 @@ export const ListaMenu = [
                 id:41,
                 title:'Productos',
                 url:'/productos',
-                icon:'ic:twotone-sell'
+                icon:'ic:twotone-inventory'
             },
             {
                 id:42,

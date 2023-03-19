@@ -3,6 +3,8 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { createContext, useContext,  useState,useEffect } from 'react';
 import typography from '../app/styles/typography';
 import components from '../app/styles/components';
+import pallete from '../App/styles/pallete';
+import shadows from '../App/styles/shadows';
 
 const TemaContext = createContext()
 
@@ -35,9 +37,8 @@ function TemaProvider({children}) {
   }, [checkTheme]);
     
   const customTheme = createTheme({
-      palette:{
-        mode: mode,
-      },
+      palette:pallete(mode),
+      shadows:shadows(mode),
       typography,
       components,
     });

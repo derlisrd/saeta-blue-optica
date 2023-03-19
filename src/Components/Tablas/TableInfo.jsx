@@ -6,11 +6,13 @@ const TableInfo = ({icon,title,subtitle}) => {
   return (
     <Box padding={1} margin={1} >
     <Stack direction="row" spacing={2}>
-        <Box>
-            {icon && <Icon icon={icon.name} height={48} />}
+        <Box p={1}>
+          <Avatar variant='rounded' >
+            {icon && <Icon icon={icon.name}  color="white" height={48} />}
+          </Avatar>
         </Box>
         <Box>
-            <Typography variant='h6'>{title}</Typography>
+            <Typography variant='h6' color="text.primary" >{title}</Typography>
             <Typography variant='caption'>{subtitle}</Typography>
         </Box>
     </Stack>

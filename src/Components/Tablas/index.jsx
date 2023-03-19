@@ -125,7 +125,7 @@ return (
             </Table>
         </TableContainer>) : (
             <Alert icon={<Icon>block</Icon>} severity="warning">
-            <Typography variant="body1">{lang? lang.sin_registros : "Sin registros"}</Typography>
+            <Typography variant="body1">Sin registros</Typography>
           </Alert>
         )
     }

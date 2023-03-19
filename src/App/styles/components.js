@@ -1,8 +1,9 @@
 const components = {
+  
     MuiOutlinedInput:{
       styleOverrides:{
         root: {
-          borderRadius: "12px",
+          borderRadius: "8px",
           borderWidth: 0,
         },
       }

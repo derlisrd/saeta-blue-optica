@@ -20,8 +20,8 @@ const ListaColumns= [
             items: {
                 "1": "Normal",
                 "2": "Semanal",
-                "3": "Mensual",
-                "4": "Quincenal"
+                "3": "Quincenal",
+                "4": "Mensual"
               },
     },
 ]

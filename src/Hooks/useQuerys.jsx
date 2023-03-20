@@ -55,21 +55,25 @@ function useQuerys() {
     }
 
 
-    const update = async ({ table, body, id }) => {
+    const actualizar = async ({ table, data, id }) => {
       try {
+
         const res = await Axios({
-          url: `${APIURL}${table}/${id}/?token=${token}`,
+          url: `${APIURL}${table}/${id}/?token=${token}&operator=`,
           method: "PUT",
-          data: JSON.stringify(body),
+          data: JSON.stringify(data),
           headers: { "X-Api-Token": XAPITOKEN },
         });
+        
         return await res.data;
       } catch (error) {
-        return { results: null, response:  false, message: error }; 
+        return { results: null, response:  false, message: error };
+        
       }
+    
     }
 
-    return {insert,update,get,borrar}
+    return {insert,actualizar,get,borrar}
 
 }
 

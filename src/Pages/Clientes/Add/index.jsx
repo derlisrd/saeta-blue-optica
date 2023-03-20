@@ -2,6 +2,7 @@ import {Alert, DialogContent,Grid,LinearProgress,TextField} from "@mui/material"
 import { useState } from "react";
 import ActionsCancelSave from "../../../Components/Dialogo/ActionsCancelSave";
 import DialogZoom from "../../../Components/Dialogo/DialogZoom";
+import useFocus from "../../../Hooks/useFocus";
 import useQuerys from "../../../Hooks/useQuerys";
 import { useClientes } from "../ClientesProvider";
 import TipoPago from "./TipoPago";
@@ -9,19 +10,20 @@ import TipoPago from "./TipoPago";
 function Add() {
     const { dialogs, llaveDialog,getLista} = useClientes();
     const [loading,setLoading] = useState(false)
-    const [error,setError] = useState({active:false,message:'',code:0})
+    const {focusTo} = useFocus()
+    const initialError = {active:false,message:'',code:0}
+    const [error,setError] = useState(initialError)
     const {insert,get} = useQuerys()    
 
-    const close = () => {setError({active:false,code:0,message:''}); llaveDialog("add", false)}
+    const close = () => {setError(initialError); llaveDialog("add", false)}
 
-    const focus = (id) =>  window.setTimeout(()=>{document.getElementById(id).focus()},500)
 
     const enviar = async(e)=>{ 
         e.preventDefault()
         let form = new FormData(e.target)
         let datas =  Object.fromEntries(form)
         if(datas.ruc_cliente === ''){
-            focus('ruc_cliente')
+            focusTo('ruc_cliente')
             return false;
         }
         if(datas.nombre_cliente === ''){
@@ -32,9 +34,10 @@ function Add() {
         if(check.response && check.found>0){
             setError({active:true,message:'Ya existe un cliente con ese doc.',code:1})
             setLoading(false)
+            focusTo('ruc_cliente')
             return false;
         }
-        setError({active:false,message:'',code:0})
+        setError(initialError)
 
         let res = await insert({table:'clientes',data:datas})
         if(res.response){

@@ -218,6 +218,8 @@ class Controllers {
         $tableURIArray = explode("/",RAIZ);
         $tableArray = array_filter($tableURIArray);
         $table = $tableArray[1];
+        echo $table;
+        return;
         $id = isset($tableArray[2]) ? $tableArray[2] : null;
         $data = file_get_contents("php://input");    
         $set = isset($_GET['set']) && !empty($_GET['set']) ? $_GET['set'] : null;

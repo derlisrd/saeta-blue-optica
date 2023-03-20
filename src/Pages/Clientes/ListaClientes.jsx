@@ -1,30 +1,24 @@
+import AddButton from "../../Components/Botones/AddButton";
 import Tablas from "../../Components/Tablas";
+import { useClientes } from "./ClientesProvider";
+import ListaColumns from "./ListaColumns";
+import ListaOpciones from "./ListaOpciones";
 
 function ListaClientes() {
+    const {isLoading,lista,llaveDialog} = useClientes()
 
-    const columns = [
-        {
-            field:'doc_cliente',
-            title:'Doc.'
-        },
-        {
-            field:'nombre_cliente',
-            title:'Nombre'
-        }
-    ]
-    const datas = []
-
-    const Acciones = ()=>{
-        return <></>
-    }
+    const Inputs = (<AddButton onClick={()=>{ llaveDialog('add',true) }} />)
 
     return ( <Tablas
         title="Clientes"
         subtitle="Módulo de listado de clientes"
-        datas={datas}
+        inputs={Inputs}
+        datas={lista}
+        loading={isLoading}
         icon={{ name:'ic:twotone-people' }}
-        Accions={Acciones}
-        columns={columns}
+        showOptions
+        Accions={ListaOpciones}
+        columns={ListaColumns}
          /> );
 }
 

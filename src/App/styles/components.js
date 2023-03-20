@@ -9,6 +9,13 @@ const components = {
       }
     }
     ,
+    MuiDialogContent:{
+      styleOverrides:{
+        root:{
+          paddingTop:"10px !important"
+        }
+      }
+    },
     MuiCssBaseline:{
       styleOverrides:{
         body: {

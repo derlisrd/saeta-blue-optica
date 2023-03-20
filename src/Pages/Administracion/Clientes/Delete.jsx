@@ -1,6 +1,6 @@
 import { useState } from "react";
-import DialogBorrar from "../../Components/Dialogo/DialogBorrar";
-import useQuerys from "../../Hooks/useQuerys";
+import DialogBorrar from "../../../Components/Dialogo/DialogBorrar";
+import useQuerys from "../../../Hooks/useQuerys";
 import { useClientes } from "./ClientesProvider";
 
 function Delete() {

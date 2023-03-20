@@ -57,18 +57,15 @@ function useQuerys() {
 
     const actualizar = async ({ table, data, id }) => {
       try {
-
         const res = await Axios({
           url: `${APIURL}${table}/${id}/?token=${token}&operator=`,
           method: "PUT",
           data: JSON.stringify(data),
           headers: { "X-Api-Token": XAPITOKEN },
         });
-        
         return await res.data;
       } catch (error) {
         return { results: null, response:  false, message: error };
-        
       }
     
     }

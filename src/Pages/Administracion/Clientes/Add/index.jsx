@@ -1,9 +1,9 @@
 import {Alert, DialogContent,Grid,LinearProgress,TextField} from "@mui/material";
 import { useState } from "react";
-import ActionsCancelSave from "../../../Components/Dialogo/ActionsCancelSave";
-import DialogZoom from "../../../Components/Dialogo/DialogZoom";
-import useFocus from "../../../Hooks/useFocus";
-import useQuerys from "../../../Hooks/useQuerys";
+import ActionsCancelSave from "../../../../Components/Dialogo/ActionsCancelSave";
+import DialogZoom from "../../../../Components/Dialogo/DialogZoom";
+import useFocus from "../../../../Hooks/useFocus";
+import useQuerys from "../../../../Hooks/useQuerys";
 import { useClientes } from "../ClientesProvider";
 import TipoPago from "./TipoPago";
 

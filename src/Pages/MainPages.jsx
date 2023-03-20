@@ -45,7 +45,7 @@ function MainPages() {
 const Login = Loadable(lazy(() => import('./Auth/Login')));
 const Home = Loadable(lazy(() => import('./Home')));
 const Base = Loadable(lazy(() => import('./Base')));
-const Clientes = Loadable(lazy(() => import('./Clientes')));
+const Clientes = Loadable(lazy(() => import('./Administracion/Clientes')));
 const NotFound = Loadable(lazy(() => import('./Status/NotFound')));
 const AddProducto = Loadable(lazy(() => import('./Productos/Add')));
 const ListadoProductos = Loadable(lazy(() => import('./Productos/Listado')));

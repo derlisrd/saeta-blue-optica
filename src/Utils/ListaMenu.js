@@ -6,13 +6,7 @@ export const ListaMenu = [
         icon:'fluent-mdl2:home',
         sub:false
     },
-    {
-        id:3,
-        url:'/clientes',
-        title:'Clientes',
-        icon:'ic:twotone-people',
-        sub:false
-    },
+
 
 
     {
@@ -87,10 +81,17 @@ export const ListaMenu = [
         open:false,
         submenu:[
             {
+                id:3,
+                url:'/clientes',
+                title:'Clientes',
+                icon:'ic:twotone-people',
+                sub:false
+            },
+            {
                 id:41,
-                title:'Pedidos',
-                url:'/ventas',
-                icon:'ic:baseline-receipt-long'
+                title:'Proveedores',
+                url:'/proveedores',
+                icon:'fluent:vehicle-truck-cube-20-regular'
             },
             {
                 id:42,

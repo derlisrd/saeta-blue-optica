@@ -1,8 +1,8 @@
 import { Stack } from "@mui/material";
 import { useState } from "react";
-import AddButton from "../../Components/Botones/AddButton";
-import Tablas from "../../Components/Tablas";
-import Buscar from "../../Components/TextFields/Buscar";
+import AddButton from "../../../Components/Botones/AddButton";
+import Tablas from "../../../Components/Tablas";
+import Buscar from "../../../Components/TextFields/Buscar";
 import { useClientes } from "./ClientesProvider";
 import ListaColumns from "./ListaColumns";
 import ListaOpciones from "./ListaOpciones";

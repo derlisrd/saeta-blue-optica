@@ -3,18 +3,17 @@ import { useState } from "react";
 import AddButton from "../../../Components/Botones/AddButton";
 import Tablas from "../../../Components/Tablas";
 import Buscar from "../../../Components/TextFields/Buscar";
-import { useClientes } from "./ClientesProvider";
-import ListaColumns from "./ListaColumns";
-import ListaOpciones from "./ListaOpciones";
+import {  useDeposito } from "./DepositoProvider";
+import Columns from "./Columns";
+import Opciones from "./Opciones";
 
-function ListaClientes() {
-    const {isLoading,lista,llaveDialog,getLista} = useClientes()
+function Lista() {
+    const {isLoading,lista,llaveDialog,getLista} = useDeposito()
     const [inputSearch, setInputSearch] = useState("");
 
     const FilterData = lista.filter(
         (e) =>
-          e.nombre_cliente.toLowerCase().includes(inputSearch.toLowerCase()) ||
-          e.ruc_cliente.toLowerCase().includes(inputSearch.toLowerCase())
+          e.nombre_deposito.toLowerCase().includes(inputSearch.toLowerCase())
       ); 
 
 
@@ -30,16 +29,16 @@ function ListaClientes() {
     );
 
     return ( <Tablas
-        title="Clientes"
-        subtitle="Módulo de listado de clientes"
+        title="Depósitos"
+        subtitle="Módulo de listado de depósitos"
         inputs={Inputs}
         datas={FilterData}
         loading={isLoading}
-        icon={{ name:'ic:twotone-people' }}
+        icon={{ name:'ic:twotone-local-convenience-store' }}
         showOptions
-        Accions={ListaOpciones}
-        columns={ListaColumns}
+        Accions={Opciones}
+        columns={Columns}
          /> );
 }
 
-export default ListaClientes;
+export default Lista;

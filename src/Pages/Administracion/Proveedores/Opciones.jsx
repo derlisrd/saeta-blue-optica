@@ -1,11 +1,11 @@
 import { Icon } from "@iconify/react";
 import { IconButton, Stack } from "@mui/material";
-import { useClientes } from "./ClientesProvider";
+import { useProveedor } from "./ProveedorProvider";
 import { red } from "@mui/material/colors";
 
-function ListaOpciones({rowProps}) {
+function Opciones({rowProps}) {
    
-    const {setFormSelect,llaveDialog} = useClientes()
+    const {setFormSelect,llaveDialog} = useProveedor()
 
     
     const open = (form,metodo)=>{
@@ -22,4 +22,4 @@ function ListaOpciones({rowProps}) {
     )
 }
 
-export default ListaOpciones ;
+export default Opciones ;

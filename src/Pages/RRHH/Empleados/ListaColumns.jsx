@@ -1,14 +1,14 @@
 const ListaColumns= [
     {
-        field:'ruc_proveedor',
+        field:'doc_empleado',
         title:'Doc.'
     },
     {
-        field:'nombre_proveedor',
-        title:'Nombre'
+        field:'nombre_empleado',
+        title:'Nombre Apellido'
     },
     {
-        field:'telefono_proveedor',
+        field:'telefono_empleado',
         title:'Tel.'
     }
 ]

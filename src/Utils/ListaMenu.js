@@ -15,7 +15,51 @@ export const ListaMenu = [
         title:'Memos',
         icon:'ic:twotone-sticky-note-2',
         sub:false
-    },//mdi:file-report-outline
+    },
+    {
+        id:78,
+        url:'#',
+        title:'Comercial',
+        icon:'carbon:store',
+        sub:true,
+        open:false,
+        submenu:[
+            {
+                id:41,
+                title:'Pedidos',
+                url:'/pedidos',
+                icon:'ic:baseline-receipt-long'
+            },
+            {
+                id:42,
+                title:'Vender',
+                url:'/vender',
+                icon:'ion:cash-outline'
+            },
+        ]
+    },
+    {
+        id:71,
+        url:'#',
+        title:'Stock',
+        icon:'fluent-mdl2:product-release',
+        sub:true,
+        open:false,
+        submenu:[
+            {
+                id:41,
+                title:'Productos',
+                url:'/productos',
+                icon:'ic:twotone-inventory'
+            },
+            {
+                id:42,
+                title:'Depositos',
+                url:'/depositos',
+                icon:'ic:twotone-local-convenience-store'
+            }
+        ]
+    }, 
     {
         id:87,
         url:'#',
@@ -26,21 +70,27 @@ export const ListaMenu = [
         submenu:[
             {
                 id:41,
-                title:'Pedidos',
-                url:'/ventas',
-                icon:'ic:baseline-receipt-long'
+                title:'Generales',
+                url:'/reportes/generales',
+                icon:'tabler:report-analytics'
             },
             {
                 id:42,
-                title:'Facturar',
-                url:'/cuentas/cobrar',
-                icon:'ion:cash-outline'
+                title:'Productos',
+                url:'/reportes/productos',
+                icon:'ep:sell'
             },
             {
                 id:43,
-                title:'A pagar',
-                url:'/cuentas/pagar',
-                icon:'ic:baseline-money'
+                title:'Ventas',
+                url:'/reportes/ventas',
+                icon:'mdi:report-line'
+            },
+            {
+                id:43,
+                title:'Gráficos',
+                url:'/reportes/graficos',
+                icon:'mdi:report-bar'
             }
         ]
     }, 
@@ -54,15 +104,31 @@ export const ListaMenu = [
         submenu:[
             {
                 id:41,
-                title:'Pedidos',
+                title:'Empleados',
+                url:'/empleados',
+                icon:'clarity:employee-line'
+            }
+        ]
+    },
+    {
+        id:7,
+        url:'#',
+        title:'Financiero',
+        icon:'fluent-mdl2:money',
+        sub:true,
+        open:false,
+        submenu:[
+            {
+                id:41,
+                title:'Ventas',
                 url:'/ventas',
-                icon:'ic:baseline-receipt-long'
+                icon:'ic:twotone-sell'
             },
             {
                 id:42,
-                title:'Facturar',
+                title:'A cobrar',
                 url:'/cuentas/cobrar',
-                icon:'ion:cash-outline'
+                icon:'tabler:pig-money'
             },
             {
                 id:43,
@@ -94,18 +160,6 @@ export const ListaMenu = [
                 icon:'fluent:vehicle-truck-cube-20-regular'
             },
             {
-                id:42,
-                title:'Facturar',
-                url:'/cuentas/cobrar',
-                icon:'ion:cash-outline'
-            },
-            {
-                id:43,
-                title:'A pagar',
-                url:'/cuentas/pagar',
-                icon:'ic:baseline-money'
-            },
-            {
                 id:5,
                 url:'/usuarios',
                 title:'Usuarios',
@@ -114,90 +168,9 @@ export const ListaMenu = [
             },
         ]
     },
-    {
-        id:78,
-        url:'#',
-        title:'Comercial',
-        icon:'carbon:store',
-        sub:true,
-        open:false,
-        submenu:[
-            {
-                id:41,
-                title:'Pedidos',
-                url:'/pedidos',
-                icon:'ic:baseline-receipt-long'
-            },
-            {
-                id:42,
-                title:'Facturar',
-                url:'/cuentas/cobrar',
-                icon:'ion:cash-outline'
-            },
-            {
-                id:43,
-                title:'A pagar',
-                url:'/cuentas/pagar',
-                icon:'ic:baseline-money'
-            }
-        ]
-    }, //
-    {
-        id:71,
-        url:'#',
-        title:'Stock',
-        icon:'fluent-mdl2:product-release',
-        sub:true,
-        open:false,
-        submenu:[
-            {
-                id:41,
-                title:'Productos',
-                url:'/productos',
-                icon:'ic:twotone-inventory'
-            },
-            {
-                id:42,
-                title:'A cobrar',
-                url:'/cuentas/cobrar',
-                icon:'tabler:pig-money'
-            },
-            {
-                id:43,
-                title:'A pagar',
-                url:'/cuentas/pagar',
-                icon:'ic:baseline-money'
-            }
-        ]
-    },
-    {
-        id:7,
-        url:'#',
-        title:'Financiero',
-        icon:'fluent-mdl2:money',
-        sub:true,
-        open:false,
-        submenu:[
-            {
-                id:41,
-                title:'Ventas',
-                url:'/ventas',
-                icon:'ic:twotone-sell'
-            },
-            {
-                id:42,
-                title:'A cobrar',
-                url:'/cuentas/cobrar',
-                icon:'tabler:pig-money'
-            },
-            {
-                id:43,
-                title:'A pagar',
-                url:'/cuentas/pagar',
-                icon:'ic:baseline-money'
-            }
-        ]
-    },
+    //
+
+    
     
     
 ]

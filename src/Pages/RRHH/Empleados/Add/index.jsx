@@ -4,10 +4,10 @@ import ActionsCancelSave from "../../../../Components/Dialogo/ActionsCancelSave"
 import DialogZoom from "../../../../Components/Dialogo/DialogZoom";
 import useFocus from "../../../../Hooks/useFocus";
 import useQuerys from "../../../../Hooks/useQuerys";
-import { useProveedor } from "../ProveedorProvider";
+import { useEmpleados } from "../EmpleadosProvider";
 
 function Add() {
-    const { dialogs, llaveDialog,getLista} = useProveedor();
+    const { dialogs, llaveDialog,getLista} = useEmpleados();
     const [loading,setLoading] = useState(false)
     const {focusTo} = useFocus()
     const initialError = {active:false,message:'',code:0}
@@ -21,24 +21,24 @@ function Add() {
         e.preventDefault()
         let form = new FormData(e.target)
         let datas =  Object.fromEntries(form)
-        if(datas.ruc_proveedor === ''){
-            focusTo('ruc_proveedor')
+        if(datas.doc_empleado === ''){
+            focusTo('doc_empleado')
             return false;
         }
-        if(datas.nombre_proveedor === ''){
+        if(datas.nombre_empleado === ''){
             return false;
         }
         setLoading(true)
-        let check = await get({table:'proveedors',where:`ruc_proveedor,=,'${datas.ruc_proveedor}'`})
+        let check = await get({table:'empleados',where:`doc_empleado,=,'${datas.doc_empleado}'`})
         if(check.response && check.found>0){
-            setError({active:true,message:'Ya existe un proveedor con ese doc.',code:1})
+            setError({active:true,message:'Ya existe un empleado con ese doc.',code:1})
             setLoading(false)
-            focusTo('ruc_proveedor')
+            focusTo('doc_empleado')
             return false;
         }
         setError(initialError)
 
-        let res = await insert({table:'proveedors',data:datas})
+        let res = await insert({table:'empleados',data:datas})
         if(res.response){
             close()
             getLista()
@@ -57,13 +57,13 @@ function Add() {
                     {error.active && <Alert severity="error">{error.message}</Alert> }
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                    <TextField id="ruc_proveedor" error={error.code===1} autoFocus name="ruc_proveedor" required autoComplete="off" fullWidth label="Documento" />
+                    <TextField id="doc_empleado" error={error.code===1} autoFocus name="doc_empleado" required autoComplete="off" fullWidth label="Documento" />
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                    <TextField fullWidth name="nombre_proveedor" required autoComplete="off" label="Nombre de proveedor" />
+                    <TextField fullWidth name="nombre_empleado" required autoComplete="off" label="Nombre y Apellido" />
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                    <TextField fullWidth name="telefono_proveedor" label="teléfono" />
+                    <TextField fullWidth name="telefono_empleado" required label="teléfono" />
                 </Grid>
             </Grid>
         </DialogContent>

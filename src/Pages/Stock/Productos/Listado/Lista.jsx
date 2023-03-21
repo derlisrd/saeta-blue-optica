@@ -1,7 +1,7 @@
 
-import AddButton from "../../../Components/Botones/AddButton";
-import Tablas from "../../../Components/Tablas";
-import useGotoNavigate from "../../../Hooks/useGotoNavigate";
+import AddButton from "../../../../Components/Botones/AddButton";
+import Tablas from "../../../../Components/Tablas";
+import useGotoNavigate from "../../../../Hooks/useGotoNavigate";
 import { useListadoProducto } from "./ListadoProductoProvider";
 import ListaOpciones from "./ListaOpciones";
 

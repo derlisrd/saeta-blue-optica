@@ -84,14 +84,11 @@ function ProfileMenu() {
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
         <MenuItem onClick={handleClose}>
-           Profile
-        </MenuItem>
-        <MenuItem onClick={handleClose}>
-           My account
+           Perfil
         </MenuItem>
         <Divider />
         <MenuItem onClick={confirmLogOut}>
-           Salir
+           Cerrar sesión 
         </MenuItem>
       </Menu>  </>);
 }

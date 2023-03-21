@@ -6,18 +6,18 @@ import useFocus from "../../../../Hooks/useFocus";
 import useQuerys from "../../../../Hooks/useQuerys";
 import { useAuth } from "../../../../Providers/AuthProvider";
 import { APICALLER } from "../../../../Services/api";
-import { useProveedor } from "../ProveedorProvider";
+import { useEmpleados } from "../EmpleadosProvider";
 
 
 function Edit() {
-    const { dialogs, llaveDialog,getLista,formSelect} = useProveedor();
+    const { dialogs, llaveDialog,getLista,formSelect} = useEmpleados();
     const [loading,setLoading] = useState(false)
     const initialError = {active:false,message:'',code:0}
     const [error,setError] = useState(initialError)
     const {get} = useQuerys()
     const {userData} = useAuth()
     const {focusTo} = useFocus()    
-    const [formEdit,setFormEdit] = useState({id_proveedor:"",ruc_proveedor:"",telefono_proveedor:"",nombre_proveedor:""})
+    const [formEdit,setFormEdit] = useState({id_empleado:"",doc_empleado:"",telefono_empleado:"",nombre_empleado:"",tipo_empleado:""})
 
 
     const change = e=>{
@@ -31,24 +31,24 @@ function Edit() {
     const enviar = async(e)=>{ 
         e.preventDefault()
         let datas = {...formEdit}
-        if(datas.ruc_proveedor === ''){
-            focusTo('ruc_cliente')
+        if(datas.doc_empleado === ''){
+            focusTo('doc_empleado')
             return false;
         }
-        if(datas.nombre_proveedor === ''){
+        if(datas.nombre_empleado === ''){
             return false;
         }
         setLoading(true)
-        let id = formSelect.id_proveedor;
-        let check = await get({table:'proveedors',where:`ruc_proveedor,=,'${datas.ruc_proveedor}',and,id_proveedor,<>,${id}`})
+        let id = formSelect.id_empleado;
+        let check = await get({table:'empleados',where:`doc_empleado,=,'${datas.doc_empleado}',and,id_empleado,<>,${id}`})
         if(check.response && check.found>0){
-            setError({active:true,message:'Ya existe un proveedor con ese doc.',code:1})
-            focusTo('ruc_proveedor')
+            setError({active:true,message:'Ya existe un empleado con ese doc.',code:1})
+            focusTo('doc_empleado')
             setLoading(false)
             return false;
         }
         setError(initialError)
-        let res = await APICALLER.update({table:'proveedors',data:datas,id,token:userData.token_user})
+        let res = await APICALLER.update({table:'empleados',data:datas,id,token:userData.token_user})
         if(res.response){
             close()
             getLista()
@@ -66,7 +66,7 @@ function Edit() {
   return (
     <DialogZoom open={dialogs.edit} title="Agregar" onClose={close} fullWidth>
       <form onSubmit={enviar}>
-        <input type="hidden" name="id" value={formSelect.id_proveedor} />
+        <input type="hidden" name="id" value={formSelect.id_empleado} />
         <DialogContent>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
@@ -74,13 +74,13 @@ function Edit() {
                     {error.active && <Alert severity="error">{error.message}</Alert> }
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                    <TextField id="ruc_proveedor" error={error.code===1} autoFocus name="ruc_proveedor" onChange={change} value={formEdit.ruc_proveedor} required autoComplete="off" fullWidth label="Documento" />
+                    <TextField id="doc_empleado" error={error.code===1} autoFocus name="doc_empleado" onChange={change} value={formEdit.doc_empleado} required autoComplete="off" fullWidth label="Documento" />
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                    <TextField fullWidth name="nombre_proveedor" onChange={change} value={formEdit.nombre_proveedor} required autoComplete="off" label="Nombre de proveedor" />
+                    <TextField fullWidth name="nombre_empleado" onChange={change} value={formEdit.nombre_empleado} required autoComplete="off" label="Nombre y Apellido" />
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                    <TextField fullWidth name="telefono_proveedor" onChange={change} value={formEdit.telefono_proveedor} label="teléfono" />
+                    <TextField fullWidth name="telefono_empleado" onChange={change} value={formEdit.telefono_empleado} label="Teléfono" />
                 </Grid>
             </Grid>
         </DialogContent>

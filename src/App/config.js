@@ -6,6 +6,7 @@ export const XAPITOKEN = import.meta.env.VITE_APP_X_API_TOKEN;
 export const SECRETO =  import.meta.env.VITE_APP_SECRETO;
 
 
+
 export const env = {
     BASEURL, 
     ICONAPP, 

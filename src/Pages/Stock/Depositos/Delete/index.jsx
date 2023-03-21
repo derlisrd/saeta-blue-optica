@@ -1,17 +1,17 @@
 import { useState } from "react";
-import DialogBorrar from "../../../Components/Dialogo/DialogBorrar";
-import useQuerys from "../../../Hooks/useQuerys";
-import { useClientes } from "./ClientesProvider";
+import DialogBorrar from "../../../../Components/Dialogo/DialogBorrar";
+import useQuerys from "../../../../Hooks/useQuerys";
+import { useDeposito } from "../DepositoProvider";
 
 function Delete() {
 
-    const {dialogs,llaveDialog,getLista,formSelect} = useClientes()
+    const {dialogs,llaveDialog,getLista,formSelect} = useDeposito()
     const [isLoading,setIsloading]  = useState(false)
     const {borrar} = useQuerys()
 
     const erase = async()=>{
         setIsloading(true)
-        let res = await borrar({table:'clientes',id: formSelect.id_cliente})
+        let res = await borrar({table:'depositos',id: formSelect.id_deposito})
         if(res.response){
             getLista()
             close()

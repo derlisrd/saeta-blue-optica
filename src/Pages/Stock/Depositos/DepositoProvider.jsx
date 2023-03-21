@@ -1,20 +1,16 @@
 import {createContext,useContext,useState,useEffect,useCallback} from 'react';
 import { APICALLER } from '../../../Services/api';
 
-const ClientesContext = createContext()
+const DepositoContext = createContext()
 
-const ClientesProvider = ({children}) => {
+const DepositoProvider = ({children}) => {
   
   const [lista,setLista] = useState([])
   const [isLoading,setIsLoading] = useState(true)
   const [dialogs,setDialogs] = useState({add:false,edit:false,delete:false})
   const [formSelect,setFormSelect] = useState({
-    id_cliente:'',
-    nombre_cliente:'',
-    email_cliente:'',
-    ruc_cliente:'',
-    telefono_cliente:'',
-    tipo_pago:''
+    id_deposito:'',
+    nombre_deposito:''
   })
 
   const llaveDialog = (name,bolean)=>{ setDialogs({...dialogs,[name]:bolean}) }
@@ -22,9 +18,9 @@ const ClientesProvider = ({children}) => {
   const getLista = useCallback(async(searchTxt='')=>{
     setIsLoading(true)
     let config = {
-      table: "clientes",
-      fields: "ruc_cliente,nombre_cliente,id_cliente,email_cliente,telefono_cliente,tipo_pago",
-      filtersField:"nombre_cliente,ruc_cliente",
+      table: "depositos",
+      fields: "id_deposito,nombre_deposito",
+      filtersField:"nombre_deposito",
       filtersSearch:`${searchTxt}`,
     };
     let res = await APICALLER.get(config)
@@ -41,13 +37,13 @@ const ClientesProvider = ({children}) => {
   }, [getLista]);
 
   const values = {lista,isLoading,llaveDialog,dialogs,getLista,formSelect,setFormSelect}
-  return <ClientesContext.Provider value={values}>{children}</ClientesContext.Provider>
+  return <DepositoContext.Provider value={values}>{children}</DepositoContext.Provider>
   
 }
 
-export function useClientes(){
-  const {lista,isLoading,llaveDialog,dialogs,getLista,formSelect,setFormSelect} = useContext(ClientesContext)
+export function useDeposito(){
+  const {lista,isLoading,llaveDialog,dialogs,getLista,formSelect,setFormSelect} = useContext(DepositoContext)
   return {lista,isLoading,llaveDialog,dialogs,getLista,formSelect,setFormSelect}
 }
 
-export default ClientesProvider
+export default DepositoProvider

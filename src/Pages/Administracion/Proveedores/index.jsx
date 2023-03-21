@@ -1,19 +1,18 @@
 import React from 'react'
+import ProveedorProvider from './ProveedorProvider'
+import Lista from './Lista'
 import Add from './Add'
-import ClientesProvider from './ClientesProvider'
 import Delete from './Delete'
 import Edit from './Edit'
-import ListaClientes from './ListaClientes'
 
-const Clientes = () => {
-  return (
-    <ClientesProvider>
-      <Delete />
-      <Add />
-      <Edit />
-      <ListaClientes />
-    </ClientesProvider>
-  )
+const Proveedores = () => {
+
+  return <ProveedorProvider>
+    <Lista />
+    <Add />
+    <Edit />
+    <Delete />
+  </ProveedorProvider>
 }
 
-export default Clientes
+export default Proveedores

@@ -1,5 +1,5 @@
 import { Box, Grid, TextField } from "@mui/material";
-import RegistrarButton from "../../../Components/Botones/RegistrarButton";
+import RegistrarButton from "../../../../Components/Botones/RegistrarButton";
 
 import InputPrecio from "./Components/InputPrecio";
 import Tipo from "./Components/Tipo";

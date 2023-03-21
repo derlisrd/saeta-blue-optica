@@ -1,6 +1,6 @@
 import { Icon } from "@iconify/react";
 import { InputAdornment, TextField } from "@mui/material";
-import NumberFormatCustom from "../../../../Components/TextFields/NumberFormatCustom";
+import NumberFormatCustom from "../../../../../Components/TextFields/NumberFormatCustom";
 
 function InputPrecio({ name, value, onChange,label,...rest}) {
     return (<TextField label={label} {...rest}

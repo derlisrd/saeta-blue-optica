@@ -21,7 +21,7 @@ import SimpleBar from "simplebar-react";
 
 
 function MenuList({isMobile}) {
-  const { BASEURL,APPNAME } = env;
+  const { BASEURL,APPNAME, ICONAPP} = env;
   let location = useLocation();
   const pathname =  (location.pathname).substring(6);
 
@@ -42,10 +42,11 @@ function MenuList({isMobile}) {
 
   return (<SimpleBar forceVisible="y" autoHide={false} style={{ maxHeight: "100vh" }}>
     <Toolbar >
-      <Stack direction='row' alignItems='center' justifyContent='space-between' width='100%'>
-        {isMobile && <IconButton onClick={closeMobileMenu} ><Icon icon='ri:menu-fold-line' height={24} /></IconButton>}
-        <Typography variant="button">{APPNAME}</Typography>
-
+      <Stack direction='row' alignItems='center' justifyContent='space-around' width='100%'>
+        {isMobile ? <IconButton onClick={closeMobileMenu} ><Icon icon='ri:menu-fold-line' height={24} /></IconButton> :
+        <> <Icon icon={ICONAPP} height={36} />  <Typography variant="button">{APPNAME}</Typography> </>  
+      }
+         
         </Stack>
       </Toolbar>
       <List >

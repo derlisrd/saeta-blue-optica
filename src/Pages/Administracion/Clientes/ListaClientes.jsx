@@ -6,6 +6,7 @@ import Buscar from "../../../Components/TextFields/Buscar";
 import { useClientes } from "./ClientesProvider";
 import ListaColumns from "./ListaColumns";
 import ListaOpciones from "./ListaOpciones";
+import Pagination from "./Pagination";
 
 function ListaClientes() {
     const {isLoading,lista,llaveDialog,getLista} = useClientes()
@@ -29,7 +30,7 @@ function ListaClientes() {
       </Stack>
     );
 
-    return ( <Tablas
+    return (<><Tablas
         title="Clientes"
         subtitle="Módulo de listado de clientes"
         inputs={Inputs}
@@ -39,7 +40,10 @@ function ListaClientes() {
         showOptions
         Accions={ListaOpciones}
         columns={ListaColumns}
-         /> );
+         /> 
+         <Pagination />
+         </>
+         );
 }
 
 export default ListaClientes;

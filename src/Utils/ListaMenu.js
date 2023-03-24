@@ -48,6 +48,12 @@ export const ListaMenu = [
         submenu:[
             {
                 id:41,
+                title:'Categorias',
+                url:'/categorias',
+                icon:'ic:twotone-category'
+            },
+            {
+                id:41,
                 title:'Productos',
                 url:'/productos',
                 icon:'ic:twotone-inventory'

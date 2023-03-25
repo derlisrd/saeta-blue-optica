@@ -1,7 +1,7 @@
 import { Box, Button, Grid, LinearProgress, TextField,Typography } from "@mui/material";
 import { useState } from "react";
 import RegistrarButton from "../../../../Components/Botones/RegistrarButton";
-
+import NumberFormatCustom from '../../../../Components/TextFields/NumberFormatCustom'
 import InputPrecio from "./Components/InputPrecio";
 import SelectDeposito from "./Components/SelectDeposito";
 import SelectCategory from "./Components/SelectCategory";
@@ -13,17 +13,32 @@ import useGet from "./useGet";
 function AddProducto() {
 
   const {isLoading,listas} = useGet()
-
-  const [form,setForm] = useState({
+  const [stock,setStock] = useState([])
+  const initialForm = {
     'id_categoria_producto':'',
     'deposito_id':'',
     'graduacion_esferico':'',
     'graduacion_cilindrico':'',
-  })
+    'stock_producto_deposito':'0'
+  }
+  const [form,setForm] = useState(initialForm)
 
   const change = e=>{
     const {value,name} = e.target
     setForm(prev=> {return {...prev,[name]:value}})
+  }
+
+  const addStock = ()=>{
+    let new_stock = [...stock]
+    let insertar = {
+      deposito_id: form.deposito_id,
+      stock_producto_deposito: form.stock_producto_deposito,
+      graduacion_cilindrico:form.graduacion_cilindrico,
+      graduacion_esferico:form.graduacion_esferico,
+    }
+    new_stock.push(insertar)
+    setStock(new_stock)
+    setForm(initialForm)
   }
 
   const submit = (e) => {
@@ -74,14 +89,17 @@ function AddProducto() {
                   <SelectEsferico onChange={change} value={form.graduacion_esferico} />
                 </Grid>
                 <Grid item xs={12} sm={6} md={4} >
-                  <TextField label="Cantidad" name="stock_producto_deposito" fullWidth />
+                  <TextField autoComplete="off" InputProps={{inputComponent: NumberFormatCustom}} value={form.stock_producto_deposito} onChange={change} label="Cantidad" name="stock_producto_deposito" id="stock_producto_deposito" fullWidth />
                 </Grid>
                 <Grid item xs={12} sm={6} md={4} >
-                  <Button variant="outlined">Agregar</Button>
+                  <Button onClick={addStock} variant="outlined">Agregar</Button>
                 </Grid>
               </Grid>
             </Box> 
             </Grid>
+
+          
+
           </Grid>
 
         </Grid>

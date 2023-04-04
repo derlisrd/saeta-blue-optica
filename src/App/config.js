@@ -16,5 +16,5 @@ export const env = {
     SECRETO,
     LOGIN_PAGE_URL : '/admin',
     HOME_PAGE_URL: '/admin/home',
-    DRAWER_WIDTH: 200
+    DRAWER_WIDTH: 170
 }

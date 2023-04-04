@@ -54,7 +54,7 @@ function Lista() {
     return (<Tablas
         title="Productos y Servicios"
         subtitle="Módulo de productos y servicios"
-        icon={{ name:'ic:twotone-inventory' }}
+        icon={{ name:'fluent-mdl2:product-variant' }}
         loading={isLoading}
         columns={columns}
         datas={lista}

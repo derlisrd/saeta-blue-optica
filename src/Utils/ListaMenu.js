@@ -6,9 +6,13 @@ export const ListaMenu = [
         icon:'fluent-mdl2:home',
         sub:false
     },
-
-
-
+    {
+        id:98,
+        url:'/contabilidad',
+        title:'Contabilidad',
+        icon:'ic:twotone-menu-book',
+        sub:false
+    },
     {
         id:6,
         url:'/memo',
@@ -56,6 +60,12 @@ export const ListaMenu = [
                 id:41,
                 title:'Productos',
                 url:'/productos',
+                icon:'fluent-mdl2:product-variant'
+            },
+            {
+                id:456,
+                title:'Inventario',
+                url:'/inventario',
                 icon:'ic:twotone-inventory'
             },
             {
@@ -147,7 +157,7 @@ export const ListaMenu = [
     {
         id:788,
         url:'#',
-        title:'Administración',
+        title:'Admin...',
         icon:'pajamas:admin',
         sub:true,
         open:false,

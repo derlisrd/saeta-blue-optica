@@ -1,133 +1,81 @@
-import { Box, Button, Grid, LinearProgress, TextField,Typography } from "@mui/material";
-import { useState } from "react";
-import RegistrarButton from "../../../../Components/Botones/RegistrarButton";
-import NumberFormatCustom from '../../../../Components/TextFields/NumberFormatCustom'
+import { Box, Grid, LinearProgress, TextField,Button, Dialog, DialogContent, DialogTitle, DialogActions } from "@mui/material";
 import InputPrecio from "./Components/InputPrecio";
-import SelectDeposito from "./Components/SelectDeposito";
 import SelectCategory from "./Components/SelectCategory";
-import { SelectCilindrico, SelectEsferico } from "./Components/SelectGraduaciones";
 import Tipo from "./Components/Tipo";
 import useGet from "./useGet";
+import Stock from "./Components/Stock";
+import AddStock from "./Components/AddStock";
+import useAdd from "./useAdd";
 
 
 function AddProducto() {
 
+  const {enviar,change,form,stock,error,addStock,isLoadingSend} = useAdd()
   const {isLoading,listas} = useGet()
-  const [stock,setStock] = useState([])
-  const initialForm = {
-    'id_categoria_producto':'',
-    'deposito_id':'',
-    'graduacion_esferico':'',
-    'graduacion_cilindrico':'',
-    'stock_producto_deposito':'0'
-  }
-  const [form,setForm] = useState(initialForm)
-
-  const change = e=>{
-    const {value,name} = e.target
-    setForm(prev=> {return {...prev,[name]:value}})
-  }
-
-  const addStock = ()=>{
-    let new_stock = [...stock]
-    let insertar = {
-      deposito_id: form.deposito_id,
-      stock_producto_deposito: form.stock_producto_deposito,
-      graduacion_cilindrico:form.graduacion_cilindrico,
-      graduacion_esferico:form.graduacion_esferico,
-    }
-    new_stock.push(insertar)
-    setStock(new_stock)
-    setForm(initialForm)
-  }
-
-  const submit = (e) => {
-    e.preventDefault();
-    let formdata = new FormData(e.target)
-    let datas =  Object.fromEntries(formdata)
-    console.log(datas);
-  };
-
-
-  if(isLoading){
-    return <LinearProgress />
-  }
+  
 
   return (
-    <form onSubmit={submit}>
-      
-      <h3>Agregar nuevo producto</h3>
+    <Dialog open fullScreen onClose={()=>{}}>
+      <DialogTitle>Agregar nuevo producto</DialogTitle>
+      <form onSubmit={enviar}>
+      <DialogContent>
       <Grid container spacing={2} alignItems="flex-start">
-        <Grid item xs={12} md={8}>
-          
+        <Grid item xs={12}> {(isLoading || isLoadingSend) && <LinearProgress />} </Grid>
+        <Grid item xs={12} md={9}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <Box boxShadow={12} borderRadius={3} paddingY={3} paddingX={2}>
                 <Grid container spacing={2}>
-                  <Grid item xs={12}>
-                    <TextField autoComplete="off" name="codigo_producto" autoFocus label="Código" fullWidth />
+                  <Grid item xs={12} md={4}>
+                    <TextField autoComplete="off" id="codigo_producto" error={error.code===5} name="codigo_producto" autoFocus label="Código" fullWidth />
                   </Grid>
-                  <Grid item xs={12}>
-                    <TextField label="Nombre de producto" name="nombre_producto" fullWidth />
+                  <Grid item xs={12} md={8}>
+                    <TextField autoComplete="off" id="nombre_producto" error={error.code===6} label="Nombre de producto"  name="nombre_producto" fullWidth />
                   </Grid>
                 </Grid>
               </Box>
             </Grid>
             <Grid item xs={12}>
             <Box boxShadow={12} borderRadius={3} paddingY={3} paddingX={2}>
-              <Grid container spacing={2} alignItems="center" >
-                <Grid item xs={12}>
-                  <Typography>Stock</Typography>
+              <Grid container spacing={2}>
+                <Grid item sm={12} md={6}>
+                  <AddStock error={error} onChange={change} form={form} listas={listas} addStock={addStock} />
                 </Grid>
-                <Grid item xs={12} sm={6} md={4} >
-                  <SelectDeposito name="deposito_id" value={form.deposito_id} onChange={change} opciones={listas.depositos} />
-                </Grid>
-                <Grid item xs={12} sm={6} md={4} >
-                <SelectCilindrico onChange={change} value={form.graduacion_cilindrico} />
-                </Grid>
-                <Grid item xs={12} sm={6} md={4} >
-                  <SelectEsferico onChange={change} value={form.graduacion_esferico} />
-                </Grid>
-                <Grid item xs={12} sm={6} md={4} >
-                  <TextField autoComplete="off" InputProps={{inputComponent: NumberFormatCustom}} value={form.stock_producto_deposito} onChange={change} label="Cantidad" name="stock_producto_deposito" id="stock_producto_deposito" fullWidth />
-                </Grid>
-                <Grid item xs={12} sm={6} md={4} >
-                  <Button onClick={addStock} variant="outlined">Agregar</Button>
+                <Grid item sm={12} md={6}>
+                  <Stock stock={stock} />
                 </Grid>
               </Grid>
             </Box> 
             </Grid>
-
-          
-
           </Grid>
 
         </Grid>
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} md={3}>
           <Box boxShadow={12} borderRadius={3} paddingY={3} paddingX={2}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
-                <InputPrecio fullWidth label="Precio" name="precio_producto"   />
+                <InputPrecio fullWidth error={error.code===7} label="Precio" id="precio_producto"  name="precio_producto"   />
               </Grid>
               <Grid item xs={12}>
-                <InputPrecio fullWidth label="Precio Mayorista" name="preciom_producto"   />
+                <InputPrecio fullWidth error={error.code===8} label="Precio Mayorista" id="preciom_producto"  name="preciom_producto"   />
               </Grid>
               <Grid item xs={12}>
-                <Tipo name="tipo_producto" />
+                <Tipo name='tipo_producto' error={error}  />
               </Grid>
               <Grid item xs={12}>
-                <SelectCategory onChange={change} value={form.id_categoria_producto} opciones={listas.categorias} name="id_categoria_producto" />
+                <SelectCategory error={error.code===10} onChange={change} value={form.id_categoria_producto} opciones={listas.categorias} name="id_categoria_producto" />
               </Grid>
             </Grid>
           </Box>
-          <Box paddingY={5} paddingX={2}>
-            <RegistrarButton type="submit"  />
-          </Box>
         </Grid>
-
-
       </Grid>
-    </form>
+      </DialogContent>
+      <DialogActions>
+        <Button size="large" variant="outlined">Cerrar</Button>
+        <Button size="large" type='submit' variant="contained">Registrar</Button>
+      </DialogActions>
+      </form>
+    </Dialog>
   );
 }
 

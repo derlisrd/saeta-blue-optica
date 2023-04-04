@@ -1,7 +1,7 @@
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import { graduaciones } from "./graduaciones";
 
-export function SelectEsferico({onChange,value}) {
+export function SelectEsferico({onChange,value,...rest}) {
     return ( <FormControl fullWidth>
         <InputLabel id="graduacion_esferico">Esférico</InputLabel>
         <Select
@@ -9,6 +9,7 @@ export function SelectEsferico({onChange,value}) {
           value={value}
           label="Esférico"
           name='graduacion_esferico'
+          {...rest}
         >
           <MenuItem value="" disabled>Seleccionar</MenuItem>
           {graduaciones.map((e,i)=>(
@@ -20,7 +21,7 @@ export function SelectEsferico({onChange,value}) {
 }
 
 
-export function SelectCilindrico({value,onChange}) {
+export function SelectCilindrico({value,onChange,...rest}) {
     return ( <FormControl fullWidth>
         <InputLabel id="graduacion_cilindrico">Cilindrico</InputLabel>
         <Select
@@ -28,6 +29,7 @@ export function SelectCilindrico({value,onChange}) {
           value={value}
           label="Cilindrico"
           name='graduacion_cilindrico'
+          {...rest}
         >
           <MenuItem value="" disabled>Seleccionar</MenuItem>
           {graduaciones.map((e,i)=>(

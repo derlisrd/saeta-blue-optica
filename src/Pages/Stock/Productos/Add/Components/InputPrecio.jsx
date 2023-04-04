@@ -5,6 +5,7 @@ import NumberFormatCustom from "../../../../../Components/TextFields/NumberForma
 function InputPrecio({ name, value, onChange,label,...rest}) {
     return (<TextField label={label} {...rest}
         name={name}
+        autoComplete='off'
         value={value}
         onChange={onChange}
     InputProps={{

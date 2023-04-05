@@ -17,11 +17,8 @@ const NumberFormatCustom = React.forwardRef(function NumberFormatCustom(props, r
           },
         });
       }}
-      
       thousandSeparator="."
       decimalSeparator=","
-      
-      
     />
   );
 });

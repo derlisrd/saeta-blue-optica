@@ -11,13 +11,13 @@ import {
   Typography,
 } from "@mui/material";
 import { Link,useLocation } from "react-router-dom";
-import { env } from "../../app/config";
 import { ListaMenu } from "../../Utils/ListaMenu";
 import { Icon } from "@iconify/react";
 import { Fragment,useState } from "react";
 import styles from './styles.module.css'
 import { useMenu } from "./MenuProvider";
 import SimpleBar from "simplebar-react";
+import { env } from "../../App/config";
 
 
 function MenuList({isMobile}) {

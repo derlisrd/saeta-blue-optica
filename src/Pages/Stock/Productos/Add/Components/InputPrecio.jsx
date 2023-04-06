@@ -2,13 +2,15 @@ import { Icon } from "@iconify/react";
 import { InputAdornment, TextField } from "@mui/material";
 import NumberFormatCustom from "../../../../../Components/TextFields/NumberFormatCustom";
 
-function InputPrecio({ name, value, onChange,label,...rest}) {
+function InputPrecio({ name, value, onChange,label, ...rest}) {
+
+    
     return (<TextField label={label} {...rest}
         name={name}
         autoComplete='off'
         value={value}
         onChange={onChange}
-    InputProps={{
+        InputProps={{
         startAdornment: (
           <InputAdornment position="start">
             <Icon icon="ic:baseline-attach-money" height={22}  />

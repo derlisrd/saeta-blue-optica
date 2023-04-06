@@ -2,7 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { NumericFormat } from 'react-number-format';
 
-const NumberFormatCustom = React.forwardRef(function NumberFormatCustom(props, ref) {
+const NumberFormatCustom = React.forwardRef(function NumberFormatCustom(
+  props,
+  ref,
+) {
   const { onChange, ...other } = props;
 
   return (
@@ -17,14 +20,15 @@ const NumberFormatCustom = React.forwardRef(function NumberFormatCustom(props, r
           },
         });
       }}
-      thousandSeparator="."
-      decimalSeparator=","
+      thousandSeparator
+      valueIsNumericString
+      prefix=""
     />
   );
 });
 
 NumberFormatCustom.propTypes = {
-  
+  name: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
 };
 

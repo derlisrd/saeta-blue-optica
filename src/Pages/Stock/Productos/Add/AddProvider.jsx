@@ -16,10 +16,10 @@ const AddProvider = ({children})=>{
     const [error,setError] = useState(initialError)
     const [stock,setStock] = useState([])
 
-    const enviar = async(e)=>{
-        e.preventDefault();
-        let formdata = new FormData(e.target)
-        let datas =  Object.fromEntries(formdata)
+    const enviar = async(datas)=>{
+        //e.preventDefault();
+        //let formdata = new FormData(e.target)
+        //let datas =  Object.fromEntries(formdata)
         console.log(datas);
         if(datas.codigo_producto === ''){
           setError({active:true,code:5,message:'Codigo de producto'})
@@ -51,19 +51,32 @@ const AddProvider = ({children})=>{
         }
         setError(initialError)
         setIsLoadingSend(true)
+        let comprobar = await APICALLER.get({table:'productos',where:`codigo_producto,=,'${datas.codigo_producto}'`})
+        if(comprobar.found>0){
+          setError({active:true,code:5,message:'Código existente'})
+          useEnfocar('codigo_producto')
+          setIsLoadingSend(false)
+          return false
+        }
         let productoForm = {
           codigo_producto : datas.codigo_producto,
           id_categoria_producto: datas.id_categoria_producto,
           nombre_producto: datas.nombre_producto,
-          precio_producto: datas.precio_producto,
-          preciom_producto: datas.preciom_producto,
+          precio_producto: (datas.precio_producto),
+          preciom_producto: (datas.preciom_producto),
           tipo_producto : datas.tipo_producto
         }
 
         let res = await APICALLER.insert({table:'productos',data:productoForm,token:userData.token_user})
         if(res.response){
-          console.log(res)
+          let producto_id = res.last_id;
+          let promises = [], datos= {}
+          stock.forEach(el=>{
+            datos = {...el, producto_id}
+            promises.push(APICALLER.insert({table:'productos_depositos',token:userData.token_user,data:datos}))
+          })
         }
+         
         setIsLoadingSend(false)
         setDialogs({...dialogs,main:false})
     }
@@ -95,14 +108,14 @@ const AddProvider = ({children})=>{
       return () => {isActive = false; ca.abort();};
       }, [getLista]);
 
-    const values = {enviar,listas,isLoading,isLoadingSend,dialogs,setDialogs,error,stock,setStock}
+    const values = {enviar,listas,isLoading,isLoadingSend,dialogs,setDialogs,initialError,error,setError,stock,setStock}
 
     return <AddContext.Provider value={values}>{children}</AddContext.Provider>
 }
 
 export const useAdd = ()=>{
-    const {enviar,listas,isLoading,isLoadingSend,dialogs,setDialogs,error,stock,setStock} = useContext(AddContext)
-    return {enviar,listas,isLoading,isLoadingSend,dialogs,setDialogs,error,stock,setStock}
+    const {enviar,listas,isLoading,isLoadingSend,dialogs,setDialogs,initialError,error,setError,stock,setStock} = useContext(AddContext)
+    return {enviar,listas,isLoading,isLoadingSend,dialogs,setDialogs,initialError,error,setError,stock,setStock}
 }
 
 export default AddProvider

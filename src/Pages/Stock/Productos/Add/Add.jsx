@@ -6,12 +6,13 @@ import { useState } from "react";
 import Stock from "./Components/Stock";
 import AddStock from "./Components/AddStock";
 import { useAdd } from "./AddProvider";
+import ButtonTip from "../../../../Components/Botones/ButtonTip";
 
 
 function Add() {
 
-  const {dialogs,enviar,isLoading,isLoadingSend,error,listas,setStock,stock,setDialogs} = useAdd()
-  const initialForm = {
+  const {dialogs,enviar,isLoading,isLoadingSend,error,listas,setStock,stock,setDialogs,setError,initialError} = useAdd()
+  const initialFormStock = {
     id_categoria_producto:'',
     deposito_id:'',
     graduacion_esferico:'',
@@ -19,16 +20,28 @@ function Add() {
     stock_producto_deposito:0,
     eje:0
   }
+  const [formStock,setFormStock] = useState(initialFormStock)
+  const initialForm = {
+    codigo_producto:'',
+    nombre_producto:'',
+    preciom_producto:'',
+    precio_producto:'',
+    tipo_producto:'1',
+    id_categoria_producto:''
+  }
   const [form,setForm] = useState(initialForm)
-
-  const change = e=>{
+  const changeForm = e=>{
     const {value,name} = e.target
     setForm({...form,[name]:value})
+  }
+  const change = e=>{
+    const {value,name} = e.target
+    setFormStock({...formStock,[name]:value})
   }
   
   const addStock = ()=>{
     let new_stock = [...stock]
-    let eje = parseInt(form.eje), cil = form.graduacion_cilindrico, esf = form.graduacion_esferico, dep = form.deposito_id 
+    let eje = parseInt(formStock.eje), cil = formStock.graduacion_cilindrico, esf = formStock.graduacion_esferico, dep = formStock.deposito_id 
     if( eje<0 || eje>180 ){
       setError({code:1,active:true,message:'Eje incorrecto'})
       return false;
@@ -47,22 +60,21 @@ function Add() {
     }
     setError(initialError)
     let insertar = {
-      deposito_id: form.deposito_id,
-      stock_producto_deposito: form.stock_producto_deposito,
-      graduacion_cilindrico:form.graduacion_cilindrico,
-      graduacion_esferico:form.graduacion_esferico,
-      eje:form.eje
+      deposito_id: formStock.deposito_id,
+      stock_producto_deposito: formStock.stock_producto_deposito,
+      graduacion_cilindrico:formStock.graduacion_cilindrico,
+      graduacion_esferico:formStock.graduacion_esferico,
+      eje:formStock.eje
     }
     new_stock.push(insertar)
     setStock(new_stock)
-    setForm(initialForm)
+    setFormStock(initialFormStock)
   }
 
-  const close = ()=> setDialogs({...dialogs,main:false})
+  const close = ()=> { setError(initialError); setForm(initialForm); setDialogs({...dialogs,main:false}) }
 
     return ( <Dialog open={dialogs.main} fullScreen onClose={()=>{}}>
-    <DialogTitle>Agregar nuevo producto</DialogTitle>
-    <form onSubmit={enviar}>
+    <DialogTitle><ButtonTip title="Cerrar" onClick={close} icon="ic:round-close" />  Agregar nuevo producto</DialogTitle>
     <DialogContent>
     <Grid container spacing={2} alignItems="flex-start">
       <Grid item xs={12}> {(isLoading || isLoadingSend) && <LinearProgress />} </Grid>
@@ -72,10 +84,10 @@ function Add() {
             <Box boxShadow={12} borderRadius={3} paddingY={3} paddingX={2}>
               <Grid container spacing={2}>
                 <Grid item xs={12} md={4}>
-                  <TextField autoComplete="off" id="codigo_producto" error={error.code===5} name="codigo_producto" autoFocus label="Código" fullWidth />
+                  <TextField autoComplete="off" value={form.codigo_producto} onChange={changeForm}  id="codigo_producto" helperText={error.code===5 && error.message} error={error.code===5} name="codigo_producto" autoFocus label="Código" fullWidth />
                 </Grid>
                 <Grid item xs={12} md={8}>
-                  <TextField autoComplete="off" id="nombre_producto" error={error.code===6} label="Nombre de producto"  name="nombre_producto" fullWidth />
+                  <TextField autoComplete="off" value={form.nombre_producto} onChange={changeForm}  id="nombre_producto" error={error.code===6} label="Nombre de producto"  name="nombre_producto" fullWidth />
                 </Grid>
               </Grid>
             </Box>
@@ -84,7 +96,7 @@ function Add() {
           <Box boxShadow={12} borderRadius={3} paddingY={3} paddingX={2}>
             <Grid container spacing={2}>
               <Grid item sm={12} md={6}>
-                <AddStock error={error} onChange={change} form={form} listas={listas} addStock={addStock} />
+                <AddStock error={error} onChange={change} form={formStock} listas={listas} addStock={addStock} />
               </Grid>
               <Grid item sm={12} md={6}>
                 <Stock stock={stock} />
@@ -99,16 +111,16 @@ function Add() {
         <Box boxShadow={12} borderRadius={3} paddingY={3} paddingX={2}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <InputPrecio fullWidth error={error.code===7} label="Precio" id="precio_producto"  name="precio_producto"   />
+              <InputPrecio fullWidth error={error.code===7} value={form.precio_producto} onChange={changeForm} label="Precio" id="precio_producto"  name="precio_producto"   />
             </Grid>
             <Grid item xs={12}>
-              <InputPrecio fullWidth error={error.code===8} label="Precio Mayorista" id="preciom_producto"  name="preciom_producto"   />
+              <InputPrecio fullWidth error={error.code===8} value={form.preciom_producto} onChange={changeForm} label="Precio Mayorista" id="preciom_producto"  name="preciom_producto"   />
             </Grid>
             <Grid item xs={12}>
-              <Tipo name='tipo_producto' error={error}  />
+              <Tipo name='tipo_producto' error={error} value={form.tipo_producto} onChange={changeForm}  />
             </Grid>
             <Grid item xs={12}>
-              <SelectCategory error={error.code===10} onChange={change} value={form.id_categoria_producto} opciones={listas.categorias} name="id_categoria_producto" />
+              <SelectCategory error={error.code===10} onChange={changeForm} value={form.id_categoria_producto} opciones={listas.categorias} name="id_categoria_producto" />
             </Grid>
           </Grid>
         </Box>
@@ -117,9 +129,8 @@ function Add() {
     </DialogContent>
     <DialogActions>
       <Button size="large" onClick={close} variant="outlined">Cerrar</Button>
-      <Button size="large" type='submit' variant="contained">Registrar</Button>
+      <Button size="large" onClick={()=>{ enviar(form)}} variant="contained">Registrar</Button>
     </DialogActions>
-    </form>
   </Dialog> );
 }
 

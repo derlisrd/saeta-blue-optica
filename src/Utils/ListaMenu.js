@@ -63,6 +63,12 @@ export const ListaMenu = [
                 icon:'fluent-mdl2:product-variant'
             },
             {
+                id:4521,
+                title:'Mov. Stock',
+                url:'/movstock',
+                icon:'ic:twotone-move-down'
+            },
+            {
                 id:456,
                 title:'Inventario',
                 url:'/inventario',

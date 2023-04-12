@@ -1,8 +1,8 @@
 import { CssBaseline } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { createContext, useContext,  useState,useEffect } from 'react';
-import typography from '../app/styles/typography';
-import components from '../app/styles/components';
+import typography from '../App/styles/typography';
+import components from '../App/styles/components';
 import pallete from '../App/styles/pallete';
 import shadows from '../App/styles/shadows';
 

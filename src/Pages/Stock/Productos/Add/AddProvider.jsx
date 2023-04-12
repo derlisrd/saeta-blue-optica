@@ -20,7 +20,7 @@ const AddProvider = ({children})=>{
         //e.preventDefault();
         //let formdata = new FormData(e.target)
         //let datas =  Object.fromEntries(formdata)
-        console.log(datas);
+        //console.log(datas);
         if(datas.codigo_producto === ''){
           setError({active:true,code:5,message:'Codigo de producto'})
           useEnfocar('codigo_producto')
@@ -49,6 +49,10 @@ const AddProvider = ({children})=>{
           setError({active:true,code:10,message:'Categoria'})
           return false
         }
+        if(datas.iva_producto === ''){
+          setError({active:true,code:11,message:'IVA'})
+          return false
+        }
         setError(initialError)
         setIsLoadingSend(true)
         let comprobar = await APICALLER.get({table:'productos',where:`codigo_producto,=,'${datas.codigo_producto}'`})
@@ -64,21 +68,27 @@ const AddProvider = ({children})=>{
           nombre_producto: datas.nombre_producto,
           precio_producto: (datas.precio_producto),
           preciom_producto: (datas.preciom_producto),
-          tipo_producto : datas.tipo_producto
+          tipo_producto : datas.tipo_producto,
+          iva_producto: datas.iva_producto
         }
 
         let res = await APICALLER.insert({table:'productos',data:productoForm,token:userData.token_user})
         if(res.response){
           let producto_id = res.last_id;
           let promises = [], datos= {}
+          let cantidad_mov = 0
           stock.forEach(el=>{
             datos = {...el, producto_id}
+            cantidad += parseFloat(el.stock_producto_deposito)
             promises.push(APICALLER.insert({table:'productos_depositos',token:userData.token_user,data:datos}))
           })
+
+          let data_mov = {cantidad_mov, user_id_mov: userData.id_user,producto_id_mov: producto_id,tipo_mov:1}
+          promises.push(APICALLER.insert({table:'productos_movimientos',data:data_mov,token:userData.token_user}))
         }
          
         setIsLoadingSend(false)
-        setDialogs({...dialogs,main:false})
+        return true;
     }
 
     

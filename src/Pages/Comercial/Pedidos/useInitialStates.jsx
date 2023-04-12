@@ -1,7 +1,10 @@
 
 function useInitialStates() {
     const iDialogs = {
-        main:true
+        main:true,
+        registrar_cliente:false,
+        buscar_cliente:false,
+        select_deposito_stock:false
     }
 
     return { iDialogs}

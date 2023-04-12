@@ -1,0 +1,25 @@
+table{
+    border-collapse: collapse;
+}
+.head{
+    font-variant: small-caps;
+    font-weight: bold;
+    border-radius: 8px;
+    background-color: whitesmoke;
+}
+.head_cantidad{
+    text-align: center !important;
+}
+.head td{
+    padding-left: 5px;
+    text-align: left;
+}
+.cantidad{
+    font-size: 1.3rem;
+}
+.items td{
+    padding-left: 5px;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    border-bottom: 1px solid silver;
+}

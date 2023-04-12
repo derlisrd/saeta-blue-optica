@@ -7,6 +7,7 @@ import Stock from "./Components/Stock";
 import AddStock from "./Components/AddStock";
 import { useAdd } from "./AddProvider";
 import ButtonTip from "../../../../Components/Botones/ButtonTip";
+import SelectIvaProducto from "./Components/SelectIvaProducto";
 
 
 function Add() {
@@ -27,7 +28,8 @@ function Add() {
     preciom_producto:'',
     precio_producto:'',
     tipo_producto:'1',
-    id_categoria_producto:''
+    id_categoria_producto:'',
+    iva_producto:"10"
   }
   const [form,setForm] = useState(initialForm)
   const changeForm = e=>{
@@ -37,6 +39,12 @@ function Add() {
   const change = e=>{
     const {value,name} = e.target
     setFormStock({...formStock,[name]:value})
+  }
+
+  const enviar_form = ()=>{
+    if(enviar(form)){
+      close()
+    }
   }
   
   const addStock = ()=>{
@@ -71,7 +79,7 @@ function Add() {
     setFormStock(initialFormStock)
   }
 
-  const close = ()=> { setError(initialError); setForm(initialForm); setDialogs({...dialogs,main:false}) }
+  const close = ()=> { setError(initialError); setForm(initialForm); setStock([]); setDialogs({...dialogs,main:false}) }
 
     return ( <Dialog open={dialogs.main} fullScreen onClose={()=>{}}>
     <DialogTitle><ButtonTip title="Cerrar" onClick={close} icon="ic:round-close" />  Agregar nuevo producto</DialogTitle>
@@ -99,7 +107,7 @@ function Add() {
                 <AddStock error={error} onChange={change} form={formStock} listas={listas} addStock={addStock} />
               </Grid>
               <Grid item sm={12} md={6}>
-                <Stock stock={stock} />
+                <Stock stock={stock}  setStock={setStock} />
               </Grid>
             </Grid>
           </Box> 
@@ -122,6 +130,9 @@ function Add() {
             <Grid item xs={12}>
               <SelectCategory error={error.code===10} onChange={changeForm} value={form.id_categoria_producto} opciones={listas.categorias} name="id_categoria_producto" />
             </Grid>
+            <Grid item xs={12}>
+              <SelectIvaProducto error={error.code===11} onChange={changeForm} value={form.iva_producto} name="iva_producto" />
+            </Grid>
           </Grid>
         </Box>
       </Grid>
@@ -129,7 +140,7 @@ function Add() {
     </DialogContent>
     <DialogActions>
       <Button size="large" onClick={close} variant="outlined">Cerrar</Button>
-      <Button size="large" onClick={()=>{ enviar(form)}} variant="contained">Registrar</Button>
+      <Button size="large" onClick={enviar_form} variant="contained">Registrar</Button>
     </DialogActions>
   </Dialog> );
 }

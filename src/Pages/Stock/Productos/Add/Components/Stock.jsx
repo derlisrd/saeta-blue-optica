@@ -2,9 +2,12 @@ import { Icon } from "@iconify/react";
 import { IconButton } from "@mui/material";
 import { red } from "@mui/material/colors";
 
-function Stock({ stock }) {
-    const borrar = (index)=>{
-        console.log(index);
+function Stock({ stock, setStock}) {
+    
+    const borrar = (i)=>{
+      let fact = [...stock]
+      fact.splice(i,1)
+      setStock(fact)
     }
   return (
     <table width="100%">

@@ -16,7 +16,12 @@ function PedidosProvider({children}) {
             nombre_cliente:'SIN NOMBRE'
         }
     }
-    const [formDepositoStock,setFormDepositoStock] = useState(null)
+    const [cargas,setCargas] = useState({
+        main:false,
+        stock:false
+    })
+    const [formDepositoStock,setFormDepositoStock] = useState([])
+    const [seleccionado,setSeleccionado] = useState([])
     const [factura,setFactura] = useState(initialFactura)
 
 
@@ -30,14 +35,14 @@ function PedidosProvider({children}) {
         console.log(obj);
     }
 
-    const values = {dialogs,setDialogs,factura,setFactura,setearFactura,initialFactura,formDepositoStock,setFormDepositoStock}
+    const values = {dialogs,setDialogs,factura,setFactura,setearFactura,initialFactura,formDepositoStock,setFormDepositoStock,seleccionado,setSeleccionado,cargas,setCargas}
     return <PedidosContext.Provider value={values}>{children}</PedidosContext.Provider>
 }
 
 
 export const usePedidos = ()=>{
-    const {dialogs,setDialogs,factura,setFactura,setearFactura,initialFactura,formDepositoStock,setFormDepositoStock} = useContext(PedidosContext)
-    return {dialogs,setDialogs,factura,setFactura,setearFactura,initialFactura,formDepositoStock,setFormDepositoStock}
+    const {dialogs,setDialogs,factura,setFactura,setearFactura,initialFactura,formDepositoStock,setFormDepositoStock,seleccionado,setSeleccionado,cargas,setCargas} = useContext(PedidosContext)
+    return {dialogs,setDialogs,factura,setFactura,setearFactura,initialFactura,formDepositoStock,setFormDepositoStock,seleccionado,setSeleccionado,cargas,setCargas}
 }
 
 export default PedidosProvider;

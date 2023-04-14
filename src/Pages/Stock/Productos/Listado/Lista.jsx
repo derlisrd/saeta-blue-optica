@@ -29,10 +29,10 @@ function Lista() {
               },
             styleCondition: {
                 "2": {
-                  backgroundColor: "#ff7c6b",
+                  backgroundColor: "#6b8eff",
                   padding: "3px",fontWeight:"bold",
                   borderRadius: "5px",
-                  color: "#780c00",
+                  color: "#004c78",
                 },
                 "1": {
                   backgroundColor: "#2dec76",

@@ -1,20 +1,23 @@
-import { Dialog, DialogContent, DialogTitle, Grid } from "@mui/material";
+import { Dialog, DialogContent, DialogTitle, Grid, IconButton } from "@mui/material";
 import { usePedidos } from "./PedidosProvider";
 import TablaItems from "./TablaItems";
 import InputCodigo from "./InputCodigo";
 import Botones from "./Botones";
 import InputCliente from "./InputCliente";
+import Cargando from "./Cargando";
+import { funciones } from "../../../App/helpers/funciones";
+import { Icon } from "@iconify/react";
 
 
 function DialogMain() {
 
-    const {setDialogs,dialogs,factura} = usePedidos()
+    const {setDialogs,dialogs,factura,cargas} = usePedidos()
 
     const close = ()=>{ setDialogs({...dialogs,main:false}) }
 
-    return ( <Dialog open={dialogs.main} fullScreen >
-
-        <DialogTitle> Pedido - Total: {factura.total} </DialogTitle>
+    return ( <Dialog open={dialogs.main} fullScreen onClose={()=>{}} >
+        <Cargando open={cargas.stock} />
+        <DialogTitle> <IconButton onClick={close} ><Icon icon="ic:twotone-close" /> </IconButton>  Pedido - Total: { funciones.numberFormat( factura.total )} </DialogTitle>
         <DialogContent>
             <Grid container spacing={2}>
                 <Grid item xs={12}>

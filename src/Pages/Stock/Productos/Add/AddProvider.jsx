@@ -79,7 +79,7 @@ const AddProvider = ({children})=>{
           let cantidad_mov = 0
           stock.forEach(el=>{
             datos = {...el, producto_id}
-            cantidad += parseFloat(el.stock_producto_deposito)
+            cantidad_mov += parseFloat(el.stock_producto_deposito)
             promises.push(APICALLER.insert({table:'productos_depositos',token:userData.token_user,data:datos}))
           })
 

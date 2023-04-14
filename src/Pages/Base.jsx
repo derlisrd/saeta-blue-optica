@@ -1,8 +1,8 @@
 import { Box } from '@mui/material';
 import React from 'react'
 import { Navigate, Outlet } from 'react-router-dom'
-import SimpleBar from 'simplebar-react';
-import 'simplebar-react/dist/simplebar.min.css';
+//import SimpleBar from 'simplebar-react';
+//import 'simplebar-react/dist/simplebar.min.css';
 import DrawerMainMenu from '../Components/Menu/DrawerMainMenu'
 
 import {env} from '../App/config'
@@ -18,21 +18,21 @@ const Base = () => {
   let margin_left = isOpenMenu ? `${DRAWER_WIDTH}px` : '0';
   let width_main = isOpenMenu ? `calc(100% - ${DRAWER_WIDTH}px)` : '100%';
 
-  let stylesMain = {px:2, py:"40px", mt:'60px', ml:{ md: margin_left}, width: { md: width_main},bgcolor:'background.paper',minHeight:"calc(100vh - 60px)",transition:'all 0.2s' }
+  let stylesMain = {px:2, pt:'80px', pb:"40px", mt:'0', ml:{ md: margin_left}, width: { md: width_main},bgcolor:'background.paper',minHeight:"calc(100vh - 60px)",transition:'all 0.2s' }
 
   if(!userData.login){
     return <Navigate to="/" />
   }
 
   return (
-    <SimpleBar style={{ maxHeight: "100vh" }}>
+    <>
       <DrawerMainMenu />
       <ToolbarMain />
         <Box component="main" 
             sx={stylesMain} >
           <Outlet />
         </Box>
-    </SimpleBar>
+    </>
   )
 }
 

@@ -16,7 +16,8 @@ import { Icon } from "@iconify/react";
 import { Fragment,useState } from "react";
 import styles from './styles.module.css'
 import { useMenu } from "./MenuProvider";
-import SimpleBar from "simplebar-react";
+import SimpleBar from 'simplebar-react';
+import 'simplebar-react/dist/simplebar.min.css';
 import { env } from "../../App/config";
 
 

@@ -1,12 +1,17 @@
 import { Dialog, DialogTitle,DialogContent, TextField, Grid, Stack, DialogActions, Button } from "@mui/material";
 import { usePedidos } from "./PedidosProvider";
 import styles from './styles.module.css'
+import { useState } from "react";
 
 function DialogSelectDepositoStock() {
 
     const {setDialogs,dialogs,formDepositoStock,setearFactura,factura} = usePedidos()
-
-    console.log(formDepositoStock);
+    const [search,setSearch] = useState({
+        eje:'',
+        cil:'',
+        esf:''
+    })
+    const handleChange = e => setSearch({...search,[e.target.name]:e.target.value})
 
     const select = (val)=>{
         let new_fact = {...factura}
@@ -34,15 +39,17 @@ function DialogSelectDepositoStock() {
     }
 
     const close = ()=>{ setDialogs({...dialogs,select_deposito_stock:false}) }
-
+    //const FilterData =  lista.productos.filter(item => item.nombre_producto.toLowerCase().includes(inputSearch.toLowerCase())|| item.codigo_producto.toLowerCase().includes(inputSearch.toLowerCase()));
+    const filtrado  = formDepositoStock.filter(item=> item.graduacion_esferico.includes(search.esf) )
     return ( <Dialog open={dialogs.select_deposito_stock} fullWidth onClose={close} >
         <DialogTitle>Seleccionar item</DialogTitle>
         <DialogContent>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
                     <Stack direction="row" spacing={2}>
-                        <TextField size="small" label="Cilindrico" />
-                        <TextField size="small" label="Esférico" />
+                        <TextField size="small" name="cil" value={search.cil} onChange={handleChange} label="Cilindrico" />
+                        <TextField size="small" name="esf" value={search.esf} onChange={handleChange} label="Esférico" />
+                        <TextField size="small" name="eje" value={search.eje} onChange={handleChange} label="Eje" />
                     </Stack>
                 </Grid>
                 <Grid item xs={12}>
@@ -57,7 +64,7 @@ function DialogSelectDepositoStock() {
                         </tr>
                         
                         {
-                            formDepositoStock.map((e,i)=>(
+                            filtrado.map((e,i)=>(
                             <tr key={i} className={styles.items_stock}>
                                 <td>{e.graduacion_esferico}</td>
                                 <td>{e.graduacion_cilindrico}</td>

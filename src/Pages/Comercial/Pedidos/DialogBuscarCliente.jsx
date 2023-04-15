@@ -10,7 +10,7 @@ function DialogBuscarCliente() {
     const [search,setSearch] = useState('')
     const [loading,setLoading] = useState(false)
     const close = ()=>{ setDialogs({...dialogs,buscar_cliente:false}) }
-
+    const openRegistrar = ()=>{ setDialogs({...dialogs,buscar_cliente:false,registrar_cliente:true}) }
     const insertar = (e,val)=>{
         let new_fact = {...factura}
         new_fact.cliente = {
@@ -57,7 +57,7 @@ function DialogBuscarCliente() {
             </Grid>
         </DialogContent>
         <DialogActions>
-            <Button variant="outlined" >REGISTRAR</Button>
+            <Button onClick={openRegistrar} variant="outlined" >REGISTRAR</Button>
             <Button onClick={close} variant="contained" >CERRAR</Button>
         </DialogActions>
     </Dialog> );

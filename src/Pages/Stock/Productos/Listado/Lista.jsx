@@ -1,9 +1,11 @@
 
+
 import AddButton from "../../../../Components/Botones/AddButton";
 import Tablas from "../../../../Components/Tablas";
 import useGotoNavigate from "../../../../Hooks/useGotoNavigate";
 import { useListadoProducto } from "./ListadoProductoProvider";
 import ListaOpciones from "./ListaOpciones";
+import { Stack, TextField } from "@mui/material";
 
 function Lista() {
     const {navigate} = useGotoNavigate()
@@ -45,11 +47,15 @@ function Lista() {
         
     ];
 
-    const inputs = (<AddButton onClick={()=>{ navigate('/productos/add') }} />)
+    //const FilterData =  lista.filter(item => item.nombre_producto.toLowerCase().includes(inputSearch.toLowerCase())|| item.codigo_producto.toLowerCase().includes(inputSearch.toLowerCase()));
 
+    const inputs = (
+        <Stack direction="row" spacing={1}>
+            <TextField label="Buscar" />
+            <AddButton onClick={()=>{ navigate('/productos/add') }} />
+        </Stack>
+    )
 
-
-    
 
     return (<Tablas
         title="Productos y Servicios"

@@ -29,13 +29,17 @@ const ClientesProvider = ({children}) => {
 
   const getLista = useCallback(async(searchTxt='')=>{
     setIsLoading(true)
+    let actual_pagina = 0
+    if(searchTxt===''){
+      actual_pagina = currentPage;
+    }
     let config = {
       table: "clientes",
       fields: "ruc_cliente,nombre_cliente,id_cliente,email_cliente,telefono_cliente,tipo_pago",
       filtersField:"nombre_cliente,ruc_cliente",
       filtersSearch:`${searchTxt}`,
       sort:'-nombre_cliente',
-      pagenumber:currentPage,pagesize:pagination.size
+      pagenumber:actual_pagina,pagesize:pagination.size
     };
     let res = await APICALLER.get(config)
     if(res.response){

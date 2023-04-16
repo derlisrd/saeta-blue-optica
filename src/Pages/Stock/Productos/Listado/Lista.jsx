@@ -1,63 +1,44 @@
-
-
+import { Icon } from "@iconify/react";
 import AddButton from "../../../../Components/Botones/AddButton";
 import Tablas from "../../../../Components/Tablas";
 import useGotoNavigate from "../../../../Hooks/useGotoNavigate";
 import { useListadoProducto } from "./ListadoProductoProvider";
-import ListaOpciones from "./ListaOpciones";
-import { Stack, TextField } from "@mui/material";
+import TextFieldBuscar from "./TextFieldBuscar";
+import Paginacion from "./Paginacion";
+import { IconButton, Stack } from "@mui/material";
+import { red } from "@mui/material/colors";
+import { columns } from "./columns";
 
 function Lista() {
     const {navigate} = useGotoNavigate()
-    const {lista,isLoading} = useListadoProducto()
-
-    const columns = [
-        {
-            field:'codigo_producto',
-            title:'COD.'
-        },
-        {
-            field:'nombre_producto',
-            title:'nombre'
-        },
-        {
-            field:'tipo_producto',
-            title:'tipo',
-            compareField:"tipo_producto",
-            styleFieldCondition: "tipo_producto",
-            items: {
-                "1": "Artículo",
-                "2": "Servicio",
-              },
-            styleCondition: {
-                "2": {
-                  backgroundColor: "#6b8eff",
-                  padding: "3px",fontWeight:"bold",
-                  borderRadius: "5px",
-                  color: "#004c78",
-                },
-                "1": {
-                  backgroundColor: "#2dec76",
-                  padding: "3px", fontWeight:"bold",
-                  borderRadius: "5px",
-                  color: "#007b02",
-                },
-            }
-        },
-        
-    ];
+    const {lista,isLoading,llaveDialog} = useListadoProducto()
+    
 
     //const FilterData =  lista.filter(item => item.nombre_producto.toLowerCase().includes(inputSearch.toLowerCase())|| item.codigo_producto.toLowerCase().includes(inputSearch.toLowerCase()));
 
     const inputs = (
         <Stack direction="row" spacing={1}>
-            <TextField label="Buscar" />
+            <TextFieldBuscar />
             <AddButton onClick={()=>{ navigate('/productos/add') }} />
         </Stack>
     )
 
+    const openStock = ()=>{
+        llaveDialog('stock',true)
+    }
 
-    return (<Tablas
+    function ListaOpciones({rowProps}) {
+        return (<Stack direction="row"> 
+            {rowProps.tipo_producto==="1" && <IconButton onClick={()=>{openStock(rowProps)}} ><Icon icon="fluent-mdl2:product-release" /></IconButton> }
+            <IconButton onClick={()=>{navigate(`/productos/edit/${rowProps.id_producto}`)}}><Icon icon="tabler:edit" /></IconButton>
+            <IconButton onClick={()=>{}}><Icon color={red[300]} icon="tabler:trash" /> </IconButton>
+        </Stack>)
+    }
+
+
+    return (
+    <>
+    <Tablas
         title="Productos y Servicios"
         subtitle="Módulo de productos y servicios"
         icon={{ name:'fluent-mdl2:product-variant' }}
@@ -67,7 +48,10 @@ function Lista() {
         showOptions
         Accions={ListaOpciones}
         inputs={inputs}
-        />);
+        />
+        <Paginacion />
+    </>
+    );
 }
 
 export default Lista;

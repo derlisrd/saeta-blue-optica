@@ -3,9 +3,11 @@ import { Button,  Divider, IconButton,  Menu, MenuItem } from "@mui/material";
 import { useState } from "react";
 import { useAuth } from "../../Providers/AuthProvider";
 import DialogPregunta from "../Dialogo/DialogPregunta";
+import { Link } from "react-router-dom";
+import useGotoNavigate from "../../Hooks/useGotoNavigate";
 
 function ProfileMenu() {
-
+    const {navigate} = useGotoNavigate()
     const {logOut} = useAuth()
     const [openDialog,setOpenDialog] = useState(false)
     const toggleDialog = ()=>{setOpenDialog(!openDialog)}
@@ -16,17 +18,19 @@ function ProfileMenu() {
 
 
     const [anchorEl, setAnchorEl] = useState(null);
-  const open = Boolean(anchorEl);
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+    const open = Boolean(anchorEl);
+    const handleClick = (event) => {
+      setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+      setAnchorEl(null);
+    };
+    const navegar = url =>{
+      setAnchorEl(null);
+      navigate(`/${url}`)
+    }
     return (
     <>
-
-
       <DialogPregunta 
       title="Cerrar" text="Estás seguro que desea cerrar la sesión?" 
       open={openDialog} onClose={toggleDialog} icon={{ name:'uim:exclamation-triangle',color:'orange' }} >
@@ -83,7 +87,7 @@ function ProfileMenu() {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={()=>{navegar('perfil')}} >
            Perfil
         </MenuItem>
         <Divider />

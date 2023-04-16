@@ -3,6 +3,7 @@ import useGotoNavigate from "../../../../Hooks/useGotoNavigate";
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, LinearProgress, TextField } from "@mui/material";
 import { useState,useEffect,useCallback } from "react";
 import { APICALLER } from "../../../../Services/api";
+import ButtonTip from "../../../../Components/Botones/ButtonTip";
 
 function EditProduct() {
 
@@ -44,7 +45,7 @@ function EditProduct() {
 
 
     return (<Dialog open={true} fullScreen onClose={close}>
-        <DialogTitle>Editar</DialogTitle>
+        <DialogTitle> <ButtonTip title="Cerrar" onClick={close} icon="ic:round-close" />  Editar</DialogTitle>
         <DialogContent>
             <Grid container spacing={2}>
                 <Grid item xs={12}>{loading && <LinearProgress />}</Grid>

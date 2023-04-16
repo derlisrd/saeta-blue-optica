@@ -104,7 +104,7 @@ return (
                                             column.items ?
                                             column.items[data[column.compareField]] :
                                             column.html ? column.html :
-                                            data[column.field].substr(0,25)
+                                            data[column.field] //.substr(0,25)
                                             }
                                             {
                                                 column.after ?? null

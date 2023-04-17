@@ -1,7 +1,8 @@
-import { Dialog, DialogTitle,DialogContent, TextField, Grid, Stack, DialogActions, Button } from "@mui/material";
+import { Dialog, DialogTitle,DialogContent, TextField, Grid, Stack, DialogActions, Button, IconButton, Typography } from "@mui/material";
 import { usePedidos } from "./PedidosProvider";
 import styles from './styles.module.css'
 import { useState } from "react";
+import { Icon } from "@iconify/react";
 
 function DialogSelectDepositoStock() {
 
@@ -13,11 +14,11 @@ function DialogSelectDepositoStock() {
     })
     const handleChange = e => setSearch({...search,[e.target.name]:e.target.value})
 
-    const select = (val)=>{
+    const select = (val,lado)=>{
         let new_fact = {...factura}
         let tipo =  parseInt(val.tipo_producto), id_producto = val.id_producto
-        let index = new_fact.items.findIndex(e => e.id_productos_deposito.toLowerCase() === val.id_productos_deposito.toLowerCase());
-        let found = new_fact.items.filter(i => i.id_productos_deposito.toLowerCase() === val.id_productos_deposito.toLowerCase());
+        let index = new_fact.items.findIndex(e => e.id_productos_deposito.toLowerCase() === val.id_productos_deposito.toLowerCase() && e.lado === lado);
+        let found = new_fact.items.filter(i => i.id_productos_deposito.toLowerCase() === val.id_productos_deposito.toLowerCase() && i.lado === lado);
 
         if (found.length > 0) {
             new_fact.items[index].cantidad += 1 
@@ -27,11 +28,12 @@ function DialogSelectDepositoStock() {
                 cantidad:1,
                 precio: parseFloat(val.precio_producto),
                 preciom: parseFloat(val.precio_producto),
-                descripcion:`${val.nombre_producto} ${val.graduacion_esferico} ${val.graduacion_cilindrico} `,
+                descripcion:`${val.nombre_producto} ${val.graduacion_esferico} ${val.graduacion_cilindrico} ${lado} `,
                 id_producto,
                 codigo:val.codigo_producto,
                 tipo,
-                iva:parseFloat(val.precio_producto)                    
+                iva:parseFloat(val.precio_producto),
+                lado:lado                    
             }
             new_fact.items.push(nuevo_item)
         }
@@ -40,9 +42,9 @@ function DialogSelectDepositoStock() {
 
     const close = ()=>{ setDialogs({...dialogs,select_deposito_stock:false}) }
     //const FilterData =  lista.productos.filter(item => item.nombre_producto.toLowerCase().includes(inputSearch.toLowerCase())|| item.codigo_producto.toLowerCase().includes(inputSearch.toLowerCase()));
-    const filtrado  = formDepositoStock.filter(item=> item.graduacion_esferico.includes(search.esf) )
-    return ( <Dialog open={dialogs.select_deposito_stock} fullWidth onClose={close} >
-        <DialogTitle>Seleccionar item</DialogTitle>
+    const filtrado  = formDepositoStock.filter(item=> item.graduacion_esferico.includes(search.esf) || item.graduacion_esferico.includes(search.cil) )
+    return ( <Dialog open={dialogs.select_deposito_stock} fullWidth maxWidth="lg" onClose={close} >
+        <DialogTitle><IconButton onClick={close} ><Icon icon="ic:twotone-close" /> </IconButton> Seleccionar item</DialogTitle>
         <DialogContent>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
@@ -51,6 +53,9 @@ function DialogSelectDepositoStock() {
                         <TextField size="small" name="esf" value={search.esf} onChange={handleChange} label="Esférico" />
                         <TextField size="small" name="eje" value={search.eje} onChange={handleChange} label="Eje" />
                     </Stack>
+                </Grid>
+                <Grid item xs={12}>
+                   <Typography variant="button">STOCK DISPONIBLE</Typography>
                 </Grid>
                 <Grid item xs={12}>
                 <table className={styles.table} width="100%" border={1}>
@@ -71,7 +76,10 @@ function DialogSelectDepositoStock() {
                                 <td>{e.eje}</td>
                                 <td>{e.stock_producto_deposito}</td>
                                 <td>
-                                    <Button variant="contained" size="small" onClick={()=>{select(e)}} >Selecciona</Button>
+                                    <Stack direction="row" spacing={1}>
+                                    <Button variant="contained" size="small" onClick={()=>{select(e,'izq')}} >IZQUIERDO</Button>
+                                    <Button variant="contained" size="small" onClick={()=>{select(e,'der')}} >DERECHO</Button>
+                                    </Stack>
                                 </td>
                             </tr>
                             ))

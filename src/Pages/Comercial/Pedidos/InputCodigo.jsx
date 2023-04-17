@@ -45,7 +45,7 @@ function InputCodigo() {
                         id_producto,
                         codigo:val.codigo_producto,
                         tipo,
-                        iva:parseFloat(val.precio_producto)                    
+                        iva:parseInt(val.iva_producto)                 
                     }
                     new_fact.items.push(nuevo_item)
                 }

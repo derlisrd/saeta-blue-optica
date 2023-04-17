@@ -184,7 +184,11 @@ export const funciones = {
         };
         return fecha.toLocaleDateString("es-ES", options);
       },
-    
+      redondeo2decimalesNumberFormat : (n)=>{
+        let nro = parseFloat(n);
+        let r = Math.round(nro * 100) / 100;
+        return parseFloat(r).toLocaleString("de-DE")
+      },
       redondeo2decimales: (numero) => {
         var nro = parseFloat(numero);
         return Math.round(nro * 100) / 100;

@@ -16,7 +16,8 @@ function DialogBuscarCliente() {
         new_fact.cliente = {
             id_cliente:val.id_cliente,
             ruc_cliente:val.ruc_cliente,
-            nombre_cliente:val.nombre_cliente
+            nombre_cliente:val.nombre_cliente,
+            direccion_cliente: val.direccion_cliente
         }
         setearFactura(new_fact)
         close()
@@ -28,7 +29,7 @@ function DialogBuscarCliente() {
                 setLoading(true)
                 let res = await APICALLER.get({
                     table: "clientes",
-                    fields:'ruc_cliente,nombre_cliente,telefono_cliente,id_cliente',
+                    fields:'ruc_cliente,nombre_cliente,telefono_cliente,id_cliente,direccion_cliente',
                     filtersField:"nombre_cliente,ruc_cliente",filtersSearch:search,pagesize:20
                 })
                 setLista(res.results);

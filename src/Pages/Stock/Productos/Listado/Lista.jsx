@@ -11,7 +11,7 @@ import { columns } from "./columns";
 
 function Lista() {
     const {navigate} = useGotoNavigate()
-    const {lista,isLoading,llaveDialog} = useListadoProducto()
+    const {listas,isLoading,llaveDialog,setFormSelect} = useListadoProducto()
     
 
     //const FilterData =  lista.filter(item => item.nombre_producto.toLowerCase().includes(inputSearch.toLowerCase())|| item.codigo_producto.toLowerCase().includes(inputSearch.toLowerCase()));
@@ -23,14 +23,21 @@ function Lista() {
         </Stack>
     )
 
-    const openStock = ()=>{
+    const openStock = (row)=>{
+        setFormSelect(row)
+        //console.log(row);
         llaveDialog('stock',true)
+    }
+    const openEdit = (row)=>{
+        setFormSelect(row)
+        //console.log(row);
+        llaveDialog('edit',true)
     }
 
     function ListaOpciones({rowProps}) {
         return (<Stack direction="row"> 
             {rowProps.tipo_producto==="1" && <IconButton onClick={()=>{openStock(rowProps)}} ><Icon icon="fluent-mdl2:product-release" /></IconButton> }
-            <IconButton onClick={()=>{navigate(`/productos/edit/${rowProps.id_producto}`)}}><Icon icon="tabler:edit" /></IconButton>
+            <IconButton onClick={()=>{openEdit(rowProps)} }><Icon icon="tabler:edit" /></IconButton>
             <IconButton onClick={()=>{}}><Icon color={red[300]} icon="tabler:trash" /> </IconButton>
         </Stack>)
     }
@@ -44,7 +51,7 @@ function Lista() {
         icon={{ name:'fluent-mdl2:product-variant' }}
         loading={isLoading}
         columns={columns}
-        datas={lista}
+        datas={listas.productos}
         showOptions
         Accions={ListaOpciones}
         inputs={inputs}

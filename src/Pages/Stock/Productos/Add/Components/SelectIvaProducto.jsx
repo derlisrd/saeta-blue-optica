@@ -1,6 +1,6 @@
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 
-function SelectIvaProducto({opciones,name,value,onChange, ...rest}) {
+function SelectIvaProducto({name,value,onChange, ...rest}) {
     return ( <FormControl fullWidth>
         <InputLabel id="iva_producto">IVA</InputLabel>
         <Select

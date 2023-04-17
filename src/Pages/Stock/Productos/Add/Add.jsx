@@ -2,7 +2,7 @@ import { Box, Grid, LinearProgress, TextField,Button, Dialog, DialogContent, Dia
 import InputPrecio from "./Components/InputPrecio";
 import SelectCategory from "./Components/SelectCategory";
 import Tipo from "./Components/Tipo";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Stock from "./Components/Stock";
 import AddStock from "./Components/AddStock";
 import { useAdd } from "./AddProvider";
@@ -24,6 +24,7 @@ function Add() {
   const [formStock,setFormStock] = useState(initialFormStock)
   const initialForm = {
     codigo_producto:'',
+    costo_producto:'',
     nombre_producto:'',
     preciom_producto:'',
     precio_producto:'',
@@ -41,11 +42,7 @@ function Add() {
     setFormStock({...formStock,[name]:value})
   }
 
-  const enviar_form = ()=>{
-    if(enviar(form)){
-      close()
-    }
-  }
+  const enviar_form = ()=>enviar(form) 
   
   const addStock = ()=>{
     let new_stock = [...stock]
@@ -79,6 +76,10 @@ function Add() {
     setFormStock(initialFormStock)
   }
 
+  useEffect(()=>{
+    setForm(initialForm)
+  },[dialogs])
+
   const close = ()=> { setError(initialError); setForm(initialForm); setStock([]); setDialogs({...dialogs,main:false}) }
 
     return ( <Dialog open={dialogs.main} fullScreen onClose={()=>{}}>
@@ -97,11 +98,16 @@ function Add() {
                 <Grid item xs={12} md={8}>
                   <TextField autoComplete="off" value={form.nombre_producto} onChange={changeForm}  id="nombre_producto" error={error.code===6} label="Nombre de producto"  name="nombre_producto" fullWidth />
                 </Grid>
+                <Grid item xs={12}>
+                  <Tipo name='tipo_producto' error={error} value={form.tipo_producto} onChange={changeForm}  />
+                </Grid>
               </Grid>
             </Box>
           </Grid>
           <Grid item xs={12}>
-          <Box boxShadow={12} borderRadius={3} paddingY={3} paddingX={2}>
+          {
+            form.tipo_producto === '1' &&
+            <Box boxShadow={12} borderRadius={3} paddingY={3} paddingX={2}>
             <Grid container spacing={2}>
               <Grid item sm={12} md={6}>
                 <AddStock error={error} onChange={change} form={formStock} listas={listas} addStock={addStock} />
@@ -110,7 +116,8 @@ function Add() {
                 <Stock stock={stock}  setStock={setStock} />
               </Grid>
             </Grid>
-          </Box> 
+            </Box> 
+          }
           </Grid>
         </Grid>
 
@@ -118,14 +125,14 @@ function Add() {
       <Grid item xs={12} md={3}>
         <Box boxShadow={12} borderRadius={3} paddingY={3} paddingX={2}>
           <Grid container spacing={2}>
+          <Grid item xs={12}>
+              <InputPrecio fullWidth error={error.code===12} value={form.costo_producto} onChange={changeForm} label="Costo" id="costo_producto"  name="costo_producto"   />
+            </Grid>
             <Grid item xs={12}>
               <InputPrecio fullWidth error={error.code===7} value={form.precio_producto} onChange={changeForm} label="Precio" id="precio_producto"  name="precio_producto"   />
             </Grid>
             <Grid item xs={12}>
               <InputPrecio fullWidth error={error.code===8} value={form.preciom_producto} onChange={changeForm} label="Precio Mayorista" id="preciom_producto"  name="preciom_producto"   />
-            </Grid>
-            <Grid item xs={12}>
-              <Tipo name='tipo_producto' error={error} value={form.tipo_producto} onChange={changeForm}  />
             </Grid>
             <Grid item xs={12}>
               <SelectCategory error={error.code===10} onChange={changeForm} value={form.id_categoria_producto} opciones={listas.categorias} name="id_categoria_producto" />

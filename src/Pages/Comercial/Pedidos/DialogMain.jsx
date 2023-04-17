@@ -7,6 +7,7 @@ import InputCliente from "./InputCliente";
 import Cargando from "./Cargando";
 import { funciones } from "../../../App/helpers/funciones";
 import { Icon } from "@iconify/react";
+import InputObs from "./InputObs";
 
 
 function DialogMain() {
@@ -22,6 +23,7 @@ function DialogMain() {
             <Grid container spacing={2}>
                 <Grid item xs={12}>
                     <InputCliente />
+                    <InputObs />
                 </Grid>
                 <Grid item xs={12} sm={12} md={9}>
                     <TablaItems items={factura.items} />

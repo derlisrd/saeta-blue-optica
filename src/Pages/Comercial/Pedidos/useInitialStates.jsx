@@ -5,7 +5,8 @@ function useInitialStates() {
         finalizar:false,
         registrar_cliente:false,
         buscar_cliente:false,
-        select_deposito_stock:false
+        select_deposito_stock:false,
+        obs:false
     }
 
     return { iDialogs}

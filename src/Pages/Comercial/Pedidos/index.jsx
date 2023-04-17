@@ -6,10 +6,12 @@ import DialogBuscarCliente from './DialogBuscarCliente'
 import DialogRegistrarCliente from './DialogRegistrarCliente'
 import Main from './Main'
 import FinalizarPedido from './FinalizarPedido'
+import DialogObs from './DialogObs'
 
 const Pedidos = () => {
   return (
     <PedidosProvider>
+      <DialogObs />
       <FinalizarPedido />
       <DialogRegistrarCliente />
       <DialogBuscarCliente />

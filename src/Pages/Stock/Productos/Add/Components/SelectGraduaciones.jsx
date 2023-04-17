@@ -1,5 +1,5 @@
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
-import { graduaciones } from "./graduaciones";
+import { esferico,cilindrico } from "./graduaciones";
 
 export function SelectEsferico({onChange,value,...rest}) {
     return ( <FormControl fullWidth>
@@ -12,7 +12,7 @@ export function SelectEsferico({onChange,value,...rest}) {
           {...rest}
         >
           <MenuItem value="" disabled>Seleccionar</MenuItem>
-          {graduaciones.map((e,i)=>(
+          {esferico.map((e,i)=>(
             <MenuItem key={i} value={e}>{e}</MenuItem>
           ))}
           
@@ -32,7 +32,7 @@ export function SelectCilindrico({value,onChange,...rest}) {
           {...rest}
         >
           <MenuItem value="" disabled>Seleccionar</MenuItem>
-          {graduaciones.map((e,i)=>(
+          {cilindrico.map((e,i)=>(
             <MenuItem key={i} value={e}>{e}</MenuItem>
           ))}
           

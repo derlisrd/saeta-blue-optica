@@ -15,7 +15,7 @@ table{
     font-variant: small-caps;
     font-weight: bold;
     border-radius: 8px;
-    background-color: rgb(241, 241, 241);
+    
 }
 .head_cantidad{
     text-align: center !important;
@@ -23,6 +23,7 @@ table{
 .head td{
     padding-left: 5px;
     text-align: left;
+    border: 1px solid silver;
 }
 .cantidad{
     font-size: 1.3rem;

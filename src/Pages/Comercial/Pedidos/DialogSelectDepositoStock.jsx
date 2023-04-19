@@ -3,18 +3,70 @@ import { usePedidos } from "./PedidosProvider";
 import styles from './styles.module.css'
 import { useState } from "react";
 import { Icon } from "@iconify/react";
+import InputNumerico from "./Components/InputNumerico";
 
 function DialogSelectDepositoStock() {
 
-    const {setDialogs,dialogs,formDepositoStock,setearFactura,factura} = usePedidos()
-    const [search,setSearch] = useState({
-        eje:'',
-        cil:'',
-        esf:''
-    })
-    const handleChange = e => setSearch({...search,[e.target.name]:e.target.value})
+    const {setDialogs,dialogs,formDepositoStock,setearFactura,factura,selectProduct} = usePedidos()
+    
+   const [param,setParam] = useState({
+        lejos_derecho_esferico:'0',
+        lejos_derecho_cilindrico:'0',
+        lejos_izquierdo_cilindrico:'0',
+        lejos_izquierdo_esferico:'0',
+        lejos_eje_derecho:'0',
+        lejos_eje_izquierdo:'0',
 
-    const select = (val,lado)=>{
+        cerca_derecho_esferico:'0',
+        cerca_derecho_cilindrico:'0',
+        cerca_izquierdo_cilindrico:'0',
+        cerca_izquierdo_esferico:'0',
+        cerca_eje_derecho:'0',
+        cerca_eje_izquierdo:'0',
+        adicion_izquierdo:'0',
+        adicion_derecho:'0'
+    })
+
+    const change = e=>{
+        const {value,name} = e.target
+        let p = {...param}
+        if(name=== 'lejos_derecho_esferico'){
+            p.lejos_derecho_esferico = value
+            p.adicion_derecho = parseFloat(p.lejos_derecho_esferico) + parseFloat(p.cerca_derecho_esferico) 
+            setParam(p)
+            return;
+        }
+        if(name=== 'cerca_derecho_esferico'){
+            p.cerca_derecho_esferico = value
+            p.adicion_derecho = parseFloat(p.lejos_derecho_esferico) + parseFloat(p.cerca_derecho_esferico) 
+            setParam(p)
+            return;
+        }
+
+        if(name=== 'lejos_izquierdo_esferico'){
+            p.lejos_izquierdo_esferico = value
+            p.adicion_izquierdo = parseFloat(p.lejos_izquierdo_esferico) + parseFloat(p.cerca_izquierdo_esferico) 
+            setParam(p)
+            return;
+        }
+        if(name=== 'cerca_izquierdo_esferico'){
+            p.cerca_izquierdo_esferico = value
+            p.adicion_izquierdo = parseFloat(p.lejos_izquierdo_esferico) + parseFloat(p.cerca_izquierdo_esferico) 
+            setParam(p)
+            return;
+        }
+
+        setParam({...param, [name]:value})
+    }
+
+    const insertarReceta = ()=>{
+        let new_fact = {...factura}
+        new_fact.receta = {...param}
+        setearFactura(new_fact)
+        close()
+    }
+
+    /* const select = (val,lado)=>{
         let new_fact = {...factura}
         let tipo =  parseInt(val.tipo_producto), id_producto = val.id_producto
         let index = new_fact.items.findIndex(e => e.id_productos_deposito.toLowerCase() === val.id_productos_deposito.toLowerCase() && e.lado === lado);
@@ -38,22 +90,53 @@ function DialogSelectDepositoStock() {
             new_fact.items.push(nuevo_item)
         }
         setearFactura(new_fact)
-    }
+    } */
 
     const close = ()=>{ setDialogs({...dialogs,select_deposito_stock:false}) }
-    //const FilterData =  lista.productos.filter(item => item.nombre_producto.toLowerCase().includes(inputSearch.toLowerCase())|| item.codigo_producto.toLowerCase().includes(inputSearch.toLowerCase()));
-    const filtrado  = formDepositoStock.filter(item=> item.graduacion_esferico.includes(search.esf) || item.graduacion_esferico.includes(search.cil) )
+
+
+
     return ( <Dialog open={dialogs.select_deposito_stock} fullWidth maxWidth="lg" onClose={close} >
-        <DialogTitle><IconButton onClick={close} ><Icon icon="ic:twotone-close" /> </IconButton> Seleccionar item</DialogTitle>
+        <DialogTitle><IconButton onClick={close} ><Icon icon="ic:twotone-close" /> </IconButton> {selectProduct?.codigo_producto} - { selectProduct?.nombre_producto}  </DialogTitle>
         <DialogContent>
             <Grid container spacing={2}>
-                <Grid item xs={12}>
-                    <Stack direction="row" spacing={2}>
-                        <TextField size="small" name="cil" value={search.cil} onChange={handleChange} label="Cilindrico" />
-                        <TextField size="small" name="esf" value={search.esf} onChange={handleChange} label="Esférico" />
-                        <TextField size="small" name="eje" value={search.eje} onChange={handleChange} label="Eje" />
-                    </Stack>
+                <Grid item xs={12} sm={6}>
+                    <Grid container alignItems='center' spacing={1} sx={{ border:'1px solid silver',padding:1,borderRadius:1 }}>
+                        <Grid item xs={12}><Typography variant="button">LEJOS</Typography></Grid>
+                        <Grid item xs={12} sm={3}><Typography variant="overline">DERECHO:</Typography></Grid>
+                        <Grid item xs={12} sm={3}><InputNumerico autoFocus  name="lejos_derecho_esferico" onChange={change} value={param.lejos_derecho_esferico} fullWidth label='Esférico' /> </Grid>
+                        <Grid item xs={12} sm={3}><InputNumerico  name="lejos_derecho_cilindrico" onChange={change} value={param.lejos_derecho_cilindrico}  label='Cilindrico' /></Grid>
+                        <Grid item xs={12} sm={3}><InputNumerico  name="lejos_eje_derecho" onChange={change} value={param.lejos_eje_derecho}  label='Eje' /></Grid>
+                        <Grid item xs={12} sm={3}><Typography variant="overline">IZQUIERDO:</Typography></Grid>
+                        <Grid item xs={12} sm={3}><InputNumerico  name="lejos_izquierdo_esferico" onChange={change} value={param.lejos_izquierdo_esferico} fullWidth label='Esférico' /></Grid>
+                        <Grid item xs={12} sm={3}><InputNumerico  name="lejos_izquierdo_cilindrico" onChange={change} value={param.lejos_izquierdo_cilindrico}  label='Cilindrico' /></Grid>
+                        <Grid item xs={12} sm={3}><InputNumerico  name="lejos_eje_izquierdo" onChange={change} value={param.lejos_eje_izquierdo}  label='Eje' /></Grid>
+                    </Grid>
                 </Grid>
+                <Grid item xs={12} sm={6}>
+                    <Grid container alignItems='center' spacing={1} sx={{ border:'1px solid silver',padding:1,borderRadius:1 }}>
+                        <Grid item xs={12}><Typography variant="button">CERCA</Typography></Grid>
+                        <Grid item xs={12} sm={3}><Typography variant="overline">DERECHO</Typography></Grid>
+                        <Grid item xs={12} sm={3}><InputNumerico  name="cerca_derecho_esferico" onChange={change} value={param.cerca_derecho_esferico} fullWidth label='Esférico' /></Grid>
+                        <Grid item xs={12} sm={3}><InputNumerico  name="cerca_derecho_cilindrico" onChange={change} value={param.cerca_derecho_cilindrico}   label='Cilindrico' /></Grid>
+                        <Grid item xs={12} sm={3}><InputNumerico  name="cerca_eje_derecho" onChange={change} value={param.cerca_eje_derecho}  label='Eje' /></Grid>
+                        <Grid item xs={12} sm={3}><Typography variant="overline">IZQUIERDO</Typography></Grid>
+                        <Grid item xs={12} sm={3}><InputNumerico  name="cerca_izquierdo_esferico" onChange={change} value={param.cerca_izquierdo_esferico}  fullWidth label='Esférico' /></Grid>
+                        <Grid item xs={12} sm={3}><InputNumerico  name="cerca_izquierdo_cilindrico" onChange={change} value={param.cerca_izquierdo_cilindrico}   label='Cilindrico' /></Grid>
+                        <Grid item xs={12} sm={3}><InputNumerico  name="cerca_eje_izquierdo" onChange={change} value={param.cerca_eje_izquierdo}  label='Eje' /></Grid>
+                    </Grid>
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                    <Grid container alignItems='center' spacing={1} sx={{ border:'1px solid silver',padding:1,borderRadius:1 }}>
+                        <Grid item xs={12} sm={12}><Typography variant="overline">ADICION</Typography></Grid>
+                        <Grid item xs={12} sm={6}><InputNumerico  name="adicion_derecho" onChange={change} value={param.adicion_derecho} fullWidth label='Derecho' /></Grid>
+                        <Grid item xs={12} sm={6}><InputNumerico  name="adicion_izquierdo" onChange={change} value={param.adicion_izquierdo} fullWidth label='Izquierdo' /></Grid>
+                        
+                    </Grid>
+                </Grid>
+                
+
+
                 <Grid item xs={12}>
                    <Typography variant="button">STOCK DISPONIBLE</Typography>
                 </Grid>
@@ -61,26 +144,19 @@ function DialogSelectDepositoStock() {
                 <table className={styles.table} width="100%" border={1}>
                     <tbody>
                         <tr>
-                            <th>Esférico</th>
-                            <th>Cilindrico</th>
-                            <th>Eje</th>
-                            <th>Stock disponible</th>
-                            <th>Acción</th>
+                            <th width='25%'>Esférico</th>
+                            <th width='25%'>Cilindrico</th>
+                            <th width='25%'>Eje</th>
+                            <th width='25%'>Stock disponible</th>
                         </tr>
                         
                         {
-                            filtrado.map((e,i)=>(
+                            formDepositoStock.map((e,i)=>(
                             <tr key={i} className={styles.items_stock}>
-                                <td>{e.graduacion_esferico}</td>
-                                <td>{e.graduacion_cilindrico}</td>
-                                <td>{e.eje}</td>
-                                <td>{e.stock_producto_deposito}</td>
-                                <td>
-                                    <Stack direction="row" spacing={1}>
-                                    <Button variant="contained" size="small" onClick={()=>{select(e,'izq')}} >IZQUIERDO</Button>
-                                    <Button variant="contained" size="small" onClick={()=>{select(e,'der')}} >DERECHO</Button>
-                                    </Stack>
-                                </td>
+                                <td width='25%'>{e.graduacion_esferico}</td>
+                                <td width='25%'>{e.graduacion_cilindrico}</td>
+                                <td width='25%'>{e.eje}</td>
+                                <td width='25%'>{e.stock_producto_deposito}</td>
                             </tr>
                             ))
                         }
@@ -91,6 +167,7 @@ function DialogSelectDepositoStock() {
             </Grid>
         </DialogContent>
         <DialogActions>
+            <Button variant="contained" onClick={insertarReceta}>Insertar</Button>
             <Button variant="outlined" onClick={close}>Cerrar</Button>
         </DialogActions>
     </Dialog> );

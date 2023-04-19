@@ -8,7 +8,7 @@ function InputObs() {
         setDialogs({...dialogs,obs:true})
     }
 
-    return ( <Button onClick={open}>OBS</Button> );
+    return ( <Button variant="outlined" onClick={open}>OBSERVACIONES !</Button> );
 }
 
 export default InputObs;

@@ -1,91 +1,80 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, LinearProgress } from "@mui/material";
-import { usePedidos } from "./PedidosProvider";
 import { Icon } from "@iconify/react";
 import printJS from "print-js";
-import { useAuth } from "../../../Providers/AuthProvider";
 import './stylos.css'
 import { funciones } from "../../../App/helpers/funciones";
-import { useState } from "react";
+import { useListaPedidos } from "./ListaPedidosProvider";
+import { useCallback, useEffect, useState } from "react";
 import { APICALLER } from "../../../Services/api";
-import useInitialStates from "./useInitialStates";
 
-function FinalizarPedido() {
 
-    const {initialFactura} = useInitialStates()
-    const {userData} = useAuth()
-    const {token_user,id_user} = userData
-    const {dialogs,setDialogs,factura,setearFactura} = usePedidos()
-    const [loading,setLoading] = useState(false)
-    
-    const atras = ()=>{
-        setDialogs({...dialogs,finalizar:false}) 
-    }
+function DialogImprimir() {
 
-    const close = async()=>{ 
-        let f = {...factura}
-        setLoading(true)
-        let datos = {
-            cliente_id_pedido: f.cliente.id_cliente,
-            fecha_pedido: `${funciones.getFechaHorarioString()}`,
-            total_pedido: f.total,
-            total_exenta: f.exenta,
-            total_iva5: f.iva5,
-            total_iva10: f.iva10,
-            obs_cliente: f.obs.cliente,
-            obs_laboratorio: f.obs.laboratorio,
-            entregado_pedido:0,
-            user_id_pedido:id_user
-        }
+    const {dialogs,setDialogs,formSelect} = useListaPedidos()
+    const [loading,setLoading] = useState(true)
 
-        
-        let res = await APICALLER.insert({table:'pedidos',data:datos,token:token_user})
-        if(res.response)
-        {
-            let id_pedido = res.last_id, pedidos_items;
-            let promises = [];
-            f.items.forEach(e=>{
-                pedidos_items = {
-                    pedido_id: id_pedido,
-                    cantidad_pedido: e.cantidad,
-                    producto_id_item: e.id_producto,
-                    precio_venta_item: e.precio,
-                    deposito_id_item: e.id_productos_deposito ?? 0,
-                }
-                promises.push(APICALLER.insert({table:'pedidos_items',token:token_user,data:pedidos_items}))
-            })
-            let receta_data = { ...f.receta,
-                pedido_id_receta: id_pedido
-            }
-            promises.push(APICALLER.insert({table:'recetas',token:token_user,data:receta_data}))
-            await Promise.all(promises)
-
-        }else{console.log(res);}
-        setDialogs({...dialogs,finalizar:false})
-        setearFactura(initialFactura)
-        setLoading(false) 
-    }
+    const [factura,setFactura] = useState({
+        items:[],
+        receta:{},
+        datos:{}
+    })
 
     const imprimir = ()=>{
         printJS({ type: "html", printable: "print",
         style:`#print{font-family:monospace;margin:0;font-size:10px;width: 100%;padding:1rem;}#print h1 {font-size:1rem;text-align: center;}.table_pedido{border-collapse: collapse;border:none;margin:10px auto;width: 80mm;}.table_pedido tr td{padding:5px;}.table_head{font-variant: small-caps;font-weight: bold;border-radius: 8px;background-color: rgb(241, 241, 241);}`
-    });
+        });
     }
 
-    return ( <Dialog open={dialogs.finalizar} onClose={atras} fullScreen >
+    const atras = ()=>{setDialogs({...dialogs,imprimir:false}) }
+
+    const getLista = useCallback(async()=>{
+       if(dialogs.imprimir){
+        setLoading(true)
+            let [fact,items,receta] = await Promise.all([
+                APICALLER.get({table:'pedidos',include:'users,clientes',
+                on:'id_user,user_id_pedido,id_cliente,cliente_id_pedido',where:`id_pedido,=,${formSelect.id_pedido}`,
+                fields:'nombre_cliente,ruc_cliente,direccion_cliente,nombre_user,fecha_pedido,entregado_pedido,id_pedido,obs_cliente,obs_laboratorio'
+                }),
+                APICALLER.get({table:'pedidos_items',include:'productos',on:'id_producto,producto_id_item',where:`pedido_id,=,${formSelect.id_pedido}`}),
+                APICALLER.get({table:'recetas',where:`pedido_id_receta,=,${formSelect.id_pedido}`})
+        ])
+        if(fact.response){
+            setFactura({
+                items:items.results,
+                datos: fact.first,
+                receta: receta.first
+            })
+        }else{
+            console.log(fact,items,receta);
+        }
+        setLoading(false)
+       }
+    },[formSelect,dialogs])
+
+    
+
+    useEffect(() => {
+        const ca = new AbortController(); let isActive = true;
+        if (isActive) {getLista();}
+        return () => {isActive = false; ca.abort();};
+    }, [getLista]);
+
+
+    return ( <Dialog open={dialogs.imprimir} onClose={atras} fullScreen >
         <DialogTitle><IconButton onClick={atras}><Icon icon="ic:baseline-arrow-back" /> </IconButton> Imprimir pedido</DialogTitle>
-        <DialogContent>
-            {loading && <LinearProgress />}
+            <DialogContent>
+            {loading ? <LinearProgress /> : 
             <div id="print">
                 <table className="table_pedido" width='100%'>
                     <tbody>
-                        <tr><td><h1>PEDIDO NRO: {1} - USO INTERNO</h1></td></tr>
-                        <tr><td>FECHA: {factura.fecha} {factura.hora}</td></tr>
+                        <tr><td><h1>PEDIDO NRO: {factura.datos.id_pedido} - USO INTERNO</h1></td></tr>
+                        <tr><td>FECHA: {factura.datos.fecha_pedido}</td></tr>
                         <tr>
-                            <td>Vendedor: {userData.nombre_user}</td>
+                            <td>Vendedor: {factura.datos.nombre_user}</td>
                         </tr>
-                        <tr><td>DOC: {factura.cliente.ruc_cliente}</td></tr>
-                        <tr><td>CLIENTE: {factura.cliente.nombre_cliente} </td></tr>
-                        <tr><td>DIRECCION: {factura.cliente.direccion_cliente} </td></tr>
+                        <tr><td>DOC: {factura.datos.ruc_cliente}</td></tr>
+                        <tr><td>CLIENTE: {factura.datos.nombre_cliente} </td></tr>
+                        <tr><td>DIRECCION: {factura.datos.direccion_cliente} </td></tr>
                     </tbody>
                 </table>
                 <table className="table_pedido" width='100%' border='1'>
@@ -99,10 +88,10 @@ function FinalizarPedido() {
                 {
                 factura.items.map((e,i)=>(
                     <tr key={i} >
-                        <td>{e.codigo}</td>
-                        <td>{e.cantidad}</td>
-                        <td>{e.descripcion}</td>
-                        <td>{funciones.numberFormat(e.precio * e.cantidad)}</td>
+                        <td>{e.codigo_producto}</td>
+                        <td>{e.cantidad_pedido}</td>
+                        <td>{e.nombre_producto}</td>
+                        <td>{funciones.numberFormat(e.precio_venta_item * e.cantidad_pedido)}</td>
                     </tr>
                 ))
                 }
@@ -180,23 +169,23 @@ function FinalizarPedido() {
                     <tbody>
                         <tr>
                             <td>
-                                OBS LABORATORIO: {factura.obs.laboratorio} 
+                                OBS LABORATORIO: {factura.datos.obs_laboratorio} 
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                OBS CLIENTE: {factura.obs.cliente} 
+                                OBS CLIENTE: {factura.datos.obs_cliente} 
                             </td>
                         </tr>
                     </tbody>
                 </table>
-            </div>
-        </DialogContent>
+            </div>}
+            </DialogContent>
         <DialogActions>
-            <Button color="info" variant="outlined" onClick={close} size="large"> FINALIZAR </Button>
+            <Button color="info" variant="outlined" onClick={atras} size="large"> CERRAR </Button>
             <Button color="success" variant="contained" onClick={imprimir} size="large"> IMPRIMIR </Button>
         </DialogActions>
     </Dialog> );
 }
 
-export default FinalizarPedido;
+export default DialogImprimir;

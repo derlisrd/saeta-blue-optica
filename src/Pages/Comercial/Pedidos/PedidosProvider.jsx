@@ -1,32 +1,20 @@
 import { createContext, useContext,useState } from "react";
 import useInitialStates from "./useInitialStates";
-import { funciones } from "../../../App/helpers/funciones";
+import { useAuth } from "../../../Providers/AuthProvider";
+
 
 const PedidosContext = createContext()
 
 function PedidosProvider({children}) {
-    const {iDialogs} = useInitialStates()
+    const {iDialogs,initialFactura} = useInitialStates()
     const [dialogs,setDialogs] = useState(iDialogs)
-
-    const initialFactura = {
-        items:[],
-        total:0,
-        totaliva5:0,
-        totaliva10:0,
-        exenta:0,
-        cliente:{
-            id_cliente:1,
-            ruc_cliente:'X',
-            nombre_cliente:'SIN NOMBRE',
-            direccion_cliente:''
-        },
-        fecha: funciones.fechaActualYMD(),
-        hora: funciones.HoraActualHMS()
-    }
+    const {userData} = useAuth()
+    const {token_user} = userData
     const [cargas,setCargas] = useState({
         main:false,
         stock:false
     })
+    const [selectProduct, setSelectProduct] = useState({})
     const [formDepositoStock,setFormDepositoStock] = useState([])
     const [seleccionado,setSeleccionado] = useState([])
     const [factura,setFactura] = useState(initialFactura)
@@ -48,14 +36,14 @@ function PedidosProvider({children}) {
         console.log(obj);
     }
 
-    const values = {dialogs,setDialogs,factura,setFactura,setearFactura,initialFactura,formDepositoStock,setFormDepositoStock,seleccionado,setSeleccionado,cargas,setCargas}
+    const values = {dialogs,setDialogs,factura,setFactura,setearFactura,initialFactura,formDepositoStock,setFormDepositoStock,seleccionado,setSeleccionado,cargas,setCargas,selectProduct, setSelectProduct,token_user}
     return <PedidosContext.Provider value={values}>{children}</PedidosContext.Provider>
 }
 
 
 export const usePedidos = ()=>{
-    const {dialogs,setDialogs,factura,setFactura,setearFactura,initialFactura,formDepositoStock,setFormDepositoStock,seleccionado,setSeleccionado,cargas,setCargas} = useContext(PedidosContext)
-    return {dialogs,setDialogs,factura,setFactura,setearFactura,initialFactura,formDepositoStock,setFormDepositoStock,seleccionado,setSeleccionado,cargas,setCargas}
+    const {dialogs,setDialogs,factura,setFactura,setearFactura,initialFactura,formDepositoStock,setFormDepositoStock,seleccionado,setSeleccionado,cargas,setCargas,selectProduct, setSelectProduct,token_user} = useContext(PedidosContext)
+    return {dialogs,setDialogs,factura,setFactura,setearFactura,initialFactura,formDepositoStock,setFormDepositoStock,seleccionado,setSeleccionado,cargas,setCargas,selectProduct, setSelectProduct,token_user}
 }
 
 export default PedidosProvider;

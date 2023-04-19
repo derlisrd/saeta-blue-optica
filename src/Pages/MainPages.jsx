@@ -36,6 +36,7 @@ function MainPages() {
           <Route path="inventario" element={<Inventario />} />
           <Route path="productos/edit/:id" element={<EditProduct />} />
           <Route path="pedidos" element={<Pedidos />} />
+          <Route path="pedidos/lista" element={<ListaPedidos />} />
           <Route path="proveedores" element={<Proveedores />} />
           <Route path="empleados" element={<Empleados />} />
           <Route path="usuarios" element={<Usuarios />} />
@@ -63,6 +64,7 @@ const Inventario = Loadable(lazy(() => import('./Stock/Inventario')));
 const EditProduct = Loadable(lazy(() => import('./Stock/Productos/Edit/EditProduct')));
 const ListadoProductos = Loadable(lazy(() => import('./Stock/Productos/Listado')));
 const Pedidos = Loadable(lazy(() => import('./Comercial/Pedidos')));
+const ListaPedidos = Loadable(lazy(() => import('./Comercial/ListaPedidos')));
 const Usuarios = Loadable(lazy(() => import('./Administracion/Usuarios')));
 const Perfil = Loadable(lazy(() => import('./Administracion/Usuarios/Perfil')));
 export default MainPages;

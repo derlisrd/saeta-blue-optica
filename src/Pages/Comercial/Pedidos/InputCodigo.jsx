@@ -8,7 +8,7 @@ import { usePedidos } from "./PedidosProvider";
 
 function InputCodigo() {
 
-    const {factura,setearFactura,dialogs,setDialogs,setFormDepositoStock,setCargas,cargas} = usePedidos()
+    const {factura,setearFactura,dialogs,setDialogs,setFormDepositoStock,setCargas,cargas,setSelectProduct} = usePedidos()
     const [search,setSearch] = useState('')
     const [loading,setLoading] = useState(false)
     const [lista,setLista] = useState([])
@@ -28,9 +28,22 @@ function InputCodigo() {
                 if(res.response){
                     setFormDepositoStock(res.results)
                 }else{ console.log(res);}
+                let nuevo_item = {
+                    id_productos_deposito:null,
+                    cantidad:2,
+                    precio: parseFloat(val.precio_producto),
+                    preciom: parseFloat(val.precio_producto),
+                    descripcion:val.nombre_producto,
+                    id_producto,
+                    codigo:val.codigo_producto,
+                    tipo,
+                    iva:parseInt(val.iva_producto)                 
+                }
+                new_fact.items.push(nuevo_item)
                 setCargas({...cargas,stock:false})
-                
+                setSelectProduct(val)
                 setDialogs({...dialogs,select_deposito_stock:true})
+
             }
             else{
                 if (found.length > 0) {
@@ -49,8 +62,8 @@ function InputCodigo() {
                     }
                     new_fact.items.push(nuevo_item)
                 }
-                setearFactura(new_fact)
             }
+            setearFactura(new_fact)
             
         }
         setSearch('')

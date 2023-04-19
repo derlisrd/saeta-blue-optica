@@ -5,9 +5,9 @@
 }
 .table_pedido{
     border-collapse: collapse;
-    border:none;
+    border:1px solid rgb(201, 201, 201);
     margin:10px auto;
-    width: 80mm;
+    width: 200mm;
 }
 .table_pedido tr td{
     padding:5px;
@@ -16,4 +16,5 @@
     font-variant: small-caps;
     font-weight: bold;
     border-radius: 8px;
+    background-color: rgb(241, 241, 241);
 }

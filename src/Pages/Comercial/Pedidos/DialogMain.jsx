@@ -1,4 +1,4 @@
-import { Dialog, DialogContent, DialogTitle, Grid, IconButton } from "@mui/material";
+import { Dialog, DialogContent, DialogTitle, Grid, IconButton, Stack, Typography } from "@mui/material";
 import { usePedidos } from "./PedidosProvider";
 import TablaItems from "./TablaItems";
 import InputCodigo from "./InputCodigo";
@@ -22,8 +22,11 @@ function DialogMain() {
         <DialogContent>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <InputCliente />
+                   <Stack direction='row' spacing={2} alignItems='center'>
+                   <InputCliente />
+                    <Typography variant="overline">CODIGO CLIENTE: {factura.codigo_cliente_pedido}</Typography>
                     <InputObs />
+                   </Stack>
                 </Grid>
                 <Grid item xs={12} sm={12} md={9}>
                     <TablaItems items={factura.items} />

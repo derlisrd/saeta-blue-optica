@@ -5,9 +5,10 @@ import printJS from "print-js";
 import { useAuth } from "../../../Providers/AuthProvider";
 import './stylos.css'
 import { funciones } from "../../../App/helpers/funciones";
-import { useState } from "react";
+import { useState,useCallback,useEffect } from "react";
 import { APICALLER } from "../../../Services/api";
 import useInitialStates from "./useInitialStates";
+import Ticket from "./Print/Ticket";
 
 function FinalizarPedido() {
 
@@ -16,7 +17,7 @@ function FinalizarPedido() {
     const {token_user,id_user} = userData
     const {dialogs,setDialogs,factura,setearFactura} = usePedidos()
     const [loading,setLoading] = useState(false)
-    
+    const [nro,setNro] = useState(0)
     const atras = ()=>{
         setDialogs({...dialogs,finalizar:false}) 
     }
@@ -33,8 +34,9 @@ function FinalizarPedido() {
             total_iva10: f.iva10,
             obs_cliente: f.obs.cliente,
             obs_laboratorio: f.obs.laboratorio,
-            entregado_pedido:0,
-            user_id_pedido:id_user
+            estado_pedido:1,
+            user_id_pedido:id_user,
+            codigo_cliente_pedido: f.codigo_cliente_pedido
         }
 
         
@@ -67,130 +69,32 @@ function FinalizarPedido() {
 
     const imprimir = ()=>{
         printJS({ type: "html", printable: "print",
-        style:`#print{font-family:monospace;margin:0;font-size:10px;width: 100%;padding:1rem;}#print h1 {font-size:1rem;text-align: center;}.table_pedido{border-collapse: collapse;border:none;margin:10px auto;width: 80mm;}.table_pedido tr td{padding:5px;}.table_head{font-variant: small-caps;font-weight: bold;border-radius: 8px;background-color: rgb(241, 241, 241);}`
+        style:`#print{width: 80mm;font-weight:bold;font-family:monospace;margin:0 auto;font-size:10px;padding:1rem;}#print h1 {font-size:1rem;text-align: center;}.table_pedido{border-collapse: collapse;border:none;margin:10px auto;width: 80mm;}.table_pedido tr td{padding:5px;}.table_head{font-variant: small-caps;font-weight: bold;border-radius: 8px;background-color: rgb(241, 241, 241);}`
     });
     }
+    const getLista = useCallback(async()=>{
+        if(dialogs.finalizar){
+            setLoading(true)
+            let res = await APICALLER.get({table:'pedidos',sort:'id_pedido',pagesize:1})
+            if(res.response){
+                let nuevo = res.found>0 ? parseInt(res.first.id_pedido)+1 : 1 
+                setNro(nuevo)
+            }else{console.log(res);}
+            setLoading(false)
+        }
+    },[dialogs])
+
+    useEffect(() => {
+        const ca = new AbortController(); let isActive = true;
+        if (isActive) {getLista();}
+        return () => {isActive = false; ca.abort();};
+    }, [getLista]);
 
     return ( <Dialog open={dialogs.finalizar} onClose={atras} fullScreen >
         <DialogTitle><IconButton onClick={atras}><Icon icon="ic:baseline-arrow-back" /> </IconButton> Imprimir pedido</DialogTitle>
         <DialogContent>
             {loading && <LinearProgress />}
-            <div id="print">
-                <table className="table_pedido" width='100%'>
-                    <tbody>
-                        <tr><td><h1>PEDIDO NRO: {1} - USO INTERNO</h1></td></tr>
-                        <tr><td>FECHA: {factura.fecha} {factura.hora}</td></tr>
-                        <tr>
-                            <td>Vendedor: {userData.nombre_user}</td>
-                        </tr>
-                        <tr><td>DOC: {factura.cliente.ruc_cliente}</td></tr>
-                        <tr><td>CLIENTE: {factura.cliente.nombre_cliente} </td></tr>
-                        <tr><td>DIRECCION: {factura.cliente.direccion_cliente} </td></tr>
-                    </tbody>
-                </table>
-                <table className="table_pedido" width='100%' border='1'>
-                <tbody>
-                <tr className="table_head">
-                    <td>COD.</td>
-                    <td>CANT.</td>
-                    <td>DESCRIP</td>
-                    <td>PRECIO</td>
-                </tr>
-                {
-                factura.items.map((e,i)=>(
-                    <tr key={i} >
-                        <td>{e.codigo}</td>
-                        <td>{e.cantidad}</td>
-                        <td>{e.descripcion}</td>
-                        <td>{funciones.numberFormat(e.precio * e.cantidad)}</td>
-                    </tr>
-                ))
-                }
-                </tbody>
-                </table>
-                <h1>RECETA</h1>
-                <table className="table_pedido" border='1'>
-                    <thead>
-                        <tr>
-                            <th>OJO DERECHO</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td width='25%'></td>
-                            <td width='25%'><b>ESF</b></td>
-                            <td width='25%'><b>CIL</b></td>
-                            <td width='25%'><b>EJE</b></td>
-                        </tr>
-                        <tr>
-                            <td width='25%'><b>LEJOS</b></td>
-                            <td width='25%'>{factura.receta.lejos_derecho_esferico}</td>
-                            <td width='25%'>{factura.receta.lejos_derecho_cilindrico}</td>
-                            <td width='25%'>{factura.receta.lejos_eje_derecho}</td>
-                        </tr>
-                        <tr>
-                            <td width='25%'><b>ADICION</b></td>
-                            <td width='25%'>{factura.receta.adicion_derecho}</td>
-                            <td width='25%'></td>
-                            <td width='25%'></td>
-                        </tr>
-                        <tr>
-                            <td width='25%'><b>CERCA</b></td>
-                            <td width='25%'>{factura.receta.cerca_derecho_esferico}</td>
-                            <td width='25%'>{factura.receta.cerca_derecho_cilindrico}</td>
-                            <td width='25%'>{factura.receta.cerca_eje_derecho}</td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <table className="table_pedido" border='1'>
-                    <thead>
-                        <tr>
-                            <th>OJO IZQUIERDO</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td width='25%'></td>
-                            <td width='25%'><b>ESF</b></td>
-                            <td width='25%'><b>CIL</b></td>
-                            <td width='25%'><b>EJE</b></td>
-                        </tr>
-                        <tr>
-                            <td width='25%'><b>LEJOS</b></td>
-                            <td width='25%'>{factura.receta.lejos_izquierdo_esferico}</td>
-                            <td width='25%'>{factura.receta.lejos_izquierdo_cilindrico}</td>
-                            <td width='25%'>{factura.receta.lejos_eje_izquierdo}</td>
-                        </tr>
-                        <tr>
-                            <td width='25%'><b>ADICION</b></td>
-                            <td width='25%'>{factura.receta.adicion_izquierdo}</td>
-                            <td width='25%'></td>
-                            <td width='25%'></td>
-                        </tr>
-                        <tr>
-                            <td width='25%'><b>CERCA</b></td>
-                            <td width='25%'>{factura.receta.cerca_izquierdo_esferico}</td>
-                            <td width='25%'>{factura.receta.cerca_izquierdo_cilindrico}</td>
-                            <td width='25%'>{factura.receta.cerca_eje_izquierdo}</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <table className="table_pedido" border='1'>
-                    <tbody>
-                        <tr>
-                            <td>
-                                OBS LABORATORIO: {factura.obs.laboratorio} 
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                OBS CLIENTE: {factura.obs.cliente} 
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+            <Ticket factura={factura} nro={nro} userData={userData} />
         </DialogContent>
         <DialogActions>
             <Button color="info" variant="outlined" onClick={close} size="large"> FINALIZAR </Button>

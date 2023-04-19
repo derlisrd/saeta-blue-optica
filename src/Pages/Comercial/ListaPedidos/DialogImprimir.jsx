@@ -21,7 +21,7 @@ function DialogImprimir() {
 
     const imprimir = ()=>{
         printJS({ type: "html", printable: "print",
-        style:`#print{font-family:monospace;margin:0;font-size:10px;width: 100%;padding:1rem;}#print h1 {font-size:1rem;text-align: center;}.table_pedido{border-collapse: collapse;border:none;margin:10px auto;width: 80mm;}.table_pedido tr td{padding:5px;}.table_head{font-variant: small-caps;font-weight: bold;border-radius: 8px;background-color: rgb(241, 241, 241);}`
+        style:`#print{width: 80mm;font-weight:bold;font-family:monospace;margin:0 auto;font-size:10px;padding:1rem;}#print h1 {font-size:1rem;text-align: center;}.table_pedido{border-collapse: collapse;border:none;margin:10px auto;width: 80mm;}.table_pedido tr td{padding:5px;}.table_head{font-variant: small-caps;font-weight: bold;border-radius: 8px;background-color: rgb(241, 241, 241);}`
         });
     }
 

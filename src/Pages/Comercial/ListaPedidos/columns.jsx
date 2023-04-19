@@ -16,13 +16,13 @@ export const columns = [
         title:'cliente'
     },
     {
-        field:'entregado_pedido',
+        field:'estado_pedido',
         title:'Estado',
-        compareField:"entregado_pedido",
-        styleFieldCondition: "entregado_pedido",
+        compareField:"estado_pedido",
+        styleFieldCondition: "estado_pedido",
         items: {
-            "0": "PENDIENTE...",
-            "1": "ENTREGADO"
+            "0": "CANCELADO...",
+            "1": "PENDIENTE"
           },
           styleCondition: {
             "0": {

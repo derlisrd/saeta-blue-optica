@@ -15,7 +15,11 @@ function EntregarPedido() {
 
     const entregar = async()=>{
         setLoading(true)
-        let res = await APICALLER.update({table:'pedidos',data:{entregado_pedido:'1'},id:formSelect.id_pedido,token:userData.token_user})
+        let res = await APICALLER.update({
+            table:'pedidos',data:{entregado_pedido:'1'},
+            id:formSelect.id_pedido,
+            token:userData.token_user
+        })
         if(!res.response){
             console.log(res);
         }

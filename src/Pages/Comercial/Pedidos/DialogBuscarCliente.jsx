@@ -8,8 +8,14 @@ function DialogBuscarCliente() {
     const {setDialogs,dialogs,setearFactura,factura} = usePedidos()
     const [lista,setLista] = useState([])
     const [search,setSearch] = useState('')
+    const [codigo,setCodigo] = useState('')
     const [loading,setLoading] = useState(false)
-    const close = ()=>{ setDialogs({...dialogs,buscar_cliente:false}) }
+    const close = ()=>{ 
+        setDialogs({...dialogs,buscar_cliente:false});
+        let new_fact = {...factura}
+        new_fact.codigo_cliente_pedido = codigo
+        setearFactura(new_fact)
+    }
     const openRegistrar = ()=>{ setDialogs({...dialogs,buscar_cliente:false,registrar_cliente:true}) }
     const insertar = (e,val)=>{
         let new_fact = {...factura}
@@ -20,9 +26,8 @@ function DialogBuscarCliente() {
             direccion_cliente: val.direccion_cliente
         }
         setearFactura(new_fact)
-        close()
     }
-
+    
     useEffect(()=>{
         const timer = setTimeout(async()=>{
             if(search!==''){
@@ -46,14 +51,17 @@ function DialogBuscarCliente() {
         <DialogContent>
             <Grid container spacing={2}>
             <Grid item xs={12}>
-            <Autocomplete
-                autoComplete autoHighlight autoSelect clearOnEscape selectOnFocus
-                getOptionLabel={(option) => option.nombre_cliente+" - "+option.ruc_cliente }
-                options={lista}
-                onChange={insertar}
-                loadingText="Cargando..." loading={loading} noOptionsText="No existe en registro..."
-                renderInput={(params) => <TextField {...params} fullWidth autoFocus onChange={e=>setSearch(e.target.value)} label="Buscar" />}
-            />
+                <TextField fullWidth label='Codigo interno' value={codigo} onChange={(e)=>{setCodigo(e.target.value)}} />
+            </Grid>
+            <Grid item xs={12}>
+                <Autocomplete
+                    autoComplete autoHighlight autoSelect clearOnEscape selectOnFocus
+                    getOptionLabel={(option) => option.nombre_cliente+" - "+option.ruc_cliente }
+                    options={lista}
+                    onChange={insertar}
+                    loadingText="Cargando..." loading={loading} noOptionsText="No existe en registro..."
+                    renderInput={(params) => <TextField {...params} fullWidth autoFocus onChange={e=>setSearch(e.target.value)} label="Buscar" />}
+                />
             </Grid>
             </Grid>
         </DialogContent>

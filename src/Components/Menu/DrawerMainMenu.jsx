@@ -1,6 +1,6 @@
 import { Box } from '@mui/material';
 import React from 'react';
-import { env } from '../../app/config';
+import { env } from '../../App/config';
 import DrawerDesktop from './DrawerDesktop';
 import DrawerMobile from './DrawerMobile';
 

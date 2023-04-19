@@ -10,8 +10,8 @@ function InputNumerico({ name, value, onChange, label, ...rest }) {
       onChange={onChange}
       label={label}
       {...rest}
-      type="number"
-    InputProps={{
+      
+      InputProps={{
         inputProps: { 
             maxLength:6,
         },

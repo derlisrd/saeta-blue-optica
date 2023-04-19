@@ -23,9 +23,15 @@ function ListaPedidosProvider({children}) {
 
     const getLista = useCallback(async(searchTxt='')=>{
         setLoading(true)
+        let whereFilter = `fecha_pedido,between,'${fechas.desde}',and,'${fechas.hasta}'`
+        if(searchTxt!==''){
+            whereFilter = `id_pedido,=,${searchTxt}`
+        }
+        //console.log(whereFilter);
         let res = await APICALLER.get({table:'pedidos',include:'clientes,users',
-        on:'cliente_id_pedido,id_cliente,id_user,user_id_pedido',fields:'nombre_user,fecha_pedido,id_pedido,nombre_cliente,entregado_pedido',
-        where:`fecha_pedido,between,'${fechas.desde}',and,'${fechas.hasta}'`
+        on:'cliente_id_pedido,id_cliente,id_user,user_id_pedido',
+        fields:'nombre_user,fecha_pedido,id_pedido,nombre_cliente,estado_pedido,codigo_cliente_pedido',
+        where:whereFilter,
         })
         if(res.response){
             setListas({pedidos:res.results})

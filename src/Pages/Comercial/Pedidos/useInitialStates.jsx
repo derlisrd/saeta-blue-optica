@@ -14,6 +14,7 @@ function useInitialStates() {
             nombre_cliente:'SIN NOMBRE',
             direccion_cliente:''
         },
+        codigo_cliente_pedido:'0',
         fecha: funciones.fechaActualYMD(),
         hora: funciones.HoraActualHMS(),
         obs: {

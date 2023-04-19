@@ -1,4 +1,4 @@
-import { Dialog, DialogTitle,DialogContent, TextField, Grid, Stack, DialogActions, Button, IconButton, Typography } from "@mui/material";
+import { Dialog, DialogTitle,DialogContent,  Grid,  DialogActions, Button, IconButton, Typography } from "@mui/material";
 import { usePedidos } from "./PedidosProvider";
 import styles from './styles.module.css'
 import { useState } from "react";
@@ -9,7 +9,7 @@ function DialogSelectDepositoStock() {
 
     const {setDialogs,dialogs,formDepositoStock,setearFactura,factura,selectProduct} = usePedidos()
     
-   const [param,setParam] = useState({
+    const initialParam = {
         lejos_derecho_esferico:'0',
         lejos_derecho_cilindrico:'0',
         lejos_izquierdo_cilindrico:'0',
@@ -25,17 +25,29 @@ function DialogSelectDepositoStock() {
         cerca_eje_izquierdo:'0',
         adicion_izquierdo:'0',
         adicion_derecho:'0'
-    })
+    }
+   const [param,setParam] = useState(initialParam)
 
     const change = e=>{
         const {value,name} = e.target
         let p = {...param}
-        if(name=== 'lejos_derecho_esferico'){
+
+        if( name === 'lejos_derecho_esferico' && !(parseFloat(p.cerca_derecho_esferico))==0 ){
             p.lejos_derecho_esferico = value
             p.adicion_derecho = parseFloat(p.lejos_derecho_esferico) + parseFloat(p.cerca_derecho_esferico) 
             setParam(p)
             return;
         }
+
+        
+
+        if( name === 'lejos_izquierdo_esferico' && !(parseFloat(p.cerca_derecho_esferico))==0 ){
+            p.lejos_izquierdo_esferico = value
+            p.adicion_izquierdo = parseFloat(p.lejos_izquierdo_esferico) + parseFloat(p.cerca_izquierdo_esferico) 
+            setParam(p)
+            return;
+        }
+
         if(name=== 'cerca_derecho_esferico'){
             p.cerca_derecho_esferico = value
             p.adicion_derecho = parseFloat(p.lejos_derecho_esferico) + parseFloat(p.cerca_derecho_esferico) 
@@ -43,15 +55,23 @@ function DialogSelectDepositoStock() {
             return;
         }
 
-        if(name=== 'lejos_izquierdo_esferico'){
-            p.lejos_izquierdo_esferico = value
+        if(name=== 'cerca_izquierdo_esferico'){
+            p.cerca_izquierdo_esferico = value
             p.adicion_izquierdo = parseFloat(p.lejos_izquierdo_esferico) + parseFloat(p.cerca_izquierdo_esferico) 
             setParam(p)
             return;
         }
-        if(name=== 'cerca_izquierdo_esferico'){
-            p.cerca_izquierdo_esferico = value
-            p.adicion_izquierdo = parseFloat(p.lejos_izquierdo_esferico) + parseFloat(p.cerca_izquierdo_esferico) 
+
+        if(name=== 'adicion_derecho'){
+            p.adicion_derecho = value;
+            p.cerca_derecho_esferico = parseFloat(p.lejos_derecho_esferico) + parseFloat(p.adicion_derecho) 
+            setParam(p)
+            return;
+        }
+
+        if(name=== 'adicion_izquierdo'){
+            p.adicion_izquierdo = value;
+            p.cerca_izquierdo_esferico = parseFloat(p.lejos_izquierdo_esferico) + parseFloat(p.adicion_izquierdo) 
             setParam(p)
             return;
         }
@@ -66,33 +86,8 @@ function DialogSelectDepositoStock() {
         close()
     }
 
-    /* const select = (val,lado)=>{
-        let new_fact = {...factura}
-        let tipo =  parseInt(val.tipo_producto), id_producto = val.id_producto
-        let index = new_fact.items.findIndex(e => e.id_productos_deposito.toLowerCase() === val.id_productos_deposito.toLowerCase() && e.lado === lado);
-        let found = new_fact.items.filter(i => i.id_productos_deposito.toLowerCase() === val.id_productos_deposito.toLowerCase() && i.lado === lado);
 
-        if (found.length > 0) {
-            new_fact.items[index].cantidad += 1 
-        }else{
-            let nuevo_item = {
-                id_productos_deposito:val.id_productos_deposito,
-                cantidad:1,
-                precio: parseFloat(val.precio_producto),
-                preciom: parseFloat(val.precio_producto),
-                descripcion:`${val.nombre_producto} ${val.graduacion_esferico} ${val.graduacion_cilindrico} ${lado} `,
-                id_producto,
-                codigo:val.codigo_producto,
-                tipo,
-                iva:parseFloat(val.precio_producto),
-                lado:lado                    
-            }
-            new_fact.items.push(nuevo_item)
-        }
-        setearFactura(new_fact)
-    } */
-
-    const close = ()=>{ setDialogs({...dialogs,select_deposito_stock:false}) }
+    const close = ()=>{ setDialogs({...dialogs,select_deposito_stock:false}); }
 
 
 

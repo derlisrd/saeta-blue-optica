@@ -10,9 +10,6 @@ function BuscarProductos() {
 
     const {stock,setStock,formInfo,setFormInfo} = useInventario()
     const [search,setSearch] = useState('')
-    const [rangos,setRangos] = useState({
-        esferico:[],cilindrico:[]
-    })
     const [lista,setLista] = useState([])
     const [loading,setLoading] = useState(false)
     const [cargando,setCargando] = useState(false)
@@ -21,33 +18,12 @@ function BuscarProductos() {
         let id = val?.id_producto
         if(id){
             setCargando(true)
-            let res = await APICALLER.get({table:'productos_depositos',include:'depositos',on:'deposito_id,id_deposito',where:`producto_id,=,${id}`})
+        let res = await APICALLER.get({table:'productos_depositos',include:'depositos',on:'deposito_id,id_deposito',where:`producto_id,=,${id}`})
           if(res.response){
-            
-            //setStock(res.results);
-            
-            let min_esferico = parseFloat(val.min_esferico), 
-                max_esferico = parseFloat(val.max_esferico),
-                min_cilindrico = parseFloat(val.min_cilindrico), 
-                max_cilindrico = parseFloat(val.max_cilindrico),
-                new_rangos_esferico = [], new_rangos_cilindrico=[]
-                
-                while (min_esferico <= max_esferico) {
-                    new_rangos_esferico.push(max_esferico.toString())
-                    max_esferico -= 0.25
-                }
-                while (max_cilindrico >= min_cilindrico) {
-                    new_rangos_cilindrico.push(min_cilindrico.toString())
-                    min_cilindrico += 0.25
-                }
-                console.log(res.results, new_rangos_cilindrico);
-                res.results.forEach(elem => {
-                    
-                });
-                
+            setStock(res.results);
             setFormInfo(val);
           }else{console.log(res)}
-            setCargando(false)
+        setCargando(false)
         }else{
             setLista([])
             setFormInfo({})
@@ -60,7 +36,7 @@ function BuscarProductos() {
                 setLoading(true)
                 let res = await APICALLER.get({
                     table: "productos",
-                    fields:'codigo_producto,id_producto,nombre_producto,preciom_producto,precio_producto,tipo_producto,iva_producto,min_esferico,max_esferico,min_cilindrico,max_cilindrico',
+                    fields:'codigo_producto,id_producto,nombre_producto,preciom_producto,precio_producto,tipo_producto,iva_producto',
                     filtersField:"nombre_producto,codigo_producto",filtersSearch:search,pagesize:'20',
                     where:`tipo_producto,=,1`
                 })
@@ -72,8 +48,6 @@ function BuscarProductos() {
         return ()=> clearTimeout(timer)
     },[search])
 
-    
-    
 
     return (<Grid container spacing={2}>
         <Grid item xs={12}>
@@ -93,9 +67,10 @@ function BuscarProductos() {
             formInfo.id_producto &&
             <Fragment>
                 <Grid item xs={12}>
-                    
-                
-                    
+                    <AddStock />
+                </Grid>
+                <Grid item xs={12}>
+                    <TableStock />
                 </Grid>
             </Fragment>
         }

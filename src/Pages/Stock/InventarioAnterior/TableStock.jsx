@@ -38,7 +38,7 @@ function TableStock() {
     <table width='100%' className={style.table_stock} border={1}>
       <tbody>
         <tr>
-          <th></th>
+          <th>DEPOSITO</th>
           <th>ESFERICO</th>
           <th>CILINDRICO</th>
           <th>EJE</th>

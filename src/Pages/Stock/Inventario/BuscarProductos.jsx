@@ -8,11 +8,9 @@ import { useInventario } from "./InventarioProvider";
 
 function BuscarProductos() {
 
-    const {stock,setStock,formInfo,setFormInfo} = useInventario()
+    const {stock,setStock,formInfo,setFormInfo,setRangos} = useInventario()
     const [search,setSearch] = useState('')
-    const [rangos,setRangos] = useState({
-        esferico:[],cilindrico:[]
-    })
+    
     const [lista,setLista] = useState([])
     const [loading,setLoading] = useState(false)
     const [cargando,setCargando] = useState(false)
@@ -36,19 +34,38 @@ function BuscarProductos() {
                     new_rangos_esferico.push(max_esferico.toString())
                     max_esferico -= 0.25
                 }
+                
+                
                 while (max_cilindrico >= min_cilindrico) {
                     new_rangos_cilindrico.push(min_cilindrico.toString())
                     min_cilindrico += 0.25
                 }
-                console.log(res.results, new_rangos_cilindrico);
-                res.results.forEach(elem => {
-                    
-                });
                 
+                setRangos({esferico:new_rangos_esferico,cilindrico:new_rangos_cilindrico})
+                let found,new_stock = []
+
+                new_rangos_esferico.forEach(RE=>{
+                    let cil = []
+                    new_rangos_cilindrico.forEach(RC=>{
+                        found = res.results.find(ele => ele.graduacion_esferico === RE && ele.graduacion_cilindrico===RC);
+                        if(found){
+                            cil.push({stock: found.stock_producto_deposito,cilindrico:RC})
+                        }else{
+                            cil.push({stock: 0,cilindrico:RC})
+                        }        
+                     })
+                     new_stock.push({esferico: RE, cilindrico: cil })
+                })
+                console.log(new_stock);
+                setStock(new_stock);
+                
+                
+
             setFormInfo(val);
           }else{console.log(res)}
             setCargando(false)
         }else{
+            setFormInfo({})
             setLista([])
             setFormInfo({})
         }
@@ -93,9 +110,7 @@ function BuscarProductos() {
             formInfo.id_producto &&
             <Fragment>
                 <Grid item xs={12}>
-                    
-                
-                    
+                    <TableStock />
                 </Grid>
             </Fragment>
         }

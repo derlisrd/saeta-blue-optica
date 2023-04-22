@@ -13,6 +13,9 @@ function InventarioProvider({children}) {
     const [depositos,setDepositos] = useState([])
     const [loadingLista,setLoadingLista] = useState(true)
     const [stock,setStock] = useState([])
+    const [rangos,setRangos] = useState({
+        esferico:[],cilindrico:[]
+    })
     const [formInfo,setFormInfo] = useState({})
     const getLista = useCallback(async()=>{
         let res = await APICALLER.get({table:'depositos'})
@@ -32,15 +35,15 @@ function InventarioProvider({children}) {
     }, [getLista]);
 
     const values = {
-        depositos,loadingLista,stock,setStock,token_user,formInfo,setFormInfo
+        depositos,loadingLista,stock,setStock,token_user,formInfo,setFormInfo,rangos,setRangos
     }
 
     return ( <InventarioContext.Provider value={values}>{children}</InventarioContext.Provider> );
 }
 
 export const useInventario = ()=>{
-    const {depositos,loadingLista,stock,setStock,token_user,formInfo,setFormInfo} = useContext(InventarioContext)
-    return {depositos,loadingLista,stock,setStock,token_user,formInfo,setFormInfo}
+    const {depositos,loadingLista,stock,setStock,token_user,formInfo,setFormInfo,rangos,setRangos} = useContext(InventarioContext)
+    return {depositos,loadingLista,stock,setStock,token_user,formInfo,setFormInfo,rangos,setRangos}
 }
 
 

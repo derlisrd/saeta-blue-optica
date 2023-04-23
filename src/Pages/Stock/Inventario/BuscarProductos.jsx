@@ -3,14 +3,15 @@ import { Autocomplete, Grid, LinearProgress, TextField } from "@mui/material";
 import { Fragment, useEffect, useState } from "react";
 import { APICALLER } from "../../../Services/api";
 import TableStock from "./TableStock";
-import AddStock from "./AddStock";
+
 import { useInventario } from "./InventarioProvider";
+import SelectDeposito from "./SelectDepositos";
 
 function BuscarProductos() {
 
-    const {stock,setStock,formInfo,setFormInfo,setRangos} = useInventario()
+    const {setStock,formInfo,setFormInfo,setRangos,depositos} = useInventario()
     const [search,setSearch] = useState('')
-    
+    const [depositoID,setDepositoID] = useState('')
     const [lista,setLista] = useState([])
     const [loading,setLoading] = useState(false)
     const [cargando,setCargando] = useState(false)
@@ -19,7 +20,7 @@ function BuscarProductos() {
         let id = val?.id_producto
         if(id){
             setCargando(true)
-            let res = await APICALLER.get({table:'productos_depositos',include:'depositos',on:'deposito_id,id_deposito',where:`producto_id,=,${id}`})
+            let res = await APICALLER.get({table:'productos_depositos',include:'depositos',on:'deposito_id,id_deposito',where:`producto_id,=,${id},and,deposito_id,=,${depositoID}`})
           if(res.response){
             
             //setStock(res.results);
@@ -46,17 +47,19 @@ function BuscarProductos() {
 
                 new_rangos_esferico.forEach(RE=>{
                     let cil = []
+                    let total= 0;
                     new_rangos_cilindrico.forEach(RC=>{
                         found = res.results.find(ele => ele.graduacion_esferico === RE && ele.graduacion_cilindrico===RC);
                         if(found){
-                            cil.push({stock: found.stock_producto_deposito,cilindrico:RC})
+                            total += parseFloat(found.stock_producto_deposito)
+                            cil.push({stock: found.stock_producto_deposito,cilindrico:RC,producto_id:id,id_productos_deposito:found.id_productos_deposito,deposito_id:depositoID})
                         }else{
-                            cil.push({stock: 0,cilindrico:RC})
+                            cil.push({stock: '0',cilindrico:RC,producto_id:id,id_productos_deposito:null,deposito_id:depositoID})
                         }        
                      })
-                     new_stock.push({esferico: RE, cilindrico: cil })
+                     new_stock.push({esferico: RE, cilindrico: cil,total })
                 })
-                console.log(new_stock);
+                //console.log(new_stock);
                 setStock(new_stock);
                 
                 
@@ -70,6 +73,7 @@ function BuscarProductos() {
             setFormInfo({})
         }
     }
+
 
     useEffect(()=>{
         const timer = setTimeout(async()=>{
@@ -96,15 +100,19 @@ function BuscarProductos() {
         <Grid item xs={12}>
             {cargando && <LinearProgress />}
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={12} sm={8}>
             <Autocomplete
                 autoComplete autoHighlight autoSelect clearOnEscape selectOnFocus
                 getOptionLabel={(option) => option.nombre_producto+" - "+option.codigo_producto }
                 options={lista}
+                disabled={depositoID===''}
                 onChange={insertar}
                 loadingText="Cargando..." loading={loading} noOptionsText="Sin productos en lista..."
-                renderInput={(params) => <TextField {...params} onChange={e=>setSearch(e.target.value)} label="Buscar producto" />}
+                renderInput={(params) => <TextField  {...params} onChange={e=>setSearch(e.target.value)} label="Buscar producto" />}
             />
+        </Grid>
+        <Grid item xs={12} sm={4}>
+            <SelectDeposito opciones={depositos} name='deposito_id' value={depositoID} onChange={e=>{setDepositoID(e.target.value)}} />
         </Grid>
         {
             formInfo.id_producto &&

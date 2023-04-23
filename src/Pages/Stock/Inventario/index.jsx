@@ -1,6 +1,7 @@
 import { Grid, Typography } from "@mui/material";
 import BuscarProductos from "./BuscarProductos";
 import InventarioProvider from "./InventarioProvider";
+import Corregir from "./Corregir";
 
 function Inventario() {
   return (
@@ -13,7 +14,7 @@ function Inventario() {
           </Typography>
         </Grid>
       </Grid>
-
+      <Corregir />
       <BuscarProductos />
     </InventarioProvider>
   );

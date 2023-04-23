@@ -2,7 +2,7 @@ import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 
 function SelectDeposito({opciones,name,value,onChange, ...rest}) {
     return ( <FormControl fullWidth>
-        <InputLabel id="id_deposito">Depósito</InputLabel>
+        <InputLabel id="deposito_id">Depósito</InputLabel>
         <Select
           onChange={onChange}
           value={value}

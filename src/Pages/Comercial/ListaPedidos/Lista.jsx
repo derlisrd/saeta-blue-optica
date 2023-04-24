@@ -21,11 +21,11 @@ function Lista() {
 
     const print = (r)=>{ setFormSelect(r); setDialogs({...dialogs,imprimir:true})}
     const entregar = (r)=>{ setFormSelect(r); setDialogs({...dialogs,entregar:true})}
-    const cancelar = (r)=> {setFormSelect(r);}
+    const cancelar = (r)=> {setFormSelect(r); setDialogs({...dialogs,cancelar:true})}
 
     const ListaOpciones = ({rowProps})=>(
         <Stack direction='row'>
-            <IconButton onClick={()=>{entregar(rowProps)}}><Icon icon='ic:twotone-cancel' /> </IconButton>
+            <IconButton onClick={()=>{cancelar(rowProps)}}><Icon icon='ic:twotone-cancel' /> </IconButton>
             <IconButton onClick={()=>{entregar(rowProps)}}><Icon icon='carbon:delivery-parcel' /> </IconButton>
             <IconButton onClick={()=>{print(rowProps)}}><Icon icon='ic:twotone-print' /> </IconButton>
         </Stack>

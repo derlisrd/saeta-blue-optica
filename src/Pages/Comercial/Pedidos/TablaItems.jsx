@@ -6,7 +6,7 @@ import { usePedidos } from "./PedidosProvider";
 
 function TablaItems({items}) {
 
-    const {setearFactura,factura} = usePedidos()
+    const {setearFactura,factura,dialogs,setDialogs,setIndexCambioPrecio} = usePedidos()
 
     const mas = i=>{
         let fact = {...factura}
@@ -27,6 +27,11 @@ function TablaItems({items}) {
         let fact = {...factura}
         fact.items.splice(i,1)
         setearFactura(fact)
+    }
+
+    const precio = i=>{
+        setIndexCambioPrecio(i)
+        setDialogs({...dialogs,precio:true})
     }
 
     return (<table width="100%">
@@ -53,7 +58,7 @@ function TablaItems({items}) {
                         <td width="20%">{ f.numberFormat(e.precio)}</td>
                         <td width="20%">
                             <Stack direction="row">
-                                <IconButton onClick={()=>{}}><Icon icon="ic:twotone-remove-red-eye" /></IconButton>
+                                <IconButton onClick={()=>{precio(i)}}><Icon icon="solar:tag-price-bold-duotone" /></IconButton>
                                 <IconButton onClick={()=>{borrar(i)}}><Icon color="red" icon="tabler:trash" /></IconButton>
                             </Stack>
                         </td>

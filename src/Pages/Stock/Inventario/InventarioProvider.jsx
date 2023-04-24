@@ -24,7 +24,7 @@ function InventarioProvider({children}) {
         let res = await APICALLER.get({table:'depositos'})
         if(res.response){
             setDepositos(res.results)
-            console.log(res);
+            //console.log(res);
         }
         else{
             console.log(res);

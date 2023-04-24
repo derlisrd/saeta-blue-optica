@@ -7,10 +7,12 @@ import DialogRegistrarCliente from './DialogRegistrarCliente'
 import Main from './Main'
 import FinalizarPedido from './FinalizarPedido'
 import DialogObs from './DialogObs'
+import CambiarPrecio from './CambiarPrecio'
 
 const Pedidos = () => {
   return (
     <PedidosProvider>
+      <CambiarPrecio />
       <DialogObs />
       <FinalizarPedido />
       <DialogRegistrarCliente />

@@ -22,7 +22,10 @@ export const columns = [
         styleFieldCondition: "estado_pedido",
         items: {
             "0": "CANCELADO...",
-            "1": "PENDIENTE"
+            "1": "PENDIENTE",
+            "2": "EN PRODUCCION",
+            "3": "REVISION",
+            "4": "ENTREGADO"
           },
           styleCondition: {
             "0": {
@@ -32,11 +35,29 @@ export const columns = [
               color: "#fff",
             },
             "1": {
-              backgroundColor: "#2dec76",
+              backgroundColor: "#eca92d",
               padding: "4px", fontWeight:"bold",
               borderRadius: "5px",
-              color: "#007b02",
+              color: "#000000",
             },
+            "2": {
+              backgroundColor: "#2d96ec",
+              padding: "4px", fontWeight:"bold",
+              borderRadius: "5px",
+              color: "#ffffff",
+            },
+            "3": {
+                backgroundColor: "#2d96ec",
+                padding: "4px", fontWeight:"bold",
+                borderRadius: "5px",
+                color: "#ffffff",
+            },
+            "4": {
+                backgroundColor: "#ffffff",
+                padding: "4px", fontWeight:"bold",
+                borderRadius: "5px",
+                color: "#0c962a",
+              },
         }
     },
 ]

@@ -14,12 +14,16 @@ function FinalizarPedido() {
 
     const {initialFactura} = useInitialStates()
     const {userData} = useAuth()
+    const [finalizado,setFinalizado] = useState(false)
     const {token_user,id_user} = userData
     const {dialogs,setDialogs,factura,setearFactura} = usePedidos()
     const [loading,setLoading] = useState(false)
     const [nro,setNro] = useState(0)
     const atras = ()=>{
-        setDialogs({...dialogs,finalizar:false}) 
+        if(finalizado){
+            setearFactura(initialFactura)
+        }
+        setDialogs({...dialogs,finalizar:false})
     }
 
     const close = async()=>{ 
@@ -62,9 +66,8 @@ function FinalizarPedido() {
             await Promise.all(promises)
 
         }else{console.log(res);}
-        setDialogs({...dialogs,finalizar:false})
-        setearFactura(initialFactura)
         setLoading(false) 
+        setFinalizado(true)
     }
 
     const imprimir = ()=>{
@@ -97,8 +100,11 @@ function FinalizarPedido() {
             <Ticket factura={factura} nro={nro} userData={userData} />
         </DialogContent>
         <DialogActions>
-            <Button color="info" variant="outlined" onClick={close} size="large"> FINALIZAR </Button>
-            <Button color="success" variant="contained" onClick={imprimir} size="large"> IMPRIMIR </Button>
+            {
+                finalizado ? <Button variant="outlined" size="large" onClick={atras}>CERRAR PEDIDO</Button> :
+                <Button color="info" variant="outlined" onClick={close} size="large"> FINALIZAR </Button>
+            }
+            <Button color="success" variant="contained" disabled={!finalizado} onClick={imprimir} size="large"> IMPRIMIR </Button>
         </DialogActions>
     </Dialog> );
 }

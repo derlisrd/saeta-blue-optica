@@ -15,8 +15,15 @@ export const columns = [
         items: {
             "1": "Artículo",
             "2": "Servicio",
+            "3": "Sin lucro"
           },
         styleCondition: {
+          "3": {
+            backgroundColor: "#92b108",
+            padding: "3px",fontWeight:"bold",
+            borderRadius: "5px",
+            color: "#ffffff",
+          },
             "2": {
               backgroundColor: "#6b8eff",
               padding: "3px",fontWeight:"bold",

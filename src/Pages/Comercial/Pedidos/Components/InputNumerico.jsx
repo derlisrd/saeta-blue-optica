@@ -1,7 +1,10 @@
 import { TextField } from "@mui/material";
 import NumberFormatCustom from "../../../../Components/TextFields/NumberFormatCustom";
 
-function InputNumerico({ name, value, onChange, label, ...rest }) {
+function InputNumerico({ name, value, onChange, label, onKeyUp, ...rest }) {
+
+
+
   return (
     <TextField
       size="small"
@@ -10,7 +13,7 @@ function InputNumerico({ name, value, onChange, label, ...rest }) {
       onChange={onChange}
       label={label}
       {...rest}
-      
+      onKeyUp={onKeyUp}
       InputProps={{
         inputProps: { 
             maxLength:6,

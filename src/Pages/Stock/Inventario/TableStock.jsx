@@ -3,11 +3,12 @@ import style from './style.module.css'
 
 import { Fragment, useEffect, useState } from 'react';
 import { useInventario } from './InventarioProvider';
+import CorregirInput from './CorregirInput';
 
 
 function TableStock() {
 
-  const {stock,rangos,setFormSelect,dialogs,setDialogs} = useInventario()
+  const {stock,rangos,setFormSelect,dialogs,setDialogs,setStock} = useInventario()
   
   const [formStock,setFormStock] = useState([])
   const widthTh = 100/(rangos.cilindrico.length + 2);
@@ -20,16 +21,27 @@ function TableStock() {
   } */
 
 
-  const openCorregir = (esf,cil,stock,producto_id,deposito_id,id_productos_deposito)=>{
+  const openCorregir = (esf,cil,stockActual,producto_id,deposito_id,id_productos_deposito)=>{
+   
+    let copy_stock = [ ...stock]
+    let foundEsfe = copy_stock.find(e=> e.esferico === esf)
+    let indexEsfe = copy_stock.findIndex(e=> e.esferico ===esf)
+    //let foundCili = foundEsfe.cilindrico.findIndex(e=> e.cilindrico === formEdit.graduacion_cilindrico)
+    let indexCili = foundEsfe.cilindrico.findIndex(e=> e.cilindrico === cil)
+    copy_stock[indexEsfe].cilindrico[indexCili].edit = true;
+    setStock(copy_stock)
+
     setFormSelect({
-      stock_producto_deposito: stock,
+      stock_producto_deposito: stockActual,
       producto_id:producto_id,
       deposito_id:deposito_id,
       graduacion_esferico:esf,
       graduacion_cilindrico:cil,
-      id_productos_deposito: id_productos_deposito
+      id_productos_deposito: id_productos_deposito,
+      indexEsferico: indexEsfe,
+      indexCilindrico: indexCili
     })
-    setDialogs({...dialogs,corregir:true})
+    //setDialogs({...dialogs,corregir:true})
     //console.log(esf,cil,stock,deposito_id);
   }
 
@@ -66,7 +78,9 @@ function TableStock() {
               {
                 e.cilindrico.map((c,index)=>(
                   <Fragment key={index}>
-                    <td><Button onClick={()=>{ openCorregir(e.esferico,c.cilindrico,c.stock,c.producto_id,c.deposito_id,c.id_productos_deposito)}}> {c.stock}</Button> </td>
+                    <td>
+                      {c.edit ? <CorregirInput /> : <Button onClick={()=>{ openCorregir(e.esferico,c.cilindrico,c.stock,c.producto_id,c.deposito_id,c.id_productos_deposito)}}>{c.stock}</Button>}
+                    </td>
                   </Fragment>
                 ))
               }

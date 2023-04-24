@@ -33,7 +33,7 @@ function DialogImprimir() {
             let [fact,items,receta] = await Promise.all([
                 APICALLER.get({table:'pedidos',include:'users,clientes',
                 on:'id_user,user_id_pedido,id_cliente,cliente_id_pedido',where:`id_pedido,=,${formSelect.id_pedido}`,
-                fields:'nombre_cliente,ruc_cliente,direccion_cliente,nombre_user,fecha_pedido,entregado_pedido,id_pedido,obs_cliente,obs_laboratorio'
+                fields:'total_pedido,nombre_cliente,ruc_cliente,direccion_cliente,nombre_user,fecha_pedido,estado_pedido,id_pedido,obs_cliente,obs_laboratorio'
                 }),
                 APICALLER.get({table:'pedidos_items',include:'productos',on:'id_producto,producto_id_item',where:`pedido_id,=,${formSelect.id_pedido}`}),
                 APICALLER.get({table:'recetas',where:`pedido_id_receta,=,${formSelect.id_pedido}`})
@@ -95,6 +95,7 @@ function DialogImprimir() {
                     </tr>
                 ))
                 }
+                <tr><td align="right" colSpan={4}>TOTAL: {funciones.numberFormat(factura.datos.total_pedido)}</td></tr>
                 </tbody>
                 </table>
                 <h1>RECETA</h1>

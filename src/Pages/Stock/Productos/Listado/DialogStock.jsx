@@ -24,7 +24,7 @@ function DialogStock() {
     },[dialogs,formSelect])
 
 
-    console.log(stock);
+    //console.log(stock);
 
     useEffect(() => {
         const ca = new AbortController(); let isActive = true;

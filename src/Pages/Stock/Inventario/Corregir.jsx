@@ -6,7 +6,7 @@ import { APICALLER } from "../../../Services/api";
 
 function Corregir() {
 
-    const {formSelect,setFormSelect,dialogs,setDialogs,token_user,stock} = useInventario()
+    const {formSelect,setFormSelect,dialogs,setDialogs,token_user,stock,setStock} = useInventario()
     const [formEdit,setFormEdit] = useState({})
     const [loading,setLoading] = useState(false)
     const close = ()=>{
@@ -14,12 +14,12 @@ function Corregir() {
         setDialogs({...dialogs,corregir:false})
         setFormSelect({})
     }
-    console.log(stock);
+    //console.log(stock);
     const enviar = async()=>{
+        
         if(formEdit.stock_producto_deposito === '') return false;
         if( parseFloat(formEdit.stock_producto_deposito)<0 ) return false;
         let f = {...formEdit}
-        let copy_stock = {...stock}
         setLoading(true)
         if(formEdit.id_productos_deposito){
             let res = await APICALLER.update({table:'productos_depositos',data:{stock_producto_deposito: f.stock_producto_deposito},id:f.id_productos_deposito, token:token_user})
@@ -33,15 +33,23 @@ function Corregir() {
                 console.log(res);
             }
         }
-        //let foundEsfe = copy_stock.found(e=> e.gradua)
+        let copy_stock = [ ...stock]
+        let foundEsfe = copy_stock.find(e=> e.esferico === formEdit.graduacion_esferico)
+        let indexEsfe = copy_stock.findIndex(e=> e.esferico === formEdit.graduacion_esferico)
+        //let foundCili = foundEsfe.cilindrico.findIndex(e=> e.cilindrico === formEdit.graduacion_cilindrico)
+        let indexCili = foundEsfe.cilindrico.findIndex(e=> e.cilindrico === formEdit.graduacion_cilindrico)
+        copy_stock[indexEsfe].cilindrico[indexCili].stock = f.stock_producto_deposito
+        
+        //setStock(copy_stock)
         setLoading(false)
-        close()
+        close() 
+
     }
 
     const change = e=>{
         setFormEdit({...formEdit,stock_producto_deposito: e.target.value})
     }
-    //console.log(formEdit);
+    //console.log(formEdit,stock);
     useEffect(()=>{
         setFormEdit(formSelect)
     },[formSelect])

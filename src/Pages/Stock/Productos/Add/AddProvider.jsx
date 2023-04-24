@@ -75,7 +75,11 @@ const AddProvider = ({children})=>{
           precio_producto: (datas.precio_producto),
           preciom_producto: (datas.preciom_producto),
           tipo_producto : datas.tipo_producto,
-          iva_producto: datas.iva_producto
+          iva_producto: datas.iva_producto,
+          min_cilindrico: datas.min_cilindrico,
+          max_cilindrico: datas.max_cilindrico,
+          min_esferico: datas.min_esferico,
+          max_esferico: datas.max_esferico
         }
 
         let res = await APICALLER.insert({table:'productos',data:productoForm,token:userData.token_user})

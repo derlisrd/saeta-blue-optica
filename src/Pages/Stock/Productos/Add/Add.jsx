@@ -8,6 +8,7 @@ import AddStock from "./Components/AddStock";
 import { useAdd } from "./AddProvider";
 import ButtonTip from "../../../../Components/Botones/ButtonTip";
 import SelectIvaProducto from "./Components/SelectIvaProducto";
+import Rangos from "./Rangos";
 
 
 function Add() {
@@ -24,6 +25,10 @@ function Add() {
   const [formStock,setFormStock] = useState(initialFormStock)
   const initialForm = {
     codigo_producto:'',
+    min_esferico:'0',
+    max_esferico:'0',
+    min_cilindrico:'0',
+    max_cilindrico:'0',
     costo_producto:'',
     nombre_producto:'',
     preciom_producto:'',
@@ -33,6 +38,7 @@ function Add() {
     iva_producto:"10"
   }
   const [form,setForm] = useState(initialForm)
+  
   const changeForm = e=>{
     const {value,name} = e.target
     setForm({...form,[name]:value})
@@ -100,6 +106,12 @@ function Add() {
                 </Grid>
                 <Grid item xs={12}>
                   <Tipo name='tipo_producto' error={error} value={form.tipo_producto} onChange={changeForm}  />
+                </Grid>
+                <Grid item xs={12}>
+                  {
+                    form.tipo_producto === '1' &&
+                    <Rangos form={form} onChange={changeForm} />
+                  }
                 </Grid>
               </Grid>
             </Box>

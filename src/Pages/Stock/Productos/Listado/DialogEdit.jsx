@@ -7,6 +7,7 @@ import InputPrecio from "../Add/Components/InputPrecio";
 import SelectIvaProducto from "../Add/Components/SelectIvaProducto";
 import { useEnfocar } from "../../../../Hooks/useEnfocar";
 import { APICALLER } from "../../../../Services/api";
+import Rangos from "../Add/Rangos";
 
 function DialogEdit() {
     const {dialogs,llaveDialog,formSelect,listas,token_user,getLista} = useListadoProducto()
@@ -19,6 +20,10 @@ function DialogEdit() {
       costo_producto: "",
       id_categoria_producto: "",
       id_producto: "",
+      max_cilindrico:'',
+      min_cilindrico:'',
+      min_esferico:'',
+      max_esferico:'',
       iva_producto: "",
       nombre_producto: "",
       precio_producto: "",
@@ -115,6 +120,10 @@ function DialogEdit() {
                     </Grid>
                     <Grid item xs={12} md={4}>
                         <SelectIvaProducto name="iva_producto" error={error.code===11} onChange={change} value={formEdit.iva_producto} />
+                    </Grid>
+                    <Grid item xs={4}></Grid>
+                    <Grid item xs={12}>
+                    <Rangos form={formEdit} onChange={change} />
                     </Grid>
                 </Grid>
             </DialogContent>

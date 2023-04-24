@@ -30,7 +30,7 @@ function TableStock() {
       id_productos_deposito: id_productos_deposito
     })
     setDialogs({...dialogs,corregir:true})
-    console.log(esf,cil,stock,deposito_id);
+    //console.log(esf,cil,stock,deposito_id);
   }
 
   /* const change = (event,index)=>{

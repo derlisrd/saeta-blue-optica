@@ -7,10 +7,11 @@ import { useListaPedidos } from "./ListaPedidosProvider";
 import { useCallback, useEffect, useState } from "react";
 import { APICALLER } from "../../../Services/api";
 import { env } from "../../../App/config";
+import { useAuth } from "../../../Providers/AuthProvider";
 
 
 function DialogImprimir() {
-
+    const {dataEmpresa} = useAuth()
     const {dialogs,setDialogs,formSelect} = useListaPedidos()
     const [loading,setLoading] = useState(true)
     
@@ -71,6 +72,7 @@ function DialogImprimir() {
             <div id="print">
                 <table className="table_pedido" width='100%'>
                     <tbody>
+                        <tr><td><h1> {dataEmpresa.nombre_empresa}</h1></td></tr>
                         <tr><td><h1>PEDIDO NRO: {factura.datos.id_pedido} - USO INTERNO</h1></td></tr>
                         <tr><td>FECHA: {factura.datos.fecha_pedido}</td></tr>
                         <tr>

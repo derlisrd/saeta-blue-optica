@@ -8,6 +8,7 @@ import Cargando from "./Cargando";
 import { funciones } from "../../../App/helpers/funciones";
 import { Icon } from "@iconify/react";
 import InputObs from "./InputObs";
+import SelectTipo from "./Components/SelectTipo";
 
 
 function DialogMain() {
@@ -26,6 +27,7 @@ function DialogMain() {
                    <InputCliente />
                     <Typography variant="overline">CODIGO CLIENTE: {factura.codigo_cliente_pedido}</Typography>
                     <InputObs />
+                    <SelectTipo />
                    </Stack>
                 </Grid>
                 <Grid item xs={12} sm={12} md={9}>

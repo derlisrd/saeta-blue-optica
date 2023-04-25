@@ -62,6 +62,7 @@ const AuthProvider = ({children}) => {
             localStorage.removeItem('dataProductos');
             localStorage.removeItem('dataWeb');
     }
+
     const logOut = useCallback(()=>{
         setUserData({login:false,
             token_user:null,
@@ -150,7 +151,7 @@ const AuthProvider = ({children}) => {
         return () => {isActive = false;ca.abort();};
       }, [verificar,authcheck]);
 
-      const values = {userData,logIn,logOut,load,loading,Descifrar,dataEmpresa,setDataEmpresa}
+      const values = {userData,logIn,logOut,load,loading,Descifrar,dataEmpresa,setDataEmpresa,setearEmpresa}
 
       
   return <LoginContext.Provider value={values}>{children}</LoginContext.Provider>
@@ -159,8 +160,8 @@ const AuthProvider = ({children}) => {
 
 
 export const useAuth = ()=>{
-    const {userData,logIn,logOut,load,loading,Descifrar,dataEmpresa,setDataEmpresa} = useContext(LoginContext);
-    return {userData,logIn,logOut,load,loading,Descifrar,dataEmpresa,setDataEmpresa}
+    const {userData,logIn,logOut,load,loading,Descifrar,dataEmpresa,setDataEmpresa,setearEmpresa} = useContext(LoginContext);
+    return {userData,logIn,logOut,load,loading,Descifrar,dataEmpresa,setDataEmpresa,setearEmpresa}
 }
 
 export default AuthProvider

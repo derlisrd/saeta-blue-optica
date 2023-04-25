@@ -40,6 +40,7 @@ function FinalizarPedido() {
             obs_laboratorio: f.obs.laboratorio,
             armazon_id: f.obs.armazon_id,
             estado_pedido:1,
+            tipo_pedido:f.tipo_pedido,
             user_id_pedido:id_user,
             codigo_cliente_pedido: f.codigo_cliente_pedido
         }

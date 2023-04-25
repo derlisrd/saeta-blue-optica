@@ -1,24 +1,23 @@
 import { Button} from '@mui/material';
 import style from './style.module.css'
-
-import { Fragment, useEffect, useState } from 'react';
+import { useDownloadExcel } from 'react-export-table-to-excel';
+import { Fragment, useEffect, useState,useRef } from 'react';
 import { useInventario } from './InventarioProvider';
 import CorregirInput from './CorregirInput';
 
 
 function TableStock() {
 
-  const {stock,rangos,setFormSelect,dialogs,setDialogs,setStock} = useInventario()
-  
+  const {stock,rangos,setFormSelect,setStock} = useInventario()
+  const tableRef = useRef(null); 
   const [formStock,setFormStock] = useState([])
   const widthTh = 100/(rangos.cilindrico.length + 2);
   
-  /* const corregir = async(elem,index)=>{
-    let new_form = [...formStock]
-    let data = {stock_producto_deposito: new_form[index].stock_producto_deposito}
-    let res = await APICALLER.update({table:'productos_depositos',data,token:token_user,id:elem.id_productos_deposito})
-    if(!res.response){ console.log(res);}
-  } */
+  const { onDownload } = useDownloadExcel({
+    currentTableRef: tableRef.current,
+    filename: 'Producto_name',
+    sheet: 'Inventario'
+})
 
 
   const openCorregir = (esf,cil,stockActual,producto_id,deposito_id,id_productos_deposito)=>{
@@ -60,7 +59,7 @@ function TableStock() {
 
   return (<>
     <h3 style={{ textAlign:'center' }}>CILINDRICO</h3>
-    <table width='100%' className={style.table_stock} border={1}>
+    <table width='100%'  ref={tableRef} className={style.table_stock} border={1}>
       <tbody>
         <tr>
           <th>Esferico</th>
@@ -90,6 +89,7 @@ function TableStock() {
         }
       </tbody>
     </table>
+    <Button sx={{ mt:2 }} variant='contained' size='large' onClick={onDownload}> Excel </Button>
     </>
   );
 }

@@ -10,6 +10,9 @@ function CorregirInput() {
     const change = e=>{
         setFormStock({...formStock,stock_producto_deposito:e.target.value})
     }
+
+
+
     const cambiar = async(e)=>{
         let s = [...stock]
         if(e.key==='Escape'){
@@ -27,7 +30,7 @@ function CorregirInput() {
                 if(!res.response){
                     console.log(res);
                 }
-                //console.log(res);
+                
             }else{
                 delete f.id_productos_deposito 
                 let res = await APICALLER.insert({table:'productos_depositos',data:f,token:token_user})
@@ -36,8 +39,9 @@ function CorregirInput() {
                 }
             }
             s[formSelect.indexEsferico].cilindrico[formSelect.indexCilindrico].edit = false
-            s[formSelect.indexEsferico].cilindrico[formSelect.indexCilindrico].stock = f.stock_producto_deposito
+            s[formSelect.indexEsferico].cilindrico[formSelect.indexCilindrico].stock = parseInt(f.stock_producto_deposito)
             s[formSelect.indexEsferico].cilindrico[formSelect.indexCilindrico].id_productos_deposito = last_id
+            s[formSelect.indexEsferico].total +=  parseInt(f.stock_producto_deposito)
             setStock(s)
         }
     }
@@ -46,7 +50,7 @@ function CorregirInput() {
         setFormStock(formSelect)
     },[formSelect])
 
-    return ( <TextField size="small" value={formStock.stock_producto_deposito} onChange={change} name="stock_producto_deposito" autoFocus onKeyUp={cambiar} InputProps={{inputProps: { min: 0 },inputComponent: NumberFormatCustom}}  /> );
+    return ( <TextField size="small" value={formStock.stock_producto_deposito} onChange={change} name="stock_producto_deposito" autoFocus  onKeyUp={cambiar} InputProps={{inputProps: { min: 0 },inputComponent: NumberFormatCustom}}  /> );
 }
 
 export default CorregirInput;

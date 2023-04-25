@@ -32,14 +32,14 @@ function BuscarProductos() {
                 new_rangos_esferico = [], new_rangos_cilindrico=[]
                 
                 while (min_esferico <= max_esferico) {
-                    new_rangos_esferico.push(max_esferico.toString())
+                    new_rangos_esferico.push(max_esferico.toFixed(2).toString())
                     max_esferico -= 0.25
                 }
                 
                 
                 while (max_cilindrico >= min_cilindrico) {
-                    new_rangos_cilindrico.push(min_cilindrico.toString())
-                    min_cilindrico += 0.25
+                    new_rangos_cilindrico.push(max_cilindrico.toFixed(2).toString())
+                    max_cilindrico -= 0.25
                 }
                 
                 setRangos({esferico:new_rangos_esferico,cilindrico:new_rangos_cilindrico})
@@ -52,18 +52,26 @@ function BuscarProductos() {
                         found = res.results.find(ele => ele.graduacion_esferico === RE && ele.graduacion_cilindrico===RC);
                         if(found){
                             total += parseFloat(found.stock_producto_deposito)
-                            cil.push({edit:false,stock: found.stock_producto_deposito,cilindrico:RC,producto_id:id,id_productos_deposito:found.id_productos_deposito,deposito_id:depositoID})
+                            cil.push({
+                                edit:false,
+                                stock: found.stock_producto_deposito,
+                                cilindrico:RC,producto_id:id,
+                                id_productos_deposito:found.id_productos_deposito,
+                                deposito_id:depositoID})
                         }else{
-                            cil.push({edit:false,stock: '0',cilindrico:RC,producto_id:id,id_productos_deposito:null,deposito_id:depositoID})
+                            cil.push({
+                                edit:false,
+                                stock: '0',
+                                cilindrico:RC,
+                                producto_id:id,id_productos_deposito:null,
+                                deposito_id:depositoID
+                            })
                         }        
                      })
                      new_stock.push({esferico: RE, cilindrico: cil,total })
                 })
                 //console.log(new_stock);
                 setStock(new_stock);
-                
-                
-
             setFormInfo(val);
           }else{console.log(res)}
             setCargando(false)

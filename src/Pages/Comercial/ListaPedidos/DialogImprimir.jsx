@@ -6,17 +6,19 @@ import { funciones } from "../../../App/helpers/funciones";
 import { useListaPedidos } from "./ListaPedidosProvider";
 import { useCallback, useEffect, useState } from "react";
 import { APICALLER } from "../../../Services/api";
+import { env } from "../../../App/config";
 
 
 function DialogImprimir() {
 
     const {dialogs,setDialogs,formSelect} = useListaPedidos()
     const [loading,setLoading] = useState(true)
-
+    
     const [factura,setFactura] = useState({
         items:[],
         receta:{},
-        datos:{}
+        datos:{},
+        armazon:''
     })
 
     const imprimir = ()=>{
@@ -33,16 +35,18 @@ function DialogImprimir() {
             let [fact,items,receta] = await Promise.all([
                 APICALLER.get({table:'pedidos',include:'users,clientes',
                 on:'id_user,user_id_pedido,id_cliente,cliente_id_pedido',where:`id_pedido,=,${formSelect.id_pedido}`,
-                fields:'total_pedido,nombre_cliente,ruc_cliente,direccion_cliente,nombre_user,fecha_pedido,estado_pedido,id_pedido,obs_cliente,obs_laboratorio'
+                fields:'armazon_id,total_pedido,nombre_cliente,ruc_cliente,direccion_cliente,nombre_user,fecha_pedido,estado_pedido,id_pedido,obs_cliente,obs_laboratorio'
                 }),
                 APICALLER.get({table:'pedidos_items',include:'productos',on:'id_producto,producto_id_item',where:`pedido_id,=,${formSelect.id_pedido}`}),
                 APICALLER.get({table:'recetas',where:`pedido_id_receta,=,${formSelect.id_pedido}`})
         ])
         if(fact.response){
+            const arm = env.ARMAZONES.find(e=> e.id_armazon === fact.first.armazon_id)
             setFactura({
                 items:items.results,
                 datos: fact.first,
-                receta: receta.first
+                receta: receta.first,
+                armazon:arm.nombre_armazon
             })
         }else{
             console.log(fact,items,receta);
@@ -168,6 +172,11 @@ function DialogImprimir() {
                 </table>
                 <table className="table_pedido" border='1'>
                     <tbody>
+                        <tr>
+                            <td>
+                                ARMAZON: {factura.armazon} 
+                            </td>
+                        </tr>
                         <tr>
                             <td>
                                 OBS LABORATORIO: {factura.datos.obs_laboratorio} 

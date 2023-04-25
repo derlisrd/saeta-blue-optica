@@ -39,7 +39,7 @@ function MenuList({isMobile}) {
     setLista(array);
   }
 
-  const SELECTED = { "&:hover, &.Mui-selected":{borderRadius:'0 18px 18px 0', margin:'0 5px',borderLeftStyle:'solid',borderLeftWidth:'4px',borderLeftColor:'primary.main', "div":{color:'primary.main'},'span':{fontWeight:'bold'}}  }
+  const SELECTED = { "&:hover, &.Mui-selected":{borderRadius:'0 18px 18px 0', margin:'0',borderLeftStyle:'solid',borderLeftWidth:'4px',borderLeftColor:'primary.main', "div":{color:'primary.main'},'span':{fontWeight:'bold'}}  }
 
   return (<SimpleBar forceVisible="y" autoHide={false} style={{ maxHeight: "100vh" }}>
     <Toolbar >

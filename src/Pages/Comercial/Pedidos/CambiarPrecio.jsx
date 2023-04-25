@@ -10,6 +10,7 @@ function CambiarPrecio() {
 
     const [precio,setPrecio] = useState({
         precio_anterior:'',
+        precio_normal:'',
         precio_nuevo: '',
         precio_minimo: ''
     })
@@ -31,8 +32,10 @@ function CambiarPrecio() {
     const setearPrecio = useCallback(()=>{
         if(indexCambioPrecio>=0){
             let f = {...factura}
+            console.log(f.items);
             let precios = f.items[indexCambioPrecio]
             setPrecio({
+                precio_normal: precios.precio_normal,
                 precio_anterior: precios.precio,
                 precio_minimo: precios.preciom,
                 precio_nuevo:''
@@ -49,6 +52,9 @@ function CambiarPrecio() {
         <DialogTitle>Cambiar precio</DialogTitle>
         <DialogContent>
             <Grid container spacing={2}>
+            <Grid item xs={12}>
+                    <Typography variant="h5">Precio normal: {funciones.numberFormat(precio.precio_normal)}</Typography>
+                </Grid>
                 <Grid item xs={12}>
                     <Typography variant="h5">Precio anterior: {funciones.numberFormat(precio.precio_anterior)}</Typography>
                 </Grid>

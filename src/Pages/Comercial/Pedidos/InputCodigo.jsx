@@ -31,8 +31,9 @@ function InputCodigo() {
                 let nuevo_item = {
                     id_productos_deposito:null,
                     cantidad:2,
+                    precio_normal:parseFloat(val.precio_producto),
                     precio: parseFloat(val.precio_producto),
-                    preciom: parseFloat(val.precio_producto),
+                    preciom: parseFloat(val.preciom_producto),
                     descripcion:val.nombre_producto,
                     id_producto,
                     codigo:val.codigo_producto,
@@ -52,8 +53,9 @@ function InputCodigo() {
                     let nuevo_item = {
                         id_productos_deposito:null,
                         cantidad:1,
+                        precio_normal:parseFloat(val.precio_producto),
                         precio: parseFloat(val.precio_producto),
-                        preciom: parseFloat(val.precio_producto),
+                        preciom: parseFloat(val.preciom_producto),
                         descripcion:val.nombre_producto,
                         id_producto,
                         codigo:val.codigo_producto,

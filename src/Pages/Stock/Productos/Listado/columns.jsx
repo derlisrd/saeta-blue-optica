@@ -8,6 +8,11 @@ export const columns = [
         title:'nombre'
     },
     {
+      field:'precio_producto',
+      title:'precio',
+      isNumber:true
+  },
+    {
         field:'tipo_producto',
         title:'tipo',
         compareField:"tipo_producto",

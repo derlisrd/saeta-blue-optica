@@ -16,5 +16,27 @@ export const env = {
     SECRETO,
     LOGIN_PAGE_URL : '/admin',
     HOME_PAGE_URL: '/admin/home',
-    DRAWER_WIDTH: 170
+    DRAWER_WIDTH: 170,
+    ARMAZONES:[
+        {
+            id_armazon:'0',
+            nombre_armazon: 'Ninguno'
+        },
+        {
+            id_armazon:'1',
+            nombre_armazon: 'Metal'
+        },
+        {
+            id_armazon:'2',
+            nombre_armazon: 'Acetato'
+        },
+        {
+            id_armazon:'3',
+            nombre_armazon: 'Nylon'
+        },
+        {
+            id_armazon:'4',
+            nombre_armazon: 'Balgrip'
+        }
+    ]
 }

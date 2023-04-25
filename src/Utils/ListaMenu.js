@@ -169,6 +169,13 @@ export const ListaMenu = [
         open:false,
         submenu:[
             {
+                id:31,
+                url:'/empresa',
+                title:'Empresa',
+                icon:'ic:twotone-store',
+                sub:false
+            },
+            {
                 id:3,
                 url:'/clientes',
                 title:'Clientes',

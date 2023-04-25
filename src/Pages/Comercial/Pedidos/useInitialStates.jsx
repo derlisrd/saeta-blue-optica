@@ -20,6 +20,7 @@ function useInitialStates() {
         obs: {
             cliente:'',
             laboratorio:'',
+            armazon_id:'0'
         },
         receta:{
             lejos_derecho_esferico:'0',

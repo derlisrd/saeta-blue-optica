@@ -18,7 +18,7 @@ function Edit() {
     const {get} = useQuerys()
     const {userData} = useAuth()
     const {focusTo} = useFocus()    
-    const [formEdit,setFormEdit] = useState({id_cliente:'',ruc_cliente:'',tipo_cliente:'',email_cliente:'',telefono_cliente:''})
+    const [formEdit,setFormEdit] = useState({id_cliente:'',ruc_cliente:'',tipo_cliente:'',email_cliente:'',telefono_cliente:'',fantasia_cliente:''})
 
 
     const change = e=>{
@@ -79,6 +79,9 @@ function Edit() {
                 </Grid>
                 <Grid item xs={12} sm={6}>
                     <TextField fullWidth name="nombre_cliente" onChange={change} value={formEdit.nombre_cliente} required autoComplete="off" label="Nombre completo" />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                    <TextField fullWidth name="fantasia_cliente" onChange={change} value={formEdit.fantasia_cliente} autoComplete="off" label="Nombre fantasia" />
                 </Grid>
                 <Grid item xs={12} sm={6}>
                     <TextField fullWidth name="telefono_cliente" onChange={change} value={formEdit.telefono_cliente} label="teléfono" />

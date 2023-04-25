@@ -1,10 +1,17 @@
+import { env } from "../../../../App/config";
 import { funciones } from "../../../../App/helpers/funciones";
+import { useAuth } from "../../../../Providers/AuthProvider";
 
 
 function Ticket({factura,userData,nro}) {
+
+    const {dataEmpresa} = useAuth()
+    const armazones = env.ARMAZONES.find(e=> e.id_armazon === factura.obs.armazon_id)
+    const nombre_armazon = armazones.nombre_armazon
     return ( <div id="print">
     <table className="table_pedido" width='100%'>
         <tbody>
+            <tr><td><h1>{dataEmpresa.nombre_empresa}</h1></td></tr>
             <tr><td><h1>PEDIDO NRO: {nro} - USO INTERNO</h1></td></tr>
             <tr><td>FECHA: {factura.fecha} {factura.hora}</td></tr>
             <tr><td>VENDEDOR: {userData.nombre_user}</td></tr>
@@ -105,6 +112,11 @@ function Ticket({factura,userData,nro}) {
     </table>
     <table className="table_pedido" border='1'>
         <tbody>
+            <tr>
+                <td>
+                    ARMAZON: {nombre_armazon} 
+                </td>
+            </tr>
             <tr>
                 <td>
                     OBS LABORATORIO: {factura.obs.laboratorio} 

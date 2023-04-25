@@ -27,6 +27,7 @@ function Add() {
             return false;
         }
         if(datas.nombre_cliente === ''){
+            focusTo('nombre_cliente')
             return false;
         }
         setLoading(true)
@@ -61,7 +62,10 @@ function Add() {
                     <TextField id="ruc_cliente" error={error.code===1} autoFocus name="ruc_cliente" required autoComplete="off" fullWidth label="Documento" />
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                    <TextField fullWidth name="nombre_cliente" required autoComplete="off" label="Nombre completo" />
+                    <TextField fullWidth id="nombre_cliente" name="nombre_cliente" required autoComplete="off" label="Nombre completo" />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                    <TextField fullWidth name="fantasia_cliente" required autoComplete="off" label="Nombre Fantasia" />
                 </Grid>
                 <Grid item xs={12} sm={6}>
                     <TextField fullWidth name="telefono_cliente" label="teléfono" />

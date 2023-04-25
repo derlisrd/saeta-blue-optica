@@ -56,13 +56,13 @@ function ListadoProductoProvider({children}) {
         return () => {isActive = false; ca.abort();};
       }, [getLista]);
 
-    const values = {listas,isLoading,getLista,currentPage,pagination,setCurrentPage,dialogs,llaveDialog,formSelect,setFormSelect,token_user}
+    const values = {listas,isLoading,getLista,currentPage,pagination,setPagination, setCurrentPage,dialogs,llaveDialog,formSelect,setFormSelect,token_user}
     return <ListadoProductoContext.Provider value={values}>{children}</ListadoProductoContext.Provider>
 }
 
 export function useListadoProducto(){
-    const {listas,isLoading,getLista,currentPage,pagination,setCurrentPage,dialogs,llaveDialog,formSelect,setFormSelect,token_user} = useContext(ListadoProductoContext)
-    return {listas,isLoading,getLista,currentPage,pagination,setCurrentPage,dialogs,llaveDialog,formSelect,setFormSelect,token_user}
+    const {listas,isLoading,getLista,currentPage,pagination,setPagination, setCurrentPage,dialogs,llaveDialog,formSelect,setFormSelect,token_user} = useContext(ListadoProductoContext)
+    return {listas,isLoading,getLista,currentPage,pagination,setPagination, setCurrentPage,dialogs,llaveDialog,formSelect,setFormSelect,token_user}
 }
 
 export default ListadoProductoProvider;

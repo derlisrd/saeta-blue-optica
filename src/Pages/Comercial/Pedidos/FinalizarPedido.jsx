@@ -38,6 +38,7 @@ function FinalizarPedido() {
             total_iva10: f.iva10,
             obs_cliente: f.obs.cliente,
             obs_laboratorio: f.obs.laboratorio,
+            armazon_id: f.obs.armazon_id,
             estado_pedido:1,
             user_id_pedido:id_user,
             codigo_cliente_pedido: f.codigo_cliente_pedido

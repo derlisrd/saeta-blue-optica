@@ -13,8 +13,11 @@ const AuthProvider = ({children}) => {
     const Descifrar = t => CryptoJS.AES.decrypt(t, env.SECRETO).toString(CryptoJS.enc.Utf8);
     const storage = JSON.parse(sessionStorage.getItem("userData")) || JSON.parse(localStorage.getItem("userData"));
     const [loading,setLoading] = useState(true);
-    const storageEmpresa = JSON.parse(localStorage.getItem("dataEmpresa")) || {}
-    const [dataEmpresa,setDataEmpresa] = useState(storageEmpresa)
+
+    const [dataEmpresa,setDataEmpresa] = useState(()=>{
+        let store = JSON.parse(localStorage.getItem("dataEmpresa"))
+        return store ?? {}
+    })
     const [load,setLoad] = useState({
         login:false,
         msj:null,
@@ -46,11 +49,10 @@ const AuthProvider = ({children}) => {
         } 
     }
 
-    const setearEmpresa = ({empresa=null,monedas=null,mode})=>
+    const setearEmpresa = ({empresa=null,mode})=>
     {
         if(mode){
             localStorage.setItem("dataEmpresa", JSON.stringify(empresa))
-            localStorage.setItem("dataMonedas", JSON.stringify(monedas))
             setDataEmpresa(empresa)
         }else{
             localStorage.removeItem("dataEmpresa");
@@ -76,10 +78,10 @@ const AuthProvider = ({children}) => {
 
     const logIn = async(f,remember)=>{
         setLoad({login:true,active:false,msj:null,code:0});
-        let [res,emp,mon] = await Promise.all([APICALLER.login(f),APICALLER.get({table:"empresas"}),APICALLER.get({table:"monedas"})]);
+        let [res,emp] = await Promise.all([APICALLER.login(f),APICALLER.get({table:"empresas"}) ]);
         
         if(res.response && res.found>0){
-            let dataMonedas = mon.results;
+            
             
             let dataEmpresa = emp.results[0];
             let today = new Date();
@@ -89,7 +91,7 @@ const AuthProvider = ({children}) => {
                 setLoad({login:false,active:true,msj:"Su licencia ha vencido. Por favor contacte con el proveedor."});
                 return false;
             }
-            setearEmpresa({mode:true,empresa:dataEmpresa,monedas:dataMonedas})
+            setearEmpresa({mode:true,empresa:dataEmpresa})
             let d = res.results[0];
             let permisosData = await APICALLER.get({table:"permisos_users",where:`id_user_permiso,=,${d.id_user}`,fields:"id_permiso_permiso"});
             let datas = {...d,
@@ -108,7 +110,6 @@ const AuthProvider = ({children}) => {
     }
 
     const authcheck = useCallback(async()=>{
-        
         let local = localStorage.getItem('userData') || sessionStorage.getItem('userData')
         if (userData.login && local) {
             setInterval(async() => {
@@ -119,8 +120,7 @@ const AuthProvider = ({children}) => {
               }
               //console.log(res);
             }, 300000); //
-        }
-        
+        }        
     },[userData,logOut])
 
     const verificar = useCallback(async()=>{

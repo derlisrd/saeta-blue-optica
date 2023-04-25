@@ -8,6 +8,10 @@ const ListaColumns= [
         title:'Nombre'
     },
     {
+        field:'fantasia_cliente',
+        title:'Fantasia'
+    },
+    {
         field:'telefono_cliente',
         title:'Tel.'
     },

@@ -16,6 +16,14 @@ function DialogBuscarCliente() {
         new_fact.codigo_cliente_pedido = codigo
         setearFactura(new_fact)
     }
+    const enterCodigo = e=>{
+        if(e.key==="Enter"){
+            setDialogs({...dialogs,buscar_cliente:false});
+            let new_fact = {...factura}
+            new_fact.codigo_cliente_pedido = codigo
+            setearFactura(new_fact)
+        }
+    }
     const openRegistrar = ()=>{ setDialogs({...dialogs,buscar_cliente:false,registrar_cliente:true}) }
     const insertar = (e,val)=>{
         let new_fact = {...factura}
@@ -51,7 +59,7 @@ function DialogBuscarCliente() {
         <DialogContent>
             <Grid container spacing={2}>
             <Grid item xs={12}>
-                <TextField fullWidth label='Codigo interno' value={codigo} onChange={(e)=>{setCodigo(e.target.value)}} />
+                <TextField autoFocus fullWidth label='Codigo interno' onKeyUp={enterCodigo}  value={codigo} onChange={(e)=>{setCodigo(e.target.value)}} />
             </Grid>
             <Grid item xs={12}>
                 <Autocomplete
@@ -60,7 +68,7 @@ function DialogBuscarCliente() {
                     options={lista}
                     onChange={insertar}
                     loadingText="Cargando..." loading={loading} noOptionsText="No existe en registro..."
-                    renderInput={(params) => <TextField {...params} fullWidth autoFocus onChange={e=>setSearch(e.target.value)} label="Buscar" />}
+                    renderInput={(params) => <TextField {...params} fullWidth onChange={e=>setSearch(e.target.value)} label="Buscar" />}
                 />
             </Grid>
             </Grid>

@@ -49,7 +49,7 @@ function SelectTipo() {
           }}
           value="3"
         >
-          CORTESIA
+          GARANTIA
         </MenuItem>
       </Menu>
     </div>

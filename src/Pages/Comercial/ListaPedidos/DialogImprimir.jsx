@@ -36,7 +36,7 @@ function DialogImprimir() {
             let [fact,items,receta] = await Promise.all([
                 APICALLER.get({table:'pedidos',include:'users,clientes',
                 on:'id_user,user_id_pedido,id_cliente,cliente_id_pedido',where:`id_pedido,=,${formSelect.id_pedido}`,
-                fields:'armazon_id,total_pedido,nombre_cliente,ruc_cliente,direccion_cliente,nombre_user,fecha_pedido,estado_pedido,id_pedido,obs_cliente,obs_laboratorio'
+                fields:'armazon_id,total_pedido,nombre_cliente,ruc_cliente,direccion_cliente,nombre_user,fecha_pedido,estado_pedido,id_pedido,obs_cliente,obs_laboratorio,codigo_cliente_pedido'
                 }),
                 APICALLER.get({table:'pedidos_items',include:'productos',on:'id_producto,producto_id_item',where:`pedido_id,=,${formSelect.id_pedido}`}),
                 APICALLER.get({table:'recetas',where:`pedido_id_receta,=,${formSelect.id_pedido}`})
@@ -75,11 +75,10 @@ function DialogImprimir() {
                         <tr><td><h1> {dataEmpresa.nombre_empresa}</h1></td></tr>
                         <tr><td><h1>PEDIDO NRO: {factura.datos.id_pedido} - USO INTERNO</h1></td></tr>
                         <tr><td>FECHA: {factura.datos.fecha_pedido}</td></tr>
-                        <tr>
-                            <td>Vendedor: {factura.datos.nombre_user}</td>
-                        </tr>
+                        <tr><td>Vendedor: {factura.datos.nombre_user}</td></tr>
                         <tr><td>DOC: {factura.datos.ruc_cliente}</td></tr>
                         <tr><td>CLIENTE: {factura.datos.nombre_cliente} </td></tr>
+                        <tr><td>CODIGO CLIENTE: {factura.datos.codigo_cliente_pedido} </td></tr>
                         <tr><td>DIRECCION: {factura.datos.direccion_cliente} </td></tr>
                     </tbody>
                 </table>

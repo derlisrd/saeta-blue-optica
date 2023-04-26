@@ -66,6 +66,7 @@ function DialogEdit() {
           }
           setLoading(true)
           let id = formSelect.id_producto;
+          
           let check = await APICALLER.get({table:'productos',where:`codigo_producto,=,'${datas.codigo_producto}',and,id_producto,<>,${id}`})
           if(check.response && check.found>0){
               setError({active:true,message:'Ya existe código.',code:5})
@@ -74,6 +75,7 @@ function DialogEdit() {
               return false;
           }
           setError(initialError)
+          delete datas.nombre_categoria;
           let res = await APICALLER.update({table:'productos',data:datas,id,token:token_user})
           if(res.response){
               close()

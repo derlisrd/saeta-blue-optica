@@ -98,8 +98,9 @@ function FinalizarPedido() {
     return ( <Dialog open={dialogs.finalizar} onClose={atras} fullScreen >
         <DialogTitle><IconButton onClick={atras}><Icon icon="ic:baseline-arrow-back" /> </IconButton> Imprimir pedido</DialogTitle>
         <DialogContent>
-            {loading && <LinearProgress />}
-            <Ticket factura={factura} nro={nro} userData={userData} />
+            {loading ? <LinearProgress /> :
+            <Ticket factura={factura} nro={nro} userData={userData} /> 
+            }
         </DialogContent>
         <DialogActions>
             {

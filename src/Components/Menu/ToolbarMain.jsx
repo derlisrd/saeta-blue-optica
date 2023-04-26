@@ -5,6 +5,7 @@ import { useMenu } from "./MenuProvider";
 import ProfileMenu from "./ProfileMenu";
 import ThemeToggle from "./ThemeToggle";
 import { env } from "../../App/config";
+import InfoUsuario from "./InfoUsuario";
 
 
 const Icono = ()=>( <Icon icon='mingcute:menu-fill' height={24} ></Icon>)
@@ -39,7 +40,8 @@ function ToolbarMain() {
               <Icono />
             </IconButton>
           </Box>
-          <Stack direction='row' spacing={1} marginRight={1} >
+          <Stack direction='row' alignItems='center' spacing={1} marginRight={1} >
+            <InfoUsuario />
             <ThemeToggle />
             <ProfileMenu />
           </Stack>

@@ -35,10 +35,10 @@ function ListadoProductoProvider({children}) {
         if(searchTxt===''){
         actual_pagina = currentPage;
         }
-        let [res,cat] = await Promise.all([APICALLER.get({table:'productos',
+        let [res,cat] = await Promise.all([APICALLER.get({table:'productos', include:'categorias',on:'id_categoria_producto,id_categoria',
         filtersField:"nombre_producto,codigo_producto",
         filtersSearch:`${searchTxt}`,
-        fields:'min_esferico,max_esferico,min_cilindrico,max_cilindrico,id_producto,nombre_producto,id_categoria_producto,iva_producto,nombre_producto,precio_producto,preciom_producto,tipo_producto,codigo_producto,costo_producto',
+        fields:'nombre_categoria,min_esferico,max_esferico,min_cilindrico,max_cilindrico,id_producto,nombre_producto,id_categoria_producto,iva_producto,nombre_producto,precio_producto,preciom_producto,tipo_producto,codigo_producto,costo_producto',
         pagenumber:actual_pagina,pagesize:pagination.size
         }),
         APICALLER.get({table:'categorias',fields:'nombre_categoria,id_categoria'})

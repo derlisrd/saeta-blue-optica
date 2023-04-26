@@ -7,7 +7,7 @@ const TableInfo = ({icon,title,subtitle}) => {
     <Box padding={1} margin={1} >
     <Stack direction="row" spacing={2}>
         <Box p={1}>
-          <Avatar variant='rounded' >
+          <Avatar variant='rounded' sx={{ padding:'5px' }} >
             {icon && <Icon icon={icon.name}  color="white" height={48} />}
           </Avatar>
         </Box>

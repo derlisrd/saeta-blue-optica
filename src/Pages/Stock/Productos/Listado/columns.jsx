@@ -5,13 +5,20 @@ export const columns = [
     },
     {
         field:'nombre_producto',
-        title:'nombre'
+        title:'Nombre'
+    },
+    {
+      field:'nombre_categoria',
+      title:'Categoria',
+      style:{
+        fontWeight:'bold'
+      }
     },
     {
       field:'precio_producto',
-      title:'precio',
+      title:'Precio',
       isNumber:true
-  },
+    },
     {
         field:'tipo_producto',
         title:'tipo',

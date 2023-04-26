@@ -7,6 +7,7 @@ import { env } from "../App/config";
 
 
 
+
 const Loadable = (Component) => (props) => {
     return (
       <Suspense
@@ -37,6 +38,7 @@ function MainPages() {
           <Route path="productos/edit/:id" element={<EditProduct />} />
           <Route path="pedidos" element={<Pedidos />} />
           <Route path="pedidos/lista" element={<ListaPedidos />} />
+          <Route path="facturas" element={<Facturas />} />
           <Route path="proveedores" element={<Proveedores />} />
           <Route path="empleados" element={<Empleados />} />
           <Route path="usuarios" element={<Usuarios />} />
@@ -68,5 +70,7 @@ const Pedidos = Loadable(lazy(() => import('./Comercial/Pedidos')));
 const ListaPedidos = Loadable(lazy(() => import('./Comercial/ListaPedidos')));
 const Usuarios = Loadable(lazy(() => import('./Administracion/Usuarios')));
 const Perfil = Loadable(lazy(() => import('./Administracion/Usuarios/Perfil')));
+const Facturas = Loadable(lazy(() => import('./Comercial/Facturas')));
 const Empresa = Loadable(lazy(() => import('./Administracion/Empresa')));
+
 export default MainPages;

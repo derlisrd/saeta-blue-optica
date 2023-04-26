@@ -28,6 +28,7 @@ export const ListaMenu = [
         sub:true,
         open:false,
         submenu:[
+            
             {
                 id:41,
                 title:'Pedidos',
@@ -36,8 +37,8 @@ export const ListaMenu = [
             },
             {
                 id:42,
-                title:'Vender',
-                url:'/vender',
+                title:'Facturas',
+                url:'/facturas',
                 icon:'ion:cash-outline'
             },
         ]

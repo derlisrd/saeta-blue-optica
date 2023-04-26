@@ -12,7 +12,7 @@ function Main() {
             <Button size="large" variant="contained" onClick={abrir}>HACER PEDIDO</Button>
             <Button size="large" variant="contained" component={Link} to={BASEURL +'/pedidos/lista'} >LISTA DE PEDIDOS</Button>
         </Stack>
-    </Box>  );
+    </Box>);
 }
 
 export default Main;

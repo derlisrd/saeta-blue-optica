@@ -21,17 +21,22 @@ function ListaPedidosProvider({children}) {
 
     //console.log(fechas);
 
-    const getLista = useCallback(async(searchTxt='')=>{
+    const getLista = useCallback(async(searchTxt='',cliente='')=>{
         setLoading(true)
         let whereFilter = `fecha_pedido,between,'${fechas.desde}',and,'${fechas.hasta}'`
         if(searchTxt!==''){
             whereFilter = `id_pedido,=,${searchTxt}`
         }
+        if(cliente!==''){
+            whereFilter=''
+        }
         //console.log(whereFilter);
         let res = await APICALLER.get({table:'pedidos',include:'clientes,users',
         on:'cliente_id_pedido,id_cliente,id_user,user_id_pedido',
-        fields:'nombre_user,fecha_pedido,id_pedido,nombre_cliente,estado_pedido,codigo_cliente_pedido',
+        fields:'tipo_pedido,total_pedido,nombre_user,fecha_pedido,id_pedido,nombre_cliente,estado_pedido,codigo_cliente_pedido',
         where:whereFilter,
+        filtersSearch:`${cliente}`,
+        filtersField:'ruc_cliente,nombre_cliente'
         })
         if(res.response){
             setListas({pedidos:res.results})

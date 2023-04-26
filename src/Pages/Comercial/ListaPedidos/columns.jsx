@@ -16,6 +16,16 @@ export const columns = [
         title:'cliente'
     },
     {
+      field:'tipo_pedido',
+      title:'Tipo',
+      compareField: "tipo_pedido",
+      items: {
+          "1": "PEDIDO DE VENTA",
+          "2": "CORTESIA",
+          "3": "GARANTIA",
+        },
+    },
+    {
         field:'estado_pedido',
         title:'Estado',
         compareField:"estado_pedido",

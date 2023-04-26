@@ -113,7 +113,7 @@ return (
                                     </TableCell>
                                 ))
                             }
-                            <TableCell align='center'>
+                            <TableCell align='center' className={style.tableCell} >
                                 {
                                     showOptions && <Accions rowProps={data} />
                                 }

@@ -41,13 +41,11 @@ function MenuList({isMobile}) {
 
   const SELECTED = { "&:hover, &.Mui-selected":{borderRadius:'0 18px 18px 0', margin:'0',borderLeftStyle:'solid',borderLeftWidth:'4px',borderLeftColor:'primary.main', "div":{color:'primary.main'},'span':{fontWeight:'bold'}}  }
 
-  return (<SimpleBar forceVisible="y" autoHide={false} style={{ maxHeight: "100vh" }}>
+  return (<SimpleBar forceVisible="y" autoHide={true} style={{ maxHeight: "100vh" }}>
     <Toolbar >
       <Stack direction='row' alignItems='center' justifyContent={isMobile ? 'flex-end':'space-around'} width='100%'>
         {isMobile ? <IconButton onClick={closeMobileMenu} ><Icon icon='ri:menu-fold-line' height={24} /></IconButton> :
-        <> <Icon icon={ICONAPP} height={36} />  <Typography variant="button">{APPNAME}</Typography> </>  
-      }
-         
+        <> <Icon icon={ICONAPP} height={36} />  <Typography variant="button">{APPNAME}</Typography> </>  }
         </Stack>
       </Toolbar>
       <List >

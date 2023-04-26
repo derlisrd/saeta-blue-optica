@@ -19,6 +19,7 @@ function FinalizarPedido() {
     const {dialogs,setDialogs,factura,setearFactura} = usePedidos()
     const [loading,setLoading] = useState(false)
     const [nro,setNro] = useState(0)
+    
     const atras = ()=>{
         if(finalizado){
             setearFactura(initialFactura)

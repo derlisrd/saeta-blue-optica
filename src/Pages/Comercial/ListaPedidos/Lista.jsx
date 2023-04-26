@@ -1,9 +1,10 @@
-import { Button,  Stack, TextField } from "@mui/material";
+import { Button,  Stack, TextField,IconButton } from "@mui/material";
 import Tablas from "../../../Components/Tablas";
 import { useListaPedidos } from "./ListaPedidosProvider";
 import { columns } from "./columns";
 import { useState } from "react";
 import ButtonTip from "../../../Components/Botones/ButtonTip";
+import { Icon } from "@iconify/react";
 
 function Lista() {
     const {listas,loading,setFormSelect,dialogs,setDialogs,setFechas,getLista} = useListaPedidos()
@@ -31,9 +32,7 @@ function Lista() {
 
     const ListaOpciones = ({rowProps})=>(
         <Stack direction='row'>
-            
             <ButtonTip onClick={()=>{cancelar(rowProps)}} icon='ic:twotone-cancel' title='Cancelar pedido' />
-
             <ButtonTip title='Imprimir pedido' onClick={()=>{print(rowProps)}} icon='ic:twotone-print' /> 
         </Stack>
     )
@@ -46,6 +45,7 @@ function Lista() {
             <TextField type="date" fullWidth size="small" error={error.code===1} onChange={e=>{setDesde(e.target.value)}} helperText='desde' />
             <TextField type="date" fullWidth size="small" error={error.code===2} onChange={e=>{setHasta(e.target.value)}} helperText='hasta' />
             <Button variant="outlined" size="large" onClick={filtrar}>Filtrar</Button>
+            <IconButton onClick={getLista}><Icon icon='solar:refresh-circle-bold-duotone' /></IconButton>
         </Stack>
     )
 

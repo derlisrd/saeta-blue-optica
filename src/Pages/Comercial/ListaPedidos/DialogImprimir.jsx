@@ -24,7 +24,7 @@ function DialogImprimir() {
 
     const imprimir = ()=>{
         printJS({ type: "html", printable: "print",
-        style:`#print{width: 80mm;font-weight:bold;font-family:monospace;margin:0 auto;font-size:10px;padding:1rem;}#print h1 {font-size:1rem;text-align: center;}.table_pedido{border-collapse: collapse;border:none;margin:10px auto;width: 80mm;}.table_pedido tr td{padding:5px;}.table_head{font-variant: small-caps;font-weight: bold;border-radius: 8px;background-color: rgb(241, 241, 241);}`
+        style:`#print{width:80mm;font-weight:bold;font-family:monospace;margin:0 auto;font-size:10px;padding:1rem;}#print h1 {font-size:1rem;text-align: center;}.table_pedido{border-collapse: collapse;border:none;margin:10px auto;width: 80mm;}.table_pedido tr td{padding:5px;}.table_head{font-variant: small-caps;font-weight: bold;border-radius: 8px;background-color: rgb(241, 241, 241);}`
         });
     }
 
@@ -65,8 +65,7 @@ function DialogImprimir() {
     }, [getLista]);
 
 
-    return ( <Dialog open={dialogs.imprimir} onClose={atras} fullScreen >
-        <DialogTitle><IconButton onClick={atras}><Icon icon="ic:baseline-arrow-back" /> </IconButton> Imprimir pedido</DialogTitle>
+    return ( <Dialog open={dialogs.imprimir} onClose={atras} fullWidth maxWidth="xs" >
             <DialogContent>
             {loading ? <LinearProgress /> : 
             <div id="print">

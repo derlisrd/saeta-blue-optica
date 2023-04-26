@@ -24,7 +24,7 @@ function BuscarProductos() {
           if(res.response){
             
             //setStock(res.results);
-            
+            //console.log(res.results);
             let min_esferico = parseFloat(val.min_esferico), 
                 max_esferico = parseFloat(val.max_esferico),
                 min_cilindrico = parseFloat(val.min_cilindrico), 
@@ -32,13 +32,13 @@ function BuscarProductos() {
                 new_rangos_esferico = [], new_rangos_cilindrico=[]
                 
                 while (min_esferico <= max_esferico) {
-                    new_rangos_esferico.push(max_esferico.toFixed(2).toString())
+                    new_rangos_esferico.push(max_esferico.toString())
                     max_esferico -= 0.25
                 }
                 
                 
                 while (max_cilindrico >= min_cilindrico) {
-                    new_rangos_cilindrico.push(max_cilindrico.toFixed(2).toString())
+                    new_rangos_cilindrico.push(max_cilindrico.toString())
                     max_cilindrico -= 0.25
                 }
                 
@@ -116,7 +116,7 @@ function BuscarProductos() {
                 disabled={depositoID===''}
                 onChange={insertar}
                 loadingText="Cargando..." loading={loading} noOptionsText="Sin productos en lista..."
-                renderInput={(params) => <TextField  {...params} onChange={e=>setSearch(e.target.value)} label="Buscar producto" />}
+                renderInput={(params) => <TextField   {...params} onChange={e=>setSearch(e.target.value)} label="Buscar producto" />}
             />
         </Grid>
         <Grid item xs={12} sm={4}>

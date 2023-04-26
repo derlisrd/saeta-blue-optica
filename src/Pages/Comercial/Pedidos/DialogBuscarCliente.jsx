@@ -12,6 +12,7 @@ function DialogBuscarCliente() {
     const [loading,setLoading] = useState(false)
     const close = ()=>{ 
         setDialogs({...dialogs,buscar_cliente:false});
+        setCodigo('')
         let new_fact = {...factura}
         new_fact.codigo_cliente_pedido = codigo
         setearFactura(new_fact)
@@ -25,6 +26,7 @@ function DialogBuscarCliente() {
         }
     }
     const openRegistrar = ()=>{ setDialogs({...dialogs,buscar_cliente:false,registrar_cliente:true}) }
+
     const insertar = (e,val)=>{
         let new_fact = {...factura}
         new_fact.cliente = {
@@ -35,6 +37,7 @@ function DialogBuscarCliente() {
         }
         setearFactura(new_fact)
     }
+    
     
     useEffect(()=>{
         const timer = setTimeout(async()=>{

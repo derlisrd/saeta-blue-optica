@@ -33,7 +33,7 @@ function ListaPedidosProvider({children}) {
         //console.log(whereFilter);
         let res = await APICALLER.get({table:'pedidos',include:'clientes,users',
         on:'cliente_id_pedido,id_cliente,id_user,user_id_pedido',
-        fields:'tipo_pedido,total_pedido,nombre_user,fecha_pedido,id_pedido,nombre_cliente,estado_pedido,codigo_cliente_pedido',
+        fields:'estado_pago,total_pedido,tipo_pedido,total_pedido,nombre_user,fecha_pedido,id_pedido,nombre_cliente,estado_pedido,codigo_cliente_pedido',
         where:whereFilter,
         filtersSearch:`${cliente}`,
         filtersField:'ruc_cliente,nombre_cliente'

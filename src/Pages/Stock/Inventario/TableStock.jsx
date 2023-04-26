@@ -1,4 +1,4 @@
-import { Button} from '@mui/material';
+import { Button,Box} from '@mui/material';
 import style from './style.module.css'
 import { useDownloadExcel } from 'react-export-table-to-excel';
 import { Fragment, useEffect, useState,useRef } from 'react';
@@ -57,11 +57,11 @@ function TableStock() {
 
   //console.log(formStock);
 
-  return (<>
-    <h3 style={{ textAlign:'center' }}>CILINDRICO</h3>
+  return (<Box sx={{ margin:'0 8px' }}>
+    <h4 style={{ textAlign:'center' }}>CILINDRICO</h4>
     <table width='100%'  ref={tableRef} className={style.table_stock} border={1}>
       <tbody>
-        <tr>
+        <tr className={style.head}>
           <th>Esferico</th>
           {
             rangos.cilindrico.map((e,i)=>(
@@ -90,7 +90,7 @@ function TableStock() {
       </tbody>
     </table>
     <Button sx={{ mt:2 }} variant='contained' size='large' onClick={onDownload}> Excel </Button>
-    </>
+    </Box>
   );
 }
 

@@ -30,7 +30,8 @@ export const useTablaStyles = makeStyles((theme)=>({
     trtitles:{
         backgroundColor: theme.palette.action.hover,
         "& th ":{
-            border:"none"
+            border:"none",
+            padding:'8px',
         },
         "& :nth-child(1)": {
             borderTopLeftRadius: 8,
@@ -55,13 +56,17 @@ export const useTablaStyles = makeStyles((theme)=>({
           " & :last-child":{
             border:"none"
         }
-        }
+        },
       }, 
     tableCell:{
         [theme.breakpoints.down("md")]: {
             display: "flex !important",
             justifyContent: "space-between",
+            padding:'8px',
           },
+          padding:'0 6px',
+        fontSize:'0.75rem'
+        
     },
     columntitleSpan:{
         display: "none",

@@ -16,6 +16,30 @@ export const columns = [
         title:'cliente'
     },
     {
+      field:'estado_pago',
+      title:'Pago',
+      compareField: "estado_pago",
+      items: {
+          "0": "PENDIENTE...",
+          "1": "PAGADO"
+        },
+      styleFieldCondition: "estado_pago",  
+      styleCondition: {
+        "0": {
+          backgroundColor: "#86042b",
+          padding: "4px",fontWeight:"bold",
+          borderRadius: "5px",
+          color: "#fff",
+        },
+        "1": {
+          backgroundColor: "#eca92d",
+          padding: "4px", fontWeight:"bold",
+          borderRadius: "5px",
+          color: "#000000",
+        },
+      }
+    },
+    {
       field:'tipo_pedido',
       title:'Tipo',
       compareField: "tipo_pedido",

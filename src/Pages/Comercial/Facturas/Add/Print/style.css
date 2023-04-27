@@ -1,0 +1,43 @@
+.print_table_preimpreso{
+    margin:0 auto;
+    width: 220mm;
+    font-family: monospace;
+    margin-top: 21mm;
+    font-size: 10px;
+    font-weight: bold;
+}
+
+.table_inicial td {
+    padding:8px;
+}
+.table_inicial p{
+    line-height: 0;
+    font-size: 12px;
+}
+.table_dos p{
+    font-weight: bold;
+    line-height: 1px;
+}
+
+
+.table_inicial,
+.table_dos{
+    width: 210mm;
+}
+.table_dos td {
+    padding:0;
+}
+.table_descripciones{
+    width: 198mm;
+    margin:6mm auto 0;
+    border-collapse: collapse;
+}
+.table_descripciones td{
+    text-align: center;
+}
+.table_liquidacion{
+    width: 192mm;
+    margin:0 auto;
+    margin-bottom: 12mm;
+    text-align: center;
+}

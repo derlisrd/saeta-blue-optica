@@ -38,7 +38,13 @@ function useInitialStates() {
             cerca_eje_derecho:'0',
             cerca_eje_izquierdo:'0',
             adicion_izquierdo:'0',
-            adicion_derecho:'0'
+            adicion_derecho:'0',
+
+            dnp_izquierdo:'0',
+            dnp_derecho:'0',
+
+            altura_derecho:'0',
+            altura_izquierdo:'0'
         }
     }
 

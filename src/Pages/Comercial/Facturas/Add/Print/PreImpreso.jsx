@@ -8,44 +8,42 @@ function PreImpreso() {
     const handlePrint = useReactToPrint({
         content: () => divRef.current,
       });
-    return (<Dialog open={true} onClose={()=>{}} fullScreen>
+    return (
+      <Dialog open={true} onClose={() => {}} fullScreen>
         <DialogContent>
-        
-            <div id='id_print_preimpreso' className='print_table_preimpreso' ref={divRef}>
-            <table className='table_inicial'  >
-                    <tbody>
-                        <tr>
-                            <td width='70%'>
-                                
-                            </td>
-                            <td align='center'> 
-                                <p>001-001- 000628</p>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <table className='table_dos' >
-                    <tbody>
-                        <tr>
-                            <td width='20%'></td>
-                            <td width='60%'>
-                                <p>24-03-2022</p>
-                                <p>Ruiz Diaz Romero, Derlis Francisco</p>
-                                <p>_</p>
-                                <p>4937724-8</p>
-                            </td>
-                            <td> 
-                                <b>CONTADO</b>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <table className='table_descripciones' border={0} >
+          <div id="id_print_preimpreso" className="print_main" ref={divRef}>
+            <table className="tablas nro_factura">
+              <tbody>
+                <tr>
+                  <td width="70%"></td>
+                  <td width="30%" valign="bottom" align="center">
+                    001-001-0006784
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <table className="tablas info_cliente">
+              <tbody>
+                <tr>
+                  <td width="15%"></td>
+                  <td width="65%">
+                    <p>24-03-2022</p>
+                    <p>Ruiz Diaz Romero, Derlis Francisco</p>
+                    <p>_</p>
+                    <p>4937724-8</p>
+                  </td>
+                  <td>
+                    <b>CONTADO</b>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <table className='tablas descripciones' >
                     <tbody>{
-                        [0,1,2,3,4,5,7,8].map(e=>(
+                        [1].map(e=>(
                             <tr key={e}>
                             <td width='7%'>0039</td>
-                            <td width='5%'>2</td>
+                            <td width='5%'>1</td>
                             <td width='40%'>1.56 AR -5.00 A +4.00 CIL. -2.25 A -4.00</td>
                             <td width='12%'>47.500</td>
                             <td width='12%'>0</td>
@@ -54,63 +52,63 @@ function PreImpreso() {
                         </tr>
                         ))
                      }
-                     <tr>
-                        <td colSpan={4}>
-
-                        </td>
-                        <td>47.500</td>
-                        <td>0</td>
-                        <td>95.000</td>
-                     </tr>
-                     <tr>
-                        <td colSpan={7}> NOVENTA Y CINCO MIL OCHOCIENTOS CATORCE </td>
-                     </tr>
                     </tbody>
                 </table>
-                <table className='table_liquidacion'>
+                <table className='tablas subtotales' >
                     <tbody>
                         <tr>
-                            <td width='32%'></td>
-                            <td width='22%'>0</td>
-                            <td width='22%'>0</td>
-                            <td width='24%'>0</td>
+                            <td width='64%'></td>
+                            <td width='12%'>0</td>
+                            <td width='12%'>0</td>
+                            <td width='12%'>95.000</td>
+                        </tr>
+                        <tr>
+                            <td colSpan={4}> NOVENTA Y CINCO MIL</td>
                         </tr>
                     </tbody>
                 </table>
-                <table className='table_inicial'  >
+                <table className='tablas liquidacion_iva' >
                     <tbody>
                         <tr>
-                            <td width='70%'>
-                                
-                            </td>
-                            <td align='center'> 
-                                <p>001-001- 000628</p>
-                            </td>
+                            <td width='30%'></td>
+                            <td width='20%'>0</td>
+                            <td width='20%'>0</td>
+                            <td width='30%'>95.000</td>
                         </tr>
                     </tbody>
                 </table>
-                <table className='table_dos' >
-                    <tbody>
-                        <tr>
-                            <td width='20%'></td>
-                            <td width='60%'>
-                                <p>24-03-2022</p>
-                                <p>Ruiz Diaz Romero, Derlis Francisco</p>
-                                <p>_</p>
-                                <p>4937724-8</p>
-                            </td>
-                            <td> 
-                                <b>CONTADO</b>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <table className='table_descripciones' border={0} >
+                <table className="tablas nro_factura">
+              <tbody>
+                <tr>
+                  <td width="70%"></td>
+                  <td width="30%" valign="bottom" align="center">
+                    001-001-0006784
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <table className="tablas info_cliente">
+              <tbody>
+                <tr>
+                  <td width="15%"></td>
+                  <td width="65%">
+                    <p>24-03-2022</p>
+                    <p>Ruiz Diaz Romero, Derlis Francisco</p>
+                    <p>_</p>
+                    <p>4937724-8</p>
+                  </td>
+                  <td>
+                    <b>CONTADO</b>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <table className='tablas descripciones' >
                     <tbody>{
-                        [0,1,2,3,4,5,7,8].map(e=>(
+                        [1].map(e=>(
                             <tr key={e}>
                             <td width='7%'>0039</td>
-                            <td width='5%'>2</td>
+                            <td width='5%'>1</td>
                             <td width='40%'>1.56 AR -5.00 A +4.00 CIL. -2.25 A -4.00</td>
                             <td width='12%'>47.500</td>
                             <td width='12%'>0</td>
@@ -119,63 +117,62 @@ function PreImpreso() {
                         </tr>
                         ))
                      }
-                     <tr>
-                        <td colSpan={4}>
-
-                        </td>
-                        <td>47.500</td>
-                        <td>0</td>
-                        <td>95.000</td>
-                     </tr>
-                     <tr>
-                        <td colSpan={7}> NOVENTA Y CINCO MIL OCHOCIENTOS CATORCE </td>
-                     </tr>
                     </tbody>
                 </table>
-                <table className='table_liquidacion'>
+                <table className='tablas subtotales' >
                     <tbody>
                         <tr>
-                            <td width='32%'></td>
-                            <td width='22%'>0</td>
-                            <td width='22%'>0</td>
-                            <td width='24%'>0</td>
+                            <td width='64%'></td>
+                            <td width='12%'>0</td>
+                            <td width='12%'>0</td>
+                            <td width='12%'>95.000</td>
+                        </tr>
+                        <tr>
+                            <td colSpan={4}> NOVENTA Y CINCO MIL</td>
                         </tr>
                     </tbody>
                 </table>
-                <table className='table_inicial'  >
+                <table className='tablas liquidacion_iva' >
                     <tbody>
                         <tr>
-                            <td width='70%'>
-                                
-                            </td>
-                            <td align='center'> 
-                                <p>001-001- 000628</p>
-                            </td>
+                            <td width='30%'></td>
+                            <td width='20%'>0</td>
+                            <td width='20%'>0</td>
+                            <td width='30%'>95.000</td>
                         </tr>
                     </tbody>
-                </table>
-                <table className='table_dos' >
-                    <tbody>
-                        <tr>
-                            <td width='20%'></td>
-                            <td width='60%'>
-                                <p>24-03-2022</p>
-                                <p>Ruiz Diaz Romero, Derlis Francisco</p>
-                                <p>_</p>
-                                <p>4937724-8</p>
-                            </td>
-                            <td> 
-                                <b>CONTADO</b>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <table className='table_descripciones' border={0} >
+                </table><table className="tablas nro_factura">
+              <tbody>
+                <tr>
+                  <td width="70%"></td>
+                  <td width="30%" valign="bottom" align="center">
+                    001-001-0006784
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <table className="tablas info_cliente">
+              <tbody>
+                <tr>
+                  <td width="15%"></td>
+                  <td width="65%">
+                    <p>24-03-2022</p>
+                    <p>Ruiz Diaz Romero, Derlis Francisco</p>
+                    <p>_</p>
+                    <p>4937724-8</p>
+                  </td>
+                  <td>
+                    <b>CONTADO</b>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <table className='tablas descripciones' >
                     <tbody>{
-                        [0,1,2,3,4,5,7,8].map(e=>(
+                        [1].map(e=>(
                             <tr key={e}>
                             <td width='7%'>0039</td>
-                            <td width='5%'>2</td>
+                            <td width='5%'>1</td>
                             <td width='40%'>1.56 AR -5.00 A +4.00 CIL. -2.25 A -4.00</td>
                             <td width='12%'>47.500</td>
                             <td width='12%'>0</td>
@@ -184,35 +181,40 @@ function PreImpreso() {
                         </tr>
                         ))
                      }
-                     <tr>
-                        <td colSpan={4}>
-
-                        </td>
-                        <td>47.500</td>
-                        <td>0</td>
-                        <td>95.000</td>
-                     </tr>
-                     <tr>
-                        <td colSpan={7}> NOVENTA Y CINCO MIL OCHOCIENTOS CATORCE </td>
-                     </tr>
                     </tbody>
                 </table>
-                <table className='table_liquidacion'>
+                <table className='tablas subtotales' >
                     <tbody>
                         <tr>
-                            <td width='32%'></td>
-                            <td width='22%'>0</td>
-                            <td width='22%'>0</td>
-                            <td width='24%'>0</td>
+                            <td width='64%'></td>
+                            <td width='12%'>0</td>
+                            <td width='12%'>0</td>
+                            <td width='12%'>95.000</td>
+                        </tr>
+                        <tr>
+                            <td colSpan={4}> NOVENTA Y CINCO MIL</td>
                         </tr>
                     </tbody>
                 </table>
-            </div>
+                <table className='tablas liquidacion_iva' >
+                    <tbody>
+                        <tr>
+                            <td width='30%'></td>
+                            <td width='20%'>0</td>
+                            <td width='20%'>0</td>
+                            <td width='30%'>95.000</td>
+                        </tr>
+                    </tbody>
+                </table>
+          </div>
         </DialogContent>
         <DialogActions>
-            <Button variant='contained' size='large' onClick={handlePrint} >print</Button>
+          <Button variant="contained" size="large" onClick={handlePrint}>
+            print
+          </Button>
         </DialogActions>
-    </Dialog>);
+      </Dialog>
+    );
 }
 
 export default PreImpreso;

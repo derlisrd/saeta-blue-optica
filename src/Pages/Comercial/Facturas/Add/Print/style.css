@@ -1,43 +1,49 @@
-.print_table_preimpreso{
-    margin:0 auto;
-    width: 220mm;
-    font-family: monospace;
-    margin-top: 21mm;
-    font-size: 10px;
+.print_main{
+    width: 216mm;
+    margin-top: 12mm;
+    margin-left: auto;
+    margin-right: auto;
     font-weight: bold;
 }
 
-.table_inicial td {
-    padding:8px;
-}
-.table_inicial p{
-    line-height: 0;
-    font-size: 12px;
-}
-.table_dos p{
-    font-weight: bold;
-    line-height: 1px;
-}
-
-
-.table_inicial,
-.table_dos{
-    width: 210mm;
-}
-.table_dos td {
-    padding:0;
-}
-.table_descripciones{
-    width: 198mm;
-    margin:6mm auto 0;
-    border-collapse: collapse;
-}
-.table_descripciones td{
-    text-align: center;
-}
-.table_liquidacion{
+.tablas{
     width: 192mm;
     margin:0 auto;
-    margin-bottom: 12mm;
+}
+.nro_factura{
+    height: 19mm;
+    font-size: 12px;
+    font-weight: bold;
+}
+.info_cliente{
+    font-size: 10px;
+    height: 14mm;
+}
+.info_cliente p{
+    line-height: 0px;
+}
+.descripciones{
+    margin-top: 5mm;
+    font-size: 8px;
     text-align: center;
+    height: 33mm;
+    vertical-align: top;
+}
+
+.descripciones tr{
+    padding: 0;
+}
+.descripciones tr td{
+    margin:0; padding: 0;
+    font-size: 8px;
+    vertical-align: top;
+}
+.subtotales{
+    font-size: 8px;
+    text-align: center;
+}
+.liquidacion_iva{
+    font-size: 8px;
+    text-align: center;
+    margin-bottom: 8mm;
 }

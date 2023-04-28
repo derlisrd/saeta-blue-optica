@@ -8,7 +8,7 @@ function Facturas() {
 
 
     return (<FacturasProvider>
-        
+        <PreImpreso />
         <Add />
         <Main />
     </FacturasProvider>);

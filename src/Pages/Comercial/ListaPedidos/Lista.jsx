@@ -27,13 +27,15 @@ function Lista() {
     }
 
     const print = (r)=>{ setFormSelect(r); setDialogs({...dialogs,imprimir:true})}
-    //const entregar = (r)=>{ setFormSelect(r); setDialogs({...dialogs,entregar:true})}
+    const cambioestado = (r)=>{ setFormSelect(r); setDialogs({...dialogs,cambio_estado:true})}
     const cancelar = (r)=> {setFormSelect(r); setDialogs({...dialogs,cancelar:true})}
+
 
     const ListaOpciones = ({rowProps})=>(
         <Stack direction='row'>
             <ButtonTip onClick={()=>{cancelar(rowProps)}} icon='ic:twotone-cancel' title='Cancelar pedido' />
             <ButtonTip title='Imprimir pedido' onClick={()=>{print(rowProps)}} icon='ic:twotone-print' /> 
+            <ButtonTip title='Cambio de estado' onClick={()=>{cambioestado(rowProps)}} icon='material-symbols:change-circle-outline' />
         </Stack>
     )
 

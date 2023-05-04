@@ -4,10 +4,9 @@ function useInitialState() {
     const iDialogs = {
         main:true,
         finalizar:false,
+        nro_factura:false,
         registrar_cliente:false,
         buscar_cliente:false,
-        select_deposito_stock:false,
-        obs:false,
         precio:false
     }
 
@@ -15,6 +14,8 @@ function useInitialState() {
     const initialFactura = {
         items:[],
         total:0,
+        liquiiva5:0,
+        liquiiva10:0,
         iva5:0,
         iva10:0,
         exenta:0,
@@ -22,11 +23,12 @@ function useInitialState() {
             id_cliente:1,
             ruc_cliente:'X',
             nombre_cliente:'SIN NOMBRE',
-            direccion_cliente:''
+            direccion_cliente:'_'
         },
-        tipo_pedido:'1',
+        tipo_factura:'1',
+        nro_factura:'0',
         codigo_cliente_pedido:'',
-        fecha: funciones.fechaActualYMD(),
+        fecha: funciones.getFechaHorarioString(),
         hora: funciones.HoraActualHMS(),
         obs: {
             cliente:'',

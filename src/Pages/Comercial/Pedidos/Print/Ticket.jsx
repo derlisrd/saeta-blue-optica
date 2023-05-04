@@ -8,7 +8,7 @@ function Ticket({factura,userData,nro}) {
     const {dataEmpresa} = useAuth()
     const armazones = env.ARMAZONES.find(e=> e.id_armazon === factura.obs.armazon_id)
     const nombre_armazon = armazones.nombre_armazon
-    return ( <div id="print">
+    return ( <>
     <table className="table_pedido" width='100%'>
         <tbody>
             <tr><td><h1>{dataEmpresa.nombre_empresa}</h1></td></tr>
@@ -51,28 +51,32 @@ function Ticket({factura,userData,nro}) {
         </thead>
         <tbody>
             <tr>
-                <td width='25%'></td>
-                <td width='25%'><b>ESF</b></td>
-                <td width='25%'><b>CIL</b></td>
-                <td width='25%'><b>EJE</b></td>
+                <td width='20%'></td>
+                <td width='20%'><b>ESF</b></td>
+                <td width='20%'><b>CIL</b></td>
+                <td width='20%'><b>EJE</b></td>
+                <td width='20%'>DNP</td>
             </tr>
             <tr>
-                <td width='25%'><b>LEJOS</b></td>
-                <td width='25%'>{factura.receta.lejos_derecho_esferico}</td>
-                <td width='25%'>{factura.receta.lejos_derecho_cilindrico}</td>
-                <td width='25%'>{factura.receta.lejos_eje_derecho}</td>
+                <td width='20%'><b>LEJOS</b></td>
+                <td width='20%'>{factura.receta.lejos_derecho_esferico}</td>
+                <td width='20%'>{factura.receta.lejos_derecho_cilindrico}</td>
+                <td width='20%'>{factura.receta.lejos_eje_derecho}</td>
+                <td width='20%'>{factura.receta.dnp_derecho}</td>
             </tr>
             <tr>
-                <td width='25%'><b>ADICION</b></td>
-                <td width='25%'>{factura.receta.adicion_derecho}</td>
-                <td width='25%'></td>
-                <td width='25%'></td>
+                <td width='20%'><b>ADICION</b></td>
+                <td width='20%'>{factura.receta.adicion_derecho}</td>
+                <td width='20%'></td>
+                <td width='20%'></td>
+                <td width='20%'>ALTURA</td>
             </tr>
             <tr>
-                <td width='25%'><b>CERCA</b></td>
-                <td width='25%'>{factura.receta.cerca_derecho_esferico}</td>
-                <td width='25%'>{factura.receta.cerca_derecho_cilindrico}</td>
-                <td width='25%'>{factura.receta.cerca_eje_derecho}</td>
+                <td width='20%'><b>CERCA</b></td>
+                <td width='20%'>{factura.receta.cerca_derecho_esferico}</td>
+                <td width='20%'>{factura.receta.cerca_derecho_cilindrico}</td>
+                <td width='20%'>{factura.receta.cerca_eje_derecho}</td>
+                <td width='20%'>{factura.receta.altura_derecho}</td>
             </tr>
         </tbody>
     </table>
@@ -85,28 +89,32 @@ function Ticket({factura,userData,nro}) {
         </thead>
         <tbody>
             <tr>
-                <td width='25%'></td>
-                <td width='25%'><b>ESF</b></td>
-                <td width='25%'><b>CIL</b></td>
-                <td width='25%'><b>EJE</b></td>
+                <td width='20%'></td>
+                <td width='20%'><b>ESF</b></td>
+                <td width='20%'><b>CIL</b></td>
+                <td width='20%'><b>EJE</b></td>
+                <td width='20%'><b>DNP</b></td>
             </tr>
             <tr>
-                <td width='25%'><b>LEJOS</b></td>
-                <td width='25%'>{factura.receta.lejos_izquierdo_esferico}</td>
-                <td width='25%'>{factura.receta.lejos_izquierdo_cilindrico}</td>
-                <td width='25%'>{factura.receta.lejos_eje_izquierdo}</td>
+                <td width='20%'><b>LEJOS</b></td>
+                <td width='20%'>{factura.receta.lejos_izquierdo_esferico}</td>
+                <td width='20%'>{factura.receta.lejos_izquierdo_cilindrico}</td>
+                <td width='20%'>{factura.receta.lejos_eje_izquierdo}</td>
+                <td width='20%'><b>{factura.receta.dnp_izquierdo}</b></td>
             </tr>
             <tr>
-                <td width='25%'><b>ADICION</b></td>
-                <td width='25%'>{factura.receta.adicion_izquierdo}</td>
-                <td width='25%'></td>
-                <td width='25%'></td>
+                <td width='20%'><b>ADICION</b></td>
+                <td width='20%'>{factura.receta.adicion_izquierdo}</td>
+                <td width='20%'></td>
+                <td width='20%'></td>
+                <td width='20%'>ALTURA</td>
             </tr>
             <tr>
-                <td width='25%'><b>CERCA</b></td>
-                <td width='25%'>{factura.receta.cerca_izquierdo_esferico}</td>
-                <td width='25%'>{factura.receta.cerca_izquierdo_cilindrico}</td>
-                <td width='25%'>{factura.receta.cerca_eje_izquierdo}</td>
+                <td width='20%'><b>CERCA</b></td>
+                <td width='20%'>{factura.receta.cerca_izquierdo_esferico}</td>
+                <td width='20%'>{factura.receta.cerca_izquierdo_cilindrico}</td>
+                <td width='20%'>{factura.receta.cerca_eje_izquierdo}</td>
+                <td width='20%'>{factura.receta.altura_izquierdo}</td>
             </tr>
         </tbody>
     </table>
@@ -129,7 +137,7 @@ function Ticket({factura,userData,nro}) {
             </tr>
         </tbody>
     </table>
-</div> );
+</> );
 }
 
 export default Ticket;

@@ -1,4 +1,6 @@
 .print_main{
+    color:black;
+    background-color: white;
     width: 216mm;
     margin-top: 12mm;
     margin-left: auto;
@@ -9,6 +11,7 @@
 .tablas{
     width: 192mm;
     margin:0 auto;
+
 }
 .nro_factura{
     height: 19mm;
@@ -18,15 +21,16 @@
 .info_cliente{
     font-size: 10px;
     height: 14mm;
+    margin-top: 4mm;
 }
 .info_cliente p{
-    line-height: 0px;
+    line-height: 2px;
 }
 .descripciones{
-    margin-top: 5mm;
-    font-size: 8px;
+    margin-top: 7mm;
+    font-size: 10px;
     text-align: center;
-    height: 33mm;
+    height: 38mm;
     vertical-align: top;
 }
 
@@ -35,7 +39,7 @@
 }
 .descripciones tr td{
     margin:0; padding: 0;
-    font-size: 8px;
+    font-size: 10px;
     vertical-align: top;
 }
 .subtotales{
@@ -45,5 +49,5 @@
 .liquidacion_iva{
     font-size: 8px;
     text-align: center;
-    margin-bottom: 8mm;
+    margin-bottom: 9mm;
 }

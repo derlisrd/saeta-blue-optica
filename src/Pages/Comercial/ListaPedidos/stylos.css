@@ -1,5 +1,5 @@
-#print{font-family:monospace; margin:0 auto; font-size:10px; width: 80mm; padding:1rem; font-weight: bold;}
-#print h1 {
+#print_2{font-family:monospace; margin:0 auto; font-size:10px; width: 80mm; padding:0; font-weight: bold;}
+#print_2 h1 {
     font-size:1rem;
     text-align: center;
 }
@@ -7,10 +7,11 @@
     border-collapse: collapse;
     border:none;
     margin:10px auto;
-    width: 80mm;
+    width: 78mm;
 }
 .table_pedido tr td{
     padding:5px;
+    border: 1px solid black;
 }
 .table_head{
     font-variant: small-caps;

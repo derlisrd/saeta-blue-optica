@@ -8,7 +8,7 @@ const ListaPedidosContext = createContext()
 function ListaPedidosProvider({children}) {
 
     
-    const [dialogs,setDialogs] = useState({imprimir:false,entregar:false,cancelar:false})
+    const [dialogs,setDialogs] = useState({imprimir:false,entregar:false,cancelar:false,cambio_estado:false})
     const [loading,setLoading] = useState(true)
     const [formSelect,setFormSelect] = useState({})
     const [fechas,setFechas] = useState({

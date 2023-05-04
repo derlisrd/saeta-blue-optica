@@ -1,3 +1,4 @@
+import swal from "sweetalert";
 import { TextField } from "@mui/material";
 import { useInventario } from "./InventarioProvider";
 import { useEffect, useState } from "react";
@@ -28,7 +29,7 @@ function CorregirInput() {
                 
                 let res = await APICALLER.update({table:'productos_depositos',data:{stock_producto_deposito: f.stock_producto_deposito},id:f.id_productos_deposito, token:token_user})
                 if(!res.response){
-                    console.log(res);
+                   swal({text:'Ocurrió un error',title:'error',icon:'warning',timer:2000})
                 }
                 
             }else{

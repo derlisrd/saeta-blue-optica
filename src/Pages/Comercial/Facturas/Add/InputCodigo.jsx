@@ -18,10 +18,9 @@ function InputCodigo() {
         if(val){
             let new_fact = {...factura}
             let tipo =  parseInt(val.tipo_producto), id_producto = val.id_producto
-            let index = new_fact.items.findIndex(e => e.codigo.toLowerCase() === val.codigo_producto.toLowerCase());
-            let found = new_fact.items.filter(i => i.codigo.toLowerCase() === val.codigo_producto.toLowerCase());
+            let index = new_fact.items.findIndex(e => e.codigo_producto.toLowerCase() === val.codigo_producto.toLowerCase());
+            let found = new_fact.items.filter(i => i.codigo_producto.toLowerCase() === val.codigo_producto.toLowerCase());
             
-            console.log(val);
 
             if (found.length > 0) {
                 new_fact.items[index].cantidad += 1 
@@ -32,9 +31,9 @@ function InputCodigo() {
                     precio_normal:parseFloat(val.precio_producto),
                     precio: parseFloat(val.precio_producto),
                     preciom: parseFloat(val.preciom_producto),
-                    descripcion:val.nombre_producto,
+                    nombre_producto:val.nombre_producto,
                     id_producto,
-                    codigo:val.codigo_producto,
+                    codigo_producto:val.codigo_producto,
                     tipo,
                     iva:parseInt(val.iva_producto)                 
                 }

@@ -1,217 +1,96 @@
 import {Dialog,DialogContent,DialogActions, Button} from '@mui/material'
 import './style.css'
-import { useRef } from 'react';
+import { useRef,useState } from 'react';
 import { useReactToPrint } from 'react-to-print';
+import { useFacturas } from '../FacturasProvider';
+import TablasDatos from './TablasDatos';
+import LoadingPage from '../../../../../Components/UI/LoadingPage';
+import { useAuth } from '../../../../../Providers/AuthProvider';
+import { APICALLER } from '../../../../../Services/api';
 
 function PreImpreso() {
+    const {userData} = useAuth()
+    const {token_user,id_user} = userData
+    const {factura,dialogs,setDialogs,initialFactura,setearFactura} = useFacturas();
+    const [grabado,setGrabado] = useState(false)
+    const [loading,setLoading] = useState(false)
+    const limpiar = ()=>{
+      setearFactura(initialFactura)
+      close()
+      setGrabado(false)
+    }
     const divRef = useRef();
     const handlePrint = useReactToPrint({
         content: () => divRef.current,
       });
+
+    const grabarFactura = async()=>{
+      
+      setLoading(true)
+      let data = {
+        tipo_factura: factura.tipo_factura,
+        cliente_id: factura.cliente.id_cliente,
+        user_id: id_user,
+        total_exenta: factura.exenta,
+        total_iva5: factura.iva5,
+        total_iva10: factura.iva10,
+        total_factura: factura.total,
+        fecha_factura: factura.fecha,
+        fecha_cobro_factura: factura.fecha,
+        nro_factura: factura.nro_factura
+      }
+      console.log(data);
+      let res = await APICALLER.insert({table:'facturas',data,token:token_user})
+      if(res.response){
+        let LAST_ID = res.last_id;
+        let promises = []
+        factura.items.forEach(el => {
+          let data = {
+            factura_id: LAST_ID,
+            producto_id: el.id_producto,
+            cantidad_item: el.cantidad,
+            precio_item: el.precio,
+            iva_item: el.iva
+          }
+          promises.push(APICALLER.insert({table:'facturas_items',data,token:token_user}))
+        });
+        setGrabado(true)
+      }else{
+        console.log(res);
+      } 
+      setLoading(false)
+    }  
+    
+    const close = ()=> { setDialogs({...dialogs,finalizar:false}) }  
+
     return (
-      <Dialog open={true} onClose={() => {}} fullScreen>
+      <Dialog open={dialogs.finalizar} onClose={() => {}} fullScreen>
         <DialogContent>
-          <div id="id_print_preimpreso" className="print_main" ref={divRef}>
-            <table className="tablas nro_factura">
-              <tbody>
-                <tr>
-                  <td width="70%"></td>
-                  <td width="30%" valign="bottom" align="center">
-                    001-001-0006784
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            <table className="tablas info_cliente">
-              <tbody>
-                <tr>
-                  <td width="15%"></td>
-                  <td width="65%">
-                    <p>24-03-2022</p>
-                    <p>Ruiz Diaz Romero, Derlis Francisco</p>
-                    <p>_</p>
-                    <p>4937724-8</p>
-                  </td>
-                  <td>
-                    <b>CONTADO</b>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            <table className='tablas descripciones' >
-                    <tbody>{
-                        [1].map(e=>(
-                            <tr key={e}>
-                            <td width='7%'>0039</td>
-                            <td width='5%'>1</td>
-                            <td width='40%'>1.56 AR -5.00 A +4.00 CIL. -2.25 A -4.00</td>
-                            <td width='12%'>47.500</td>
-                            <td width='12%'>0</td>
-                            <td width='12%'>0</td>
-                            <td width='12%'>95.000</td>
-                        </tr>
-                        ))
-                     }
-                    </tbody>
-                </table>
-                <table className='tablas subtotales' >
-                    <tbody>
-                        <tr>
-                            <td width='64%'></td>
-                            <td width='12%'>0</td>
-                            <td width='12%'>0</td>
-                            <td width='12%'>95.000</td>
-                        </tr>
-                        <tr>
-                            <td colSpan={4}> NOVENTA Y CINCO MIL</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <table className='tablas liquidacion_iva' >
-                    <tbody>
-                        <tr>
-                            <td width='30%'></td>
-                            <td width='20%'>0</td>
-                            <td width='20%'>0</td>
-                            <td width='30%'>95.000</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <table className="tablas nro_factura">
-              <tbody>
-                <tr>
-                  <td width="70%"></td>
-                  <td width="30%" valign="bottom" align="center">
-                    001-001-0006784
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            <table className="tablas info_cliente">
-              <tbody>
-                <tr>
-                  <td width="15%"></td>
-                  <td width="65%">
-                    <p>24-03-2022</p>
-                    <p>Ruiz Diaz Romero, Derlis Francisco</p>
-                    <p>_</p>
-                    <p>4937724-8</p>
-                  </td>
-                  <td>
-                    <b>CONTADO</b>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            <table className='tablas descripciones' >
-                    <tbody>{
-                        [1].map(e=>(
-                            <tr key={e}>
-                            <td width='7%'>0039</td>
-                            <td width='5%'>1</td>
-                            <td width='40%'>1.56 AR -5.00 A +4.00 CIL. -2.25 A -4.00</td>
-                            <td width='12%'>47.500</td>
-                            <td width='12%'>0</td>
-                            <td width='12%'>0</td>
-                            <td width='12%'>95.000</td>
-                        </tr>
-                        ))
-                     }
-                    </tbody>
-                </table>
-                <table className='tablas subtotales' >
-                    <tbody>
-                        <tr>
-                            <td width='64%'></td>
-                            <td width='12%'>0</td>
-                            <td width='12%'>0</td>
-                            <td width='12%'>95.000</td>
-                        </tr>
-                        <tr>
-                            <td colSpan={4}> NOVENTA Y CINCO MIL</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <table className='tablas liquidacion_iva' >
-                    <tbody>
-                        <tr>
-                            <td width='30%'></td>
-                            <td width='20%'>0</td>
-                            <td width='20%'>0</td>
-                            <td width='30%'>95.000</td>
-                        </tr>
-                    </tbody>
-                </table><table className="tablas nro_factura">
-              <tbody>
-                <tr>
-                  <td width="70%"></td>
-                  <td width="30%" valign="bottom" align="center">
-                    001-001-0006784
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            <table className="tablas info_cliente">
-              <tbody>
-                <tr>
-                  <td width="15%"></td>
-                  <td width="65%">
-                    <p>24-03-2022</p>
-                    <p>Ruiz Diaz Romero, Derlis Francisco</p>
-                    <p>_</p>
-                    <p>4937724-8</p>
-                  </td>
-                  <td>
-                    <b>CONTADO</b>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            <table className='tablas descripciones' >
-                    <tbody>{
-                        [1].map(e=>(
-                            <tr key={e}>
-                            <td width='7%'>0039</td>
-                            <td width='5%'>1</td>
-                            <td width='40%'>1.56 AR -5.00 A +4.00 CIL. -2.25 A -4.00</td>
-                            <td width='12%'>47.500</td>
-                            <td width='12%'>0</td>
-                            <td width='12%'>0</td>
-                            <td width='12%'>95.000</td>
-                        </tr>
-                        ))
-                     }
-                    </tbody>
-                </table>
-                <table className='tablas subtotales' >
-                    <tbody>
-                        <tr>
-                            <td width='64%'></td>
-                            <td width='12%'>0</td>
-                            <td width='12%'>0</td>
-                            <td width='12%'>95.000</td>
-                        </tr>
-                        <tr>
-                            <td colSpan={4}> NOVENTA Y CINCO MIL</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <table className='tablas liquidacion_iva' >
-                    <tbody>
-                        <tr>
-                            <td width='30%'></td>
-                            <td width='20%'>0</td>
-                            <td width='20%'>0</td>
-                            <td width='30%'>95.000</td>
-                        </tr>
-                    </tbody>
-                </table>
+          {
+            loading ? <LoadingPage /> : <div id="id_print_preimpreso" className="print_main" ref={divRef}>
+            <TablasDatos factura={factura} />
+            <TablasDatos factura={factura} />
+            <TablasDatos factura={factura} />
           </div>
+          }
         </DialogContent>
         <DialogActions>
-          <Button variant="contained" size="large" onClick={handlePrint}>
-            print
+          {
+            grabado ? <Button variant="contained" size="large" onClick={limpiar} >
+            Cerrar
+          </Button> : 
+            <Button variant="contained" size="large" onClick={close} >
+            Volver  
           </Button>
+          }
+          {
+            grabado ? <Button variant="contained" size="large" onClick={handlePrint}>
+            Imprimir
+          </Button> : 
+          <Button variant="contained" size="large" onClick={grabarFactura}>
+            Grabar factura
+          </Button>
+          }
         </DialogActions>
       </Dialog>
     );

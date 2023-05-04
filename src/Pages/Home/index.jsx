@@ -1,8 +1,8 @@
 import { Icon } from "@iconify/react";
-import { Box, Grid, Typography } from "@mui/material";
+import { Box,  Typography } from "@mui/material";
 
 function Home() {
-    return (<Box sx={{ height:'60vh',display:'flex',alignItems:'center',justifyContent:'center',gap:'8px',flexDirection:'column' }}>
+    return (<Box sx={{ display:'flex',alignItems:'center',justifyContent:'center',gap:'8px',flexDirection:'column' }}>
 
                 <Icon icon='emojione:lion-face' height={240} />
                 <Typography variant="h3">

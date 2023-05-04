@@ -55,8 +55,8 @@ function TableItems() {
                                 <IconButton onClick={()=>{mas(i)}}><Icon icon="ic:outline-plus" /></IconButton>
                             </Stack>
                         </td>
-                        <td width="20%">{e.codigo}</td>
-                        <td width="30%">{e.descripcion}</td>
+                        <td width="20%">{e.codigo_producto}</td>
+                        <td width="30%">{e.nombre_producto}</td>
                         <td width="20%">{ f.numberFormat(e.precio)}</td>
                         <td width="5%">{ e.iva}</td>
                         <td width="20%">

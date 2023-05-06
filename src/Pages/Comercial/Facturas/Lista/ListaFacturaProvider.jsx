@@ -21,8 +21,14 @@ function ListaFacturaProvider({children}) {
     const getLista = useCallback(async(searchTxt='',cliente='')=>{
         setLoading(true)
         let whereFilter = `fecha_factura,between,'${fechas.desde}',and,'${fechas.hasta}'`
+        let busca_cliente = cliente;
+        let filterField = 'ruc_cliente,nombre_cliente';
+
         if(searchTxt!==''){
-            whereFilter = `nro_factura,=,${searchTxt}`
+            //whereFilter = `nro_factura,LIKE,'%${searchTxt}%'`
+            busca_cliente = searchTxt
+            filterField = 'nro_factura'
+            whereFilter=''
         }
         if(cliente!==''){
             whereFilter=''
@@ -32,15 +38,20 @@ function ListaFacturaProvider({children}) {
         on:'cliente_id,id_cliente,id_user,user_id',
         fields:'id_factura,nro_factura,nombre_cliente,ruc_cliente,tipo_factura,total_factura,nombre_user,fecha_factura,tipo_factura,factura_pagado',
         where:whereFilter,
-        filtersSearch:`${cliente}`,
-        filtersField:'ruc_cliente,nombre_cliente',
+        filtersSearch:`${busca_cliente}`,
+        filtersField:filterField,
         sort:'id_factura'
         }),
         APICALLER.get({table:'facturas',where:`fecha_factura,between,'${fechas.desde}',and,'${fechas.hasta}'`,fields:'SUM(total_factura) as monto_total'})
         ])
         if(res.response){
+            let facturas = []
+            res.results.forEach(elem=>{
+                let condicion = elem.tipo_factura === '1' ? 'Contado' : 'Credito'
 
-            setListas({facturas:res.results,total: totales.first.monto_total })
+                facturas.push({...elem,condicion,total_factura : parseFloat(elem.total_factura)})
+            })
+            setListas({facturas,total: totales.first.monto_total })
         }else{
             console.log(res);
         }

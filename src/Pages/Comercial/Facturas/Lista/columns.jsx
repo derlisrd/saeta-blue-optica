@@ -1,3 +1,13 @@
+export const columnsData = [
+  { label: "FECHA", value: "fecha_factura" },
+  { label: 'NRO', value:"nro_factura"},
+  { label: 'RUC', value:"ruc_cliente"},
+  { label: 'CLIENTE', value:"nombre_cliente"},
+  { label: 'CONDICION', value:"condicion"},
+  { label: 'TOTAL', value:"total_factura"},
+]
+
+
 export const columns = [
     {
         field:'id_factura',
@@ -71,5 +81,4 @@ export const columns = [
             fontWeight:'bold'
         }
     },
-    
 ]

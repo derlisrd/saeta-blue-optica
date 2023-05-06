@@ -10,7 +10,10 @@ function FacturasProvider({children}) {
     const {iDialogs,initialFactura} = useInitialState()
     const [dialogs,setDialogs] = useState(iDialogs)
     const [pedidos,setPedidos] = useState([])
-    const [factura,setFactura] = useState(initialFactura)
+    const [factura,setFactura] = useState(()=>{
+        let sto = JSON.parse(localStorage.getItem('factura'))
+        return sto ?? initialFactura
+    })
     const [indexCambioPrecio,setIndexCambioPrecio] = useState(-1)
 
     const setearFactura = (obj)=>{
@@ -29,6 +32,7 @@ function FacturasProvider({children}) {
         obj.iva5 = iva5;
         obj.exenta = exenta;
         setFactura(obj)
+        localStorage.setItem('factura',JSON.stringify(obj))
     }
 
     const values = {dialogs,setDialogs,indexCambioPrecio,setIndexCambioPrecio,factura,setearFactura,initialFactura,pedidos,setPedidos}

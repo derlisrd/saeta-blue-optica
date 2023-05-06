@@ -1,18 +1,39 @@
 import Tablas from "../../../../Components/Tablas";
-import { Button,  Stack, TextField,IconButton, Grid, Alert } from "@mui/material";
+import { Button,  Stack, TextField, Grid, Alert} from "@mui/material";
 import useGotoNavigate from "../../../../Hooks/useGotoNavigate";
 import { useListaFactura } from "./ListaFacturaProvider";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ButtonTip from "../../../../Components/Botones/ButtonTip";
-import { columns } from "./columns";
+import { columns, columnsData } from "./columns";
 import { funciones } from "../../../../App/helpers/funciones";
+import SelectCondicion from "./SelectCondicion";
+import xlsx from "json-as-xlsx"
 
 function Lista() {
     const {listas,loading,setFechas,getLista} = useListaFactura()
+    const [listaFiltrada,setListaFiltrada] = useState([])
+    const [totalVenta,setTotalVenta] = useState(0)
     const {navigate} = useGotoNavigate()
     const [error,setError] = useState({code:0})
     const [desde,setDesde] = useState('')
     const [hasta,setHasta] = useState('')
+
+    const downloadExcel = () => {
+        let data = [
+          {
+            sheet: "Facturas",
+            columns: columnsData,
+            content: listaFiltrada,
+          },
+          
+        ]
+        let settings = {
+          fileName: "Facturas",
+        }
+        xlsx(data, settings)
+      }
+
+
 
     const filtrar = ()=>{
         if(desde===''){
@@ -35,35 +56,60 @@ function Lista() {
         </Stack>
     )
 
-    //console.log(listas);
+    const filtarCondicion = (e)=>{
+        let old_list = [...listas.facturas]
+        
+        const {value} = e.target
+        if(value ==='0'){
+            setListaFiltrada(listas.facturas)
+            setTotalVenta(listas.total)
+            return
+        }
+        let result =  old_list.filter(elem => elem.tipo_factura === value);
+        let new_total = 0;
+        result.forEach(element => {
+            new_total += parseFloat(element.total_factura)
+        });
+        setTotalVenta(new_total)
+        setListaFiltrada(result)
+    }
+
 
     const Inputs = (
-        <Grid container spacing={2}>
+        <Grid container spacing={2} alignItems='center' justifyContent='flex-start'>
             <Grid item xs={12}>
                 <Button onClick={navegar} variant="contained" size="large">Nueva Factura</Button>
             </Grid>
             <Grid item xs={12}>
             <Stack direction={{ xs:'column',md:'row' }} sx={{ maxWidth:{md:'1100px'} }} spacing={1} alignItems='flex-start'>
-            <TextField size="small" fullWidth onKeyUp={e=>{ e.key==='Enter' && getLista(e.target.value) }} helperText='Ingrese el nro, presione Enter' label='Número de factura' />
-            <TextField size="small" fullWidth onKeyUp={e=>{ e.key==='Enter' && getLista('',e.target.value) }} helperText='Ingrese el doc o nombre, presione Enter' label='Ruc o nombre de cliente' />
+            <TextField size="small" fullWidth onKeyUp={e=>{ e.key==='Enter' && getLista(e.target.value) }} helperText='Número de factura' label='Número' />
+            <TextField size="small" fullWidth onKeyUp={e=>{ e.key==='Enter' && getLista('',e.target.value) }} helperText='Ruc o Nombre' label='Cliente' />
             <TextField type="date" fullWidth size="small" error={error.code===1} onChange={e=>{setDesde(e.target.value)}} helperText='desde' />
             <TextField type="date" fullWidth size="small" error={error.code===2} onChange={e=>{setHasta(e.target.value)}} helperText='hasta' />
+            <SelectCondicion onChange={filtarCondicion}  />
             <Button variant="outlined" size="large" onClick={filtrar}>Filtrar</Button>
             <ButtonTip title='Actualizar' onClick={()=>{getLista('','')}} icon='solar:refresh-circle-bold-duotone' />
             </Stack>
             </Grid>
-            <Grid item xs={12} sm={4}>
-                <Alert icon={false}>Total: { funciones.numberFormat( listas.total)}</Alert>
+            <Grid item xs={12} sm={3} md={2}>
+                <Button variant="outlined" fullWidth onClick={downloadExcel} color='success'>EXCEL</Button>
+            </Grid>
+            <Grid item xs={12} sm={4} md={3}>
+                <Alert icon={false}>Total: { funciones.numberFormat(totalVenta)}</Alert>
             </Grid>
         </Grid>
     )
 
+    useEffect(()=>{
+        setListaFiltrada(listas.facturas)
+        setTotalVenta(listas.total)
+    },[listas])
 
     return (<Tablas
         title="Factura"
         subtitle='Listado de facturas'
         inputs={Inputs}
-        datas={listas.facturas}
+        datas={listaFiltrada}
         loading={loading}
         icon={{ name:'ic:baseline-receipt-long' }}
         showOptions

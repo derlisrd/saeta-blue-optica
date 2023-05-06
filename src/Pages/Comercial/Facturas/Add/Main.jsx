@@ -1,11 +1,12 @@
 import { Dialog, DialogContent, Grid, IconButton, DialogTitle,Stack,Button} from "@mui/material";
 import { useFacturas } from "./FacturasProvider";
-import { Icon } from "@iconify/react";
+
 import TableItems from "./TableItems";
 import InputCodigo from "./InputCodigo";
 import { funciones } from "../../../../App/helpers/funciones";
 import Botones from "./Botones";
 import SelectTipo from "./SelectTipo";
+import IconButtonTip from "../../../../Components/Botones/IconButtonTip";
 
 
 function Main() {
@@ -16,7 +17,7 @@ function Main() {
     const openNroFactura = ()=>{ setDialogs({...dialogs,nro_factura:true})}
 
     return ( <Dialog open={dialogs.main} fullScreen onClose={()=>{}} >
-    <DialogTitle><IconButton onClick={close} ><Icon icon="ic:twotone-close" /> </IconButton>  Factura - Total: { funciones.numberFormat( factura.total)} </DialogTitle>
+    <DialogTitle><IconButtonTip onClick={close} title='Cerrar factura' icon={{ name:'close' }} /> Factura - Total: { funciones.numberFormat( factura.total)} </DialogTitle>
     <DialogContent>
         <Grid container spacing={2}>
             <Grid item xs={12}>

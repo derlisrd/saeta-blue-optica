@@ -1,9 +1,8 @@
-import { IconButton, Stack } from "@mui/material";
-
-import { Icon } from "@iconify/react";
+import { IconButton, Stack,Icon } from "@mui/material";
 import styles from './styles.module.css'
 import { useFacturas } from "./FacturasProvider";
 import { funciones as f } from "../../../../App/helpers/funciones";
+import IconButtonTip from "../../../../Components/Botones/IconButtonTip";
 
 function TableItems() {
 
@@ -49,10 +48,10 @@ function TableItems() {
                 factura.items.map((e,i)=>(
                     <tr key={i} className={styles.items}>
                         <td width="5%">
-                            <Stack spacing={0} direction="row" alignContent="flex-start" justifyContent="flex-start" >
-                                <IconButton onClick={()=>{menos(i)}}><Icon icon="ic:outline-minus" /></IconButton>
+                            <Stack spacing={0} direction="row" alignContent="center" justifyContent="center" >
+                                <IconButtonTip title='Menos' onClick={()=>{menos(i)}} icon={{ name:'remove', color:'inherit' }} />
                                 <span className={styles.cantidad} >{e.cantidad}</span>
-                                <IconButton onClick={()=>{mas(i)}}><Icon icon="ic:outline-plus" /></IconButton>
+                                <IconButtonTip onClick={()=>{mas(i)}} title="Más" icon={{ name:'add', color:'inherit' }}  />
                             </Stack>
                         </td>
                         <td width="20%">{e.codigo_producto}</td>
@@ -61,8 +60,8 @@ function TableItems() {
                         <td width="5%">{ e.iva}</td>
                         <td width="20%">
                             <Stack direction="row">
-                                <IconButton onClick={()=>{precio(i)}}><Icon icon="solar:tag-price-bold-duotone" /></IconButton>
-                                <IconButton onClick={()=>{borrar(i)}}><Icon color="red" icon="tabler:trash" /></IconButton>
+                                <IconButtonTip onClick={()=>{precio(i)}} title='Cambia precio' icon={{ name:'price_change',color:'warning' }} />
+                                <IconButtonTip onClick={()=>{borrar(i)}} title='Borrar item' icon={{ name:'delete_forever',color:'error' }} />
                             </Stack>
                         </td>
                     </tr>

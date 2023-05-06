@@ -31,9 +31,13 @@ function PedidosProvider({children}) {
     const [selectProduct, setSelectProduct] = useState({})
     const [formDepositoStock,setFormDepositoStock] = useState([])
     const [seleccionado,setSeleccionado] = useState([])
-    const [factura,setFactura] = useState(initialFactura)
+    const [factura,setFactura] = useState(()=>{
+        let sto = JSON.parse(localStorage.getItem('pedido'))
+        return sto ?? initialFactura
+    })
     const [indexCambioPrecio,setIndexCambioPrecio] = useState(-1)
     const [lastID,setLastID] = useState('')
+    
     const setearFactura = (obj)=>{
         let total = 0,iva5=0,iva10=0,exenta=0;
         
@@ -50,7 +54,7 @@ function PedidosProvider({children}) {
         obj.iva5 = iva5;
         obj.exenta = exenta;
         setFactura(obj)
-        
+        localStorage.setItem('pedido',JSON.stringify(obj))
     }
 
     const values = {lastID,setLastID,indexCambioPrecio,setIndexCambioPrecio,dialogs,setDialogs,factura,setFactura,setearFactura,initialFactura,formDepositoStock,setFormDepositoStock,seleccionado,setSeleccionado,cargas,setCargas,selectProduct, setSelectProduct,token_user}

@@ -17,20 +17,40 @@ function DialogInsertarPedido() {
         const myFormData = new FormData(e.target);
         const data = Object.fromEntries(myFormData.entries());
         setLoading(true)
+        setError({active:false,message:''})
         let [res,client] = await Promise.all([APICALLER.get({table:'pedidos_items',
         fields:'precio_venta_item,nombre_producto,codigo_producto,cantidad_pedido,id_producto,iva_producto,precio_producto,preciom_producto',
         include:'productos',on:'producto_id_item,id_producto',where:`pedido_id,=,${data.nro_pedido}`}),
         APICALLER.get({table:'pedidos',include:'clientes',on:'id_cliente,cliente_id_pedido',
         where:`id_pedido,=,${data.nro_pedido}`,
-        fields:'nombre_cliente,ruc_cliente,direccion_cliente,id_cliente'})
+        fields:'nombre_cliente,ruc_cliente,direccion_cliente,id_cliente,estado_pedido,facturado_pedido'})
         ])
         
+        if(res.found===0 && res.response){
+          setLoading(false)
+          setError({active:true,message:'Número de pedido no existe'})
+          return false;
+        }
         
         if(res.response && res.found>0 && client.response){
+
           let p = [...pedidos]
           p.push(data.nro_pedido)
           let f  = {...factura}
-          console.log(f.cliente, client.first);
+          
+          if(client.first.estado_pedido === '0'){
+            setLoading(false)
+            setError({active:true,message:'Este pedido fue cancelado'})
+            return false;
+          }
+
+          if(client.first.facturado_pedido === '1'){
+            setLoading(false)
+            setError({active:true,message:'Este pedido ya fue facturado'})
+            return false;
+          }
+          
+
           if(pedidos.length>0 && (f.cliente.id_cliente !== client.first.id_cliente)){
               setLoading(false)
               setError({active:true,message:'Ese pedido pertenece a otro cliente'})
@@ -88,7 +108,7 @@ function DialogInsertarPedido() {
               }
             </Grid>
             <Grid item xs={12}>
-                <TextField required name="nro_pedido" fullWidth autoFocus />
+                <TextField required autoComplete="off" name="nro_pedido" fullWidth autoFocus />
             </Grid>
           </Grid>
         </DialogContent>

@@ -31,7 +31,7 @@ function Botones() {
             color="info"
             fullWidth
           >
-            CANCELAR PEDIDO
+            CANCELAR
           </Button>
         </>
       )}

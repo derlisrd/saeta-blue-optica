@@ -3,6 +3,7 @@ import { APICALLER } from '../Services/api';
 import {  env } from "../App/config";
 import CryptoJS from "crypto-js";
 import { funciones } from '../App/helpers/funciones';
+import swal from 'sweetalert';
 
 
 const LoginContext = createContext()
@@ -134,7 +135,8 @@ const AuthProvider = ({children}) => {
                 APICALLER.get({table:"permisos_users",where:`id_user_permiso,=,${userData.id_user}`,fields:"id_permiso_permiso"})
             ]);
               if (!validate.response ) {
-                  console.log(validate)
+                  //console.log(validate)
+                  swal({icon:'info',title:'Error de conexión', text:'Tienes problemas de conexión? Ocurrió un error.'})
                   logOut()
               }
               if(permisos.response){

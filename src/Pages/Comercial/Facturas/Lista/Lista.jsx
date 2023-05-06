@@ -91,9 +91,9 @@ function Lista() {
             <ButtonTip title='Actualizar' onClick={()=>{getLista('','')}} icon='solar:refresh-circle-bold-duotone' />
             </Stack>
             </Grid>
-            <Grid item xs={12} sm={3} md={2}>
+            {listaFiltrada.length>0 && <Grid item xs={12} sm={3} md={2}>
                 <Button variant="outlined" fullWidth onClick={downloadExcel} color='success'>EXCEL</Button>
-            </Grid>
+            </Grid>}
             <Grid item xs={12} sm={4} md={3}>
                 <Alert icon={false}>Total: { funciones.numberFormat(totalVenta)}</Alert>
             </Grid>

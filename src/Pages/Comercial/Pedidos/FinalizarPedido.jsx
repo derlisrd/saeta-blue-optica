@@ -10,6 +10,7 @@ import { useState,useCallback,useEffect } from "react";
 import { APICALLER } from "../../../Services/api";
 import useInitialStates from "./useInitialStates";
 import Ticket from "./Print/Ticket";
+import swal from "sweetalert";
 
 function FinalizarPedido() {
 
@@ -17,7 +18,7 @@ function FinalizarPedido() {
     const {userData} = useAuth()
     const [finalizado,setFinalizado] = useState(false)
     const {token_user,id_user} = userData
-    const {dialogs,setDialogs,factura,setearFactura} = usePedidos()
+    const {dialogs,setDialogs,factura,setearFactura,lastID,setLastID} = usePedidos()
     const [loading,setLoading] = useState(false)
     const [nro,setNro] = useState(0)
     
@@ -44,7 +45,8 @@ function FinalizarPedido() {
             estado_pedido:1,
             tipo_pedido:f.tipo_pedido,
             user_id_pedido:id_user,
-            codigo_cliente_pedido: f.codigo_cliente_pedido
+            codigo_cliente_pedido: f.codigo_cliente_pedido,
+            motivo_cancela:''
         }
 
         
@@ -52,6 +54,8 @@ function FinalizarPedido() {
         if(res.response)
         {
             let id_pedido = res.last_id, pedidos_items;
+            setLastID(id_pedido)
+            
             let promises = [];
             f.items.forEach(e=>{
                 pedidos_items = {
@@ -68,8 +72,13 @@ function FinalizarPedido() {
             }
             promises.push(APICALLER.insert({table:'recetas',token:token_user,data:receta_data}))
             await Promise.all(promises)
-
-        }else{console.log(res);}
+        }else{
+            console.log(res);
+            swal({title:'Error',text:'Ocurrió un error con la conexión a internet',icon:'warning'})
+            setLoading(false)
+            setFinalizado(false)
+            return;
+        }
         setLoading(false) 
         setFinalizado(true)
     }
@@ -101,7 +110,7 @@ function FinalizarPedido() {
         <DialogContent>
             {loading ? <LinearProgress /> :
             <div ref={divRef} id="print">
-            <Ticket factura={factura} nro={nro} userData={userData} /> 
+            <Ticket factura={factura} nro={lastID} userData={userData} /> 
             </div>
             }
         </DialogContent>

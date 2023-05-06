@@ -40,6 +40,7 @@ function MainPages() {
           <Route path="pedidos/lista" element={<ListaPedidos />} />
           <Route path="facturas" element={<Facturas />} />
           <Route path="facturas/add" element={<AddFactura />} />
+          <Route path="facturas/lista" element={<ListaFacturas />} />
           <Route path="proveedores" element={<Proveedores />} />
           <Route path="empleados" element={<Empleados />} />
           <Route path="usuarios" element={<Usuarios />} />
@@ -72,6 +73,7 @@ const ListaPedidos = Loadable(lazy(() => import('./Comercial/ListaPedidos')));
 const Usuarios = Loadable(lazy(() => import('./Administracion/Usuarios')));
 const Perfil = Loadable(lazy(() => import('./Administracion/Usuarios/Perfil')));
 const Facturas = Loadable(lazy(() => import('./Comercial/Facturas')));
+const ListaFacturas = Loadable(lazy(() => import('./Comercial/Facturas/Lista')));
 const AddFactura = Loadable(lazy(() => import('./Comercial/Facturas/Add')));
 const Empresa = Loadable(lazy(() => import('./Administracion/Empresa')));
 

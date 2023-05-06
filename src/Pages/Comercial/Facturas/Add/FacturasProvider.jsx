@@ -9,7 +9,7 @@ function FacturasProvider({children}) {
     //const {userData} = useAuth()
     const {iDialogs,initialFactura} = useInitialState()
     const [dialogs,setDialogs] = useState(iDialogs)
-
+    const [pedidos,setPedidos] = useState([])
     const [factura,setFactura] = useState(initialFactura)
     const [indexCambioPrecio,setIndexCambioPrecio] = useState(-1)
 
@@ -31,13 +31,13 @@ function FacturasProvider({children}) {
         setFactura(obj)
     }
 
-    const values = {dialogs,setDialogs,indexCambioPrecio,setIndexCambioPrecio,factura,setearFactura,initialFactura}
+    const values = {dialogs,setDialogs,indexCambioPrecio,setIndexCambioPrecio,factura,setearFactura,initialFactura,pedidos,setPedidos}
     return <FacturasContext.Provider value={values}>{children}</FacturasContext.Provider>
 }
 
 export const useFacturas = ()=>{
-    const {dialogs,setDialogs,indexCambioPrecio,setIndexCambioPrecio,factura,setearFactura,initialFactura} = useContext(FacturasContext)
-    return {dialogs,setDialogs,indexCambioPrecio,setIndexCambioPrecio,factura,setearFactura,initialFactura}
+    const {dialogs,setDialogs,indexCambioPrecio,setIndexCambioPrecio,factura,setearFactura,initialFactura,pedidos,setPedidos} = useContext(FacturasContext)
+    return {dialogs,setDialogs,indexCambioPrecio,setIndexCambioPrecio,factura,setearFactura,initialFactura,pedidos,setPedidos}
 }
 
 export default FacturasProvider;

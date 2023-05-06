@@ -37,9 +37,10 @@ function PreImpreso() {
         total_factura: factura.total,
         fecha_factura: factura.fecha,
         fecha_cobro_factura: factura.fecha,
-        nro_factura: factura.nro_factura
+        nro_factura: factura.nro_factura,
+        factura_pagado: factura.tipo_factura==='2' ? '0':'1'
       }
-      console.log(data);
+      //console.log(data);
       let res = await APICALLER.insert({table:'facturas',data,token:token_user})
       if(res.response){
         let LAST_ID = res.last_id;

@@ -59,22 +59,22 @@ function Ticket({factura,userData,nro}) {
             </tr>
             <tr>
                 <td width='20%'><b>LEJOS</b></td>
-                <td width='20%'>{factura.receta.lejos_derecho_esferico}</td>
-                <td width='20%'>{factura.receta.lejos_derecho_cilindrico}</td>
+                <td width='20%'>{funciones.addZeros( factura.receta.lejos_derecho_esferico)}</td>
+                <td width='20%'>{ funciones.addZeros(factura.receta.lejos_derecho_cilindrico)}</td>
                 <td width='20%'>{factura.receta.lejos_eje_derecho}</td>
                 <td width='20%'>{factura.receta.dnp_derecho}</td>
             </tr>
             <tr>
                 <td width='20%'><b>ADICION</b></td>
-                <td width='20%'>{factura.receta.adicion_derecho}</td>
+                <td width='20%'>{funciones.addZeros(factura.receta.adicion_derecho)}</td>
                 <td width='20%'></td>
                 <td width='20%'></td>
                 <td width='20%'>ALTURA</td>
             </tr>
             <tr>
                 <td width='20%'><b>CERCA</b></td>
-                <td width='20%'>{factura.receta.cerca_derecho_esferico}</td>
-                <td width='20%'>{factura.receta.cerca_derecho_cilindrico}</td>
+                <td width='20%'>{funciones.addZeros(factura.receta.cerca_derecho_esferico)}</td>
+                <td width='20%'>{funciones.addZeros(factura.receta.cerca_derecho_cilindrico)}</td>
                 <td width='20%'>{factura.receta.cerca_eje_derecho}</td>
                 <td width='20%'>{factura.receta.altura_derecho}</td>
             </tr>
@@ -97,22 +97,22 @@ function Ticket({factura,userData,nro}) {
             </tr>
             <tr>
                 <td width='20%'><b>LEJOS</b></td>
-                <td width='20%'>{factura.receta.lejos_izquierdo_esferico}</td>
-                <td width='20%'>{factura.receta.lejos_izquierdo_cilindrico}</td>
+                <td width='20%'>{funciones.addZeros(factura.receta.lejos_izquierdo_esferico)}</td>
+                <td width='20%'>{funciones.addZeros(factura.receta.lejos_izquierdo_cilindrico)}</td>
                 <td width='20%'>{factura.receta.lejos_eje_izquierdo}</td>
                 <td width='20%'><b>{factura.receta.dnp_izquierdo}</b></td>
             </tr>
             <tr>
                 <td width='20%'><b>ADICION</b></td>
-                <td width='20%'>{factura.receta.adicion_izquierdo}</td>
+                <td width='20%'>{funciones.addZeros(factura.receta.adicion_izquierdo)}</td>
                 <td width='20%'></td>
                 <td width='20%'></td>
                 <td width='20%'>ALTURA</td>
             </tr>
             <tr>
                 <td width='20%'><b>CERCA</b></td>
-                <td width='20%'>{factura.receta.cerca_izquierdo_esferico}</td>
-                <td width='20%'>{factura.receta.cerca_izquierdo_cilindrico}</td>
+                <td width='20%'>{funciones.addZeros(factura.receta.cerca_izquierdo_esferico)}</td>
+                <td width='20%'>{funciones.addZeros(factura.receta.cerca_izquierdo_cilindrico)}</td>
                 <td width='20%'>{factura.receta.cerca_eje_izquierdo}</td>
                 <td width='20%'>{factura.receta.altura_izquierdo}</td>
             </tr>

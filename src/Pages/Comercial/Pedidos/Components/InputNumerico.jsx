@@ -13,6 +13,7 @@ function InputNumerico({ name, value, onChange, label, onKeyUp, ...rest }) {
       onChange={onChange}
       label={label}
       {...rest}
+      autoComplete="off"
       onKeyUp={onKeyUp}
       InputProps={{
         inputProps: { 

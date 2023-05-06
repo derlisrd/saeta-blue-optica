@@ -11,7 +11,7 @@ import SelectTipo from "./SelectTipo";
 function Main() {
     const {dialogs,setDialogs,factura} = useFacturas()
     const close = ()=>{ setDialogs({...dialogs,main:false}) }
-
+    const openInsertarPedido = ()=>{ setDialogs({...dialogs,insertar_pedido:true}) }
     const openCliente = ()=>{ setDialogs({...dialogs,buscar_cliente:true})}
     const openNroFactura = ()=>{ setDialogs({...dialogs,nro_factura:true})}
 
@@ -21,6 +21,7 @@ function Main() {
         <Grid container spacing={2}>
             <Grid item xs={12}>
                <Stack direction='row' spacing={2} alignItems='center'>
+                    <Button onClick={openInsertarPedido}>INSERTAR PEDIDO</Button>
                     <Button onClick={openCliente}>CLIENTE: {factura.cliente.ruc_cliente} {factura.cliente.nombre_cliente}</Button>
                     <Button onClick={openNroFactura}>FACTURA NRO: {factura.nro_factura}</Button>
                     <SelectTipo />

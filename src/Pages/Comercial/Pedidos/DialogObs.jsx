@@ -58,7 +58,7 @@ function DialogObs() {
             </Grid>
         </DialogContent>
         <DialogActions>
-            <Button onClick={close}>Cerrar</Button>
+            <Button variant="contained" onClick={close}>Cerrar</Button>
         </DialogActions>
     </Dialog>  );
 }

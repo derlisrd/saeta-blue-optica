@@ -7,7 +7,8 @@ function useInitialState() {
         nro_factura:false,
         registrar_cliente:false,
         buscar_cliente:false,
-        precio:false
+        precio:false,
+        insertar_pedido:false
     }
 
 

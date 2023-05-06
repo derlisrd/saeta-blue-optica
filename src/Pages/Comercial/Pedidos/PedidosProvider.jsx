@@ -1,13 +1,27 @@
 import { createContext, useContext,useState } from "react";
 import useInitialStates from "./useInitialStates";
 import { useAuth } from "../../../Providers/AuthProvider";
+import useQuery from "../../../Hooks/useQuery";
+
 
 
 const PedidosContext = createContext()
 
+
+
+
 function PedidosProvider({children}) {
-    const {iDialogs,initialFactura} = useInitialStates()
-    const [dialogs,setDialogs] = useState(iDialogs)
+    const {initialFactura} = useInitialStates()
+    let query = useQuery();
+    const [dialogs,setDialogs] = useState({
+        main: query.get("open") ? true : false ,
+        finalizar:false,
+        registrar_cliente:false,
+        buscar_cliente:false,
+        select_deposito_stock:false,
+        obs:false,
+        precio:false
+    })
     const {userData} = useAuth()
     const {token_user} = userData
     const [cargas,setCargas] = useState({
@@ -19,7 +33,7 @@ function PedidosProvider({children}) {
     const [seleccionado,setSeleccionado] = useState([])
     const [factura,setFactura] = useState(initialFactura)
     const [indexCambioPrecio,setIndexCambioPrecio] = useState(-1)
-
+    const [lastID,setLastID] = useState('')
     const setearFactura = (obj)=>{
         let total = 0,iva5=0,iva10=0,exenta=0;
         
@@ -39,14 +53,14 @@ function PedidosProvider({children}) {
         
     }
 
-    const values = {indexCambioPrecio,setIndexCambioPrecio,dialogs,setDialogs,factura,setFactura,setearFactura,initialFactura,formDepositoStock,setFormDepositoStock,seleccionado,setSeleccionado,cargas,setCargas,selectProduct, setSelectProduct,token_user}
+    const values = {lastID,setLastID,indexCambioPrecio,setIndexCambioPrecio,dialogs,setDialogs,factura,setFactura,setearFactura,initialFactura,formDepositoStock,setFormDepositoStock,seleccionado,setSeleccionado,cargas,setCargas,selectProduct, setSelectProduct,token_user}
     return <PedidosContext.Provider value={values}>{children}</PedidosContext.Provider>
 }
 
 
 export const usePedidos = ()=>{
-    const {indexCambioPrecio,setIndexCambioPrecio,dialogs,setDialogs,factura,setFactura,setearFactura,initialFactura,formDepositoStock,setFormDepositoStock,seleccionado,setSeleccionado,cargas,setCargas,selectProduct, setSelectProduct,token_user} = useContext(PedidosContext)
-    return {indexCambioPrecio,setIndexCambioPrecio,dialogs,setDialogs,factura,setFactura,setearFactura,initialFactura,formDepositoStock,setFormDepositoStock,seleccionado,setSeleccionado,cargas,setCargas,selectProduct, setSelectProduct,token_user}
+    const {lastID,setLastID,indexCambioPrecio,setIndexCambioPrecio,dialogs,setDialogs,factura,setFactura,setearFactura,initialFactura,formDepositoStock,setFormDepositoStock,seleccionado,setSeleccionado,cargas,setCargas,selectProduct, setSelectProduct,token_user} = useContext(PedidosContext)
+    return {lastID,setLastID,indexCambioPrecio,setIndexCambioPrecio,dialogs,setDialogs,factura,setFactura,setearFactura,initialFactura,formDepositoStock,setFormDepositoStock,seleccionado,setSeleccionado,cargas,setCargas,selectProduct, setSelectProduct,token_user}
 }
 
 export default PedidosProvider;

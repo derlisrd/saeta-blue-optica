@@ -14,19 +14,21 @@ export const columns = [
     {
         field:'nombre_cliente',
         title:'cliente'
+    },{
+      
     },
     {
-      field:'estado_pago',
-      title:'Pago',
-      compareField: "estado_pago",
+      field:'facturado_pedido',
+      title:'Facturado',
+      compareField: "facturado_pedido",
       items: {
-          "0": "PENDIENTE...",
-          "1": "PAGADO"
+          "0": "PENDIENTE",
+          "1": "FACTURADO"
         },
-      styleFieldCondition: "estado_pago",  
+      styleFieldCondition: "facturado_pedido",  
       styleCondition: {
         "0": {
-          backgroundColor: "#86042b",
+          backgroundColor: "#aa3d5e",
           padding: "4px",fontWeight:"bold",
           borderRadius: "5px",
           color: "#fff",
@@ -53,15 +55,15 @@ export const columns = [
         field:'estado_pedido',
         title:'Estado',
         compareField:"estado_pedido",
-        styleFieldCondition: "estado_pedido",
         items: {
-            "0": "CANCELADO...",
-            "1": "PENDIENTE",
-            "2": "EN PRODUCCION",
-            "3": "REVISION",
-            "4": "ENTREGADO"
-          },
-          styleCondition: {
+          "0": "CANCELADO...",
+          "1": "PENDIENTE",
+          "2": "PRODUCCION",
+          "3": "REVISION",
+          "4": "ENTREGADO"
+        },
+        styleFieldCondition: "estado_pedido",
+        styleCondition: {
             "0": {
               backgroundColor: "#86042b",
               padding: "4px",fontWeight:"bold",
@@ -87,11 +89,16 @@ export const columns = [
                 color: "#ffffff",
             },
             "4": {
-                backgroundColor: "#ffffff",
+                backgroundColor: "#0c962a",
                 padding: "4px", fontWeight:"bold",
                 borderRadius: "5px",
-                color: "#0c962a",
+                color: "#fff",
               },
         }
     },
+    {
+      field:'total_pedido',
+      title:'total',
+      isNumber:true
+    }
 ]

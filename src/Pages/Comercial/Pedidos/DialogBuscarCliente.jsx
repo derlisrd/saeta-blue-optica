@@ -66,7 +66,7 @@ function DialogBuscarCliente() {
             </Grid>
             <Grid item xs={12}>
                 <Autocomplete
-                    autoComplete autoHighlight autoSelect clearOnEscape selectOnFocus
+                    autoComplete autoHighlight autoSelect  selectOnFocus
                     getOptionLabel={(option) => option.nombre_cliente+" - "+option.ruc_cliente }
                     options={lista}
                     onChange={insertar}

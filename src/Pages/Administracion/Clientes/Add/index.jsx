@@ -68,6 +68,9 @@ function Add() {
                     <TextField fullWidth name="fantasia_cliente" required autoComplete="off" label="Nombre Fantasia" />
                 </Grid>
                 <Grid item xs={12} sm={6}>
+                    <TextField fullWidth name="direccion_cliente" autoComplete="off" label="Dirección" />
+                </Grid>
+                <Grid item xs={12} sm={6}>
                     <TextField fullWidth name="telefono_cliente" label="teléfono" />
                 </Grid>
                 <Grid item xs={12} sm={6}>

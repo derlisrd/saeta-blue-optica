@@ -8,7 +8,7 @@ function Pagination() {
     const {currentPage,pagination,setCurrentPage} = useClientes()
     const anterior = currentPage - pagination.size;
     const siguiente = currentPage + pagination.size;
-    console.log(pagination);
+    //console.log(pagination);
     const change = (size)=>{
         navigate(`/clientes?p=${size}`)
         setCurrentPage(size)

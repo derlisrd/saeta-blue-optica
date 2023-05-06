@@ -1,5 +1,5 @@
-import { Icon } from "@iconify/react";
-import {  IconButton, Toolbar, Stack, Box } from "@mui/material";
+
+import {  IconButton, Toolbar, Stack, Box,Icon } from "@mui/material";
 
 import { useMenu } from "./MenuProvider";
 import ProfileMenu from "./ProfileMenu";
@@ -8,7 +8,7 @@ import { env } from "../../App/config";
 import InfoUsuario from "./InfoUsuario";
 
 
-const Icono = ()=>( <Icon icon='mingcute:menu-fill' height={24} ></Icon>)
+const Icono = ()=>( <Icon sx={{ fontWeight:'bold' }}>menu</Icon>)
 
 function ToolbarMain() {
 

@@ -3,51 +3,65 @@ export const ListaMenu = [
         id:1,
         url:'/home',
         title:'Inicio',
-        icon:'fluent-mdl2:home',
+        icon:'home',
         sub:false
     },
     {
         id:98,
         url:'/contabilidad',
         title:'Contabilidad',
-        icon:'ic:twotone-menu-book',
+        icon:'calculate',
         sub:false
     },
     {
         id:6,
         url:'/memo',
         title:'Memos',
-        icon:'ic:twotone-sticky-note-2',
+        icon:'question_answer',
         sub:false
     },
     {
         id:78,
         url:'#',
         title:'Comercial',
-        icon:'carbon:store',
+        icon:'sell',
         sub:true,
         open:false,
         submenu:[
-            
+            {
+                id:41,
+                title:'Nuevo pedido',
+                url:'/pedidos?open=nuevo',
+                icon:'receipt'
+            },
             {
                 id:41,
                 title:'Pedidos',
-                url:'/pedidos',
-                icon:'ic:baseline-receipt-long'
+                url:'/pedidos/lista',
+                icon:'receipt_long'
+            },
+
+            {
+                id:42,
+                title:'Nueva factura',
+                url:'/facturas/add',
+                icon:'credit_card'
             },
             {
                 id:42,
                 title:'Facturas',
-                url:'/facturas',
-                icon:'ion:cash-outline'
+                url:'/facturas/lista',
+                icon:'receipt'
             },
+            
+            
         ]
     },
     {
         id:71,
         url:'#',
         title:'Stock',
-        icon:'fluent-mdl2:product-release',
+        icon:'inventory_2',
         sub:true,
         open:false,
         submenu:[
@@ -55,31 +69,25 @@ export const ListaMenu = [
                 id:41,
                 title:'Categorias',
                 url:'/categorias',
-                icon:'ic:twotone-category'
+                icon:'category'
             },
             {
                 id:41,
                 title:'Productos',
                 url:'/productos',
-                icon:'fluent-mdl2:product-variant'
-            },
-            {
-                id:4521,
-                title:'Mov. Stock',
-                url:'/movstock',
-                icon:'ic:twotone-move-down'
+                icon:'shopping_bag'
             },
             {
                 id:456,
                 title:'Inventario',
                 url:'/inventario',
-                icon:'ic:twotone-inventory'
+                icon:'inventory'
             },
             {
                 id:42,
                 title:'Depositos',
                 url:'/depositos',
-                icon:'ic:twotone-local-convenience-store'
+                icon:'store'
             }
         ]
     }, 
@@ -87,7 +95,7 @@ export const ListaMenu = [
         id:87,
         url:'#',
         title:'Reportes',
-        icon:'octicon:graph-24',
+        icon:'summarize',
         sub:true,
         open:false,
         submenu:[
@@ -121,7 +129,7 @@ export const ListaMenu = [
         id:7818,
         url:'#',
         title:'RRHH',
-        icon:'mdi:human-capacity-increase',
+        icon:'people_alt',
         sub:true,
         open:false,
         submenu:[
@@ -129,7 +137,7 @@ export const ListaMenu = [
                 id:41,
                 title:'Empleados',
                 url:'/empleados',
-                icon:'clarity:employee-line'
+                icon:'perm_contact_calendar'
             }
         ]
     },
@@ -137,7 +145,7 @@ export const ListaMenu = [
         id:7,
         url:'#',
         title:'Financiero',
-        icon:'fluent-mdl2:money',
+        icon:'account_balance_wallet',
         sub:true,
         open:false,
         submenu:[
@@ -165,7 +173,7 @@ export const ListaMenu = [
         id:788,
         url:'#',
         title:'Admin...',
-        icon:'pajamas:admin',
+        icon:'settings',
         sub:true,
         open:false,
         submenu:[
@@ -173,27 +181,34 @@ export const ListaMenu = [
                 id:31,
                 url:'/empresa',
                 title:'Empresa',
-                icon:'ic:twotone-store',
+                icon:'store_mall_directory',
                 sub:false
             },
             {
                 id:3,
                 url:'/clientes',
                 title:'Clientes',
-                icon:'ic:twotone-people',
+                icon:'groups',
+                sub:false
+            },
+            {
+                id:3,
+                url:'/descuentos',
+                title:'Descuentos',
+                icon:'price_check',
                 sub:false
             },
             {
                 id:41,
                 title:'Proveedores',
                 url:'/proveedores',
-                icon:'fluent:vehicle-truck-cube-20-regular'
+                icon:'local_shipping'
             },
             {
                 id:5,
                 url:'/usuarios',
                 title:'Usuarios',
-                icon:'carbon:credentials',
+                icon:'assignment_ind',
                 sub:false
             },
         ]

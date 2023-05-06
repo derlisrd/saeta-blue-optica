@@ -1,9 +1,8 @@
-import { Icon } from "@iconify/react";
-import { Button,  Divider, IconButton,  Menu, MenuItem } from "@mui/material";
+
+import { Button,  Divider, IconButton,  Menu, MenuItem,Icon } from "@mui/material";
 import { useState } from "react";
 import { useAuth } from "../../Providers/AuthProvider";
 import DialogPregunta from "../Dialogo/DialogPregunta";
-import { Link } from "react-router-dom";
 import useGotoNavigate from "../../Hooks/useGotoNavigate";
 
 function ProfileMenu() {
@@ -33,7 +32,7 @@ function ProfileMenu() {
     <>
       <DialogPregunta 
       title="Cerrar" text="Estás seguro que desea cerrar la sesión?" 
-      open={openDialog} onClose={toggleDialog} icon={{ name:'uim:exclamation-triangle',color:'orange' }} >
+      open={openDialog} onClose={toggleDialog} icon={{ name:'error',color:'#fdd07e' }} >
           <Button variant="outlined" onClick={toggleDialog} >No, cancelar</Button>
           <Button variant="contained"  onClick={logOut}>Sí, cerrar sesión</Button>
       </DialogPregunta>
@@ -48,7 +47,7 @@ function ProfileMenu() {
             aria-haspopup="true"
             aria-expanded={open ? 'true' : undefined}
           >
-            <Icon icon='ph:user-circle-duotone' height={30} />
+            <Icon >account_circle</Icon>
           </IconButton>
 
 

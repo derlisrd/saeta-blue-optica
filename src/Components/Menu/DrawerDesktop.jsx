@@ -1,5 +1,5 @@
 import { Drawer } from "@mui/material";
-import { env } from "../../app/config";
+import { env } from "../../App/config";
 import MenuList from "./MenuList";
 import { useMenu } from "./MenuProvider";
 

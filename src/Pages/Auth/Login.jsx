@@ -1,5 +1,5 @@
-import { Icon } from "@iconify/react";
-import { Alert, Box, Button, FormControlLabel, Grid, Switch, TextField, Typography, Zoom,InputAdornment,IconButton, Stack } from "@mui/material";
+import { Icon as Icono } from "@iconify/react";
+import { Alert, Box, Button, FormControlLabel, Grid, Switch, TextField, Typography, Zoom,InputAdornment,IconButton, Stack,Icon } from "@mui/material";
 import { useRef,useState } from "react";
 import { Navigate } from "react-router-dom";
 import { env } from "../../App/config";
@@ -46,7 +46,7 @@ function Login() {
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <Stack spacing={0} justifyContent='center' alignItems='center'>
-              <p><Icon icon='emojione:lion-face' height={58} /></p>
+              <p><Icono icon='emojione:lion-face' height={58} /></p>
               </Stack>
             </Grid>
             <Grid item xs={12}>
@@ -67,7 +67,7 @@ function Login() {
                 fullWidth
                 InputProps={{  startAdornment: (
                   <InputAdornment position="start">
-                    <Icon icon="ic:twotone-person-2" height={20} />
+                    <Icon >account_circle</Icon>
                   </InputAdornment>
                 ),}}
               />
@@ -84,19 +84,19 @@ function Login() {
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
-                      <Icon icon="ic:twotone-lock" height={20} />
+                      <Icon >lock</Icon>
                     </InputAdornment>
                   ),
                   endAdornment: (
                     <InputAdornment position="end">
                       <IconButton onClick={changeInputType}>
-                        <Icon
-                          icon={
+                        <Icon>
+                          {
                             typeInput
-                              ? `ic:twotone-remove-red-eye`
-                              : `ph:eye-slash-duotone`
+                              ? `visibility`
+                              : `visibility_off`
                           }
-                        />
+                        </Icon>
                       </IconButton>
                     </InputAdornment>
                   ),

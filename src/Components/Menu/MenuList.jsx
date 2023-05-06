@@ -8,11 +8,10 @@ import {
   ListItemText,
   Stack,
   Toolbar,
-  Typography,
+  Typography, Icon
 } from "@mui/material";
 import { Link,useLocation } from "react-router-dom";
 import { ListaMenu } from "../../Utils/ListaMenu";
-import { Icon } from "@iconify/react";
 import { Fragment,useState } from "react";
 import styles from './styles.module.css'
 import { useMenu } from "./MenuProvider";
@@ -22,7 +21,7 @@ import { env } from "../../App/config";
 
 
 function MenuList({isMobile}) {
-  const { BASEURL,APPNAME, ICONAPP} = env;
+  const { BASEURL,APPNAME} = env;
   let location = useLocation();
   const pathname =  (location.pathname).substring(6);
 
@@ -44,8 +43,8 @@ function MenuList({isMobile}) {
   return (<SimpleBar forceVisible="y" autoHide={true} style={{ maxHeight: "100vh" }}>
     <Toolbar >
       <Stack direction='row' alignItems='center' justifyContent={isMobile ? 'flex-end':'space-around'} width='100%'>
-        {isMobile ? <IconButton onClick={closeMobileMenu} ><Icon icon='ri:menu-fold-line' height={24} /></IconButton> :
-        <> <Icon icon={ICONAPP} height={36} />  <Typography variant="button">{APPNAME}</Typography> </>  }
+        {isMobile ? <IconButton onClick={closeMobileMenu} ><Icon>menu</Icon></IconButton> :
+        <> <Typography variant="button">{APPNAME}</Typography> </>  }
         </Stack>
       </Toolbar>
       <List >
@@ -57,11 +56,11 @@ function MenuList({isMobile}) {
               <ListItem disablePadding >
                 <ListItemButton  onClick={()=>openCollapseMenu(e.open,e.id)} className={styles.listmenu}>
                   <ListItemIcon className={styles.iconmenu}>
-                    <Icon icon={e.icon} height={24} />
+                    <Icon height={24} >{e.icon}</Icon>
                   </ListItemIcon>
                   <ListItemText className={styles.textmenu}  primary={e.title} />
-                  <Icon
-                    icon={e.open ? `mdi:expand-less` : `mdi:expand-more`} height={24}/>
+                  <Icon>
+                    {e.open ? `expand_less` : `expand_more`} </Icon>
                 </ListItemButton>
               </ListItem>
               <Collapse in={e.open} timeout="auto" unmountOnExit>
@@ -71,7 +70,7 @@ function MenuList({isMobile}) {
                       <ListItem disablePadding key={indexsub}>
                         <ListItemButton selected={pathname === elem.url} sx={SELECTED}  onClick={closeMobileMenu} component={Link} to={BASEURL + elem.url} className={styles.listmenu}>
                           <ListItemIcon className={styles.iconmenu}>
-                          <Icon icon={elem.icon} height={20} />
+                          <Icon>{elem.icon}</Icon> 
                           </ListItemIcon>
                           <ListItemText className={styles.textmenu}  primary={elem.title} />
                         </ListItemButton>
@@ -87,7 +86,7 @@ function MenuList({isMobile}) {
                   sx={SELECTED}
                 onClick={closeMobileMenu} className={styles.listmenu}  component={Link} to={BASEURL + e.url}>
                   <ListItemIcon className={styles.iconmenu}>
-                    <Icon icon={e.icon} height={24} />
+                    <Icon>{e.icon}</Icon>
                   </ListItemIcon>
                   <ListItemText className={styles.textmenu} primary={e.title} />
                 </ListItemButton>

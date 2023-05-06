@@ -35,7 +35,7 @@ function DialogBuscarCliente() {
                 let res = await APICALLER.get({
                     table: "clientes",
                     fields:'ruc_cliente,nombre_cliente,telefono_cliente,id_cliente,direccion_cliente',
-                    filtersField:"nombre_cliente,ruc_cliente",filtersSearch:search,pagesize:20
+                    filtersField:"nombre_cliente,ruc_cliente,fantasia_cliente",filtersSearch:search,pagesize:20
                 })
                 setLista(res.results);
                 setLoading(false)

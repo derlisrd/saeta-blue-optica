@@ -17,7 +17,7 @@ export const columns = [
     },
     {
         field:'factura_pagado',
-        title:'ESTADO',
+        title:'ESTADO DE PAGO',
         compareField: "factura_pagado",
         items: {
             "1": "PAGADO",
@@ -29,7 +29,7 @@ export const columns = [
           backgroundColor: "#d56565",
           padding: "4px",fontWeight:"bold",
           borderRadius: "5px",
-          color: "#fff",
+          color: "#000000",
         },
         "1": {
           backgroundColor: "#81c583",
@@ -53,7 +53,7 @@ export const columns = [
           backgroundColor: "#1db552",
           padding: "4px",fontWeight:"bold",
           borderRadius: "5px",
-          color: "#fff",
+          color: "#000000",
         },
         "2": {
           backgroundColor: "#eca92d",

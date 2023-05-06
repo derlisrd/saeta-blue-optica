@@ -36,7 +36,7 @@ const ClientesProvider = ({children}) => {
     }
     let config = {
       table: "clientes",
-      fields: "ruc_cliente,nombre_cliente,id_cliente,email_cliente,telefono_cliente,tipo_pago,fantasia_cliente",
+      fields: "ruc_cliente,nombre_cliente,id_cliente,email_cliente,telefono_cliente,tipo_pago,fantasia_cliente,direccion_cliente",
       filtersField:"nombre_cliente,ruc_cliente",
       filtersSearch:`${searchTxt}`,
       sort:'-nombre_cliente',

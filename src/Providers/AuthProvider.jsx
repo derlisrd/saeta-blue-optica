@@ -59,8 +59,6 @@ const AuthProvider = ({children}) => {
             localStorage.removeItem("dataMonedas");    
             setDataEmpresa({})
         }
-            localStorage.removeItem('dataProductos');
-            localStorage.removeItem('dataWeb');
     }
 
     const logOut = useCallback(()=>{
@@ -77,9 +75,12 @@ const AuthProvider = ({children}) => {
         sessionStorage.removeItem("userData");
     },[])
 
+
+
+
     const logIn = async(f,remember)=>{
         setLoad({login:true,active:false,msj:null,code:0});
-        let [res,emp] = await Promise.all([APICALLER.login(f),APICALLER.get({table:"empresas"}) ]);
+        let [res,emp] = await Promise.all([APICALLER.login(f),APICALLER.get({table:"empresas",fields:'categoria_empresa,nombre_empresa,propietario_empresa,ruc_empresa,direccion_empresa,mensaje_recibo_empresa,licencia'}) ]);
         
         if(res.response && res.found>0){
             

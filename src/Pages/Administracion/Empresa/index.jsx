@@ -5,16 +5,12 @@ import { APICALLER } from "../../../Services/api";
 
 function Empresa() {
 
-    const {dataEmpresa,userData,setearEmpresa} = useAuth()
+    const {dataEmpresa: d,userData,setearEmpresa} = useAuth()
     const [loading,setLoading] = useState(false)
     const [snack,setSnack] = useState({active:false,message:''})
+
     const [form,setForm] = useState({
-        nombre_empresa:'',
-        propietario_empresa:'',
-        ruc_empresa:'',
-        categoria_empresa:'',
-        licencia:'',
-        mensaje_recibo_empresa:''
+      categoria_empresa:'',nombre_empresa:'',propietario_empresa:'',ruc_empresa:'',direccion_empresa:'',mensaje_recibo_empresa:'',licencia:''
     })
     const closeSnack = ()=>{setSnack({...snack,active:false})}
 
@@ -41,8 +37,8 @@ function Empresa() {
     }
 
     useEffect(()=>{
-        setForm(dataEmpresa)
-    },[dataEmpresa])
+        setForm(d)
+    },[d])
 
 
 

@@ -26,6 +26,7 @@ function InputCodigo() {
                 new_fact.items[index].cantidad += 1 
             }else{
                 let nuevo_item = {
+                    id_pedido_insert:null,
                     id_productos_deposito:null,
                     cantidad:1,
                     precio_normal:parseFloat(val.precio_producto),
@@ -34,7 +35,6 @@ function InputCodigo() {
                     nombre_producto:val.nombre_producto,
                     id_producto,
                     codigo_producto:val.codigo_producto,
-                    tipo,
                     iva:parseInt(val.iva_producto)                 
                 }
                 new_fact.items.push(nuevo_item)

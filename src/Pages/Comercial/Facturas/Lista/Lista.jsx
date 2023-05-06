@@ -95,7 +95,7 @@ function Lista() {
                 <Button variant="outlined" fullWidth onClick={downloadExcel} color='success'>EXCEL</Button>
             </Grid>}
             <Grid item xs={12} sm={4} md={3}>
-                <Alert icon={false}>Total: { funciones.numberFormat(totalVenta)}</Alert>
+                <Alert icon={false}>Total: {funciones.numberFormat(totalVenta)} </Alert>
             </Grid>
         </Grid>
     )

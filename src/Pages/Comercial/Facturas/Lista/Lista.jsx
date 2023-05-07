@@ -111,7 +111,7 @@ function Lista() {
         inputs={Inputs}
         datas={listaFiltrada}
         loading={loading}
-        icon={{ name:'ic:baseline-receipt-long' }}
+        icon={{ name:'receipt' }}
         showOptions
         Accions={ListaOpciones}
         columns={columns}

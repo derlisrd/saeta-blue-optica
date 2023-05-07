@@ -1,9 +1,9 @@
-import { Dialog, DialogTitle,DialogContent,  Grid,  DialogActions, Button, IconButton, Typography } from "@mui/material";
+import { Dialog, DialogTitle,DialogContent,  Grid,  DialogActions, Button,  Typography } from "@mui/material";
 import { usePedidos } from "./PedidosProvider";
 import styles from './styles.module.css'
 import { useState } from "react";
-import { Icon } from "@iconify/react";
 import InputNumerico from "./Components/InputNumerico";
+import ButtonTip from "../../../Components/Botones/ButtonTip";
 
 function DialogSelectDepositoStock() {
 
@@ -132,7 +132,7 @@ function DialogSelectDepositoStock() {
 
 
     return ( <Dialog open={dialogs.select_deposito_stock} fullWidth maxWidth="lg" onClose={close} >
-        <DialogTitle><IconButton onClick={close} ><Icon icon="ic:twotone-close" /> </IconButton> {selectProduct?.codigo_producto} - { selectProduct?.nombre_producto}  </DialogTitle>
+        <DialogTitle><ButtonTip onClick={close} title='Cerrar' icon='close' /> {selectProduct?.codigo_producto} - { selectProduct?.nombre_producto}  </DialogTitle>
         <DialogContent>
             <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>

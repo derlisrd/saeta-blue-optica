@@ -35,7 +35,7 @@ function Lista() {
         inputs={Inputs}
         datas={FilterData}
         loading={isLoading}
-        icon={{ name:'fluent:vehicle-truck-cube-20-regular' }}
+        icon={{ name:'local_shipping' }}
         showOptions
         Accions={Opciones}
         columns={ListaColumns}

@@ -1,5 +1,5 @@
-import { Icon } from "@iconify/react";
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, LinearProgress, Zoom } from "@mui/material";
+
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, LinearProgress, Zoom,Icon } from "@mui/material";
 
 
 function DialogBorrar({onClose,open,text,send,isLoading}) {
@@ -7,7 +7,7 @@ function DialogBorrar({onClose,open,text,send,isLoading}) {
     <DialogTitle>Borrar</DialogTitle>
     <DialogContent>
         <Box>{isLoading && <LinearProgress />}</Box>
-      <Box display="flex" padding={2} justifyContent="center"><Icon icon="uim:exclamation-triangle" color="orange" height={96} /></Box>
+      <Box display="flex" padding={2} justifyContent="center"><Icon sx={{ color:'orange', fontSize:96 }}>error</Icon></Box>
       <DialogContentText align="center">{text}</DialogContentText>
     </DialogContent>
     <DialogActions>

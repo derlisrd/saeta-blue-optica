@@ -1,10 +1,9 @@
-import { Button,  Stack, TextField,IconButton, Grid, Alert } from "@mui/material";
+import { Button,  Stack, TextField, Grid, Alert } from "@mui/material";
 import Tablas from "../../../Components/Tablas";
 import { useListaPedidos } from "./ListaPedidosProvider";
 import { columns } from "./columns";
 import { useState } from "react";
 import ButtonTip from "../../../Components/Botones/ButtonTip";
-import { Icon } from "@iconify/react";
 import useGotoNavigate from "../../../Hooks/useGotoNavigate";
 import swal from "sweetalert";
 import { funciones } from "../../../App/helpers/funciones";
@@ -42,14 +41,14 @@ function Lista() {
             {
                 rowProps.estado_pedido!=='0' && 
                 <>
-                <ButtonTip onClick={()=>{cancelar(rowProps)}} icon='ic:twotone-cancel' title='Cancelar pedido' />
-                <ButtonTip title='Cambio de estado' onClick={()=>{cambioestado(rowProps)}} icon='material-symbols:change-circle-outline' />
+                <ButtonTip onClick={()=>{cancelar(rowProps)}} icon='cancel' title='Cancelar pedido' />
+                <ButtonTip title='Cambio de estado' onClick={()=>{cambioestado(rowProps)}} icon='display_settings' />
                 </> 
             }
-            <ButtonTip title='Imprimir pedido' onClick={()=>{print(rowProps)}} icon='ic:twotone-print' />
+            <ButtonTip title='Imprimir pedido' onClick={()=>{print(rowProps)}} icon='print' />
             {
             rowProps.estado_pedido==='0' && 
-            <ButtonTip title='Motivo de cancelamiento' onClick={()=>{motivoCancela(rowProps)}} icon='ic:twotone-info' />
+            <ButtonTip title='Motivo de cancelamiento' onClick={()=>{motivoCancela(rowProps)}} icon='info' />
             } 
         </Stack>
     )
@@ -67,7 +66,7 @@ function Lista() {
             <TextField type="date" fullWidth size="small" error={error.code===1} onChange={e=>{setDesde(e.target.value)}} helperText='desde' />
             <TextField type="date" fullWidth size="small" error={error.code===2} onChange={e=>{setHasta(e.target.value)}} helperText='hasta' />
             <Button variant="outlined" size="large" onClick={filtrar}>Filtrar</Button>
-            <IconButton onClick={()=>{ getLista('','')}}><Icon icon='solar:refresh-circle-bold-duotone' /></IconButton>
+            <ButtonTip onClick={()=>{ getLista('','')}} title='Actualizar' icon='sync' />
             </Stack>
             </Grid>
             <Grid item xs={12} sm={4}>
@@ -85,7 +84,7 @@ function Lista() {
         inputs={Inputs}
         datas={listas.pedidos}
         loading={loading}
-        icon={{ name:'ic:baseline-receipt-long' }}
+        icon={{ name:'receipt' }}
         showOptions
         Accions={ListaOpciones}
         columns={columns}

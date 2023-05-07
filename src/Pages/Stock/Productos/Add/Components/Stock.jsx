@@ -1,6 +1,5 @@
-import { Icon } from "@iconify/react";
-import { IconButton } from "@mui/material";
-import { red } from "@mui/material/colors";
+
+import ButtonTip from "../../../../../Components/Botones/ButtonTip";
 
 function Stock({ stock, setStock}) {
     
@@ -27,7 +26,7 @@ function Stock({ stock, setStock}) {
             <td>{e.graduacion_cilindrico}</td>
             <td>{e.graduacion_esferico}</td>
             <td>{e.eje}</td>
-            <td><IconButton onClick={()=>borrar(i)} ><Icon color={red[300]}  icon="tabler:trash" /></IconButton> </td>
+            <td><ButtonTip onClick={()=>borrar(i)} title='Borrar' icon="delete_forever" /> </td>
           </tr>
         ))}
       </tbody>

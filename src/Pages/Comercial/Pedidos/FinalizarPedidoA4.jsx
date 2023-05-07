@@ -1,10 +1,10 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton } from "@mui/material";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
 import { usePedidos } from "./PedidosProvider";
-import { Icon } from "@iconify/react";
 import printJS from "print-js";
 import { useAuth } from "../../../Providers/AuthProvider";
 import './stylos.css'
 import { funciones } from "../../../App/helpers/funciones";
+import ButtonTip from "../../../Components/Botones/ButtonTip";
 
 function FinalizarPedido() {
 
@@ -20,7 +20,7 @@ function FinalizarPedido() {
     }
 
     return ( <Dialog open={dialogs.finalizar} onClose={close} fullScreen >
-        <DialogTitle><IconButton onClick={close}><Icon icon="ic:baseline-arrow-back" /> </IconButton> Imprimir pedido</DialogTitle>
+        <DialogTitle><ButtonTip title='Volver' icon='arrow_back' onClick={close} /> Imprimir pedido</DialogTitle>
         <DialogContent>
             <div id="print">
                 <table className="table_pedido" width='100%' border="1">

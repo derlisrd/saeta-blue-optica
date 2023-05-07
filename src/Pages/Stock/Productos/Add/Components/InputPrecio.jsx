@@ -1,5 +1,5 @@
-import { Icon } from "@iconify/react";
-import { InputAdornment, TextField } from "@mui/material";
+
+import { InputAdornment, TextField,Icon } from "@mui/material";
 import NumberFormatCustom from "../../../../../Components/TextFields/NumberFormatCustom";
 
 function InputPrecio({ name, value, onChange,label, ...rest}) {
@@ -13,7 +13,7 @@ function InputPrecio({ name, value, onChange,label, ...rest}) {
         InputProps={{
         startAdornment: (
           <InputAdornment position="start">
-            <Icon icon="ic:baseline-attach-money" height={22}  />
+            <Icon>attach_money</Icon> 
           </InputAdornment>
         ),
         inputProps: { min: 0 },

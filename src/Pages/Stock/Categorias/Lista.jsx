@@ -31,7 +31,7 @@ function Lista() {
         inputs={Inputs}
         datas={FilterData}
         loading={isLoading}
-        icon={{ name:'ic:twotone-category' }}
+        icon={{ name:'category' }}
         showOptions
         Accions={Opciones}
         columns={Columns}

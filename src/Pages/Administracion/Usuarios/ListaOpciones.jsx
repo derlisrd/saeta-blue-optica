@@ -1,8 +1,6 @@
-import { Icon } from "@iconify/react";
-import { IconButton, Stack, Tooltip } from "@mui/material";
-
-import { red } from "@mui/material/colors";
+import {  Stack } from "@mui/material";
 import { useUsuarios } from "./UsuariosProvider";
+import ButtonTip from "../../../Components/Botones/ButtonTip";
 
 function ListaOpciones({rowProps}) {
    
@@ -17,9 +15,9 @@ function ListaOpciones({rowProps}) {
 
     return (
     <Stack direction="row"> 
-        <Tooltip title="Permisos" arrow ><IconButton onClick={()=>{open(rowProps,'permisos')}}><Icon icon="ic:twotone-vpn-key" /></IconButton></Tooltip>
-        <IconButton onClick={()=>{open(rowProps,'edit')}}><Icon icon="tabler:edit" /></IconButton>
-        <IconButton onClick={()=>{open(rowProps,'delete')}}><Icon color={red[300]} icon="tabler:trash" /> </IconButton>
+        <ButtonTip onClick={()=>{open(rowProps,'permisos')}} title='Permisos' icon="manage_accounts" />
+        <ButtonTip onClick={()=>{open(rowProps,'edit')}} icon='edit' title='Editar'  />
+        <ButtonTip onClick={()=>{open(rowProps,'delete')}} icon='delete_forever' title='Borrar' />
     </Stack>
     )
 }

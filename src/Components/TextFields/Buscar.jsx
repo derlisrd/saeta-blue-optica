@@ -1,5 +1,5 @@
-import { Icon } from "@iconify/react";
-import { IconButton, InputAdornment, TextField } from "@mui/material";
+
+import { IconButton, InputAdornment, TextField,Icon } from "@mui/material";
 
 function Buscar({onClick,onChange,...rest}) {
     return (<TextField
@@ -7,7 +7,7 @@ function Buscar({onClick,onChange,...rest}) {
           endAdornment: (
             <InputAdornment position="end">
               <IconButton onClick={onClick}>
-                <Icon icon='ic:sharp-search' />
+                <Icon>search</Icon>
               </IconButton>
             </InputAdornment>
           ),

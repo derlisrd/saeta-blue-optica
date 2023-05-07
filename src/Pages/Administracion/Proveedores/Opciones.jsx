@@ -1,7 +1,8 @@
-import { Icon } from "@iconify/react";
-import { IconButton, Stack } from "@mui/material";
+
+import {Stack,Icon } from "@mui/material";
 import { useProveedor } from "./ProveedorProvider";
 import { red } from "@mui/material/colors";
+import ButtonTip from "../../../Components/Botones/ButtonTip";
 
 function Opciones({rowProps}) {
    
@@ -16,8 +17,8 @@ function Opciones({rowProps}) {
 
     return (
     <Stack direction="row"> 
-        <IconButton onClick={()=>{open(rowProps,'edit')}}><Icon icon="tabler:edit" /></IconButton>
-        <IconButton onClick={()=>{open(rowProps,'delete')}}><Icon color={red[300]} icon="tabler:trash" /> </IconButton>
+        <ButtonTip onClick={()=>{open(rowProps,'edit')}} icon='edit' title='Editar'  />
+        <ButtonTip onClick={()=>{open(rowProps,'delete')}} icon='delete_forever' title='Borrar' />
     </Stack>
     )
 }

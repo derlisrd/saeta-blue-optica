@@ -1,4 +1,4 @@
-import { Dialog, DialogContent, DialogTitle, Grid, IconButton, Stack, Typography } from "@mui/material";
+import { Dialog, DialogContent, DialogTitle, Grid,  Stack, Typography } from "@mui/material";
 import { usePedidos } from "./PedidosProvider";
 import TablaItems from "./TablaItems";
 import InputCodigo from "./InputCodigo";
@@ -6,9 +6,9 @@ import Botones from "./Botones";
 import InputCliente from "./InputCliente";
 import Cargando from "./Cargando";
 import { funciones } from "../../../App/helpers/funciones";
-import { Icon } from "@iconify/react";
 import InputObs from "./InputObs";
 import SelectTipo from "./Components/SelectTipo";
+import ButtonTip from "../../../Components/Botones/ButtonTip";
 
 
 function DialogMain() {
@@ -19,7 +19,7 @@ function DialogMain() {
 
     return ( <Dialog open={dialogs.main} fullScreen onClose={()=>{}} >
         <Cargando open={cargas.stock} />
-        <DialogTitle> <IconButton onClick={close} ><Icon icon="ic:twotone-close" /> </IconButton>  Pedido - Total: { funciones.numberFormat( factura.total )} </DialogTitle>
+        <DialogTitle> <ButtonTip onClick={close} title='Volver' icon="ic:twotone-close" />  Pedido - Total: { funciones.numberFormat( factura.total )} </DialogTitle>
         <DialogContent>
             <Grid container spacing={2}>
                 <Grid item xs={12}>

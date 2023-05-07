@@ -1,6 +1,5 @@
 
 import {  IconButton, Toolbar, Stack, Box,Icon } from "@mui/material";
-
 import { useMenu } from "./MenuProvider";
 import ProfileMenu from "./ProfileMenu";
 import ThemeToggle from "./ThemeToggle";

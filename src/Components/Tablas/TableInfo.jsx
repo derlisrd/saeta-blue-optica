@@ -1,5 +1,5 @@
-import { Icon } from '@iconify/react'
-import { Avatar, Box,  Stack, Typography } from '@mui/material'
+
+import { Avatar, Box,  Stack, Typography,Icon } from '@mui/material'
 import React from 'react'
 
 const TableInfo = ({icon,title,subtitle}) => {
@@ -8,7 +8,7 @@ const TableInfo = ({icon,title,subtitle}) => {
     <Stack direction="row" spacing={2}>
         <Box p={1}>
           <Avatar variant='rounded' sx={{ padding:'5px' }} >
-            {icon && <Icon icon={icon.name}  color="white" height={48} />}
+            {icon && <Icon>{icon.name}</Icon>}
           </Avatar>
         </Box>
         <Box>

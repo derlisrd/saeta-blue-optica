@@ -18,11 +18,12 @@ function BuscarProductos() {
 
     const insertar = async(e,val)=>{
         let id = val?.id_producto
+        
         if(id){
             setCargando(true)
             let res = await APICALLER.get({table:'productos_depositos',include:'depositos',on:'deposito_id,id_deposito',where:`producto_id,=,${id},and,deposito_id,=,${depositoID}`})
-          if(res.response){
-            
+            if(res.response){
+              //let categoria = val?.id_categoria_producto;
             //setStock(res.results);
             //console.log(res.results);
             let min_esferico = parseFloat(val.min_esferico), 
@@ -89,7 +90,7 @@ function BuscarProductos() {
                 setLoading(true)
                 let res = await APICALLER.get({
                     table: "productos",
-                    fields:'codigo_producto,id_producto,nombre_producto,preciom_producto,precio_producto,tipo_producto,iva_producto,min_esferico,max_esferico,min_cilindrico,max_cilindrico',
+                    fields:'id_categoria_producto,codigo_producto,id_producto,nombre_producto,preciom_producto,precio_producto,tipo_producto,iva_producto,min_esferico,max_esferico,min_cilindrico,max_cilindrico',
                     filtersField:"nombre_producto,codigo_producto",filtersSearch:search,pagesize:'20',
                     where:`tipo_producto,=,1`
                 })
@@ -108,18 +109,20 @@ function BuscarProductos() {
         <Grid item xs={12}>
             {cargando && <LinearProgress />}
         </Grid>
-        <Grid item xs={12} sm={8}>
+        <Grid item xs={12} sm={6}>
             <Autocomplete
                 autoComplete autoHighlight autoSelect clearOnEscape selectOnFocus
                 getOptionLabel={(option) => option.nombre_producto+" - "+option.codigo_producto }
                 options={lista}
                 disabled={depositoID===''}
                 onChange={insertar}
+                size="small" 
                 loadingText="Cargando..." loading={loading} noOptionsText="Sin productos en lista..."
                 renderInput={(params) => <TextField   {...params} onChange={e=>setSearch(e.target.value)} label="Buscar producto" />}
             />
         </Grid>
-        <Grid item xs={12} sm={4}>
+        
+        <Grid item xs={12} sm={3}>
             <SelectDeposito opciones={depositos} name='deposito_id' value={depositoID} onChange={e=>{setDepositoID(e.target.value)}} />
         </Grid>
         {

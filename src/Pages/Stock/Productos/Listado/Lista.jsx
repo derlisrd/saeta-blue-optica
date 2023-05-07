@@ -1,13 +1,14 @@
-import { Icon } from "@iconify/react";
+
 import AddButton from "../../../../Components/Botones/AddButton";
 import Tablas from "../../../../Components/Tablas";
 import useGotoNavigate from "../../../../Hooks/useGotoNavigate";
 import { useListadoProducto } from "./ListadoProductoProvider";
 import TextFieldBuscar from "./TextFieldBuscar";
 import Paginacion from "./Paginacion";
-import { IconButton, Stack } from "@mui/material";
+import {  Stack } from "@mui/material";
 import { red } from "@mui/material/colors";
 import { columns } from "./columns";
+import ButtonTip from "../../../../Components/Botones/ButtonTip";
 
 function Lista() {
     const {navigate} = useGotoNavigate()
@@ -36,9 +37,9 @@ function Lista() {
 
     function ListaOpciones({rowProps}) {
         return (<Stack direction="row"> 
-            {rowProps.tipo_producto==="1" && <IconButton onClick={()=>{openStock(rowProps)}} ><Icon icon="fluent-mdl2:product-release" /></IconButton> }
-            <IconButton onClick={()=>{openEdit(rowProps)} }><Icon icon="tabler:edit" /></IconButton>
-            <IconButton onClick={()=>{}}><Icon color={red[300]} icon="tabler:trash" /> </IconButton>
+            {rowProps.tipo_producto==="1" && <ButtonTip onClick={()=>{openStock(rowProps)}} title='Stock' icon="inventory" /> }
+            <ButtonTip onClick={()=>{openEdit(rowProps)} } icon='edit' title='Editar' />
+            <ButtonTip onClick={()=>{}}  icon="delete_forever" title='Eliminar' /> 
         </Stack>)
     }
 
@@ -48,7 +49,7 @@ function Lista() {
     <Tablas
         title="Productos y Servicios"
         subtitle="Módulo de productos y servicios"
-        icon={{ name:'fluent-mdl2:product-variant' }}
+        icon={{ name:'inventory' }}
         loading={isLoading}
         columns={columns}
         datas={listas.productos}

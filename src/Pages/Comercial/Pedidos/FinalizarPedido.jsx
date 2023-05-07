@@ -1,16 +1,17 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, LinearProgress } from "@mui/material";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle,  LinearProgress } from "@mui/material";
 import { usePedidos } from "./PedidosProvider";
-import { Icon } from "@iconify/react";
+
 import { useRef } from 'react';
 import { useReactToPrint } from 'react-to-print';
 import { useAuth } from "../../../Providers/AuthProvider";
 import './stylos.css'
 import { funciones } from "../../../App/helpers/funciones";
-import { useState,useCallback,useEffect } from "react";
+import { useState } from "react";
 import { APICALLER } from "../../../Services/api";
 import useInitialStates from "./useInitialStates";
 import Ticket from "./Print/Ticket";
 import swal from "sweetalert";
+import ButtonTip from "../../../Components/Botones/ButtonTip";
 
 function FinalizarPedido() {
 
@@ -20,7 +21,7 @@ function FinalizarPedido() {
     const {token_user,id_user} = userData
     const {dialogs,setDialogs,factura,setearFactura,lastID,setLastID} = usePedidos()
     const [loading,setLoading] = useState(false)
-    const [nro,setNro] = useState(0)
+
     
     const atras = ()=>{
         if(finalizado){
@@ -87,26 +88,11 @@ function FinalizarPedido() {
     const handlePrint = useReactToPrint({
         content: () => divRef.current,
       });
-    const getLista = useCallback(async()=>{
-        if(dialogs.finalizar){
-            setLoading(true)
-            let res = await APICALLER.get({table:'pedidos',sort:'id_pedido',pagesize:1})
-            if(res.response){
-                let nuevo = res.found>0 ? parseInt(res.first.id_pedido)+1 : 1 
-                setNro(nuevo)
-            }else{console.log(res);}
-            setLoading(false)
-        }
-    },[dialogs])
+      
 
-    useEffect(() => {
-        const ca = new AbortController(); let isActive = true;
-        if (isActive) {getLista();}
-        return () => {isActive = false; ca.abort();};
-    }, [getLista]);
 
     return ( <Dialog open={dialogs.finalizar} onClose={atras} fullScreen >
-        <DialogTitle><IconButton onClick={atras}><Icon icon="ic:baseline-arrow-back" /> </IconButton> Imprimir pedido</DialogTitle>
+        <DialogTitle><ButtonTip onClick={atras} title='Atrás' icon='arrow_back' />  Imprimir pedido</DialogTitle>
         <DialogContent>
             {loading ? <LinearProgress /> :
             <div ref={divRef} id="print">

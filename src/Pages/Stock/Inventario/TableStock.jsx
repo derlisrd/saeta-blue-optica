@@ -1,9 +1,10 @@
-import { Button,Box} from '@mui/material';
+import { Button,Box, Tooltip} from '@mui/material';
 import style from './style.module.css'
 import { useDownloadExcel } from 'react-export-table-to-excel';
 import { Fragment, useEffect, useState,useRef } from 'react';
 import { useInventario } from './InventarioProvider';
 import CorregirInput from './CorregirInput';
+import { funciones } from '../../../App/helpers/funciones';
 
 
 function TableStock() {
@@ -65,7 +66,7 @@ function TableStock() {
           <th>Esferico</th>
           {
             rangos.cilindrico.map((e,i)=>(
-              <th width={ `${widthTh}%`} key={i}>{e}</th>
+              <th width={ `${widthTh}%`} key={i}>{funciones.addZeros(e)}</th>
             ))
           }
           <th>TOTAL</th>
@@ -73,12 +74,12 @@ function TableStock() {
         {
           formStock.map((e,i)=>(
             <tr key={i}>
-              <td> {e.esferico}</td>
+              <td> {funciones.addZeros(e.esferico)}</td>
               {
                 e.cilindrico.map((c,index)=>(
                   <Fragment key={index}>
                     <td>
-                      {c.edit ? <CorregirInput /> : <Button onClick={()=>{ openCorregir(e.esferico,c.cilindrico,c.stock,c.producto_id,c.deposito_id,c.id_productos_deposito)}}>{c.stock}</Button>}
+                      {c.edit ? <CorregirInput /> : <Tooltip title={<h3>ESF: {e.esferico} CIL: {c.cilindrico}</h3>} arrow><p onClick={()=>{ openCorregir(e.esferico,c.cilindrico,c.stock,c.producto_id,c.deposito_id,c.id_productos_deposito)}}>{c.stock}</p></Tooltip>}
                     </td>
                   </Fragment>
                 ))

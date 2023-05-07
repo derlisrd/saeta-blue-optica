@@ -1,8 +1,8 @@
-import { Icon } from "@iconify/react";
-import { Button } from "@mui/material";
+
+import { Button,Icon } from "@mui/material";
 
 function AddButton({onClick, ...res}) {
-    return ( <Button variant="contained" onClick={onClick} endIcon={<Icon icon="ic:twotone-add-circle" />}>Agregar</Button> );
+    return ( <Button variant="contained" onClick={onClick} endIcon={<Icon>add</Icon>}>Agregar</Button>);
 }
 
 export default AddButton;

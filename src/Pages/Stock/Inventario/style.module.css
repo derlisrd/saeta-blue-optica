@@ -10,6 +10,12 @@
     background-color: #e3e1e1;
     color:#000;
 }
+.table_stock tr td p {
+    padding: 8px;
+    font-size: 0.8rem;
+    line-height: 0;
+    cursor: pointer;
+}
 
 .table_stock .head{
     position: sticky;

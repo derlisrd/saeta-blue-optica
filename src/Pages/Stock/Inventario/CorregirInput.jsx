@@ -51,7 +51,7 @@ function CorregirInput() {
         setFormStock(formSelect)
     },[formSelect])
 
-    return ( <TextField size="small" value={formStock.stock_producto_deposito} onChange={change} name="stock_producto_deposito" autoFocus  onKeyUp={cambiar} InputProps={{inputProps: { min: 0 },inputComponent: NumberFormatCustom}}  /> );
+    return ( <TextField variant="standard" size="small" value={formStock.stock_producto_deposito} onChange={change} name="stock_producto_deposito" autoFocus  onKeyUp={cambiar} InputProps={{inputProps: { min: 0 },inputComponent: NumberFormatCustom}}  /> );
 }
 
 export default CorregirInput;

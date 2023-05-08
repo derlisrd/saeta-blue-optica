@@ -10,9 +10,18 @@ const TemaContext = createContext()
 
 function TemaProvider({children}) {
   
-  const storage = JSON.parse(localStorage.getItem('tema'))
+  
 
-  const [mode,setMode] = useState(storage ? storage.mode : 'light')
+  const [mode,setMode] = useState(()=>{
+    let sto = JSON.parse(localStorage.getItem('tema'))
+    if(sto){
+      return sto.mode
+    }
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      return 'dark'
+    }
+     return 'light'
+  })
 
   const toggleTheme = ()=>{ 
     let nuevo_modo = mode==='light' ? 'dark' : 'light'
@@ -25,7 +34,13 @@ function TemaProvider({children}) {
     const storage = JSON.parse(localStorage.getItem('tema'))
     //console.log(storage);
     if(!storage){
-      let tema = {mode:'light'}
+      let tema 
+      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        tema = {mode:'dark'}
+      }
+      else{
+        tema = {mode:'light'}
+      }
       localStorage.setItem('tema',JSON.stringify(tema))
     }
   }

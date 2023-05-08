@@ -12,6 +12,7 @@ function useInitialStates() {
             id_cliente:1,
             ruc_cliente:'X',
             nombre_cliente:'SIN NOMBRE',
+            fantasia_cliente:'',
             direccion_cliente:''
         },
         tipo_pedido:'1',

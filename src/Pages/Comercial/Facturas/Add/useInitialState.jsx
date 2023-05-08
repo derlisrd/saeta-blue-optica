@@ -13,6 +13,7 @@ function useInitialState() {
 
 
     const initialFactura = {
+        pedidos:[],
         items:[],
         total:0,
         liquiiva5:0,

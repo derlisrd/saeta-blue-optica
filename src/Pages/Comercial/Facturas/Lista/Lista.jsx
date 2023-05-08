@@ -10,7 +10,7 @@ import SelectCondicion from "./SelectCondicion";
 import xlsx from "json-as-xlsx"
 
 function Lista() {
-    const {listas,loading,setFechas,getLista} = useListaFactura()
+    const {listas,loading,setFechas,getLista,setFormSelect,dialogs,setDialogs} = useListaFactura()
     const [listaFiltrada,setListaFiltrada] = useState([])
     const [totalVenta,setTotalVenta] = useState(0)
     const {navigate} = useGotoNavigate()
@@ -35,6 +35,7 @@ function Lista() {
 
 
 
+
     const filtrar = ()=>{
         if(desde===''){
             setError({code:1})
@@ -49,10 +50,11 @@ function Lista() {
     }
 
     const navegar = ()=>{ navigate('/facturas/add') }
-
+    const print = r=>{ setFormSelect(r); setDialogs({...dialogs,print:true}) }
     const ListaOpciones = ({rowProps})=>(
         <Stack direction='row'>
-            <ButtonTip title='Ver' icon='ic:twotone-remove-red-eye' onClick={()=>{}} />
+            <ButtonTip title='Ver' icon='visibility' onClick={()=>{}} />
+            <ButtonTip title='Imprimir' icon='print' onClick={()=>{print(rowProps)}} />
         </Stack>
     )
 
@@ -88,7 +90,7 @@ function Lista() {
             <TextField type="date" fullWidth size="small" error={error.code===2} onChange={e=>{setHasta(e.target.value)}} helperText='hasta' />
             <SelectCondicion onChange={filtarCondicion}  />
             <Button variant="outlined" size="large" onClick={filtrar}>Filtrar</Button>
-            <ButtonTip title='Actualizar' onClick={()=>{getLista('','')}} icon='solar:refresh-circle-bold-duotone' />
+            <ButtonTip onClick={()=>{ getLista('','')}} title='Actualizar' icon='sync' />
             </Stack>
             </Grid>
             {listaFiltrada.length>0 && <Grid item xs={12} sm={3} md={2}>

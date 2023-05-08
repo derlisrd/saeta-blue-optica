@@ -30,10 +30,20 @@ function DialogBuscarCliente() {
     const insertar = (e,val)=>{
         let new_fact = {...factura}
         new_fact.cliente = {
-            id_cliente:val.id_cliente,
-            ruc_cliente:val.ruc_cliente,
-            nombre_cliente:val.nombre_cliente,
-            direccion_cliente: val.direccion_cliente
+            id_cliente:1,
+            ruc_cliente:'X',
+            nombre_cliente:'SIN NOMBRE',
+            fantasia_cliente:'',
+            direccion_cliente:''
+        }
+        if(val.id_cliente){
+            new_fact.cliente = {
+                id_cliente:val.id_cliente,
+                ruc_cliente:val.ruc_cliente,
+                fantasi_cliente:val.fantasia_cliente,
+                nombre_cliente:val.nombre_cliente,
+                direccion_cliente: val.direccion_cliente
+            }
         }
         setearFactura(new_fact)
     }
@@ -45,8 +55,9 @@ function DialogBuscarCliente() {
                 setLoading(true)
                 let res = await APICALLER.get({
                     table: "clientes",
-                    fields:'ruc_cliente,nombre_cliente,telefono_cliente,id_cliente,direccion_cliente',
-                    filtersField:"nombre_cliente,ruc_cliente",filtersSearch:search,pagesize:20
+                    fields:'ruc_cliente,nombre_cliente,telefono_cliente,id_cliente,direccion_cliente,fantasia_cliente',
+                    filtersField:'nombre_cliente,ruc_cliente,fantasia_cliente',
+                    filtersSearch:search,pagesize:20
                 })
                 setLista(res.results);
                 setLoading(false)
@@ -67,7 +78,7 @@ function DialogBuscarCliente() {
             <Grid item xs={12}>
                 <Autocomplete
                     autoComplete autoHighlight autoSelect  selectOnFocus
-                    getOptionLabel={(option) => option.nombre_cliente+" - "+option.ruc_cliente }
+                    getOptionLabel={(option) => option.fantasia_cliente+' - '+option.nombre_cliente+' - '+option.ruc_cliente }
                     options={lista}
                     onChange={insertar}
                     loadingText="Cargando..." loading={loading} noOptionsText="No existe en registro..."

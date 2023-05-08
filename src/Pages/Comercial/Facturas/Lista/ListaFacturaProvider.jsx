@@ -5,7 +5,7 @@ import { APICALLER } from "../../../../Services/api"
 const ListaFacturaContext = createContext()
 
 function ListaFacturaProvider({children}) {
-    const [dialogs,setDialogs] = useState({imprimir:false,entregar:false,cancelar:false,cambio_estado:false})
+    const [dialogs,setDialogs] = useState({print:false})
     const [loading,setLoading] = useState(true)
     const [formSelect,setFormSelect] = useState({})
     const [fechas,setFechas] = useState({
@@ -36,7 +36,7 @@ function ListaFacturaProvider({children}) {
         //console.log(whereFilter);
         let [res,totales] = await Promise.all([APICALLER.get({table:'facturas',include:'clientes,users',
         on:'cliente_id,id_cliente,id_user,user_id',
-        fields:'id_factura,nro_factura,nombre_cliente,ruc_cliente,tipo_factura,total_factura,nombre_user,fecha_factura,tipo_factura,factura_pagado',
+        fields:'estado_factura,id_factura,nro_factura,nombre_cliente,ruc_cliente,tipo_factura,total_factura,nombre_user,fecha_factura,tipo_factura,factura_pagado',
         where:whereFilter,
         filtersSearch:`${busca_cliente}`,
         filtersField:filterField,

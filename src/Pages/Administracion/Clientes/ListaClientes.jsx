@@ -36,7 +36,7 @@ function ListaClientes() {
         inputs={Inputs}
         datas={FilterData}
         loading={isLoading}
-        icon={{ name:'ic:twotone-people' }}
+        icon={{ name:'groups' }}
         showOptions
         Accions={ListaOpciones}
         columns={ListaColumns}

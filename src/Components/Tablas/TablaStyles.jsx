@@ -13,7 +13,6 @@ export const useTablaStyles = makeStyles((theme)=>({
     tcontainer:{
         overflowX: "initial !important",
         position: "relative",
-        
     },
     table:{
         borderCollapse:"inherit",
@@ -23,6 +22,7 @@ export const useTablaStyles = makeStyles((theme)=>({
         top:theme.mixins.toolbar.minHeight + 6,
         textTransform:"uppercase",
         zIndex:1051,
+        fontSize:'0.75rem',
         [theme.breakpoints.down("md")]: {
             display: "none !important",
           },
@@ -31,7 +31,9 @@ export const useTablaStyles = makeStyles((theme)=>({
         backgroundColor: theme.palette.action.hover,
         "& th ":{
             border:"none",
-            padding:'8px',
+            padding:'4px',
+            fontSize:'.75rem',
+            lineHeight:'1.2rem'
         },
         "& :nth-child(1)": {
             borderTopLeftRadius: 8,
@@ -40,7 +42,7 @@ export const useTablaStyles = makeStyles((theme)=>({
         " & :last-child":{
             borderTopRightRadius: 8,
             borderBottomRightRadius: 8
-        },
+        }
         
     },
     tbody:{
@@ -57,6 +59,7 @@ export const useTablaStyles = makeStyles((theme)=>({
             border:"none"
         }
         },
+        fontSize:'0.75rem'
       }, 
     tableCell:{
         [theme.breakpoints.down("md")]: {
@@ -64,9 +67,8 @@ export const useTablaStyles = makeStyles((theme)=>({
             justifyContent: "space-between",
             padding:'8px',
           },
-          padding:'0 6px',
+        padding:'0 6px',
         fontSize:'0.75rem'
-        
     },
     columntitleSpan:{
         display: "none",

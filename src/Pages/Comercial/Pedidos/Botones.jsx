@@ -1,12 +1,16 @@
 import { Button, Stack } from "@mui/material";
 import { usePedidos } from "./PedidosProvider";
+import useGotoNavigate from "../../../Hooks/useGotoNavigate";
 
 function Botones() {
-
-    const {setearFactura,initialFactura,factura,dialogs,setDialogs} = usePedidos()
+    const {navigate} = useGotoNavigate()
+    const {setearFactura,initialFactura,factura,dialogs,setDialogs,idUpdate} = usePedidos()
 
     const cancelar = ()=>{
         setearFactura(initialFactura)
+        if(idUpdate.status){
+            navigate('/pedidos/lista')
+        }
     }
     const fin = ()=> setDialogs({...dialogs,finalizar:true})
 

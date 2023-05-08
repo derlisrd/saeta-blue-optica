@@ -1,7 +1,7 @@
 import { Dialog, DialogTitle,DialogContent,  Grid,  DialogActions, Button,  Typography } from "@mui/material";
 import { usePedidos } from "./PedidosProvider";
 import styles from './styles.module.css'
-import { useState } from "react";
+import { useCallback, useState,useEffect } from "react";
 import InputNumerico from "./Components/InputNumerico";
 import ButtonTip from "../../../Components/Botones/ButtonTip";
 
@@ -99,6 +99,13 @@ function DialogSelectDepositoStock() {
         close()
     }
 
+    const setearValores = useCallback(()=>{
+        if(dialogs.select_deposito_stock){
+            let f = {...factura}
+            setParam(f.receta)
+        }
+    },[dialogs,factura])
+
     const key = e=>{
         const {value,name} = e.target
         let p = {...param}
@@ -127,8 +134,13 @@ function DialogSelectDepositoStock() {
         }
     }
 
-    const close = ()=>{ setDialogs({...dialogs,select_deposito_stock:false}); }
+    const close = ()=>{ setDialogs({...dialogs,select_deposito_stock:false});  }
 
+    useEffect(() => {
+        const ca = new AbortController(); let isActive = true;
+        if (isActive) {setearValores();}
+        return () => {isActive = false; ca.abort();};
+      }, [setearValores]);
 
 
     return ( <Dialog open={dialogs.select_deposito_stock} fullWidth maxWidth="lg" onClose={close} >

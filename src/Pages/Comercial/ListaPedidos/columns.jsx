@@ -1,3 +1,14 @@
+export const columnsData = [
+  { label: "NRO", value: "id_pedido" },
+  { label: 'FECHA', value:"fecha_pedido"},
+  { label: 'VENDEDOR', value:"nombre_user"},
+  { label: 'CLIENTE', value:"nombre_cliente"},
+  { label: 'TIPO', value:"tipo"},
+  { label: 'FACTURADO', value:"facturado"},
+  { label: 'TOTAL', value:"total_pedido"},
+]
+
+
 export const columns = [
     {
         field:'id_pedido',
@@ -15,7 +26,8 @@ export const columns = [
         field:'nombre_cliente',
         title:'cliente'
     },{
-      
+      field:'codigo_cliente_pedido',
+      title:'Codigo interno'
     },
     {
       field:'facturado_pedido',

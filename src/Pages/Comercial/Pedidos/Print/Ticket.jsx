@@ -8,6 +8,7 @@ function Ticket({factura,userData,nro}) {
     const {dataEmpresa} = useAuth()
     const armazones = env.ARMAZONES.find(e=> e.id_armazon === factura.obs.armazon_id)
     const nombre_armazon = armazones.nombre_armazon
+    const tipoPedido = {"1":"NORMAL","2":"CORTESIA","3":"GARANTIA"}
     return ( <>
     <table className="table_pedido" width='100%'>
         <tbody>
@@ -19,6 +20,7 @@ function Ticket({factura,userData,nro}) {
             <tr><td>CLIENTE: {factura.cliente.nombre_cliente} </td></tr>
             <tr><td>CODIGO CLIENTE: {factura.codigo_cliente_pedido} </td></tr>
             <tr><td>DIRECCION: {factura.cliente.direccion_cliente} </td></tr>
+            <tr><td>TIPO DE PEDIDO: { tipoPedido[factura.tipo_pedido] } </td></tr>
         </tbody>
     </table>
     <table className="table_pedido" width='100%' border='1'>

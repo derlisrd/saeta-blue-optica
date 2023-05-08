@@ -26,6 +26,7 @@ function FinalizarPedido() {
     const atras = ()=>{
         if(finalizado){
             setearFactura(initialFactura)
+            setFinalizado(false)
         }
         setDialogs({...dialogs,finalizar:false})
     }
@@ -72,7 +73,13 @@ function FinalizarPedido() {
                 pedido_id_receta: id_pedido
             }
             promises.push(APICALLER.insert({table:'recetas',token:token_user,data:receta_data}))
-            await Promise.all(promises)
+            //await Promise.all(promises)
+            Promise.allSettled(promises).
+            then((res) => 
+                res.forEach((resp) => console.log(resp))
+            ).catch(e=>{
+                console.log(e);
+            })
         }else{
             console.log(res);
             swal({title:'Error',text:'Ocurrió un error con la conexión a internet',icon:'warning'})
@@ -91,7 +98,7 @@ function FinalizarPedido() {
       
 
 
-    return ( <Dialog open={dialogs.finalizar} onClose={atras} fullScreen >
+    return ( <Dialog open={dialogs.finalizar} onClose={()=>{}} fullScreen >
         <DialogTitle><ButtonTip onClick={atras} title='Atrás' icon='arrow_back' />  Imprimir pedido</DialogTitle>
         <DialogContent>
             {loading ? <LinearProgress /> :

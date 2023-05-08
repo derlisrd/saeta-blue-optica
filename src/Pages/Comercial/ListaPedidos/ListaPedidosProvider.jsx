@@ -8,7 +8,7 @@ const ListaPedidosContext = createContext()
 function ListaPedidosProvider({children}) {
 
     
-    const [dialogs,setDialogs] = useState({imprimir:false,entregar:false,cancelar:false,cambio_estado:false})
+    const [dialogs,setDialogs] = useState({imprimir:false,editar_pedido:false,cancelar:false,cambio_estado:false})
     const [loading,setLoading] = useState(true)
     const [formSelect,setFormSelect] = useState({})
     const [fechas,setFechas] = useState({
@@ -26,6 +26,7 @@ function ListaPedidosProvider({children}) {
     const getLista = useCallback(async(searchTxt='',cliente='')=>{
         setLoading(true)
         let whereFilter = `fecha_pedido,between,'${fechas.desde}',and,'${fechas.hasta}'`
+        
         if(searchTxt!==''){
             whereFilter = `id_pedido,=,${searchTxt}`
         }
@@ -35,7 +36,7 @@ function ListaPedidosProvider({children}) {
         //console.log(whereFilter);
         let [res,tot] = await Promise.all([APICALLER.get({table:'pedidos',include:'clientes,users',
         on:'cliente_id_pedido,id_cliente,id_user,user_id_pedido',
-        fields:'facturado_pedido,motivo_cancela,estado_pago,total_pedido,tipo_pedido,total_pedido,nombre_user,fecha_pedido,id_pedido,nombre_cliente,estado_pedido,codigo_cliente_pedido',
+        fields:'codigo_cliente_pedido,facturado_pedido,motivo_cancela,estado_pago,total_pedido,tipo_pedido,total_pedido,nombre_user,fecha_pedido,id_pedido,nombre_cliente,estado_pedido,codigo_cliente_pedido',
         where:whereFilter,
         filtersSearch:`${cliente}`,
         filtersField:'ruc_cliente,nombre_cliente',
@@ -44,7 +45,15 @@ function ListaPedidosProvider({children}) {
         APICALLER.get({table:'pedidos',where:`fecha_pedido,between,'${fechas.desde}',and,'${fechas.hasta}'`,fields:'SUM(total_pedido) as monto_total'})
         ])
         if(res.response){
-            setListas({pedidos:res.results,entrada:tot.first.monto_total,total:res.found})
+            let tipoPedido = {'1':'Venta','2':'CORTESIA','3':'GARANTIA'}
+            let pedidos = []
+            res.results.forEach(elem=>{
+                pedidos.push({...elem,total_pedido: parseFloat(elem.total_pedido), 
+                    facturado: elem.facturado_pedido==='0'? 'No' : 'Si',
+                    tipo: tipoPedido[elem.tipo_pedido]
+                })
+            })
+            setListas({pedidos,entrada:tot.first.monto_total,total:res.found})
         }else{
             console.log(res);
         }

@@ -50,6 +50,15 @@ export const columns = [
       }
     },
     {
+      field:'estado_factura',
+      title:'ESTADO',
+      compareField: "estado_factura",
+      items: {
+            "1": "NORMAL",
+            "0": "ANULADO",
+          },
+    },
+    {
         field:'tipo_factura',
         title:'Condición',
         compareField: "tipo_factura",

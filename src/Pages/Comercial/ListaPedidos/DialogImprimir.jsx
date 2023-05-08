@@ -14,7 +14,7 @@ function DialogImprimir() {
     const {dataEmpresa} = useAuth()
     const {dialogs,setDialogs,formSelect} = useListaPedidos()
     const [loading,setLoading] = useState(true)
-    
+    const tipoPedidos = {"1":"NORMAL","2":"CORTESIA","3":"GARANTIA"}
     const [factura,setFactura] = useState({
         items:[],
         receta:{},
@@ -35,7 +35,7 @@ function DialogImprimir() {
             let [fact,items,receta] = await Promise.all([
                 APICALLER.get({table:'pedidos',include:'users,clientes',
                 on:'id_user,user_id_pedido,id_cliente,cliente_id_pedido',where:`id_pedido,=,${formSelect.id_pedido}`,
-                fields:'armazon_id,total_pedido,nombre_cliente,ruc_cliente,direccion_cliente,nombre_user,fecha_pedido,estado_pedido,id_pedido,obs_cliente,obs_laboratorio,codigo_cliente_pedido'
+                fields:'tipo_pedido,armazon_id,total_pedido,nombre_cliente,ruc_cliente,direccion_cliente,nombre_user,fecha_pedido,estado_pedido,id_pedido,obs_cliente,obs_laboratorio,codigo_cliente_pedido'
                 }),
                 APICALLER.get({table:'pedidos_items',include:'productos',on:'id_producto,producto_id_item',where:`pedido_id,=,${formSelect.id_pedido}`}),
                 APICALLER.get({table:'recetas',where:`pedido_id_receta,=,${formSelect.id_pedido}`})
@@ -78,6 +78,7 @@ function DialogImprimir() {
                         <tr><td>CLIENTE: {factura.datos.nombre_cliente} </td></tr>
                         <tr><td>CODIGO CLIENTE: {factura.datos.codigo_cliente_pedido} </td></tr>
                         <tr><td>DIRECCION: {factura.datos.direccion_cliente} </td></tr>
+                        <tr><td>TIPO DE PEDIDO: {tipoPedidos[factura.datos.tipo_pedido]} </td></tr>
                     </tbody>
                 </table>
                 <table className="table_pedido" width='100%' border='1'>
@@ -118,22 +119,22 @@ function DialogImprimir() {
                         </tr>
                         <tr>
                             <td width='20%'><b>LEJOS</b></td>
-                            <td width='20%'>{funciones.addZeros(factura.receta.lejos_derecho_esferico)}</td>
-                            <td width='20%'>{funciones.addZeros(factura.receta.lejos_derecho_cilindrico)}</td>
+                            <td width='20%'>{funciones.addZerosString(factura.receta.lejos_derecho_esferico)}</td>
+                            <td width='20%'>{funciones.addZerosString(factura.receta.lejos_derecho_cilindrico)}</td>
                             <td width='20%'>{(factura.receta.lejos_eje_derecho)}</td>
                             <td width='20%'>{(factura.receta.dnp_derecho)}</td>
                         </tr>
                         <tr>
                             <td width='20%'><b>ADICION</b></td>
-                            <td width='20%'>{funciones.addZeros(factura.receta.adicion_derecho)}</td>
+                            <td width='20%'>{funciones.addZerosString(factura.receta.adicion_derecho)}</td>
                             <td width='20%'></td>
                             <td width='20%'></td>
                             <td width='20%'>ALTURA</td>
                         </tr>
                         <tr>
                             <td width='20%'><b>CERCA</b></td>
-                            <td width='20%'>{funciones.addZeros(factura.receta.cerca_derecho_esferico)}</td>
-                            <td width='20%'>{funciones.addZeros(factura.receta.cerca_derecho_cilindrico)}</td>
+                            <td width='20%'>{funciones.addZerosString(factura.receta.cerca_derecho_esferico)}</td>
+                            <td width='20%'>{funciones.addZerosString(factura.receta.cerca_derecho_cilindrico)}</td>
                             <td width='20%'>{(factura.receta.cerca_eje_derecho)}</td>
                             <td width='20%'>{(factura.receta.altura_derecho)}</td>
                         </tr>
@@ -156,22 +157,22 @@ function DialogImprimir() {
                         </tr>
                         <tr>
                             <td width='20%'><b>LEJOS</b></td>
-                            <td width='20%'>{funciones.addZeros(factura.receta.lejos_izquierdo_esferico)}</td>
-                            <td width='20%'>{funciones.addZeros(factura.receta.lejos_izquierdo_cilindrico)}</td>
+                            <td width='20%'>{funciones.addZerosString(factura.receta.lejos_izquierdo_esferico)}</td>
+                            <td width='20%'>{funciones.addZerosString(factura.receta.lejos_izquierdo_cilindrico)}</td>
                             <td width='20%'>{(factura.receta.lejos_eje_izquierdo)}</td>
                             <td width='20%'><b>{factura.receta.dnp_izquierdo}</b></td>
                         </tr>
                         <tr>
                             <td width='20%'><b>ADICION</b></td>
-                            <td width='20%'>{funciones.addZeros(factura.receta.adicion_izquierdo)}</td>
+                            <td width='20%'>{funciones.addZerosString(factura.receta.adicion_izquierdo)}</td>
                             <td width='20%'></td>
                             <td width='20%'></td>
                             <td width='20%'>ALTURA</td>
                         </tr>
                         <tr>
                             <td width='20%'><b>CERCA</b></td>
-                            <td width='20%'>{funciones.addZeros(factura.receta.cerca_izquierdo_esferico)}</td>
-                            <td width='20%'>{funciones.addZeros(factura.receta.cerca_izquierdo_cilindrico)}</td>
+                            <td width='20%'>{funciones.addZerosString(factura.receta.cerca_izquierdo_esferico)}</td>
+                            <td width='20%'>{funciones.addZerosString(factura.receta.cerca_izquierdo_cilindrico)}</td>
                             <td width='20%'>{(factura.receta.cerca_eje_izquierdo)}</td>
                             <td width='20%'>{factura.receta.altura_izquierdo}</td>
                         </tr>

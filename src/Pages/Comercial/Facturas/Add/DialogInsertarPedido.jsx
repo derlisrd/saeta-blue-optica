@@ -37,7 +37,7 @@ function DialogInsertarPedido() {
           let p = [...pedidos]
           p.push(data.nro_pedido)
           let f  = {...factura}
-          
+          //f.pedidos.push(p)
           if(client.first.estado_pedido === '0'){
             setLoading(false)
             setError({active:true,message:'Este pedido fue cancelado'})

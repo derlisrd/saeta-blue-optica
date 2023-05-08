@@ -40,7 +40,12 @@ export const ListaMenu = [
                 url:'/pedidos/lista',
                 icon:'receipt_long'
             },
-
+            {
+                id:41,
+                title:'Recibos pedido',
+                url:'/recibospedidos',
+                icon:'article'
+            },
             {
                 id:42,
                 title:'Nueva factura',

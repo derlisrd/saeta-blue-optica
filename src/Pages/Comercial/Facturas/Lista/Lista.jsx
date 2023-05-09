@@ -51,8 +51,10 @@ function Lista() {
 
     const navegar = ()=>{ navigate('/facturas/add') }
     const print = r=>{ setFormSelect(r); setDialogs({...dialogs,print:true}) }
+    const estado = r=>{ setFormSelect(r); setDialogs({...dialogs,estado:true})  }
     const ListaOpciones = ({rowProps})=>(
         <Stack direction='row'>
+            <ButtonTip title='Estado de pago' icon='edit' onClick={()=>{estado(rowProps)}} />
             <ButtonTip title='Imprimir' icon='print' onClick={()=>{print(rowProps)}} />
         </Stack>
     )

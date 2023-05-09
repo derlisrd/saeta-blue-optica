@@ -5,7 +5,7 @@ import { APICALLER } from "../../../../Services/api"
 const ListaFacturaContext = createContext()
 
 function ListaFacturaProvider({children}) {
-    const [dialogs,setDialogs] = useState({print:false})
+    const [dialogs,setDialogs] = useState({print:false,estado:false})
     const [loading,setLoading] = useState(true)
     const [formSelect,setFormSelect] = useState({})
     const [fechas,setFechas] = useState({

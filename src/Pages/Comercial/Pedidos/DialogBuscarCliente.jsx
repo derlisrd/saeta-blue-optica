@@ -12,10 +12,6 @@ function DialogBuscarCliente() {
     const [loading,setLoading] = useState(false)
     const close = ()=>{ 
         setDialogs({...dialogs,buscar_cliente:false});
-        setCodigo('')
-        let new_fact = {...factura}
-        new_fact.codigo_cliente_pedido = codigo
-        setearFactura(new_fact)
     }
     const enterCodigo = e=>{
         if(e.key==="Enter"){
@@ -29,25 +25,24 @@ function DialogBuscarCliente() {
 
     const insertar = (e,val)=>{
         let new_fact = {...factura}
-        new_fact.cliente = {
-            id_cliente:1,
-            ruc_cliente:'X',
-            nombre_cliente:'SIN NOMBRE',
-            fantasia_cliente:'',
-            direccion_cliente:''
-        }
-        if(val.id_cliente){
+       
             new_fact.cliente = {
                 id_cliente:val.id_cliente,
                 ruc_cliente:val.ruc_cliente,
-                fantasi_cliente:val.fantasia_cliente,
+                fantasia_cliente:val.fantasia_cliente,
                 nombre_cliente:val.nombre_cliente,
                 direccion_cliente: val.direccion_cliente
             }
-        }
+        
         setearFactura(new_fact)
-        close();
+        setDialogs({...dialogs,buscar_cliente:false});
     }
+
+    useEffect(()=>{
+        if(dialogs.buscar_cliente){
+            setCodigo(factura.codigo_cliente_pedido)
+        }
+    },[dialogs,factura])
     
     
     useEffect(()=>{
@@ -56,7 +51,7 @@ function DialogBuscarCliente() {
                 setLoading(true)
                 let res = await APICALLER.get({
                     table: "clientes",
-                    fields:'ruc_cliente,nombre_cliente,telefono_cliente,id_cliente,direccion_cliente,fantasia_cliente,codigo_cliente',
+                    fields:'ruc_cliente,nombre_cliente,telefono_cliente,id_cliente,direccion_cliente,fantasia_cliente',
                     filtersField:'codigo_cliente,nombre_cliente,ruc_cliente,fantasia_cliente',
                     filtersSearch:search,pagesize:20
                 })
@@ -69,7 +64,7 @@ function DialogBuscarCliente() {
     },[search])
 
 
-    return ( <Dialog open={dialogs.buscar_cliente} maxWidth='lg' fullWidth onClose={close} >
+    return ( <Dialog open={dialogs.buscar_cliente} maxWidth='md' fullWidth onClose={close} >
         <DialogTitle>Cliente</DialogTitle>
         <DialogContent>
             <Grid container spacing={2}>
@@ -79,7 +74,7 @@ function DialogBuscarCliente() {
             <Grid item xs={12}>
                 <Autocomplete
                     autoComplete autoHighlight autoSelect  selectOnFocus
-                    getOptionLabel={(option) => option.codigo_cliente+' - '+option.nombre_cliente+' - '+option.ruc_cliente }
+                    getOptionLabel={(option) => option.nombre_cliente+' - '+option.ruc_cliente }
                     options={lista}
                     onChange={insertar}
                     loadingText="Cargando..." loading={loading} noOptionsText="No existe en registro..."

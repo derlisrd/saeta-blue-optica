@@ -14,7 +14,7 @@ function DialogImprimir() {
     const {dataEmpresa} = useAuth()
     const {dialogs,setDialogs,formSelect} = useListaPedidos()
     const [loading,setLoading] = useState(true)
-    const tipoPedidos = {"1":"NORMAL","2":"CORTESIA","3":"GARANTIA"}
+    const tipoPedidos = {"1":"NORMAL PRESCRIPCION","2":"CORTESIA","3":"GARANTIA","4":"VENTA NORMAL SOLO CRISTAL"}
     const [factura,setFactura] = useState({
         items:[],
         receta:{},
@@ -72,13 +72,13 @@ function DialogImprimir() {
                     <tbody>
                         <tr><td><h1> {dataEmpresa.nombre_empresa}</h1></td></tr>
                         <tr><td><h1>PEDIDO NRO: {factura.datos.id_pedido} - USO INTERNO</h1></td></tr>
+                        <tr><td align="center"><h3>TIPO DE PEDIDO: {tipoPedidos[factura.datos.tipo_pedido]} </h3></td></tr>
                         <tr><td>FECHA: {factura.datos.fecha_pedido}</td></tr>
                         <tr><td>Vendedor: {factura.datos.nombre_user}</td></tr>
                         <tr><td>DOC: {factura.datos.ruc_cliente}</td></tr>
                         <tr><td>CLIENTE: {factura.datos.nombre_cliente} </td></tr>
                         <tr><td>CODIGO CLIENTE: {factura.datos.codigo_cliente_pedido} </td></tr>
                         <tr><td>DIRECCION: {factura.datos.direccion_cliente} </td></tr>
-                        <tr><td>TIPO DE PEDIDO: {tipoPedidos[factura.datos.tipo_pedido]} </td></tr>
                     </tbody>
                 </table>
                 <table className="table_pedido" width='100%' border='1'>

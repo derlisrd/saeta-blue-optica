@@ -19,12 +19,19 @@ function SelectTipo() {
     f.tipo_pedido = e;
     setearFactura(f);
     setAnchorEl(null);
-  };
+  }
+
+  const tipos = {
+    "1": "NORMAL PREESCRIPCIÓN",
+    "2": "CORTESIA",
+    "3": "GARANTIA",
+    "4": "NORMAL SOLO CRISTAL"
+  }
 
   return (
     <div>
       <Button onClick={handleOpen}  >
-        TIPO PEDIDO: {factura.tipo_pedido ==='1' ? 'NORMAL' : factura.tipo_pedido==='2' ? 'CORTESIA' : 'GARANTIA' }
+        TIPO PEDIDO: {tipos[factura.tipo_pedido] }
       </Button>
       <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
         <MenuItem
@@ -33,7 +40,7 @@ function SelectTipo() {
           }}
           value="1"
         >
-          NORMAL
+          NORMAL PREESCRIPCIÓN
         </MenuItem>
         <MenuItem
           onClick={() => {
@@ -50,6 +57,14 @@ function SelectTipo() {
           value="3"
         >
           GARANTIA
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
+            change("4");
+          }}
+          value="4"
+        >
+          NORMAL SOLO CRISTAL
         </MenuItem>
       </Menu>
     </div>

@@ -15,12 +15,11 @@ function PedidosProvider({children}) {
     const {initialFactura} = useInitialStates()
     let query = useQuery();
 
-    
-
     const [idUpdate,setIdUpdate] = useState({
         state:false,
         id: null
     })
+    //console.log(idUpdate);
     const [dialogs,setDialogs] = useState({
         main: query.get("open") ? true : false ,
         finalizar:false,
@@ -67,6 +66,7 @@ function PedidosProvider({children}) {
         setFactura(obj)
         localStorage.setItem('pedido',JSON.stringify(obj))
     }
+
 
 
     const getDatasEdit = useCallback(async()=>{
@@ -131,7 +131,7 @@ function PedidosProvider({children}) {
                 setearFactura(f)
 
             }
-            console.log(main,items);
+            //console.log(main,items);
             setCargas({main:false,stock:false})
         }
     },[])

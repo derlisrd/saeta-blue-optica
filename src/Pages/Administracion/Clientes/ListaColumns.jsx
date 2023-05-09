@@ -12,6 +12,10 @@ const ListaColumns= [
         title:'Fantasia'
     },
     {
+        field:'direccion_cliente',
+        title:'Direccion'
+    },
+    {
         field:'telefono_cliente',
         title:'Tel.'
     },

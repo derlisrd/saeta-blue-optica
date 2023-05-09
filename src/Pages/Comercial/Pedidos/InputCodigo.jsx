@@ -21,10 +21,14 @@ function InputCodigo() {
             let found = new_fact.items.filter(i => i.codigo.toLowerCase() === val.codigo_producto.toLowerCase());
             
             if(tipo === 1){
+                let idCliente = new_fact.cliente.id_cliente
                 setCargas({...cargas,stock:true})
-                let res = await APICALLER.get({table:'productos_depositos',
+                let [res,desc] = await Promise.all([APICALLER.get({table:'productos_depositos',
                 fields:'nombre_producto,deposito_id,eje,graduacion_cilindrico,graduacion_esferico,stock_producto_deposito,codigo_producto,precio_producto,iva_producto,tipo_producto,id_producto,preciom_producto,precio_producto,id_productos_deposito'
-                ,include:'productos',on:'producto_id,id_producto',where:`producto_id,=,${id_producto}`})
+                ,include:'productos',on:'producto_id,id_producto',where:`producto_id,=,${id_producto}`}),
+                APICALLER.get({table:'descuentos',where:`cliente_id_descuento,=,${idCliente},and,producto_id_descuento,=,${id_producto}`})
+            ])
+                console.log(desc);
                 if(res.response){
                     setFormDepositoStock(res.results)
                 }else{ console.log(res);}
@@ -98,7 +102,7 @@ function InputCodigo() {
         options={lista}
         onChange={insertaProducto}
         loadingText="Cargando..." loading={loading} noOptionsText="Sin productos en lista..."
-        renderInput={(params) => <TextField {...params} onChange={e=>setSearch(e.target.value)} label="Buscar producto" />}
+        renderInput={(params) => <TextField id='id_busca_codigo' {...params} onChange={e=>setSearch(e.target.value)} label="Buscar producto" />}
       />);
 }
 

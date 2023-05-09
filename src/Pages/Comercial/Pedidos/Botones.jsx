@@ -1,4 +1,4 @@
-import { Button, Stack } from "@mui/material";
+import { Button, Icon, Stack } from "@mui/material";
 import { usePedidos } from "./PedidosProvider";
 import useGotoNavigate from "../../../Hooks/useGotoNavigate";
 
@@ -12,6 +12,12 @@ function Botones() {
             navigate('/pedidos/lista')
         }
     }
+
+    const nuevo = ()=>{
+        setearFactura(initialFactura)
+        //console.log(document.getElementById('id_busca_codigo'));
+    }
+
     const receta = ()=> setDialogs({...dialogs,select_deposito_stock:true})
 
     const fin = ()=> setDialogs({...dialogs,finalizar:true})
@@ -21,16 +27,20 @@ function Botones() {
             factura.items.length>0 &&
             <>
             <Button size="large" onClick={fin} variant="contained" color="success" fullWidth>
-            FINALIZAR PEDIDO
+            FINALIZAR
         </Button>
         <Button onClick={cancelar} size="large" variant="outlined" color="info" fullWidth>
-            CANCELAR PEDIDO
+            CANCELAR
         </Button>
         <Button onClick={receta} size="large" variant="outlined" color="warning" fullWidth>
             RECETA
         </Button>
             </>
         }
+        {
+            !idUpdate.state && <Button onClick={nuevo} color='secondary' startIcon={<Icon>cleaning_services</Icon>} variant="contained">LIMPIAR TODO</Button>
+        }
+        
     </Stack> );
 }
 

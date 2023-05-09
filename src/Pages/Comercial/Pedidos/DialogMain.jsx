@@ -9,13 +9,21 @@ import { funciones } from "../../../App/helpers/funciones";
 import InputObs from "./InputObs";
 import SelectTipo from "./Components/SelectTipo";
 import ButtonTip from "../../../Components/Botones/ButtonTip";
+import useGotoNavigate from "../../../Hooks/useGotoNavigate";
 
 
 function DialogMain() {
 
-    const {setDialogs,dialogs,factura,cargas,idUpdate} = usePedidos()
-
-    const close = ()=>{ setDialogs({...dialogs,main:false}) }
+    const {navigate} = useGotoNavigate()
+    const {setDialogs,dialogs,factura,cargas,idUpdate,initialFactura,setearFactura} = usePedidos()
+    //console.log(idUpdate);
+    const close = ()=>{ 
+        if(idUpdate.state){
+            setearFactura(initialFactura)
+            navigate('/pedidos/lista')
+        }
+        setDialogs({...dialogs,main:false}) 
+    }
 
     return ( <Dialog open={dialogs.main} fullScreen onClose={()=>{}} >
         <Cargando open={cargas.stock} />

@@ -9,7 +9,7 @@ function Home() {
                     LIONS
                 </Typography>
                 <Typography variant="h3">
-                    Sistema de Gestion Administrativa de Negocio
+                    Sistema de Gestion Administrativo
                 </Typography>
 
     </Box>);

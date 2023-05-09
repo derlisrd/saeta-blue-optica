@@ -12,7 +12,7 @@ function Main() {
 
     return (<Box sx={{display:'flex',gap:4 }}>
         <Button variant="contained" onClick={open} >HACER FACTURA</Button>
-        <Button variant="contained" onClick={open} >LISTA DE FACTURAS</Button>
+        <Button variant="contained" onClick={ir} >LISTA DE FACTURAS</Button>
     </Box>);
 }
 

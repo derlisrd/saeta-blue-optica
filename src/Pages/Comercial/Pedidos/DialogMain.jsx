@@ -13,14 +13,14 @@ import ButtonTip from "../../../Components/Botones/ButtonTip";
 
 function DialogMain() {
 
-    const {setDialogs,dialogs,factura,cargas} = usePedidos()
+    const {setDialogs,dialogs,factura,cargas,idUpdate} = usePedidos()
 
     const close = ()=>{ setDialogs({...dialogs,main:false}) }
 
     return ( <Dialog open={dialogs.main} fullScreen onClose={()=>{}} >
         <Cargando open={cargas.stock} />
         <Cargando open={cargas.main} />
-        <DialogTitle> <ButtonTip onClick={close} title='Atrás' icon='arrow_back' />  Pedido - Total: { funciones.numberFormat( factura.total )} </DialogTitle>
+        <DialogTitle> <ButtonTip onClick={close} title='Atrás' icon='arrow_back' /> {idUpdate.state && `Modificar pedido nro: ${idUpdate.id} -`}  Pedido - Total: { funciones.numberFormat( factura.total )} </DialogTitle>
         <DialogContent>
             <Grid container spacing={2}>
                 <Grid item xs={12}>

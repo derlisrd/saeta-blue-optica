@@ -176,8 +176,8 @@ function DialogSelectDepositoStock() {
                 <Grid item xs={12} sm={6}>
                     <Grid container alignItems='center' spacing={1} sx={{ border:'1px solid silver',padding:1,borderRadius:1 }}>
                         <Grid item xs={12} sm={12}><Typography variant="overline">ADICION</Typography></Grid>
-                        <Grid item xs={12} sm={6}><InputNumerico  name="adicion_derecho" onChange={change} value={param.adicion_derecho} fullWidth label='Derecho' /></Grid>
-                        <Grid item xs={12} sm={6}><InputNumerico  name="adicion_izquierdo" onChange={change} value={param.adicion_izquierdo} fullWidth label='Izquierdo' /></Grid>
+                        <Grid item xs={12} sm={6}><InputNumerico onKeyUp={key} name="adicion_derecho" onChange={change} value={param.adicion_derecho} fullWidth label='Derecho' /></Grid>
+                        <Grid item xs={12} sm={6}><InputNumerico onKeyUp={key} name="adicion_izquierdo" onChange={change} value={param.adicion_izquierdo} fullWidth label='Izquierdo' /></Grid>
                         
                     </Grid>
                 </Grid>

@@ -53,7 +53,6 @@ function Lista() {
     const print = r=>{ setFormSelect(r); setDialogs({...dialogs,print:true}) }
     const ListaOpciones = ({rowProps})=>(
         <Stack direction='row'>
-            <ButtonTip title='Ver' icon='visibility' onClick={()=>{}} />
             <ButtonTip title='Imprimir' icon='print' onClick={()=>{print(rowProps)}} />
         </Stack>
     )

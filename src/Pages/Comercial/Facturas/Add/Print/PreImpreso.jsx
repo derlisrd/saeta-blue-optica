@@ -11,7 +11,7 @@ import { APICALLER } from '../../../../../Services/api';
 function PreImpreso() {
     const {userData} = useAuth()
     const {token_user,id_user} = userData
-    const {factura,dialogs,setDialogs,initialFactura,setearFactura} = useFacturas();
+    const {factura,dialogs,setDialogs,initialFactura,setearFactura,pedidos} = useFacturas();
     const [grabado,setGrabado] = useState(false)
     const [loading,setLoading] = useState(false)
     const limpiar = ()=>{
@@ -55,12 +55,19 @@ function PreImpreso() {
           }
           promises.push(APICALLER.insert({table:'facturas_items',data,token:token_user}))
         });
+        pedidos.forEach(elem=>{
+          promises.push(APICALLER.update({table:'pedidos',token:token_user,data:{facturado_pedido:1},id:elem}))
+        })
+        await Promise.all(promises)
         setGrabado(true)
       }else{
         console.log(res);
       } 
       setLoading(false)
     }  
+
+
+
     
     const close = ()=> { setDialogs({...dialogs,finalizar:false}) }  
 

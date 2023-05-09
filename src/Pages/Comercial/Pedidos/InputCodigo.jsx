@@ -38,6 +38,7 @@ function InputCodigo() {
                     id_producto,
                     codigo:val.codigo_producto,
                     tipo,
+                    editable:true,
                     iva:parseInt(val.iva_producto)                 
                 }
                 new_fact.items.push(nuevo_item)
@@ -60,6 +61,7 @@ function InputCodigo() {
                         id_producto,
                         codigo:val.codigo_producto,
                         tipo,
+                        editable:true,
                         iva:parseInt(val.iva_producto)                 
                     }
                     new_fact.items.push(nuevo_item)

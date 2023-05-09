@@ -25,7 +25,7 @@ function DialogBuscarCliente() {
             setearFactura(new_fact)
         }
     }
-    const openRegistrar = ()=>{ setDialogs({...dialogs,buscar_cliente:false,registrar_cliente:true}) }
+    //const openRegistrar = ()=>{ setDialogs({...dialogs,buscar_cliente:false,registrar_cliente:true}) }
 
     const insertar = (e,val)=>{
         let new_fact = {...factura}
@@ -46,6 +46,7 @@ function DialogBuscarCliente() {
             }
         }
         setearFactura(new_fact)
+        close();
     }
     
     
@@ -55,8 +56,8 @@ function DialogBuscarCliente() {
                 setLoading(true)
                 let res = await APICALLER.get({
                     table: "clientes",
-                    fields:'ruc_cliente,nombre_cliente,telefono_cliente,id_cliente,direccion_cliente,fantasia_cliente',
-                    filtersField:'nombre_cliente,ruc_cliente,fantasia_cliente',
+                    fields:'ruc_cliente,nombre_cliente,telefono_cliente,id_cliente,direccion_cliente,fantasia_cliente,codigo_cliente',
+                    filtersField:'codigo_cliente,nombre_cliente,ruc_cliente,fantasia_cliente',
                     filtersSearch:search,pagesize:20
                 })
                 setLista(res.results);
@@ -68,7 +69,7 @@ function DialogBuscarCliente() {
     },[search])
 
 
-    return ( <Dialog open={dialogs.buscar_cliente} fullWidth onClose={close} >
+    return ( <Dialog open={dialogs.buscar_cliente} maxWidth='lg' fullWidth onClose={close} >
         <DialogTitle>Cliente</DialogTitle>
         <DialogContent>
             <Grid container spacing={2}>
@@ -78,7 +79,7 @@ function DialogBuscarCliente() {
             <Grid item xs={12}>
                 <Autocomplete
                     autoComplete autoHighlight autoSelect  selectOnFocus
-                    getOptionLabel={(option) => option.fantasia_cliente+' - '+option.nombre_cliente+' - '+option.ruc_cliente }
+                    getOptionLabel={(option) => option.codigo_cliente+' - '+option.nombre_cliente+' - '+option.ruc_cliente }
                     options={lista}
                     onChange={insertar}
                     loadingText="Cargando..." loading={loading} noOptionsText="No existe en registro..."
@@ -88,8 +89,7 @@ function DialogBuscarCliente() {
             </Grid>
         </DialogContent>
         <DialogActions>
-            <Button onClick={openRegistrar} variant="outlined" >REGISTRAR</Button>
-            <Button onClick={close} variant="contained" >CERRAR</Button>
+            <Button onClick={close} variant="contained">CERRAR</Button>
         </DialogActions>
     </Dialog> );
 }

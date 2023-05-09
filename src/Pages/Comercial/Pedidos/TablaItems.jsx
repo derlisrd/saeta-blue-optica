@@ -37,29 +37,33 @@ function TablaItems({items}) {
     return (<table width="100%">
         <tbody>
             <tr className={styles.head} >
-                <td className={styles.head_cantidad} width="10%">Cant</td>
-                <td width="20%">Codigo</td>
+                <td width="5%" className={styles.head_cantidad} >Cant</td>
+                <td width="15%">Codigo</td>
                 <td width="30%">Descripción</td>
-                <td width="20%">Precio</td>
+                <td width="15%">Precio</td>
+                <td width="15%">Subtotal</td>
                 <td width="20%">Opcion</td>
             </tr>
             {
                 items.map((e,i)=>(
                     <tr key={i} className={styles.items}>
-                        <td width="10%">
+                        <td width="5%">
                             <Stack spacing={0} direction="row" alignContent="flex-start" justifyContent="flex-start" >
                                 <IconButtonTip title='Menos' onClick={()=>{menos(i)}} icon={{ name:'remove', color:'inherit' }} />
                                 <span className={styles.cantidad} >{e.cantidad}</span>
                                 <IconButtonTip onClick={()=>{mas(i)}} title="Más" icon={{ name:'add', color:'inherit' }}  />
                             </Stack>
                         </td>
-                        <td width="20%">{e.codigo}</td>
+                        <td width="15%">{e.codigo}</td>
                         <td width="30%">{e.descripcion}</td>
-                        <td width="20%">{ f.numberFormat(e.precio)}</td>
-                        <td width="20%">
+                        <td width="15%">{ f.numberFormat(e.precio)}</td>
+                        <td width="15%">{ f.numberFormat(e.precio * e.cantidad)}</td>
+                        <td width="15%">
                             <Stack direction="row">
                                 <IconButtonTip onClick={()=>{precio(i)}} title='Cambia precio' icon={{ name:'price_change',color:'warning' }} />
-                                <IconButtonTip onClick={()=>{borrar(i)}} title='Borrar item' icon={{ name:'delete_forever',color:'error' }} />
+                                {
+                                    e.editable && <IconButtonTip onClick={()=>{borrar(i)}} title='Borrar item' icon={{ name:'delete_forever',color:'error' }} />
+                                }
                             </Stack>
                         </td>
                     </tr>

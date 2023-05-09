@@ -23,7 +23,7 @@ function DialogInsertarPedido() {
         include:'productos',on:'producto_id_item,id_producto',where:`pedido_id,=,${data.nro_pedido}`}),
         APICALLER.get({table:'pedidos',include:'clientes',on:'id_cliente,cliente_id_pedido',
         where:`id_pedido,=,${data.nro_pedido}`,
-        fields:'nombre_cliente,ruc_cliente,direccion_cliente,id_cliente,estado_pedido,facturado_pedido'})
+        fields:'nombre_cliente,ruc_cliente,direccion_cliente,id_cliente,estado_pedido,facturado_pedido,tipo_cliente'})
         ])
         
         if(res.found===0 && res.response){
@@ -37,7 +37,8 @@ function DialogInsertarPedido() {
           let p = [...pedidos]
           p.push(data.nro_pedido)
           let f  = {...factura}
-          //f.pedidos.push(p)
+          f.pedidos.push(data.nro_pedido)
+          
           if(client.first.estado_pedido === '0'){
             setLoading(false)
             setError({active:true,message:'Este pedido fue cancelado'})
@@ -58,6 +59,8 @@ function DialogInsertarPedido() {
           }
           setError({active:false,message:''})
           f.cliente = {...client.first}
+          f.tipo_factura = client.first.tipo_cliente==='1' ? '1': '2' 
+          
           res.results.forEach(val => {
             let nuevo_item;
             let indexItem = f.items.findIndex(elem=> elem.id_producto === val.id_producto )

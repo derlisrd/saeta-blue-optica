@@ -17,8 +17,7 @@ function useInitialStates() {
         },
         tipo_pedido:'1',
         codigo_cliente_pedido:'',
-        fecha: funciones.fechaActualYMD(),
-        hora: funciones.HoraActualHMS(),
+        fecha: funciones.getFechaHorarioString(),
         obs: {
             cliente:'',
             laboratorio:'',

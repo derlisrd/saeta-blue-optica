@@ -41,7 +41,10 @@ function PedidosProvider({children}) {
     const [seleccionado,setSeleccionado] = useState([])
     const [factura,setFactura] = useState(()=>{
         let sto = JSON.parse(localStorage.getItem('pedido'))
-        return sto ?? initialFactura
+        if(sto && !query.get('id')){
+            return sto
+        }
+        return initialFactura
     })
     const [indexCambioPrecio,setIndexCambioPrecio] = useState(-1)
     const [lastID,setLastID] = useState('')
@@ -69,37 +72,67 @@ function PedidosProvider({children}) {
     const getDatasEdit = useCallback(async()=>{
         let id = query.get('id')
         if(id){
-            let [main,items] = await Promise.all([
+            setCargas({main:true,stock:false})
+            setearFactura(initialFactura)
+            let [main,items,rece] = await Promise.all([
                 APICALLER.get({
                     table:'pedidos',where:`id_pedido,=,${id}`,
                     include:'clientes,users',on:'id_cliente,cliente_id_pedido,user_id_pedido,id_user',
-                    fields:'nombre_cliente,ruc_cliente,direccion_cliente,nombre_user,fecha_pedido,codigo_cliente_pedido,obs_laboratorio,armazon_id,tipo_pedido'
+                    fields:'fecha_pedido,tipo_pedido,armazon_id,codigo_cliente_pedido,obs_cliente,obs_laboratorio,id_cliente,nombre_cliente,ruc_cliente,direccion_cliente,fantasia_cliente,nombre_user,fecha_pedido,codigo_cliente_pedido,obs_laboratorio,armazon_id,tipo_pedido'
             }),
             APICALLER.get({table:'pedidos_items',
             where:`pedido_id,=,${id}`,
             include:'productos',on:'id_producto,producto_id_item',
-            fields:'deposito_id_item,codigo_producto,cantidad_pedido,id_producto,precio_producto,preciom_producto,precio_venta_item,iva_producto,nombre_producto'
-            })
+            fields:'id_pedidos_item,deposito_id_item,codigo_producto,cantidad_pedido,id_producto,precio_producto,preciom_producto,precio_venta_item,iva_producto,nombre_producto,tipo_producto'
+            }),
+            APICALLER.get({table:'recetas',where:`pedido_id_receta,=,${id}`})
             ])
             if(main.response && items.response){
                 setIdUpdate({state:true,id:id})
                 let f = {...factura}
-                let objeto = {
-                    id_productos_deposito:null,
-                    cantidad:2,
-                    precio_normal:parseFloat(val.precio_producto),
-                    precio: parseFloat(val.precio_producto),
-                    preciom: parseFloat(val.preciom_producto),
-                    descripcion:val.nombre_producto,
-                    id_producto,
-                    codigo:val.codigo_producto,
-                    tipo,
-                    iva:parseInt(val.iva_producto)
-                }
+                
+                items.results.forEach(elem=>{
+                    let objeto = {
+                        id_pedidos_item: elem.id_pedidos_item,
+                        id_productos_deposito:elem.deposito_id_item,
+                        cantidad:parseFloat(elem.cantidad_pedido),
+                        precio_normal:parseFloat(elem.precio_producto),
+                        precio: parseFloat(elem.precio_venta_item),
+                        preciom: parseFloat(elem.preciom_producto),
+                        descripcion:elem.nombre_producto,
+                        id_producto:elem.id_producto,
+                        codigo:elem.codigo_producto,
+                        tipo:elem.tipo_producto,
+                        iva:parseInt(elem.iva_producto),
+                        editable:false,
 
+                    }
+                    f.items.push(objeto)
+                })
+                let fa  = main.first, fare = rece.first
+                f.cliente = {
+                    id_cliente:fa.id_cliente,
+                    ruc_cliente:fa.ruc_cliente,
+                    nombre_cliente:fa.nombre_cliente,
+                    fantasia_cliente:fa.fantasia_cliente,
+                    direccion_cliente:fa.direccion_cliente
+                }
+                f.tipo_pedido = fa.tipo_pedido,
+                f.codigo_cliente_pedido = fa.codigo_cliente_pedido,
+                f.fecha = fa.fecha_pedido,
+                f.obs = {
+                    cliente:fa.obs_cliente,
+                    laboratorio:fa.obs_laboratorio,
+                    armazon_id:fa.armazon_id
+                }
+                delete fare.updated_at
+                delete fare.pedido_id_receta
+                f.receta = fare
+                setearFactura(f)
 
             }
             console.log(main,items);
+            setCargas({main:false,stock:false})
         }
     },[])
 

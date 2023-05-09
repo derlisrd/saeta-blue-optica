@@ -8,10 +8,12 @@ function Botones() {
 
     const cancelar = ()=>{
         setearFactura(initialFactura)
-        if(idUpdate.status){
+        if(idUpdate.state){
             navigate('/pedidos/lista')
         }
     }
+    const receta = ()=> setDialogs({...dialogs,select_deposito_stock:true})
+
     const fin = ()=> setDialogs({...dialogs,finalizar:true})
 
     return ( <Stack spacing={2} >
@@ -23,6 +25,9 @@ function Botones() {
         </Button>
         <Button onClick={cancelar} size="large" variant="outlined" color="info" fullWidth>
             CANCELAR PEDIDO
+        </Button>
+        <Button onClick={receta} size="large" variant="outlined" color="warning" fullWidth>
+            RECETA
         </Button>
             </>
         }

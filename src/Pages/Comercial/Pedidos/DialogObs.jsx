@@ -25,8 +25,10 @@ function DialogObs() {
     
 
     useEffect(()=>{
-        setObs(factura.obs)
-    },[factura])
+        if(dialogs.obs){
+            setObs(factura.obs)
+        }
+    },[factura,dialogs])
 
     return (<Dialog open={dialogs.obs} onClose={close} fullWidth >
         <DialogTitle>Observaciones</DialogTitle>

@@ -14,7 +14,7 @@ function Ticket({factura,userData,nro}) {
         <tbody>
             <tr><td><h1>{dataEmpresa.nombre_empresa}</h1></td></tr>
             <tr><td><h1>PEDIDO NRO: {nro} - USO INTERNO</h1></td></tr>
-            <tr><td>FECHA: {factura.fecha} {factura.hora}</td></tr>
+            <tr><td>FECHA: {factura.fecha}</td></tr>
             <tr><td>VENDEDOR: {userData.nombre_user}</td></tr>
             <tr><td>DOC: {factura.cliente.ruc_cliente}</td></tr>
             <tr><td>CLIENTE: {factura.cliente.nombre_cliente} </td></tr>

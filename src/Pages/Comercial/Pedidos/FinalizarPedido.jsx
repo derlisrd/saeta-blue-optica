@@ -12,14 +12,15 @@ import useInitialStates from "./useInitialStates";
 import Ticket from "./Print/Ticket";
 import swal from "sweetalert";
 import ButtonTip from "../../../Components/Botones/ButtonTip";
+import useGotoNavigate from "../../../Hooks/useGotoNavigate";
 
 function FinalizarPedido() {
-
+    const {navigate} = useGotoNavigate()
     const {initialFactura} = useInitialStates()
     const {userData} = useAuth()
     const [finalizado,setFinalizado] = useState(false)
     const {token_user,id_user} = userData
-    const {dialogs,setDialogs,factura,setearFactura,lastID,setLastID} = usePedidos()
+    const {dialogs,setDialogs,factura,setearFactura,lastID,setLastID,idUpdate} = usePedidos()
     const [loading,setLoading] = useState(false)
 
     
@@ -29,6 +30,45 @@ function FinalizarPedido() {
             setFinalizado(false)
         }
         setDialogs({...dialogs,finalizar:false})
+    }
+    const actualizar = async()=>{
+        let f = {...factura}
+
+        setLoading(true)
+
+        let updatePedido = {
+            armazon_id: f.obs.armazon_id,
+            obs_laboratorio:f.obs.laboratorio,
+            obs_cliente: f.obs.cliente,
+            cliente_id_pedido: f.cliente.id_cliente,
+            tipo_pedido: f.tipo_pedido,
+            codigo_cliente_pedido: f.codigo_cliente_pedido,
+            total_pedido: f.total,
+            total_iva10: f.iva10,
+            total_iva5: f.iva5,
+            total_exenta: f.exenta
+        }
+        
+
+        let promesas =  [
+            APICALLER.update({table:'pedidos',token:token_user,id:idUpdate.id,data:updatePedido}),
+            APICALLER.update({table:'recetas',token:token_user,id:f.receta.id_receta,data:f.receta}),
+        ]
+
+        f.items.forEach(elem=>{
+            let dataItems = {
+                pedido_id: idUpdate.id,
+                cantidad_pedido: elem.cantidad,
+                producto_id_item: elem.id_producto,
+                precio_venta_item: elem.precio,
+                deposito_id_item: elem.id_productos_deposito ?? 0,
+            }
+            promesas.push(APICALLER.update({table:'pedidos_items',id: elem.id_pedidos_item,data:dataItems,token:token_user}))
+        })
+
+        await Promise.allSettled(promesas)
+        setLoading(false)
+        navigate('/pedidos/lista')
     }
 
     const close = async()=>{ 
@@ -103,14 +143,14 @@ function FinalizarPedido() {
         <DialogContent>
             {loading ? <LinearProgress /> :
             <div ref={divRef} id="print">
-            <Ticket factura={factura} nro={lastID} userData={userData} /> 
+            <Ticket factura={factura} nro={idUpdate.state ? idUpdate.id : lastID} userData={userData} /> 
             </div>
             }
         </DialogContent>
         <DialogActions>
             {
                 finalizado ? <Button variant="outlined" size="large" onClick={atras}>CERRAR PEDIDO</Button> :
-                <Button color="info" variant="outlined" onClick={close} size="large"> FINALIZAR </Button>
+                <Button color="info" variant="outlined" onClick={ idUpdate.state ? actualizar : close} size="large"> {idUpdate.state ? `ACTUALIZAR` : `FINALIZAR` } </Button>
             }
             <Button color="success" variant="contained" disabled={!finalizado} onClick={handlePrint} size="large"> IMPRIMIR </Button>
         </DialogActions>

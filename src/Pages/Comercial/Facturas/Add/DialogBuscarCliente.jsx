@@ -16,15 +16,20 @@ function DialogBuscarCliente() {
     const openRegistrar = ()=>{ setDialogs({...dialogs,buscar_cliente:false,registrar_cliente:true}) }
 
     const insertar = (e,val)=>{
-        let new_fact = {...factura}
-        new_fact.cliente = {
-            id_cliente:val.id_cliente,
-            ruc_cliente:val.ruc_cliente,
-            nombre_cliente:val.nombre_cliente,
-            direccion_cliente: val.direccion_cliente
+        if(val.id_cliente){
+            let new_fact = {...factura}
+            new_fact.cliente = {
+                id_cliente:val.id_cliente,
+                ruc_cliente:val.ruc_cliente,
+                nombre_cliente:val.nombre_cliente,
+                direccion_cliente: val.direccion_cliente
+            }
+            if(val.tipo_cliente!=='1'){
+                new_fact.tipo_factura = '2' 
+            }
+            setearFactura(new_fact)
+            close()
         }
-        setearFactura(new_fact)
-        close()
     }
     
     
@@ -34,8 +39,8 @@ function DialogBuscarCliente() {
                 setLoading(true)
                 let res = await APICALLER.get({
                     table: "clientes",
-                    fields:'ruc_cliente,nombre_cliente,telefono_cliente,id_cliente,direccion_cliente',
-                    filtersField:"nombre_cliente,ruc_cliente,fantasia_cliente",filtersSearch:search,pagesize:20
+                    fields:'ruc_cliente,nombre_cliente,telefono_cliente,id_cliente,direccion_cliente,tipo_cliente',
+                    filtersField:"codigo_cliente,nombre_cliente,ruc_cliente,fantasia_cliente",filtersSearch:search,pagesize:20
                 })
                 setLista(res.results);
                 setLoading(false)
@@ -46,7 +51,7 @@ function DialogBuscarCliente() {
     },[search])
 
 
-    return ( <Dialog open={dialogs.buscar_cliente} fullWidth onClose={close} >
+    return ( <Dialog open={dialogs.buscar_cliente} fullWidth maxWidth='lg' onClose={close} >
         <DialogTitle>Cliente</DialogTitle>
         <DialogContent>
             <Grid container spacing={2}>

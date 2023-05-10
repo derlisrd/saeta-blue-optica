@@ -2,12 +2,13 @@ import { Button,  Stack, TextField, Grid, Alert } from "@mui/material";
 import Tablas from "../../../Components/Tablas";
 import { useListaPedidos } from "./ListaPedidosProvider";
 import { columns, columnsData } from "./columns";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ButtonTip from "../../../Components/Botones/ButtonTip";
 import useGotoNavigate from "../../../Hooks/useGotoNavigate";
 import swal from "sweetalert";
 import { funciones } from "../../../App/helpers/funciones";
 import xlsx from "json-as-xlsx"
+import SelectTipo from "./SelectTipo";
 
 function Lista() {
     const {listas,loading,setFormSelect,dialogs,setDialogs,setFechas,getLista} = useListaPedidos()
@@ -15,6 +16,7 @@ function Lista() {
     const [error,setError] = useState({code:0})
     const [desde,setDesde] = useState('')
     const [hasta,setHasta] = useState('')
+    const [filterLista,setFilterLista] = useState([])
     const downloadExcel = () => {
         let data = [
           {
@@ -29,6 +31,17 @@ function Lista() {
         }
         xlsx(data, settings)
       }
+
+    const changeTipo = e=>{
+        const {value} = e.target
+        let l = [...listas.pedidos]
+        if(value==='0'){
+            setFilterLista(l)
+            return;
+        }
+        let filtrado = l.filter(elem=> elem.tipo_pedido === value )
+        setFilterLista(filtrado)
+    }  
 
     const filtrar = ()=>{
         if(desde===''){
@@ -50,6 +63,8 @@ function Lista() {
     const motivoCancela = (r)=>{
         swal({text:r.motivo_cancela, title:`Pedido ${r.id_pedido} - Motivo:`,icon:'info'})
     }
+
+
 
     const ListaOpciones = ({rowProps})=>(
         <Stack direction='row'>
@@ -77,6 +92,7 @@ function Lista() {
             </Grid>
             <Grid item xs={12}>
             <Stack direction={{ xs:'column',md:'row' }} sx={{ maxWidth:{md:'1100px'} }} spacing={1} alignItems='flex-start'>
+                <SelectTipo onChange={changeTipo} />
             <TextField size="small" fullWidth onKeyUp={e=>{ e.key==='Enter' && getLista(e.target.value,'') }} helperText='Ingrese el nro, presione Enter' label='Número de pedido' />
             <TextField size="small" fullWidth onKeyUp={e=>{ e.key==='Enter' && getLista('',e.target.value) }} helperText='Ingrese el doc o nombre, presione Enter' label='Ruc o nombre de cliente' />
             <TextField type="date" fullWidth size="small" error={error.code===1} onChange={e=>{setDesde(e.target.value)}} helperText='desde' />
@@ -97,11 +113,15 @@ function Lista() {
         </Grid>
     )
 
+    useEffect(()=>{
+        setFilterLista(listas.pedidos)
+    },[listas])
+
     return (<Tablas
         title="Pedidos"
         subtitle="Módulo de listado de pedidos"
         inputs={Inputs}
-        datas={listas.pedidos}
+        datas={filterLista}
         loading={loading}
         icon={{ name:'receipt' }}
         showOptions

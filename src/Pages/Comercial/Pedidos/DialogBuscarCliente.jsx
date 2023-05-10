@@ -28,17 +28,18 @@ function DialogBuscarCliente() {
     //const openRegistrar = ()=>{ setDialogs({...dialogs,buscar_cliente:false,registrar_cliente:true}) }
 
     const insertar = (e,val)=>{
-        let new_fact = {...factura}
+        let f = {...factura}
        
-            new_fact.cliente = {
+            f.cliente = {
                 id_cliente:val.id_cliente,
                 ruc_cliente:val.ruc_cliente,
                 fantasia_cliente:val.fantasia_cliente,
                 nombre_cliente:val.nombre_cliente,
                 direccion_cliente: val.direccion_cliente
             }
-        
-        setearFactura(new_fact)
+            
+        f.codigo_cliente_pedido = codigo
+        setearFactura(f)
         setDialogs({...dialogs,buscar_cliente:false});
     }
 
@@ -78,7 +79,7 @@ function DialogBuscarCliente() {
             <Grid item xs={12}>
                 <Autocomplete
                     autoComplete autoHighlight autoSelect  selectOnFocus
-                    getOptionLabel={(option) => option.nombre_cliente+' - '+option.ruc_cliente }
+                    getOptionLabel={(o) => o.nombre_cliente+' - '+o.fantasia_cliente+' '+o.ruc_cliente }
                     options={lista}
                     onChange={insertar}
                     loadingText="Cargando..." loading={loading} noOptionsText="No existe en registro..."

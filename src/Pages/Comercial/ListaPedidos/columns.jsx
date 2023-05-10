@@ -58,9 +58,10 @@ export const columns = [
       title:'Tipo',
       compareField: "tipo_pedido",
       items: {
-          "1": "PEDIDO DE VENTA",
+          "1": "NORMAL PREESCRIPCION",
           "2": "CORTESIA",
           "3": "GARANTIA",
+          "4": "NORMAL SOLO CRISTAL"
         },
     },
     {

@@ -1,7 +1,7 @@
-import {FormControl,InputLabel,Select,MenuItem} from '@mui/material'
+import {FormControl,Select,MenuItem, InputLabel} from '@mui/material'
 function SelectCondicion({onChange,}) {
     return ( <FormControl fullWidth>
-        
+        <InputLabel>Tipo</InputLabel>
         <Select
             onChange={onChange}
             label="Condición"

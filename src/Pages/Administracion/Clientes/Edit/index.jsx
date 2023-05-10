@@ -18,8 +18,9 @@ function Edit() {
     const {get} = useQuerys()
     const {userData} = useAuth()
     const {focusTo} = useFocus()    
-    const [formEdit,setFormEdit] = useState({id_cliente:'',ruc_cliente:'',tipo_cliente:'',email_cliente:'',telefono_cliente:'',fantasia_cliente:'',direccion_cliente:''})
+    const [formEdit,setFormEdit] = useState({})
 
+    //console.log(formEdit,formSelect);
 
     const change = e=>{
         const {value,name} = e.target
@@ -41,7 +42,7 @@ function Edit() {
         }
         setLoading(true)
         let id = formSelect.id_cliente;
-        let check = await get({table:'clientes',where:`ruc_cliente,=,'${datas.ruc_cliente}',and,id_cliente,<>,${id}`})
+        let check = await get({table:'clientes',where:`codigo_cliente,=,'${datas.ruc_cliente}',and,id_cliente,<>,${id}`})
         if(check.response && check.found>0){
             setError({active:true,message:'Ya existe un cliente con ese doc.',code:1})
             focusTo('ruc_cliente')
@@ -59,13 +60,14 @@ function Edit() {
     }
 
     useEffect(()=>{
-        setFormEdit(formSelect)
-        //console.log('cambia form select');
-    },[formSelect])
+        if(dialogs.edit){
+            setFormEdit(formSelect)
+        }
+    },[formSelect,dialogs])
   
 
   return (
-    <DialogZoom open={dialogs.edit} title="Agregar" onClose={close} fullWidth>
+    <DialogZoom open={dialogs.edit} title={`EDITAR - ${formSelect?.codigo_cliente}`} onClose={close} fullWidth>
       <form onSubmit={enviar}>
         <input type="hidden" name="id" value={formSelect.id_cliente} />
         <DialogContent>

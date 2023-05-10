@@ -2,6 +2,7 @@ import { Autocomplete, CircularProgress, TextField } from "@mui/material";
 import { useEffect, useState } from "react";
 import { APICALLER } from "../../../Services/api";
 import { usePedidos } from "./PedidosProvider";
+import swal from "sweetalert";
 
 
 
@@ -23,20 +24,28 @@ function InputCodigo() {
             if(tipo === 1){
                 let idCliente = new_fact.cliente.id_cliente
                 setCargas({...cargas,stock:true})
-                let [res,desc] = await Promise.all([APICALLER.get({table:'productos_depositos',
-                fields:'nombre_producto,deposito_id,eje,graduacion_cilindrico,graduacion_esferico,stock_producto_deposito,codigo_producto,precio_producto,iva_producto,tipo_producto,id_producto,preciom_producto,precio_producto,id_productos_deposito'
-                ,include:'productos',on:'producto_id,id_producto',where:`producto_id,=,${id_producto}`}),
-                APICALLER.get({table:'descuentos',where:`cliente_id_descuento,=,${idCliente},and,producto_id_descuento,=,${id_producto}`})
-            ])
-                console.log(desc);
+                let [res,desc] = await Promise.all([
+                    APICALLER.get({table:'productos_depositos',
+                    fields:'nombre_producto,deposito_id,eje,graduacion_cilindrico,graduacion_esferico,stock_producto_deposito,codigo_producto,precio_producto,iva_producto,tipo_producto,id_producto,preciom_producto,precio_producto,id_productos_deposito'
+                    ,include:'productos',on:'producto_id,id_producto',where:`producto_id,=,${id_producto}`}),
+                    APICALLER.get({table:'descuentos',where:`cliente_id_descuento,=,${idCliente},and,producto_id_descuento,=,${id_producto}`})
+                ])
+                
                 if(res.response){
                     setFormDepositoStock(res.results)
-                }else{ console.log(res);}
+                }else{
+                    swal({title:'Error',icon:'warning',text:'Ocurrió un error con tu conexión a internet'}) 
+                    console.log(res);
+                }
+                let precio_descuento = parseFloat(val.precio_producto)
+                if(desc.found>0){
+                    precio_descuento = precio_descuento - ((precio_descuento * parseFloat(desc.first.porcentaje_descuento))/100)
+                }
                 let nuevo_item = {
                     id_productos_deposito:null,
                     cantidad:2,
                     precio_normal:parseFloat(val.precio_producto),
-                    precio: parseFloat(val.precio_producto),
+                    precio: precio_descuento,
                     preciom: parseFloat(val.preciom_producto),
                     descripcion:val.nombre_producto,
                     id_producto,

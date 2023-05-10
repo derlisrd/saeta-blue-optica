@@ -7,7 +7,7 @@ import AddButton from "../../../Components/Botones/AddButton";
 
 function ListaDescuentos() {
     
-    const {listas,dialogs,setDialogs} = useDescuentos()
+    const {listas,dialogs,setDialogs,loading} = useDescuentos()
 
     const add = ()=>{ setDialogs({...dialogs,add:true})}
 
@@ -18,7 +18,7 @@ function ListaDescuentos() {
 
     const Opciones = ({rowProps})=>(
         <Stack direction='row'>
-            <ButtonTip title='Ver' onClick={()=>{}} icon='visibility' />
+            <ButtonTip title='Ver' onClick={()=>{}} icon='edit' />
         </Stack>
     )
 
@@ -27,6 +27,7 @@ function ListaDescuentos() {
         title='Descuentos'
         subtitle='Descuentos por clientes'
         icon={{ name:'price_check' }}
+        loading={loading}
         showOptions
         Accions={Opciones}
         datas={listas.descuentos}

@@ -150,7 +150,7 @@ function FinalizarPedido() {
         <DialogActions>
             {
                 finalizado ? <Button variant="outlined" size="large" onClick={atras}>CERRAR PEDIDO</Button> :
-                <Button color="info" variant="outlined" onClick={ idUpdate.state ? actualizar : close} size="large"> {idUpdate.state ? `ACTUALIZAR` : `FINALIZAR` } </Button>
+                <Button color="info" variant="outlined" onClick={ idUpdate.state ? actualizar : close} size="large"> {idUpdate.state ? `ACTUALIZAR` : `GRABAR PEDIDO` } </Button>
             }
             <Button color="success" variant="contained" disabled={!finalizado} onClick={handlePrint} size="large"> IMPRIMIR </Button>
         </DialogActions>

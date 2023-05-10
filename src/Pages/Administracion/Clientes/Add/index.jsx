@@ -31,13 +31,13 @@ function Add() {
             return false;
         }
         setLoading(true)
-        let check = await get({table:'clientes',where:`ruc_cliente,=,'${datas.ruc_cliente}'`})
+        /* let check = await get({table:'clientes',where:`ruc_cliente,=,'${datas.ruc_cliente}'`})
         if(check.response && check.found>0){
             setError({active:true,message:'Ya existe un cliente con ese doc.',code:1})
             setLoading(false)
             focusTo('ruc_cliente')
             return false;
-        }
+        } */
         setError(initialError)
 
         let res = await insert({table:'clientes',data:datas})

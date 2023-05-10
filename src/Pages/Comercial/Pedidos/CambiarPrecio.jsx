@@ -32,7 +32,7 @@ function CambiarPrecio() {
     const setearPrecio = useCallback(()=>{
         if(indexCambioPrecio>=0){
             let f = {...factura}
-            console.log(f.items);
+            //console.log(f.items);
             let precios = f.items[indexCambioPrecio]
             setPrecio({
                 precio_normal: precios.precio_normal,

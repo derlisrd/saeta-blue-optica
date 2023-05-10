@@ -1,4 +1,4 @@
-import { Dialog, DialogActions, DialogContent, DialogTitle, Grid,Autocomplete,TextField, Button } from "@mui/material";
+import { Dialog, DialogActions, DialogContent, DialogTitle, Grid,Autocomplete,TextField, Button, Icon } from "@mui/material";
 import { useDescuentos } from "./DescuentosProvider";
 import { APICALLER } from "../../../Services/api";
 import { useState,useEffect } from "react";
@@ -13,6 +13,7 @@ function Agregar() {
     const [search,setSearch] = useState('')
     const [cliente,setCliente] = useState(iCliente)
     const [producto,setProducto] = useState(iProducto)
+    const [expand,setExpand] = useState(false)
     const insertar = (e,val)=>{
         if(val && val.id_cliente){
             setCliente({...val})
@@ -37,6 +38,10 @@ function Agregar() {
         setProducto(iProducto)
     }
 
+    const agregar = ()=>{
+        document.getElementById('codigo_producto').focus();
+    }
+
     useEffect(()=>{
         const timer = setTimeout(async()=>{
             if(search!==''){
@@ -54,31 +59,35 @@ function Agregar() {
         return ()=> clearTimeout(timer)
     },[search])
 
-    return ( <Dialog onClose={close} open={dialogs.add} fullWidth >
+    return ( <Dialog onClose={close} open={dialogs.add} maxWidth='md' fullWidth={!expand} fullScreen={expand} >
         <DialogTitle>Agregar descuento por cliente</DialogTitle>
         <DialogContent>
-            <Grid container spacing={2}>
-                <Grid item xs={12}>
+            <Grid container spacing={2} alignItems='center'>
+                <Grid item xs={12} lg={3}>
                     <Autocomplete
                     autoComplete autoHighlight autoSelect  selectOnFocus
-                    getOptionLabel={(option) => option.fantasia_cliente+" - "+option.nombre_cliente+" - "+option.ruc_cliente }
+                    getOptionLabel={(option) => option.id_cliente+" - "+option.nombre_cliente+" - "+option.ruc_cliente }
                     options={lista}
                     onChange={insertar}
                     loadingText="Cargando..." loading={loadingSearch} noOptionsText="No existe en registro..."
                     renderInput={(params) => <TextField {...params} fullWidth onChange={e=>setSearch(e.target.value)} label="Buscar cliente" />}
                 />
                 </Grid>
-                <Grid item xs={12} sm={6}>
-                    <TextField disabled={cliente.id_cliente===null} onKeyUp={e=>{e.key==='Enter'&&consultar(e.target.value)}} label='Código de producto' helperText={error.message} 
+                <Grid item xs={12} sm={4} lg={3}>
+                    <TextField id='codigo_producto' size='small' fullWidth disabled={cliente.id_cliente===null} onKeyUp={e=>{e.key==='Enter'&&consultar(e.target.value)}} label='Código de producto' helperText={error.message} 
                     
                     error={error.active && error.code===1} />
                 </Grid>
-                <Grid item xs={12} sm={6}>
-
+                <Grid item xs={12} sm={4} lg={3}>
+                    <TextField fullWidth size='small' label='Porcentaje %' />
+                </Grid>
+                <Grid item xs={12} sm={4} lg={3}>
+                    <Button size="large" onClick={agregar} color="success" startIcon={<Icon>add</Icon>} variant="outlined">Agregar</Button>
                 </Grid>
             </Grid>
         </DialogContent>
         <DialogActions>
+            <Button variant="contained" startIcon={<Icon>{expand ? `close_fullscreen`: `open_in_full`}</Icon>} onClick={()=>{setExpand(!expand)}}> {expand ? `MINIZAR` : `EXPANDIR`} </Button>
             <Button variant="contained" onClick={close}>CERRAR</Button>
         </DialogActions>
     </Dialog> );

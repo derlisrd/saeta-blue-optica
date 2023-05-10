@@ -9,6 +9,7 @@ function DescuentosProvider({children}) {
         add:false,
         edit:false
     })
+    const [formSelect,setFormSelect] = useState({})
     const [loading,setLoading] = useState(true)
     const [listas,setListas] = useState({
         descuentos:[]
@@ -17,7 +18,7 @@ function DescuentosProvider({children}) {
     const getLista = useCallback(async()=>{
         setLoading(true)
         let res = await APICALLER.get({table:'descuentos',include:'clientes,productos',on:'id_cliente,cliente_id_descuento,id_producto,producto_id_descuento',
-        fields:'nombre_cliente,id_descuento'})
+        fields:'nombre_cliente,id_descuento,ruc_cliente,codigo_producto,nombre_producto,porcentaje_descuento'})
         if(res.response){
             setListas({descuentos:res.results})
         }   
@@ -34,13 +35,13 @@ function DescuentosProvider({children}) {
         return () => {isActive = false; ca.abort();};
     }, [getLista]);
 
-    const values ={listas,getLista,loading,setDialogs,dialogs}
+    const values ={listas,getLista,loading,setDialogs,dialogs,formSelect,setFormSelect}
     return <DescuentosContext.Provider value={values}>{children}</DescuentosContext.Provider>
 }
 
 export function useDescuentos(){
-    const {listas,getLista,loading,setDialogs,dialogs} = useContext(DescuentosContext)
-    return {listas,getLista,loading,setDialogs,dialogs}
+    const {listas,getLista,loading,setDialogs,dialogs,formSelect,setFormSelect} = useContext(DescuentosContext)
+    return {listas,getLista,loading,setDialogs,dialogs,formSelect,setFormSelect}
 }
 
 

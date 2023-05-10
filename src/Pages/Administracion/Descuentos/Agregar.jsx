@@ -1,35 +1,64 @@
-import { Dialog, DialogActions, DialogContent, DialogTitle, Grid,Autocomplete,TextField, Button, Icon } from "@mui/material";
+import { Dialog, DialogActions, DialogContent, DialogTitle, Grid,Autocomplete,TextField, Button, Icon, LinearProgress } from "@mui/material";
 import { useDescuentos } from "./DescuentosProvider";
 import { APICALLER } from "../../../Services/api";
 import { useState,useEffect } from "react";
 import useInitialState from "./useInitialState";
+import { useAuth } from "../../../Providers/AuthProvider";
 
 function Agregar() {
+    const {userData}  = useAuth()
+    const {token_user} = userData
     const {dialogs,setDialogs} = useDescuentos()
     const {iError,iProducto,iCliente} = useInitialState()
     const [lista,setLista]= useState([])
     const [loadingSearch,setLoadingSearch] = useState(false)
+    const [loading,setLoading] = useState(false)
     const [error,setError] = useState(iError)
     const [search,setSearch] = useState('')
     const [cliente,setCliente] = useState(iCliente)
-    const [producto,setProducto] = useState(iProducto)
     const [expand,setExpand] = useState(false)
+    const [producto,setProducto] = useState(iProducto)
+    const [form,setForm] = useState({
+        codigo_producto:'',
+        porcentaje_descuento:'',
+    })
+    const change = e=>{
+        const {value,name} = e.target
+        setForm({...form,[name]:value})
+    }
     const insertar = (e,val)=>{
         if(val && val.id_cliente){
             setCliente({...val})
         }
     }
-    const consultar = async(txt)=>{
-        let res = await APICALLER.get({table:'productos',where:`codigo_producto,=,${txt}`})
+    const consultar = async()=>{
+        if(form.codigo_producto === ''){
+            setError({active:true,code:1,message:'Falta código'})
+            return false;
+        }
+        if(form.porcentaje_descuento === ''){
+            setError({active:true,code:2,message:'Falta porcentaje'})
+            return false;
+        }
+        setError(iError)
+        setLoading(true)
+        let res = await APICALLER.get({table:'productos',where:`codigo_producto,=,${form.codigo_producto}`})
         if(res.response){
             if(res.found>0){
-
+                console.log(res.first);
+                /* let ins = await APICALLER.insert({table:'descuentos',data:{},token:token_user})
+                if(ins.response){
+                    //let p = [...productos]
+                    //p.push(nuevo)
+                }else{ console.log(ins);} */
             }else{
                 setError({active:true,code:1,message:'Producto no existente.'})
             }
         }else{
             console.log(res)
         }
+        setLoading(false)
+        document.getElementById('codigo_producto').focus();
     }
     const close = ()=>{
         setDialogs({...dialogs,add:false})
@@ -38,9 +67,7 @@ function Agregar() {
         setProducto(iProducto)
     }
 
-    const agregar = ()=>{
-        document.getElementById('codigo_producto').focus();
-    }
+   
 
     useEffect(()=>{
         const timer = setTimeout(async()=>{
@@ -73,16 +100,20 @@ function Agregar() {
                     renderInput={(params) => <TextField {...params} fullWidth onChange={e=>setSearch(e.target.value)} label="Buscar cliente" />}
                 />
                 </Grid>
-                <Grid item xs={12} sm={4} lg={3}>
-                    <TextField id='codigo_producto' size='small' fullWidth disabled={cliente.id_cliente===null} onKeyUp={e=>{e.key==='Enter'&&consultar(e.target.value)}} label='Código de producto' helperText={error.message} 
-                    
-                    error={error.active && error.code===1} />
+                <Grid item xs={12}>
+                    {loading && <LinearProgress />}
                 </Grid>
                 <Grid item xs={12} sm={4} lg={3}>
-                    <TextField fullWidth size='small' label='Porcentaje %' />
+                    <TextField id='codigo_producto' size='small' name='codigo_producto' value={form.codigo_producto} onChange={change} fullWidth disabled={cliente.id_cliente===null}  label='Código de producto' helperText={error.code===1 && error.message} error={error.active && error.code===1} />
                 </Grid>
                 <Grid item xs={12} sm={4} lg={3}>
-                    <Button size="large" onClick={agregar} color="success" startIcon={<Icon>add</Icon>} variant="outlined">Agregar</Button>
+                    <TextField fullWidth size='small' name='porcentaje_descuento' value={form.porcentaje_descuento} onChange={change} label='Porcentaje %' helperText={error.code===2 && error.message} error={error.active && error.code===2} />
+                </Grid>
+                <Grid item xs={12} sm={4} lg={3}>
+                    <Button size="large" onClick={consultar} color="success" startIcon={<Icon>add</Icon>} variant="outlined">Agregar</Button>
+                </Grid>
+                <Grid item xs={12}>
+
                 </Grid>
             </Grid>
         </DialogContent>

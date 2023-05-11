@@ -15,9 +15,9 @@ function ListaOpciones({rowProps}) {
 
     return (
     <Stack direction="row"> 
-        <ButtonTip onClick={()=>{open(rowProps,'permisos')}} title='Permisos' icon="manage_accounts" />
-        <ButtonTip onClick={()=>{open(rowProps,'edit')}} icon='edit' title='Editar'  />
-        <ButtonTip onClick={()=>{open(rowProps,'delete')}} icon='delete_forever' title='Borrar' />
+        <ButtonTip id='14' onClick={()=>{open(rowProps,'permisos')}} title='Permisos' icon="manage_accounts" />
+        <ButtonTip id='12' onClick={()=>{open(rowProps,'edit')}} icon='edit' title='Editar'  />
+        <ButtonTip id='13' onClick={()=>{open(rowProps,'delete')}} icon='delete_forever' title='Borrar' />
     </Stack>
     )
 }

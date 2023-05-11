@@ -29,13 +29,13 @@ export const ListaMenu = [
         open:false,
         submenu:[
             {
-                id:41,
+                id:9,
                 title:'Nuevo pedido',
                 url:'/pedidos?open=nuevo',
                 icon:'receipt'
             },
             {
-                id:41,
+                id:1,
                 title:'Pedidos',
                 url:'/pedidos/lista',
                 icon:'receipt_long'
@@ -210,7 +210,7 @@ export const ListaMenu = [
                 icon:'local_shipping'
             },
             {
-                id:5,
+                id:15,
                 url:'/usuarios',
                 title:'Usuarios',
                 icon:'assignment_ind',

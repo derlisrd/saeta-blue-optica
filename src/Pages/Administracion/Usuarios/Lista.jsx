@@ -27,12 +27,12 @@ function Lista() {
       );
   
       return (<><Tablas
-          title="Usuario"
-          subtitle="Módulo de usuario y credenciales"
+          title="Usuarios"
+          subtitle="Módulo de usuarios y credenciales"
           inputs={Inputs}
           datas={FilterData}
           loading={isLoading}
-          icon={{ name:'carbon:credentials' }}
+          icon={{ name:'assignment_ind' }}
           showOptions
           Accions={ListaOpciones}
           columns={ListaColumns}

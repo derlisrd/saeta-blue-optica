@@ -84,7 +84,7 @@ function Permisos() {
                     checked={item.checked}
                   />
                 }
-                label={`${item.clave_permiso} ${item.descripcion_permiso}`}
+                label={`${item.clave_permiso} => ${item.descripcion_permiso}`}
               /> 
             </ListItem>
           ))}

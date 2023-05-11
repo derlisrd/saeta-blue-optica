@@ -16,7 +16,7 @@ export const env = {
     SECRETO,
     LOGIN_PAGE_URL : '/admin',
     HOME_PAGE_URL: '/admin/home',
-    DRAWER_WIDTH: 190,
+    DRAWER_WIDTH: 175,
     ARMAZONES:[
         {
             id_armazon:'0',

@@ -9,6 +9,7 @@ import swal from "sweetalert";
 import { funciones } from "../../../App/helpers/funciones";
 import xlsx from "json-as-xlsx"
 import SelectTipo from "./SelectTipo";
+import ButtonPermisos from "../../../Components/Botones/ButtonPermisos";
 
 function Lista() {
     const {listas,loading,setFormSelect,dialogs,setDialogs,setFechas,getLista} = useListaPedidos()
@@ -71,15 +72,15 @@ function Lista() {
             {
                 rowProps.estado_pedido!=='0' && 
                 <>
-                <ButtonTip onClick={()=>{editPedido(rowProps)}} icon='edit' title='Editar pedido' />
-                <ButtonTip onClick={()=>{cancelar(rowProps)}} icon='cancel' title='Cancelar pedido' />
-                <ButtonTip title='Cambio de estado' onClick={()=>{cambioestado(rowProps)}} icon='display_settings' />
+                <ButtonTip id='3' onClick={()=>{editPedido(rowProps)}} icon='edit' title='Editar pedido' />
+                <ButtonTip id='4' onClick={()=>{cancelar(rowProps)}} icon='cancel' title='Cancelar pedido' />
+                <ButtonTip id='5' title='Cambio de estado' onClick={()=>{cambioestado(rowProps)}} icon='display_settings' />
                 </> 
             }
-            <ButtonTip title='Imprimir pedido' onClick={()=>{print(rowProps)}} icon='print' />
+            <ButtonTip id='2' title='Imprimir pedido' onClick={()=>{print(rowProps)}} icon='print' />
             {
             rowProps.estado_pedido==='0' && 
-            <ButtonTip title='Motivo de cancelamiento' onClick={()=>{motivoCancela(rowProps)}} icon='info' />
+            <ButtonTip id='8' title='Motivo de cancelamiento' onClick={()=>{motivoCancela(rowProps)}} icon='info' />
             } 
         </Stack>
     )
@@ -88,21 +89,21 @@ function Lista() {
     const Inputs = (
         <Grid container spacing={1} alignItems='center'>
             <Grid item xs={12}>
-                <Button onClick={navegar} variant="contained" size="large">Nuevo pedido</Button>
+                <ButtonPermisos id='9' onClick={navegar} variant="contained" size="large">Nuevo pedido</ButtonPermisos>
             </Grid>
             <Grid item xs={12}>
             <Stack direction={{ xs:'column',md:'row' }} sx={{ maxWidth:{md:'1100px'} }} spacing={1} alignItems='flex-start'>
                 <SelectTipo onChange={changeTipo} />
-            <TextField size="small" fullWidth onKeyUp={e=>{ e.key==='Enter' && getLista(e.target.value,'') }} helperText='Ingrese el nro, presione Enter' label='Número de pedido' />
-            <TextField size="small" fullWidth onKeyUp={e=>{ e.key==='Enter' && getLista('',e.target.value) }} helperText='Ingrese el doc o nombre, presione Enter' label='Ruc o nombre de cliente' />
-            <TextField type="date" fullWidth size="small" error={error.code===1} onChange={e=>{setDesde(e.target.value)}} helperText='desde' />
-            <TextField type="date" fullWidth size="small" error={error.code===2} onChange={e=>{setHasta(e.target.value)}} helperText='hasta' />
+            <TextField size="small" fullWidth onKeyUp={e=>{ e.key==='Enter' && getLista(e.target.value,'') }} helperText='Presione Enter' label='Número de pedido' />
+            <TextField size="small" fullWidth onKeyUp={e=>{ e.key==='Enter' && getLista('',e.target.value) }} helperText='Presione Enter' label='Ruc o nombre de cliente' />
+            <TextField type="date" fullWidth size="small" error={error.code===1} onChange={e=>{setDesde(e.target.value)}} helperText='Fecha desde' />
+            <TextField type="date" fullWidth size="small" error={error.code===2} onChange={e=>{setHasta(e.target.value)}} helperText='Fecha hasta' />
             <Button variant="outlined" size="large" onClick={filtrar}>Filtrar</Button>
-            <ButtonTip onClick={()=>{ getLista('','')}} title='Actualizar' icon='sync' />
+            <ButtonTip id='1' onClick={()=>{ getLista('','')}} title='Actualizar' icon='sync' />
             </Stack>
             </Grid>
             {listas.pedidos.length>0 && <Grid item xs={12} sm={3} md={2}>
-                <Button variant="outlined" fullWidth onClick={downloadExcel} color='success'>EXCEL</Button>
+                <ButtonPermisos id='10' variant="outlined" fullWidth onClick={downloadExcel} color='success'>EXCEL</ButtonPermisos>
             </Grid>}
             <Grid item xs={12} sm={4}>
                 <Alert icon={false}>Total: {listas.total}</Alert>

@@ -18,11 +18,14 @@ import { useMenu } from "./MenuProvider";
 import SimpleBar from 'simplebar-react';
 import 'simplebar-react/dist/simplebar.min.css';
 import { env } from "../../App/config";
+import { useAuth } from "../../Providers/AuthProvider";
 
 
 function MenuList({isMobile}) {
   const { BASEURL,APPNAME} = env;
-  let location = useLocation();
+  const {userData} = useAuth()
+  const {permisos} = userData
+  const location = useLocation();
   const pathname =  (location.pathname).substring(6);
 
   const [lista,setLista] = useState(ListaMenu);
@@ -67,6 +70,7 @@ function MenuList({isMobile}) {
                 <List component="div" className={styles.submenu} disablePadding >
                   {
                     e.submenu.map((elem,indexsub)=>(
+                      (permisos.some(p => parseInt(p.id_permiso_permiso)===parseInt(elem.id)) ) &&
                       <ListItem disablePadding key={indexsub}>
                         <ListItemButton selected={pathname === elem.url} sx={SELECTED}  onClick={closeMobileMenu} component={Link} to={BASEURL + elem.url} className={styles.listmenu}>
                           <ListItemIcon className={styles.iconmenu}>

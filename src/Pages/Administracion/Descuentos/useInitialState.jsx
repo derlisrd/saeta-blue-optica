@@ -11,16 +11,16 @@ function useInitialState() {
         message:''
     }
 
-    const iProducto = {
-        id_producto:null,
+    
+    const iForm = {
         codigo_producto:'',
-        nombre_producto:'',
-        precio_producto:'',
-        preciom_producto:''
+        porcentaje_descuento:'',
     }
 
+    const iProducto = []
+
     
-    return {iError,iCliente,iProducto}
+    return {iError,iCliente,iProducto,iForm}
 }
 
 export default useInitialState;

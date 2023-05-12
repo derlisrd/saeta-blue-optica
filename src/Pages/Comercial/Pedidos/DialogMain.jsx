@@ -28,7 +28,7 @@ function DialogMain() {
     return ( <Dialog open={dialogs.main} fullScreen onClose={()=>{}} >
         <Cargando open={cargas.stock} />
         <Cargando open={cargas.main} />
-        <DialogTitle> <ButtonTip onClick={close} title='Atrás' icon='arrow_back' /> {idUpdate.state && `Modificar pedido nro: ${idUpdate.id} -`}  Pedido - Total: { funciones.numberFormat( factura.total )} </DialogTitle>
+        <DialogTitle> <ButtonTip id='1' onClick={close} title='Atrás' icon='arrow_back' /> {idUpdate.state && `Modificar pedido nro: ${idUpdate.id} -`}  Pedido - Total: { funciones.numberFormat( factura.total )} </DialogTitle>
         <DialogContent>
             <Grid container spacing={2}>
                 <Grid item xs={12}>

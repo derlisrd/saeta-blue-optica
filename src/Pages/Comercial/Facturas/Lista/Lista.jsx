@@ -8,6 +8,7 @@ import { columns, columnsData } from "./columns";
 import { funciones } from "../../../../App/helpers/funciones";
 import SelectCondicion from "./SelectCondicion";
 import xlsx from "json-as-xlsx"
+import ButtonPermisos from "../../../../Components/Botones/ButtonPermisos";
 
 function Lista() {
     const {listas,loading,setFechas,getLista,setFormSelect,dialogs,setDialogs} = useListaFactura()
@@ -31,7 +32,24 @@ function Lista() {
           fileName: "Facturas",
         }
         xlsx(data, settings)
-      }
+    }
+    const filtarCondicion = (e)=>{
+        let old_list = [...listas.facturas]
+        
+        const {value} = e.target
+        if(value ==='0'){
+            setListaFiltrada(listas.facturas)
+            setTotalVenta(listas.total)
+            return
+        }
+        let result =  old_list.filter(elem => elem.tipo_factura === value);
+        let new_total = 0;
+        result.forEach(element => {
+            new_total += parseFloat(element.total_factura)
+        });
+        setTotalVenta(new_total)
+        setListaFiltrada(result)
+    }
 
 
 
@@ -54,34 +72,19 @@ function Lista() {
     const estado = r=>{ setFormSelect(r); setDialogs({...dialogs,estado:true})  }
     const ListaOpciones = ({rowProps})=>(
         <Stack direction='row'>
-            <ButtonTip title='Estado de pago' icon='edit' onClick={()=>{estado(rowProps)}} />
-            <ButtonTip title='Imprimir' icon='print' onClick={()=>{print(rowProps)}} />
+            <ButtonTip id='19' title='Estado de pago' icon='edit' onClick={()=>{estado(rowProps)}} />
+            <ButtonTip id='18' title='Anular' icon='close' onClick={()=>{}} />
+            <ButtonTip id='22' title='Imprimir' icon='print' onClick={()=>{print(rowProps)}} />
         </Stack>
     )
 
-    const filtarCondicion = (e)=>{
-        let old_list = [...listas.facturas]
-        
-        const {value} = e.target
-        if(value ==='0'){
-            setListaFiltrada(listas.facturas)
-            setTotalVenta(listas.total)
-            return
-        }
-        let result =  old_list.filter(elem => elem.tipo_factura === value);
-        let new_total = 0;
-        result.forEach(element => {
-            new_total += parseFloat(element.total_factura)
-        });
-        setTotalVenta(new_total)
-        setListaFiltrada(result)
-    }
+    
 
 
     const Inputs = (
         <Grid container spacing={2} alignItems='center' justifyContent='flex-start'>
             <Grid item xs={12}>
-                <Button onClick={navegar} variant="contained" size="large">Nueva Factura</Button>
+                <ButtonPermisos id='17' onClick={navegar} variant="contained" size="large">Nueva Factura</ButtonPermisos>
             </Grid>
             <Grid item xs={12}>
             <Stack direction={{ xs:'column',md:'row' }} sx={{ maxWidth:{md:'1100px'} }} spacing={1} alignItems='flex-start'>
@@ -91,11 +94,11 @@ function Lista() {
             <TextField type="date" fullWidth size="small" error={error.code===2} onChange={e=>{setHasta(e.target.value)}} helperText='hasta' />
             <SelectCondicion onChange={filtarCondicion}  />
             <Button variant="outlined" size="large" onClick={filtrar}>Filtrar</Button>
-            <ButtonTip onClick={()=>{ getLista('','')}} title='Actualizar' icon='sync' />
+            <ButtonTip id='16' onClick={()=>{ getLista('','')}} title='Actualizar' icon='sync' />
             </Stack>
             </Grid>
             {listaFiltrada.length>0 && <Grid item xs={12} sm={3} md={2}>
-                <Button variant="outlined" fullWidth onClick={downloadExcel} color='success'>EXCEL</Button>
+                <ButtonPermisos id='21' variant="outlined" fullWidth onClick={downloadExcel} color='success'>EXCEL</ButtonPermisos>
             </Grid>}
             <Grid item xs={12} sm={4} md={3}>
                 <Alert icon={false}>Total: {funciones.numberFormat(totalVenta)} </Alert>

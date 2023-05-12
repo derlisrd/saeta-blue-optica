@@ -1,9 +1,8 @@
-import { Button, Stack } from "@mui/material";
+import { Button, Icon, Stack } from "@mui/material";
 import { useFacturas } from "./FacturasProvider";
 
 function Botones() {
-  const { setearFactura, initialFactura, factura, dialogs, setDialogs,setPedidos } =
-    useFacturas();
+  const { setearFactura, initialFactura, factura, dialogs, setDialogs,setPedidos } =useFacturas();
 
   const cancelar = () => {
     setPedidos([])
@@ -33,8 +32,10 @@ function Botones() {
           >
             CANCELAR
           </Button>
+          
         </>
       )}
+      <Button onClick={cancelar} fullWidth color='secondary' startIcon={<Icon>cleaning_services</Icon>} variant="contained">LIMPIAR TODO</Button>
     </Stack>
   );
 }

@@ -47,13 +47,13 @@ export const ListaMenu = [
                 icon:'article'
             },
             {
-                id:42,
+                id:17,
                 title:'Nueva factura',
                 url:'/facturas/add',
                 icon:'credit_card'
             },
             {
-                id:42,
+                id:16,
                 title:'Facturas',
                 url:'/facturas/lista',
                 icon:'receipt'
@@ -77,13 +77,13 @@ export const ListaMenu = [
                 icon:'category'
             },
             {
-                id:41,
+                id:27,
                 title:'Productos',
                 url:'/productos',
                 icon:'shopping_bag'
             },
             {
-                id:456,
+                id:31,
                 title:'Inventario',
                 url:'/inventario',
                 icon:'inventory'
@@ -190,7 +190,7 @@ export const ListaMenu = [
                 sub:false
             },
             {
-                id:3,
+                id:23,
                 url:'/clientes',
                 title:'Clientes',
                 icon:'groups',

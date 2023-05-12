@@ -15,8 +15,8 @@ function ListaDescuentos() {
     const add = ()=>{ setDialogs({...dialogs,add:true})}
 
     const Inputs = (<Stack direction='row'>
-        <AddButton onClick={add} />
-        <ButtonTip title='Actualizar' onClick={getLista} icon='refreshs' />
+        <AddButton id='34' onClick={add} />
+        <ButtonTip id='33' title='Actualizar' onClick={getLista} icon='refreshs' />
     </Stack>)
 
     const borrar = async(id)=>{
@@ -31,7 +31,7 @@ function ListaDescuentos() {
 
     const Opciones = ({rowProps})=>(
         <Stack direction='row'>
-            <ButtonTip title='Borrar' onClick={()=>{borrar(rowProps.id_descuento)}} icon='delete_forever' />
+            <ButtonTip id='36' title='Borrar' onClick={()=>{borrar(rowProps.id_descuento)}} icon='delete_forever' />
         </Stack>
     )
 

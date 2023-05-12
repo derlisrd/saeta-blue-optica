@@ -20,7 +20,7 @@ function Lista() {
     const inputs = (
         <Stack direction="row" spacing={1}>
             <TextFieldBuscar />
-            <AddButton onClick={()=>{ navigate('/productos/add') }} />
+            <AddButton id='28' onClick={()=>{ navigate('/productos/add') }} />
         </Stack>
     )
 
@@ -37,9 +37,9 @@ function Lista() {
 
     function ListaOpciones({rowProps}) {
         return (<Stack direction="row"> 
-            {rowProps.tipo_producto==="1" && <ButtonTip onClick={()=>{openStock(rowProps)}} title='Stock' icon="inventory" /> }
-            <ButtonTip onClick={()=>{openEdit(rowProps)} } icon='edit' title='Editar' />
-            <ButtonTip onClick={()=>{}}  icon="delete_forever" title='Eliminar' /> 
+            {rowProps.tipo_producto==="1" && <ButtonTip id='31' onClick={()=>{openStock(rowProps)}} title='Stock' icon="inventory" /> }
+            <ButtonTip id='29' onClick={()=>{openEdit(rowProps)} } icon='edit' title='Editar' />
+            <ButtonTip id='30' onClick={()=>{}}  icon="delete_forever" title='Eliminar' /> 
         </Stack>)
     }
 

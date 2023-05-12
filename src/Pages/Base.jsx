@@ -14,6 +14,9 @@ const Base = () => {
   const {DRAWER_WIDTH} = env
   const {isOpenMenu} = useMenu()
   const {userData} = useAuth()
+  const {permisos} = userData
+
+  
 
   let margin_left = isOpenMenu ? `${DRAWER_WIDTH}px` : '0';
   let width_main = isOpenMenu ? `calc(100% - ${DRAWER_WIDTH}px)` : '100%';
@@ -28,10 +31,9 @@ const Base = () => {
     <>
       <DrawerMainMenu />
       <ToolbarMain />
-        <Box component="main" 
-            sx={stylesMain} >
-          <Outlet />
-        </Box>
+      <Box component="main"sx={stylesMain} >
+        <Outlet />
+      </Box>
     </>
   )
 }

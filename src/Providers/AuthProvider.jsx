@@ -74,6 +74,7 @@ const AuthProvider = ({children}) => {
         setearEmpresa({mode:false })
         localStorage.removeItem("userData");
         sessionStorage.removeItem("userData");
+        localStorage.clear()
     },[])
 
 

@@ -1,12 +1,8 @@
-import {  Route, Routes } from "react-router-dom";
+import {  Navigate, Route, Routes } from "react-router-dom";
 import { Suspense, lazy } from 'react';
 import LoadingPage from "../Components/UI/LoadingPage";
-
 import { env } from "../App/config";
-
-
-
-
+import { useAuth } from "../Providers/AuthProvider";
 
 
 const Loadable = (Component) => (props) => {
@@ -19,38 +15,46 @@ const Loadable = (Component) => (props) => {
         <Component {...props} />
       </Suspense>
     );
-  };
-
+};
 
 function MainPages() {
+
+  const {userData} = useAuth()
+  const {permisos} = userData
+
+  const PrivateRoute = ({children,id})=>{
+
+    return permisos.some( elem=> parseInt(elem.id_permiso_permiso) === parseInt(id)) ? <>{children}</> : <Navigate to='/401' />
+  }
 
   return (
     
       <Routes>
         <Route path='/' element={<Login />} />
+        <Route path='/401' element={<NotAutorizated />} />
         <Route path={env.LOGIN_PAGE_URL} element={<Login />} />
         
         <Route path="/admin" element={<Base />}>
           <Route path="home" element={<Home />} />
-          <Route path="clientes" element={<Clientes />} />
-          <Route path="productos" element={<ListadoProductos />} />
-          <Route path="productos/add" element={<AddProducto />} />
-          <Route path="inventario" element={<Inventario />} />
-          <Route path="productos/edit/:id" element={<EditProduct />} />
-          <Route path="pedidos" element={<Pedidos />} />
-          <Route path="pedidos/lista" element={<ListaPedidos />} />
-          <Route path="facturas" element={<Facturas />} />
-          <Route path="facturas/add" element={<AddFactura />} />
-          <Route path="descuentos" element={<Descuentos />} />
-          <Route path="recibospedidos" element={<RecibosPedidos />} />
-          <Route path="facturas/lista" element={<ListaFacturas />} />
+          <Route path="clientes" element={<PrivateRoute id='23'><Clientes /></PrivateRoute>} />
+          <Route path="productos" element={<PrivateRoute id='27'><ListadoProductos /></PrivateRoute>} />
+          <Route path="productos/add" element={<PrivateRoute id='28'><AddProducto /></PrivateRoute>} />
+          <Route path="inventario" element={<PrivateRoute id='31'><Inventario /></PrivateRoute>} />
+          <Route path="productos/edit/:id" element={<PrivateRoute id=''><EditProduct /></PrivateRoute>} />
+          <Route path="pedidos" element={<PrivateRoute id='9'><Pedidos /></PrivateRoute>} />
+          <Route path="pedidos/lista" element={<PrivateRoute id='3'><ListaPedidos /></PrivateRoute>} />
+          <Route path="facturas" element={<PrivateRoute id='16'><Facturas /></PrivateRoute>} />
+          <Route path="facturas/add" element={<PrivateRoute id='17'><AddFactura /></PrivateRoute>} />
+          <Route path="facturas/lista" element={<PrivateRoute id='16'><ListaFacturas /></PrivateRoute>} />
+          <Route path="descuentos" element={<PrivateRoute id='33'><Descuentos /></PrivateRoute>} />
+          <Route path="recibospedidos" element={<PrivateRoute id=''><RecibosPedidos /></PrivateRoute>} />
           <Route path="proveedores" element={<Proveedores />} />
-          <Route path="empleados" element={<Empleados />} />
-          <Route path="usuarios" element={<Usuarios />} />
+          <Route path="empleados" element={<PrivateRoute id='43'><Empleados /></PrivateRoute>} />
+          <Route path="usuarios" element={<PrivateRoute id='15'><Usuarios /></PrivateRoute>} />
           <Route path="perfil" element={<Perfil />} />
-          <Route path="depositos" element={<Depositos />} />
-          <Route path="categorias" element={<Categorias />} />
-          <Route path="empresa" element={<Empresa />} />
+          <Route path="depositos" element={<PrivateRoute id=''><Depositos /></PrivateRoute>} />
+          <Route path="categorias" element={<PrivateRoute id='39'><Categorias /></PrivateRoute>} />
+          <Route path="empresa" element={<PrivateRoute id='37'><Empresa /></PrivateRoute>} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>
@@ -81,4 +85,6 @@ const AddFactura = Loadable(lazy(() => import('./Comercial/Facturas/Add')));
 const Empresa = Loadable(lazy(() => import('./Administracion/Empresa')));
 const Descuentos = Loadable(lazy(() => import('./Administracion/Descuentos')));
 const RecibosPedidos = Loadable(lazy(()=> import('./Comercial/RecibosPedidos')));
+const NotAutorizated = Loadable(lazy(()=> import("./Status/NotAutorizated") ));
+
 export default MainPages;

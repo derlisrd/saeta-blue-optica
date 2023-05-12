@@ -40,7 +40,7 @@ function MainPages() {
           <Route path="productos" element={<PrivateRoute id='27'><ListadoProductos /></PrivateRoute>} />
           <Route path="productos/add" element={<PrivateRoute id='28'><AddProducto /></PrivateRoute>} />
           <Route path="inventario" element={<PrivateRoute id='31'><Inventario /></PrivateRoute>} />
-          <Route path="productos/edit/:id" element={<PrivateRoute id=''><EditProduct /></PrivateRoute>} />
+          <Route path="productos/edit/:id" element={<PrivateRoute id='29'><EditProduct /></PrivateRoute>} />
           <Route path="pedidos" element={<PrivateRoute id='9'><Pedidos /></PrivateRoute>} />
           <Route path="pedidos/lista" element={<PrivateRoute id='3'><ListaPedidos /></PrivateRoute>} />
           <Route path="facturas" element={<PrivateRoute id='16'><Facturas /></PrivateRoute>} />
@@ -52,7 +52,7 @@ function MainPages() {
           <Route path="empleados" element={<PrivateRoute id='43'><Empleados /></PrivateRoute>} />
           <Route path="usuarios" element={<PrivateRoute id='15'><Usuarios /></PrivateRoute>} />
           <Route path="perfil" element={<Perfil />} />
-          <Route path="depositos" element={<PrivateRoute id=''><Depositos /></PrivateRoute>} />
+          <Route path="depositos" element={<PrivateRoute id='47'><Depositos /></PrivateRoute>} />
           <Route path="categorias" element={<PrivateRoute id='39'><Categorias /></PrivateRoute>} />
           <Route path="empresa" element={<PrivateRoute id='37'><Empresa /></PrivateRoute>} />
         </Route>

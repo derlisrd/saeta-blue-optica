@@ -34,7 +34,7 @@ function Lista() {
         inputs={Inputs}
         datas={FilterData}
         loading={isLoading}
-        icon={{ name:'ic:twotone-local-convenience-store' }}
+        icon={{ name:'store' }}
         showOptions
         Accions={Opciones}
         columns={Columns}

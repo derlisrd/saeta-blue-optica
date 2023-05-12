@@ -1,8 +1,9 @@
 
 import { Stack } from "@mui/material";
 import { useCategoria } from "./CategoriaProvider";
-
 import ButtonTip from "../../../Components/Botones/ButtonTip";
+
+
 
 function ListaOpciones({rowProps}) {
    
@@ -17,8 +18,8 @@ function ListaOpciones({rowProps}) {
 
     return (
     <Stack direction="row"> 
-        <ButtonTip title='Editar' onClick={()=>{open(rowProps,'edit')}} icon='edit' />
-        <ButtonTip onClick={()=>{open(rowProps,'delete')}} icon="delete_forever" /> 
+        <ButtonTip id='40' title='Editar' onClick={()=>{open(rowProps,'edit')}} icon='edit' />
+        <ButtonTip id='41' title='Borrar' onClick={()=>{open(rowProps,'delete')}} icon="delete_forever" /> 
     </Stack>
     )
 }

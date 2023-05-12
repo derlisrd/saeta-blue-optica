@@ -1,5 +1,6 @@
 import { Stack } from "@mui/material";
 import { useDeposito } from "./DepositoProvider";
+import ButtonTip from "../../../Components/Botones/ButtonTip";
 
 
 function ListaOpciones({rowProps}) {
@@ -15,8 +16,8 @@ function ListaOpciones({rowProps}) {
 
     return (
     <Stack direction="row">
-        <ButtonTip onClick={()=>{open(rowProps,'edit')}} icon='edit' title='Editar'  />
-        <ButtonTip onClick={()=>{open(rowProps,'delete')}} icon='delete_forever' title='Borrar' />
+        <ButtonTip id='49' onClick={()=>{open(rowProps,'edit')}} icon='edit' title='Editar'  />
+        <ButtonTip id='50' onClick={()=>{open(rowProps,'delete')}} icon='delete_forever' title='Borrar' />
     </Stack>
     )
 }

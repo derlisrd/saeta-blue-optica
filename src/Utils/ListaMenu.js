@@ -89,7 +89,7 @@ export const ListaMenu = [
                 icon:'inventory'
             },
             {
-                id:42,
+                id:47,
                 title:'Depositos',
                 url:'/depositos',
                 icon:'store'

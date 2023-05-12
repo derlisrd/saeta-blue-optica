@@ -17,7 +17,7 @@ function Lista() {
     const Inputs = (
       <Stack spacing={2} direction="row">
         <Buscar label="Buscar" onClick={()=>{getLista(inputSearch)}}  onChange={(e) => setInputSearch(e.target.value)} />
-        <AddButton
+        <AddButton id='42'
           onClick={() => {
             llaveDialog("add", true);
           }}

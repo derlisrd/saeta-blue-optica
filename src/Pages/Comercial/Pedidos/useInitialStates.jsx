@@ -43,6 +43,9 @@ function useInitialStates() {
             dnp_izquierdo:'0',
             dnp_derecho:'0',
 
+            codigo_derecho:'',
+            codigo_izquierdo:'',
+
             altura_derecho:'0',
             altura_izquierdo:'0'
         }

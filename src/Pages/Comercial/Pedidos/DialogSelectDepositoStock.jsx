@@ -4,11 +4,13 @@ import styles from './styles.module.css'
 import { useCallback, useState,useEffect } from "react";
 import InputNumerico from "./Components/InputNumerico";
 import ButtonTip from "../../../Components/Botones/ButtonTip";
+import SelectOjos from "./Components/SelectOjos";
 
 function DialogSelectDepositoStock() {
 
     const {setDialogs,dialogs,formDepositoStock,setearFactura,factura,selectProduct} = usePedidos()
-    
+    const [selecOjo,setSelectOjo] = useState('ambos')
+
     const initialParam = {
         lejos_derecho_esferico:'0',
         lejos_derecho_cilindrico:'0',
@@ -29,6 +31,9 @@ function DialogSelectDepositoStock() {
 
         dnp_izquierdo:'0',
         dnp_derecho:'0',
+
+        codigo_derecho:'',
+        codigo_izquierdo:'',
 
         altura_derecho:'0',
         altura_izquierdo:'0'
@@ -99,12 +104,7 @@ function DialogSelectDepositoStock() {
         close()
     }
 
-    const setearValores = useCallback(()=>{
-        if(dialogs.select_deposito_stock){
-            let f = {...factura}
-            setParam(f.receta)
-        }
-    },[dialogs,factura])
+    
 
     const key = e=>{
         const {value,name} = e.target
@@ -134,8 +134,15 @@ function DialogSelectDepositoStock() {
         }
     }
 
-    const close = ()=>{ setDialogs({...dialogs,select_deposito_stock:false});  }
 
+
+    const close = ()=>{ setDialogs({...dialogs,select_deposito_stock:false});  }
+    const setearValores = useCallback(()=>{
+        if(dialogs.select_deposito_stock){
+            let f = {...factura}
+            setParam(f.receta)
+        }
+    },[dialogs,factura])
     useEffect(() => {
         const ca = new AbortController(); let isActive = true;
         if (isActive) {setearValores();}
@@ -147,6 +154,9 @@ function DialogSelectDepositoStock() {
         <DialogTitle><ButtonTip onClick={close} title='Cerrar' icon='close' /> {selectProduct?.codigo_producto} - { selectProduct?.nombre_producto}  </DialogTitle>
         <DialogContent>
             <Grid container spacing={2}>
+                <Grid item xs={12}>
+                    <SelectOjos />
+                </Grid>
                 <Grid item xs={12} sm={6}>
                     <Grid container alignItems='center' spacing={1} sx={{ border:'1px solid silver',padding:1,borderRadius:1 }}>
                         <Grid item xs={12}><Typography variant="button">LEJOS</Typography></Grid>

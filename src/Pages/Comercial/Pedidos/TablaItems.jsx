@@ -64,6 +64,9 @@ function TablaItems({items}) {
                                 {
                                     e.editable && <IconButtonTip onClick={()=>{borrar(i)}} title='Borrar item' icon={{ name:'delete_forever',color:'error' }} />
                                 }
+                                {
+                                    e.tipo === 1 && <IconButtonTip onClick={()=>{}} title='Receta' icon={{ name:'medication',color:'primary' }} />
+                                }
                             </Stack>
                         </td>
                     </tr>

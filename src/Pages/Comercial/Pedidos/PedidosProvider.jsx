@@ -45,6 +45,7 @@ function PedidosProvider({children}) {
         }
         return initialFactura
     })
+    const [selectIndex,setSelectIndex] = useState(-1)
     const [indexCambioPrecio,setIndexCambioPrecio] = useState(-1)
     const [lastID,setLastID] = useState('')
     
@@ -143,14 +144,14 @@ function PedidosProvider({children}) {
         return () => {isActive = false; ca.abort();};
       }, [getDatasEdit]);
 
-    const values = {idUpdate,lastID,setLastID,indexCambioPrecio,setIndexCambioPrecio,dialogs,setDialogs,factura,setFactura,setearFactura,initialFactura,formDepositoStock,setFormDepositoStock,seleccionado,setSeleccionado,cargas,setCargas,selectProduct, setSelectProduct,token_user}
+    const values = {selectIndex,setSelectIndex,idUpdate,lastID,setLastID,indexCambioPrecio,setIndexCambioPrecio,dialogs,setDialogs,factura,setFactura,setearFactura,initialFactura,formDepositoStock,setFormDepositoStock,seleccionado,setSeleccionado,cargas,setCargas,selectProduct, setSelectProduct,token_user}
     return <PedidosContext.Provider value={values}>{children}</PedidosContext.Provider>
 }
 
 
 export const usePedidos = ()=>{
-    const {idUpdate,lastID,setLastID,indexCambioPrecio,setIndexCambioPrecio,dialogs,setDialogs,factura,setFactura,setearFactura,initialFactura,formDepositoStock,setFormDepositoStock,seleccionado,setSeleccionado,cargas,setCargas,selectProduct, setSelectProduct,token_user} = useContext(PedidosContext)
-    return {idUpdate,lastID,setLastID,indexCambioPrecio,setIndexCambioPrecio,dialogs,setDialogs,factura,setFactura,setearFactura,initialFactura,formDepositoStock,setFormDepositoStock,seleccionado,setSeleccionado,cargas,setCargas,selectProduct, setSelectProduct,token_user}
+    const {selectIndex,setSelectIndex,idUpdate,lastID,setLastID,indexCambioPrecio,setIndexCambioPrecio,dialogs,setDialogs,factura,setFactura,setearFactura,initialFactura,formDepositoStock,setFormDepositoStock,seleccionado,setSeleccionado,cargas,setCargas,selectProduct, setSelectProduct,token_user} = useContext(PedidosContext)
+    return {selectIndex,setSelectIndex,idUpdate,lastID,setLastID,indexCambioPrecio,setIndexCambioPrecio,dialogs,setDialogs,factura,setFactura,setearFactura,initialFactura,formDepositoStock,setFormDepositoStock,seleccionado,setSeleccionado,cargas,setCargas,selectProduct, setSelectProduct,token_user}
 }
 
 export default PedidosProvider;

@@ -1,6 +1,5 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
 import { usePedidos } from "./PedidosProvider";
-import printJS from "print-js";
 import { useAuth } from "../../../Providers/AuthProvider";
 import './stylos.css'
 import { funciones } from "../../../App/helpers/funciones";
@@ -14,9 +13,7 @@ function FinalizarPedido() {
     const close = ()=>{ setDialogs({...dialogs,finalizar:false}) }
 
     const imprimir = ()=>{
-        printJS({ type: "html", printable: "print",
-        style:`#print{font-family:monospace;margin:0;font-size:10px;width:100%;padding:1rem}#print h1{font-size:1rem;text-align:center}.table_pedido{border-collapse:collapse;border:1px solid #c9c9c9;margin:10px auto;width:200mm}.table_pedido tr td{padding:5px}.table_head{font-variant:small-caps;font-weight:700;border-radius:8px;background-color:#f1f1f1}`
-    });
+        
     }
 
     return ( <Dialog open={dialogs.finalizar} onClose={close} fullScreen >

@@ -3,7 +3,6 @@ import { useTablaStyles } from './TablaStyles';
 import TablaLoading from './TablaLoading'
 import {funciones} from '../../App/helpers/funciones';
 import TableInfo from './TableInfo';
-import printJS from 'print-js';
 
 const Tablas = ({title,subtitle,loading,datas,columns,caption,inputs,Accions,showOptions,lang,icon,sort,print,datasPrint}) => {
     const style = useTablaStyles();
@@ -30,26 +29,6 @@ return (
     
         <Box padding={1} mb={1}>
             {inputs && inputs}
-        </Box>
-        <Box marginBottom={1}>
-            { print &&
-                    <Button
-                    variant="contained" startIcon={<Icon>print</Icon>}
-                    onClick={() => {
-                    printJS({
-                        printable: datasPrint?.datas ?? datas,
-                        properties: columnsArray,
-                        type: "json",
-                        gridHeaderStyle: " border: 1px solid #ccc;",
-                        gridStyle: "border: 1px solid #ccc;",
-                        header: `<h3 class="custom-h3">${title}</h3>`,
-                        style: ".custom-h3 { color: red; } *{font-family:monospace; font-size:11px}",
-                    });
-                    }}
-                >
-                    {lang? lang.imprimir : "Imprimir"}
-                </Button>
-            }
         </Box>
     {
         loading ? <TablaLoading />

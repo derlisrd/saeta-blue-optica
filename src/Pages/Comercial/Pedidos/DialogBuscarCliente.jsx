@@ -57,7 +57,7 @@ function DialogBuscarCliente() {
                 let res = await APICALLER.get({
                     table: "clientes",
                     fields:'ruc_cliente,nombre_cliente,telefono_cliente,id_cliente,direccion_cliente,fantasia_cliente',
-                    filtersField:'codigo_cliente,nombre_cliente,ruc_cliente,fantasia_cliente',
+                    filtersField:'id_cliente,nombre_cliente,ruc_cliente,fantasia_cliente',
                     filtersSearch:search,pagesize:20
                 })
                 setLista(res.results);
@@ -79,11 +79,11 @@ function DialogBuscarCliente() {
             <Grid item xs={12}>
                 <Autocomplete
                     autoComplete autoHighlight autoSelect  selectOnFocus
-                    getOptionLabel={(o) => o.nombre_cliente+' - '+o.fantasia_cliente+' '+o.ruc_cliente }
+                    getOptionLabel={(o) => o.id_cliente+' '+o.nombre_cliente+' - '+o.fantasia_cliente+' '+o.ruc_cliente }
                     options={lista}
                     onChange={insertar}
                     loadingText="Cargando..." loading={loading} noOptionsText="No existe en registro..."
-                    renderInput={(params) => <TextField {...params} fullWidth onChange={e=>setSearch(e.target.value)} label="Buscar" />}
+                    renderInput={(params) => <TextField {...params} fullWidth onChange={e=>setSearch(e.target.value)} label="Buscar por codigo, ruc o nombre" />}
                 />
             </Grid>
             </Grid>

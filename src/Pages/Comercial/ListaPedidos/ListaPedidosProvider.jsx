@@ -8,7 +8,7 @@ const ListaPedidosContext = createContext()
 function ListaPedidosProvider({children}) {
 
     
-    const [dialogs,setDialogs] = useState({imprimir:false,editar_pedido:false,cancelar:false,cambio_estado:false})
+    const [dialogs,setDialogs] = useState({imprimir:false,editar_pedido:false,cancelar:false,cambio_estado:false,pdf:false})
     const [loading,setLoading] = useState(true)
     const [formSelect,setFormSelect] = useState({})
     const [fechas,setFechas] = useState({
@@ -36,7 +36,7 @@ function ListaPedidosProvider({children}) {
         //console.log(whereFilter);
         let [res,tot] = await Promise.all([APICALLER.get({table:'pedidos',include:'clientes,users',
         on:'cliente_id_pedido,id_cliente,id_user,user_id_pedido',
-        fields:'codigo_cliente_pedido,facturado_pedido,motivo_cancela,estado_pago,total_pedido,tipo_pedido,total_pedido,nombre_user,fecha_pedido,id_pedido,nombre_cliente,estado_pedido,codigo_cliente_pedido',
+        fields:'factura_id,codigo_cliente_pedido,facturado_pedido,motivo_cancela,estado_pago,total_pedido,tipo_pedido,total_pedido,nombre_user,fecha_pedido,id_pedido,nombre_cliente,estado_pedido,codigo_cliente_pedido',
         where:whereFilter,
         filtersSearch:`${cliente}`,
         filtersField:'ruc_cliente,nombre_cliente',

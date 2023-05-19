@@ -89,14 +89,14 @@ function PedidosProvider({children}) {
             APICALLER.get({table:'pedidos_items',
             where:`pedido_id,=,${id}`,
             include:'productos',on:'id_producto,producto_id_item',
-            fields:'id_pedidos_item,deposito_id_item,codigo_producto,cantidad_pedido,id_producto,precio_producto,preciom_producto,precio_venta_item,iva_producto,nombre_producto,tipo_producto'
+            fields:'lado_item,id_pedidos_item,deposito_id_item,codigo_producto,cantidad_pedido,id_producto,precio_producto,preciom_producto,precio_venta_item,iva_producto,nombre_producto,tipo_producto'
             }),
             APICALLER.get({table:'recetas',where:`pedido_id_receta,=,${id}`})
             ])
             if(main.response && items.response){
                 setIdUpdate({state:true,id:id})
-                let f = {...factura}
-                
+                let f = {...factura},
+                lados = {'0':'no', '1':'ambos', '2':'derecho','3':'izquierdo'}
                 items.results.forEach(elem=>{
                     let objeto = {
                         id_pedidos_item: elem.id_pedidos_item,
@@ -108,10 +108,11 @@ function PedidosProvider({children}) {
                         descripcion:elem.nombre_producto,
                         id_producto:elem.id_producto,
                         codigo:elem.codigo_producto,
-                        tipo:elem.tipo_producto,
+                        tipo:parseInt(elem.tipo_producto),
                         iva:parseInt(elem.iva_producto),
                         editable:false,
-
+                        receta:{},
+                        lado: lados[elem.lado_item]
                     }
                     f.items.push(objeto)
                 })
@@ -134,6 +135,7 @@ function PedidosProvider({children}) {
                 delete fare.updated_at
                 delete fare.pedido_id_receta
                 f.receta = fare
+                
                 setearFactura(f)
 
             }

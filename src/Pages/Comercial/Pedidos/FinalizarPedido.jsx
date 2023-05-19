@@ -100,7 +100,7 @@ function FinalizarPedido() {
         {
             let id_pedido = res.last_id, pedidos_items;
             setLastID(id_pedido)
-            
+            let lados = {'no':'0', 'ambos':'1', 'derecho':'2','izquierdo':'3'}
             let promises = [];
             f.items.forEach(e=>{
                 pedidos_items = {
@@ -109,6 +109,7 @@ function FinalizarPedido() {
                     producto_id_item: e.id_producto,
                     precio_venta_item: e.precio,
                     deposito_id_item: e.id_productos_deposito ?? 0,
+                    lado_item: f.tipo_pedido==='4' ? '0' : lados[e.lado]
                 }
                 promises.push(APICALLER.insert({table:'pedidos_items',token:token_user,data:pedidos_items}))
             })
@@ -153,7 +154,7 @@ function FinalizarPedido() {
             }
         })
 
-        data_receta.id_pedido = id_pedido
+        data_receta.pedido_id_receta = id_pedido
 
             
             promises.push(APICALLER.insert({table:'recetas',token:token_user,data:data_receta}))

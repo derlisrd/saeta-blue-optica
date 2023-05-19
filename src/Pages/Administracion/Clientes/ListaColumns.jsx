@@ -1,5 +1,9 @@
 const ListaColumns= [
     {
+        field:'id_cliente',
+        title:'COD.'
+    },
+    {
         field:'ruc_cliente',
         title:'Doc.'
     },

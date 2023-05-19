@@ -6,6 +6,7 @@ export const columnsData = [
   { label: 'TIPO', value:"tipo"},
   { label: 'FACTURADO', value:"facturado"},
   { label: 'TOTAL', value:"total_pedido"},
+  
 ]
 
 
@@ -18,6 +19,10 @@ export const columns = [
         field:'fecha_pedido',
         title:'fecha'
     },
+    {
+      field:'factura_id',
+      title:'factura'
+  },
     {
         field:'nombre_user',
         title:'vendedor'

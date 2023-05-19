@@ -4,12 +4,11 @@ import styles from './styles.module.css'
 import { useCallback, useState,useEffect } from "react";
 import InputNumerico from "./Components/InputNumerico";
 import ButtonTip from "../../../Components/Botones/ButtonTip";
-import SelectOjos from "./Components/SelectOjos";
+
 
 function EditReceta() {
-    const {setDialogs,dialogs,formDepositoStock,setearFactura,factura,selectProduct,selectIndex} = usePedidos()
+    const {setDialogs,dialogs,formDepositoStock,setearFactura,factura,selectProduct,selectIndex,idUpdate} = usePedidos()
 
-    //console.log(selectProduct);
 
     const initialParam = {
         lejos_derecho_esferico:'0',
@@ -142,9 +141,16 @@ function EditReceta() {
     const setearValores = useCallback(()=>{
         if(dialogs.edit_receta){
             let f = {...factura}
-            setParam(f.items[selectIndex].receta)
+            if(idUpdate.state){
+                if(f.receta.codigo_derecho===f.receta.codigo_izquierdo){
+                    setParam(f.receta)
+                }
+            }
+            else{
+                //setParam(f.items[selectIndex].receta)
+            }
         }
-    },[dialogs,factura])
+    },[dialogs,factura,idUpdate])
     useEffect(() => {
         const ca = new AbortController(); let isActive = true;
         if (isActive) {setearValores();}
@@ -156,7 +162,7 @@ function EditReceta() {
     <DialogContent>
         <Grid container spacing={2}>
             <Grid item xs={12}>
-                <Typography variant="overline" color='InactiveBorder'>{ selectProduct?.lado}</Typography>
+                <Typography variant="overline" color='WindowFrame'>{ selectProduct?.lado}</Typography>
             </Grid>
             <Grid item xs={12} sm={6}>
                 <Grid container alignItems='center' spacing={1} sx={{ border:'1px solid silver',padding:1,borderRadius:1 }}>

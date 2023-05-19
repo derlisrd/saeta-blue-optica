@@ -83,7 +83,7 @@ function InputCodigo() {
                         editable:true,
                         iva:parseInt(val.iva_producto),
                         receta:null,
-                        lado:null                 
+                        lado:'no'                 
                     }
                     new_fact.items.push(nuevo_item)
                 }

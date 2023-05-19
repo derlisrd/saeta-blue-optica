@@ -56,6 +56,7 @@ function Lista() {
         setError({code:0})
         setFechas({desde:`${desde} 00:00:00`,hasta:`${hasta} 23:59:59`})
     }
+    const openPDF = ()=>{setDialogs({...dialogs,pdf:true}) }
     const editPedido = r =>{navigate(`/pedidos?open=nuevo&id=${r.id_pedido}`)}
     const print = (r)=>{ setFormSelect(r); setDialogs({...dialogs,imprimir:true})}
     const cambioestado = (r)=>{ setFormSelect(r); setDialogs({...dialogs,cambio_estado:true})}
@@ -103,6 +104,7 @@ function Lista() {
             </Stack>
             </Grid>
             {listas.pedidos.length>0 && <Grid item xs={12} sm={3} md={2}>
+                <ButtonPermisos id='10' variant="outlined" fullWidth onClick={openPDF} color='primary'>PDF</ButtonPermisos>
                 <ButtonPermisos id='10' variant="outlined" fullWidth onClick={downloadExcel} color='success'>EXCEL</ButtonPermisos>
             </Grid>}
             <Grid item xs={12} sm={4}>

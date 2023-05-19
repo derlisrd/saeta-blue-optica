@@ -23,7 +23,7 @@ function Ticket({factura,userData,nro}) {
             <tr><td align="center"><h3>TIPO DE PEDIDO: { tipoPedido[factura.tipo_pedido] }</h3></td></tr>
             <tr><td>FECHA: {factura.fecha}</td></tr>
             <tr><td>VENDEDOR: {userData.nombre_user}</td></tr>
-            <tr><td>DOC: {factura.cliente.ruc_cliente}</td></tr>
+            <tr><td>DOC: {factura.cliente.ruc_cliente} COD: {factura.cliente.id_cliente}</td></tr>
             <tr><td>CLIENTE: {factura.cliente.nombre_cliente} _ {factura.cliente?.fantasia_cliente}</td></tr>
             <tr><td>CODIGO CLIENTE: {factura.codigo_cliente_pedido} </td></tr>
             <tr><td>DIRECCION: {factura.cliente.direccion_cliente} </td></tr>

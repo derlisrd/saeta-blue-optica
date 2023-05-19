@@ -71,7 +71,7 @@ function FinalizarPedido() {
         navigate('/pedidos/lista')
     }
 
-
+    
 
 
     const closeInsert = async()=>{ 
@@ -116,14 +116,52 @@ function FinalizarPedido() {
              * 
              * ACA SERA LA BATALLA FINAL
              */
-            let receta_data = { ...f.receta,
-                pedido_id_receta: id_pedido
+ 
+            let data_receta = {}
+        f.items.forEach(elem=>{
+            if(elem.lado==='derecho')
+            {
+                data_receta.lejos_derecho_esferico= elem.receta.lejos_derecho_esferico
+                data_receta.lejos_derecho_cilindrico= elem.receta.lejos_derecho_cilindrico
+                data_receta.lejos_eje_derecho= elem.receta.lejos_eje_derecho
+                data_receta.cerca_derecho_esferico= elem.receta.cerca_derecho_esferico
+                data_receta.cerca_derecho_cilindrico= elem.receta.cerca_derecho_cilindrico
+                data_receta.cerca_eje_derecho= elem.receta.cerca_eje_derecho
+                data_receta.adicion_derecho= elem.receta.adicion_derecho
+                data_receta.dnp_derecho= elem.receta.dnp_derecho
+                data_receta.codigo_derecho= elem.receta.codigo_derecho
+                data_receta.altura_derecho= elem.receta.altura_derecho
+      
             }
-            promises.push(APICALLER.insert({table:'recetas',token:token_user,data:receta_data}))
+            if(elem.lado==='izquierdo')
+            {
+
+                data_receta.lejos_izquierdo_cilindrico= elem.receta.lejos_izquierdo_cilindrico
+                data_receta.lejos_izquierdo_esferico= elem.receta.lejos_izquierdo_esferico
+                data_receta.lejos_eje_izquierdo= elem.receta.lejos_eje_izquierdo
+                data_receta.cerca_izquierdo_cilindrico= elem.receta.cerca_izquierdo_cilindrico
+                data_receta.cerca_izquierdo_esferico= elem.receta.cerca_izquierdo_esferico
+                data_receta.cerca_eje_izquierdo= elem.receta.cerca_eje_izquierdo
+                data_receta.adicion_izquierdo= elem.receta.adicion_izquierdo
+                data_receta.dnp_izquierdo= elem.receta.dnp_izquierdo
+                data_receta.codigo_izquierdo= elem.receta.codigo_izquierdo
+                data_receta.altura_izquierdo= elem.receta.altura_izquierdo
+            }
+            if(elem.lado==='ambos')
+            {
+                data_receta = {...elem.receta} 
+            }
+        })
+
+        data_receta.id_pedido = id_pedido
+
+            
+            promises.push(APICALLER.insert({table:'recetas',token:token_user,data:data_receta}))
+            
             //await Promise.all(promises)
             Promise.allSettled(promises).
-            then((res) => 
-                res.forEach((resp) => console.log(resp))
+            then((res) => {}
+                /* res.forEach((resp) => console.log(resp)) */
             ).catch(e=>{
                 console.log(e);
             })

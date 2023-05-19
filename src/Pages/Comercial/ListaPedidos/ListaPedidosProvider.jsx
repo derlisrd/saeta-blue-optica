@@ -45,7 +45,12 @@ function ListaPedidosProvider({children}) {
         APICALLER.get({table:'pedidos',where:`fecha_pedido,between,'${fechas.desde}',and,'${fechas.hasta}'`,fields:'SUM(total_pedido) as monto_total'})
         ])
         if(res.response){
-            let tipoPedido = {'1':'Venta','2':'CORTESIA','3':'GARANTIA'}
+            let tipoPedido = {
+                "1": "NORMAL PREESCRIPCION",
+                "2": "CORTESIA",
+                "3": "GARANTIA",
+                "4": "NORMAL SOLO CRISTAL"
+              }
             let pedidos = []
             res.results.forEach(elem=>{
                 pedidos.push({...elem,total_pedido: parseFloat(elem.total_pedido), 

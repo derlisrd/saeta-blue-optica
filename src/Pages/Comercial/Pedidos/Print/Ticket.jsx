@@ -1,6 +1,9 @@
 import { env } from "../../../../App/config";
 import { funciones } from "../../../../App/helpers/funciones";
 import { useAuth } from "../../../../Providers/AuthProvider";
+import ConReceta from "./ConReceta";
+import SoloCristal from "./SoloCristal";
+
 
 
 function Ticket({factura,userData,nro}) {
@@ -9,6 +12,9 @@ function Ticket({factura,userData,nro}) {
     const armazones = env.ARMAZONES.find(e=> e.id_armazon === factura.obs.armazon_id)
     const nombre_armazon = armazones.nombre_armazon
     const tipoPedido = {"1":"NORMAL PRESCRIPCION","2":"CORTESIA","3":"GARANTIA","4":"VENTA NORMAL SOLO CRISTAL"}
+
+
+
     return ( <>
     <table className="table_pedido" width='100%'>
         <tbody>
@@ -44,82 +50,14 @@ function Ticket({factura,userData,nro}) {
     <tr><td align="right" colSpan={4}><b>TOTAL: {funciones.numberFormat(factura.total)} </b></td></tr>
     </tbody>
     </table>
-    <h1>RECETA</h1>
-    <table className="table_pedido" border='1'>
-        <thead>
-            <tr>
-                <th>OJO DERECHO</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td width='20%'></td>
-                <td width='20%'><b>ESF</b></td>
-                <td width='20%'><b>CIL</b></td>
-                <td width='20%'><b>EJE</b></td>
-                <td width='20%'>DNP</td>
-            </tr>
-            <tr>
-                <td width='20%'><b>LEJOS</b></td>
-                <td width='20%'>{funciones.addZeros( factura.receta.lejos_derecho_esferico)}</td>
-                <td width='20%'>{ funciones.addZeros(factura.receta.lejos_derecho_cilindrico)}</td>
-                <td width='20%'>{factura.receta.lejos_eje_derecho}</td>
-                <td width='20%'>{factura.receta.dnp_derecho}</td>
-            </tr>
-            <tr>
-                <td width='20%'><b>ADICION</b></td>
-                <td width='20%'>{funciones.addZeros(factura.receta.adicion_derecho)}</td>
-                <td width='20%'></td>
-                <td width='20%'></td>
-                <td width='20%'>ALTURA</td>
-            </tr>
-            <tr>
-                <td width='20%'><b>CERCA</b></td>
-                <td width='20%'>{funciones.addZeros(factura.receta.cerca_derecho_esferico)}</td>
-                <td width='20%'>{funciones.addZeros(factura.receta.cerca_derecho_cilindrico)}</td>
-                <td width='20%'>{factura.receta.cerca_eje_derecho}</td>
-                <td width='20%'>{factura.receta.altura_derecho}</td>
-            </tr>
-        </tbody>
-    </table>
+    
+    {
+        <ConReceta  items={factura.items} tipo={factura.tipo_pedido} />
+    }
+    
 
-    <table className="table_pedido" border='1'>
-        <thead>
-            <tr>
-                <th>OJO IZQUIERDO</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td width='20%'></td>
-                <td width='20%'><b>ESF</b></td>
-                <td width='20%'><b>CIL</b></td>
-                <td width='20%'><b>EJE</b></td>
-                <td width='20%'><b>DNP</b></td>
-            </tr>
-            <tr>
-                <td width='20%'><b>LEJOS</b></td>
-                <td width='20%'>{funciones.addZeros(factura.receta.lejos_izquierdo_esferico)}</td>
-                <td width='20%'>{funciones.addZeros(factura.receta.lejos_izquierdo_cilindrico)}</td>
-                <td width='20%'>{factura.receta.lejos_eje_izquierdo}</td>
-                <td width='20%'><b>{factura.receta.dnp_izquierdo}</b></td>
-            </tr>
-            <tr>
-                <td width='20%'><b>ADICION</b></td>
-                <td width='20%'>{funciones.addZeros(factura.receta.adicion_izquierdo)}</td>
-                <td width='20%'></td>
-                <td width='20%'></td>
-                <td width='20%'>ALTURA</td>
-            </tr>
-            <tr>
-                <td width='20%'><b>CERCA</b></td>
-                <td width='20%'>{funciones.addZeros(factura.receta.cerca_izquierdo_esferico)}</td>
-                <td width='20%'>{funciones.addZeros(factura.receta.cerca_izquierdo_cilindrico)}</td>
-                <td width='20%'>{factura.receta.cerca_eje_izquierdo}</td>
-                <td width='20%'>{factura.receta.altura_izquierdo}</td>
-            </tr>
-        </tbody>
-    </table>
+
+
     <table className="table_pedido" border='1'>
         <tbody>
             <tr>

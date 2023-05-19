@@ -27,13 +27,18 @@ function PedidosProvider({children}) {
         buscar_cliente:false,
         select_deposito_stock:false,
         obs:false,
-        precio:false
+        precio:false,
+        edit_receta:false
     })
     const {userData} = useAuth()
     const {token_user} = userData
     const [cargas,setCargas] = useState({
         main:false,
         stock:false
+    })
+    const [lado,setLado] = useState({
+        izquierdo:false,
+        derecho:false
     })
     const [selectProduct, setSelectProduct] = useState({})
     const [formDepositoStock,setFormDepositoStock] = useState([])
@@ -144,14 +149,14 @@ function PedidosProvider({children}) {
         return () => {isActive = false; ca.abort();};
       }, [getDatasEdit]);
 
-    const values = {selectIndex,setSelectIndex,idUpdate,lastID,setLastID,indexCambioPrecio,setIndexCambioPrecio,dialogs,setDialogs,factura,setFactura,setearFactura,initialFactura,formDepositoStock,setFormDepositoStock,seleccionado,setSeleccionado,cargas,setCargas,selectProduct, setSelectProduct,token_user}
+    const values = {lado,setLado,selectIndex,setSelectIndex,idUpdate,lastID,setLastID,indexCambioPrecio,setIndexCambioPrecio,dialogs,setDialogs,factura,setFactura,setearFactura,initialFactura,formDepositoStock,setFormDepositoStock,seleccionado,setSeleccionado,cargas,setCargas,selectProduct, setSelectProduct,token_user}
     return <PedidosContext.Provider value={values}>{children}</PedidosContext.Provider>
 }
 
 
 export const usePedidos = ()=>{
-    const {selectIndex,setSelectIndex,idUpdate,lastID,setLastID,indexCambioPrecio,setIndexCambioPrecio,dialogs,setDialogs,factura,setFactura,setearFactura,initialFactura,formDepositoStock,setFormDepositoStock,seleccionado,setSeleccionado,cargas,setCargas,selectProduct, setSelectProduct,token_user} = useContext(PedidosContext)
-    return {selectIndex,setSelectIndex,idUpdate,lastID,setLastID,indexCambioPrecio,setIndexCambioPrecio,dialogs,setDialogs,factura,setFactura,setearFactura,initialFactura,formDepositoStock,setFormDepositoStock,seleccionado,setSeleccionado,cargas,setCargas,selectProduct, setSelectProduct,token_user}
+    const {lado,setLado,selectIndex,setSelectIndex,idUpdate,lastID,setLastID,indexCambioPrecio,setIndexCambioPrecio,dialogs,setDialogs,factura,setFactura,setearFactura,initialFactura,formDepositoStock,setFormDepositoStock,seleccionado,setSeleccionado,cargas,setCargas,selectProduct, setSelectProduct,token_user} = useContext(PedidosContext)
+    return {lado,setLado,selectIndex,setSelectIndex,idUpdate,lastID,setLastID,indexCambioPrecio,setIndexCambioPrecio,dialogs,setDialogs,factura,setFactura,setearFactura,initialFactura,formDepositoStock,setFormDepositoStock,seleccionado,setSeleccionado,cargas,setCargas,selectProduct, setSelectProduct,token_user}
 }
 
 export default PedidosProvider;

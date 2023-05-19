@@ -8,6 +8,7 @@ import Main from './Main'
 import FinalizarPedido from './FinalizarPedido'
 import DialogObs from './DialogObs'
 import CambiarPrecio from './CambiarPrecio'
+import EditReceta from './EditReceta'
 
 const Pedidos = () => {
   return (
@@ -17,6 +18,7 @@ const Pedidos = () => {
       <FinalizarPedido />
       <DialogRegistrarCliente />
       <DialogBuscarCliente />
+      <EditReceta />
       <DialogSelectDepositoStock />
       <DialogMain />
       <Main />

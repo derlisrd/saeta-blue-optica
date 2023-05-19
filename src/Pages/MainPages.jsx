@@ -42,7 +42,7 @@ function MainPages() {
           <Route path="inventario" element={<PrivateRoute id='31'><Inventario /></PrivateRoute>} />
           <Route path="productos/edit/:id" element={<PrivateRoute id='29'><EditProduct /></PrivateRoute>} />
           <Route path="pedidos" element={<PrivateRoute id='9'><Pedidos /></PrivateRoute>} />
-          <Route path="pedidos/lista" element={<PrivateRoute id='3'><ListaPedidos /></PrivateRoute>} />
+          <Route path="pedidos/lista" element={<PrivateRoute id='1'><ListaPedidos /></PrivateRoute>} />
           <Route path="facturas" element={<PrivateRoute id='16'><Facturas /></PrivateRoute>} />
           <Route path="facturas/add" element={<PrivateRoute id='17'><AddFactura /></PrivateRoute>} />
           <Route path="facturas/lista" element={<PrivateRoute id='16'><ListaFacturas /></PrivateRoute>} />

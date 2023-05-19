@@ -8,8 +8,8 @@ import SelectOjos from "./Components/SelectOjos";
 
 function DialogSelectDepositoStock() {
 
-    const {setDialogs,dialogs,formDepositoStock,setearFactura,factura,selectProduct} = usePedidos()
-    const [selecOjo,setSelectOjo] = useState('ambos')
+    const {setDialogs,dialogs,formDepositoStock,setearFactura,factura,selectProduct,selectIndex,setLado,lado} = usePedidos()
+    const [selectOjo,setSelectOjo] = useState('ambos')
 
     const initialParam = {
         lejos_derecho_esferico:'0',
@@ -99,9 +99,34 @@ function DialogSelectDepositoStock() {
 
     const insertarReceta = ()=>{
         let new_fact = {...factura}
-        new_fact.receta = {...param}
+        new_fact.items[selectIndex].receta = {...param}
+        if(selectOjo==='ambos'){
+            new_fact.items[selectIndex].cantidad = 2 
+            new_fact.items[selectIndex].receta.codigo_derecho = selectProduct.codigo
+            new_fact.items[selectIndex].receta.codigo_izquierdo = selectProduct.codigo
+            setLado({derecho:true,izquierdo:true})
+        }
+        if(selectOjo==='izquierdo'){
+            setLado((prev)=>{
+                return {...prev, izquierdo:true}
+            })
+            setSelectOjo('derecho')
+            new_fact.items[selectIndex].receta.codigo_izquierdo = selectProduct.codigo
+        }
+        if(selectOjo==='derecho'){
+            setLado((prev)=>{
+                return {...prev, derecho:true}
+            })
+            setSelectOjo('izquierdo')
+            new_fact.items[selectIndex].receta.codigo_derecho = selectProduct.codigo
+        }
+
+        new_fact.items[selectIndex].lado = selectOjo
+        //console.log(selectIndex);
+        //new_fact.receta = {...param}
         setearFactura(new_fact)
-        close()
+        setDialogs({...dialogs,select_deposito_stock:false});
+        setParam(initialParam)
     }
 
     
@@ -136,11 +161,22 @@ function DialogSelectDepositoStock() {
 
 
 
-    const close = ()=>{ setDialogs({...dialogs,select_deposito_stock:false});  }
+    const close = ()=>{ 
+        setDialogs({...dialogs,select_deposito_stock:false});
+        let f = {...factura}  
+        f.items.splice(selectIndex,1)
+        setearFactura(f)
+    }
     const setearValores = useCallback(()=>{
         if(dialogs.select_deposito_stock){
-            let f = {...factura}
-            setParam(f.receta)
+            //let f = {...factura}
+            //setParam(f.receta)
+            
+            setSelectOjo(()=>{
+                if(lado.izquierdo === true && lado.derecho===false) return 'derecho'
+                if(lado.derecho === true && lado.izquierdo===false) return 'izquierdo'
+                return 'ambos'
+            })
         }
     },[dialogs,factura])
     useEffect(() => {
@@ -151,54 +187,54 @@ function DialogSelectDepositoStock() {
 
 
     return ( <Dialog open={dialogs.select_deposito_stock} fullWidth maxWidth="lg" onClose={close} >
-        <DialogTitle><ButtonTip onClick={close} title='Cerrar' icon='close' /> {selectProduct?.codigo_producto} - { selectProduct?.nombre_producto}  </DialogTitle>
+        <DialogTitle><ButtonTip onClick={close} title='Cerrar' icon='close' /> {selectProduct?.codigo} - { selectProduct?.descripcion}  </DialogTitle>
         <DialogContent>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <SelectOjos />
+                    <SelectOjos value={selectOjo} onChange={(e)=>{ setSelectOjo(e.target.value) }} />
                 </Grid>
                 <Grid item xs={12} sm={6}>
                     <Grid container alignItems='center' spacing={1} sx={{ border:'1px solid silver',padding:1,borderRadius:1 }}>
                         <Grid item xs={12}><Typography variant="button">LEJOS</Typography></Grid>
                         <Grid item xs={12} sm={3}><Typography variant="overline">DERECHO:</Typography></Grid>
-                        <Grid item xs={12} sm={3}><InputNumerico onKeyUp={key} autoFocus  name="lejos_derecho_esferico" onChange={change} value={param.lejos_derecho_esferico} fullWidth label='Esférico' /> </Grid>
-                        <Grid item xs={12} sm={3}><InputNumerico onKeyUp={key} name="lejos_derecho_cilindrico" onChange={change} value={param.lejos_derecho_cilindrico}  label='Cilindrico' /></Grid>
-                        <Grid item xs={12} sm={3}><InputNumerico  name="lejos_eje_derecho" onChange={change} value={param.lejos_eje_derecho}  label='Eje' /></Grid>
+                        <Grid item xs={12} sm={3}><InputNumerico disabled={selectOjo==='izquierdo'} onKeyUp={key} autoFocus  name="lejos_derecho_esferico" onChange={change} value={param.lejos_derecho_esferico} fullWidth label='Esférico' /> </Grid>
+                        <Grid item xs={12} sm={3}><InputNumerico disabled={selectOjo==='izquierdo'} onKeyUp={key} name="lejos_derecho_cilindrico" onChange={change} value={param.lejos_derecho_cilindrico}  label='Cilindrico' /></Grid>
+                        <Grid item xs={12} sm={3}><InputNumerico disabled={selectOjo==='izquierdo'}  name="lejos_eje_derecho" onChange={change} value={param.lejos_eje_derecho}  label='Eje' /></Grid>
                         <Grid item xs={12} sm={3}><Typography variant="overline">IZQUIERDO:</Typography></Grid>
-                        <Grid item xs={12} sm={3}><InputNumerico onKeyUp={key}  name="lejos_izquierdo_esferico" onChange={change} value={param.lejos_izquierdo_esferico} fullWidth label='Esférico' /></Grid>
-                        <Grid item xs={12} sm={3}><InputNumerico onKeyUp={key}  name="lejos_izquierdo_cilindrico" onChange={change} value={param.lejos_izquierdo_cilindrico}  label='Cilindrico' /></Grid>
-                        <Grid item xs={12} sm={3}><InputNumerico  name="lejos_eje_izquierdo" onChange={change} value={param.lejos_eje_izquierdo}  label='Eje' /></Grid>
+                        <Grid item xs={12} sm={3}><InputNumerico disabled={selectOjo==='derecho'} onKeyUp={key}  name="lejos_izquierdo_esferico" onChange={change} value={param.lejos_izquierdo_esferico} fullWidth label='Esférico' /></Grid>
+                        <Grid item xs={12} sm={3}><InputNumerico disabled={selectOjo==='derecho'} onKeyUp={key}  name="lejos_izquierdo_cilindrico" onChange={change} value={param.lejos_izquierdo_cilindrico}  label='Cilindrico' /></Grid>
+                        <Grid item xs={12} sm={3}><InputNumerico disabled={selectOjo==='derecho'}  name="lejos_eje_izquierdo" onChange={change} value={param.lejos_eje_izquierdo}  label='Eje' /></Grid>
                     </Grid>
                 </Grid>
                 <Grid item xs={12} sm={6}>
                     <Grid container alignItems='center' spacing={1} sx={{ border:'1px solid silver',padding:1,borderRadius:1 }}>
                         <Grid item xs={12}><Typography variant="button">CERCA</Typography></Grid>
                         <Grid item xs={12} sm={3}><Typography variant="overline">DERECHO</Typography></Grid>
-                        <Grid item xs={12} sm={3}><InputNumerico onKeyUp={key} name="cerca_derecho_esferico" onChange={change} value={param.cerca_derecho_esferico} fullWidth label='Esférico' /></Grid>
-                        <Grid item xs={12} sm={3}><InputNumerico onKeyUp={key} name="cerca_derecho_cilindrico" onChange={change} value={param.cerca_derecho_cilindrico}   label='Cilindrico' /></Grid>
-                        <Grid item xs={12} sm={3}><InputNumerico  name="cerca_eje_derecho" onChange={change} value={param.cerca_eje_derecho}  label='Eje' /></Grid>
+                        <Grid item xs={12} sm={3}><InputNumerico disabled={selectOjo==='izquierdo'} onKeyUp={key} name="cerca_derecho_esferico" onChange={change} value={param.cerca_derecho_esferico} fullWidth label='Esférico' /></Grid>
+                        <Grid item xs={12} sm={3}><InputNumerico disabled={selectOjo==='izquierdo'} onKeyUp={key} name="cerca_derecho_cilindrico" onChange={change} value={param.cerca_derecho_cilindrico}   label='Cilindrico' /></Grid>
+                        <Grid item xs={12} sm={3}><InputNumerico disabled={selectOjo==='izquierdo'}  name="cerca_eje_derecho" onChange={change} value={param.cerca_eje_derecho}  label='Eje' /></Grid>
                         <Grid item xs={12} sm={3}><Typography variant="overline">IZQUIERDO</Typography></Grid>
-                        <Grid item xs={12} sm={3}><InputNumerico onKeyUp={key}  name="cerca_izquierdo_esferico" onChange={change} value={param.cerca_izquierdo_esferico}  fullWidth label='Esférico' /></Grid>
-                        <Grid item xs={12} sm={3}><InputNumerico onKeyUp={key}  name="cerca_izquierdo_cilindrico" onChange={change} value={param.cerca_izquierdo_cilindrico}   label='Cilindrico' /></Grid>
-                        <Grid item xs={12} sm={3}><InputNumerico name="cerca_eje_izquierdo" onChange={change} value={param.cerca_eje_izquierdo}  label='Eje' /></Grid>
+                        <Grid item xs={12} sm={3}><InputNumerico disabled={selectOjo==='derecho'} onKeyUp={key}  name="cerca_izquierdo_esferico" onChange={change} value={param.cerca_izquierdo_esferico}  fullWidth label='Esférico' /></Grid>
+                        <Grid item xs={12} sm={3}><InputNumerico disabled={selectOjo==='derecho'} onKeyUp={key}  name="cerca_izquierdo_cilindrico" onChange={change} value={param.cerca_izquierdo_cilindrico}   label='Cilindrico' /></Grid>
+                        <Grid item xs={12} sm={3}><InputNumerico disabled={selectOjo==='derecho'} name="cerca_eje_izquierdo" onChange={change} value={param.cerca_eje_izquierdo}  label='Eje' /></Grid>
                     </Grid>
                 </Grid>
                 <Grid item xs={12} sm={6}>
                     <Grid container alignItems='center' spacing={1} sx={{ border:'1px solid silver',padding:1,borderRadius:1 }}>
                         <Grid item xs={12} sm={12}><Typography variant="overline">ADICION</Typography></Grid>
-                        <Grid item xs={12} sm={6}><InputNumerico onKeyUp={key} name="adicion_derecho" onChange={change} value={param.adicion_derecho} fullWidth label='Derecho' /></Grid>
-                        <Grid item xs={12} sm={6}><InputNumerico onKeyUp={key} name="adicion_izquierdo" onChange={change} value={param.adicion_izquierdo} fullWidth label='Izquierdo' /></Grid>
+                        <Grid item xs={12} sm={6}><InputNumerico disabled={selectOjo==='izquierdo'} onKeyUp={key} name="adicion_derecho" onChange={change} value={param.adicion_derecho} fullWidth label='Derecho' /></Grid>
+                        <Grid item xs={12} sm={6}><InputNumerico disabled={selectOjo==='derecho'} onKeyUp={key} name="adicion_izquierdo" onChange={change} value={param.adicion_izquierdo} fullWidth label='Izquierdo' /></Grid>
                         
                     </Grid>
                 </Grid>
                 <Grid item xs={12} sm={6}>
                     <Grid container alignItems='center' spacing={1} sx={{ border:'1px solid silver',padding:1,borderRadius:1 }}>
                         <Grid item xs={12} sm={4}><Typography variant="button">DNP</Typography></Grid>
-                        <Grid item xs={12} sm={4}><InputNumerico name="dnp_derecho" onChange={change} value={param.dnp_derecho} fullWidth label='DNP DERECHO' /> </Grid>
-                        <Grid item xs={12} sm={4}><InputNumerico name="dnp_izquierdo" onChange={change} value={param.dnp_izquierdo} fullWidth label='DNP IZQUIERDO' /> </Grid>
+                        <Grid item xs={12} sm={4}><InputNumerico disabled={selectOjo==='izquierdo'} name="dnp_derecho" onChange={change} value={param.dnp_derecho} fullWidth label='DNP DERECHO' /> </Grid>
+                        <Grid item xs={12} sm={4}><InputNumerico disabled={selectOjo==='derecho'} name="dnp_izquierdo" onChange={change} value={param.dnp_izquierdo} fullWidth label='DNP IZQUIERDO' /> </Grid>
                         <Grid item xs={12} sm={4}><Typography variant="button">ALTURA</Typography></Grid>
-                        <Grid item xs={12} sm={4}><InputNumerico name="altura_derecho" onChange={change} value={param.altura_derecho} fullWidth label='Altura derecha' /> </Grid>
-                        <Grid item xs={12} sm={4}><InputNumerico name="altura_izquierdo" onChange={change} value={param.altura_izquierdo} fullWidth label='Altura izquierda' /> </Grid>
+                        <Grid item xs={12} sm={4}><InputNumerico disabled={selectOjo==='izquierdo'} name="altura_derecho" onChange={change} value={param.altura_derecho} fullWidth label='Altura derecha' /> </Grid>
+                        <Grid item xs={12} sm={4}><InputNumerico disabled={selectOjo==='derecho'} name="altura_izquierdo" onChange={change} value={param.altura_izquierdo} fullWidth label='Altura izquierda' /> </Grid>
                     </Grid>
                 </Grid>
                 
@@ -234,8 +270,8 @@ function DialogSelectDepositoStock() {
             </Grid>
         </DialogContent>
         <DialogActions>
-            <Button variant="contained" onClick={insertarReceta}>Insertar</Button>
-            <Button variant="outlined" onClick={close}>Cerrar</Button>
+            <Button variant="contained" onClick={insertarReceta}>INSERTAR</Button>
+            <Button variant="outlined" onClick={close}>CANCELAR</Button>
         </DialogActions>
     </Dialog> );
 }

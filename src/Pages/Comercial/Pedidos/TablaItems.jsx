@@ -6,7 +6,7 @@ import IconButtonTip from "../../../Components/Botones/IconButtonTip";
 
 function TablaItems({items}) {
 
-    const {setearFactura,factura,dialogs,setDialogs,setIndexCambioPrecio} = usePedidos()
+    const {setearFactura,factura,dialogs,setDialogs,setIndexCambioPrecio,setSelectProduct,setSelectIndex,setLado} = usePedidos()
 
     const mas = i=>{
         let fact = {...factura}
@@ -22,9 +22,29 @@ function TablaItems({items}) {
             setearFactura(fact)
         }
     }
-
+    const edit = (elem,index)=>{
+        setSelectIndex(index)
+        setSelectProduct(elem)
+        setDialogs({...dialogs,edit_receta:true})
+    }
     const borrar = i=>{
         let fact = {...factura}
+        if(fact.items[i].tipo===1){
+            if(fact.items[i].lado==='derecho'){
+                setLado((prev)=>{
+                    return {...prev, derecho:false}
+                })
+            }
+            if(fact.items[i].lado==='izquierdo'){
+                setLado((prev)=>{
+                    return {...prev, izquierdo:false}
+                })
+            }
+
+            if(fact.items[i].lado==='ambos'){
+                setLado({derecho:false,izquierdo:false})
+            }
+        }
         fact.items.splice(i,1)
         setearFactura(fact)
     }
@@ -38,10 +58,11 @@ function TablaItems({items}) {
         <tbody>
             <tr className={styles.head} >
                 <td width="5%" className={styles.head_cantidad} >Cant</td>
-                <td width="15%">Codigo</td>
+                <td width="10%">Codigo</td>
                 <td width="30%">Descripción</td>
-                <td width="15%">Precio</td>
-                <td width="15%">Subtotal</td>
+                <td width="10%">Lado</td>
+                <td width="10%">Precio</td>
+                <td width="10%">Subtotal</td>
                 <td width="20%">Opcion</td>
             </tr>
             {
@@ -54,18 +75,19 @@ function TablaItems({items}) {
                                 <IconButtonTip onClick={()=>{mas(i)}} title="Más" icon={{ name:'add', color:'inherit' }}  />
                             </Stack>
                         </td>
-                        <td width="15%">{e.codigo}</td>
+                        <td width="10%">{e.codigo}</td>
                         <td width="30%">{e.descripcion}</td>
-                        <td width="15%">{ f.numberFormat(e.precio)}</td>
-                        <td width="15%">{ f.numberFormat(e.precio * e.cantidad)}</td>
-                        <td width="15%">
+                        <td width="10%">{ (e.lado ?? e.lado)}</td>
+                        <td width="10%">{ f.numberFormat(e.precio)}</td>
+                        <td width="10%">{ f.numberFormat(e.precio * e.cantidad)}</td>
+                        <td width="10%">
                             <Stack direction="row">
                                 <IconButtonTip onClick={()=>{precio(i)}} title='Cambia precio' icon={{ name:'price_change',color:'warning' }} />
                                 {
                                     e.editable && <IconButtonTip onClick={()=>{borrar(i)}} title='Borrar item' icon={{ name:'delete_forever',color:'error' }} />
                                 }
                                 {
-                                    e.tipo === 1 && <IconButtonTip onClick={()=>{}} title='Receta' icon={{ name:'medication',color:'primary' }} />
+                                    e.tipo === 1 && <IconButtonTip onClick={()=>{edit(e,i)}} title='Receta' icon={{ name:'medication',color:'primary' }} />
                                 }
                             </Stack>
                         </td>

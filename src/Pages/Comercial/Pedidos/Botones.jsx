@@ -4,21 +4,23 @@ import useGotoNavigate from "../../../Hooks/useGotoNavigate";
 
 function Botones() {
     const {navigate} = useGotoNavigate()
-    const {setearFactura,initialFactura,factura,dialogs,setDialogs,idUpdate} = usePedidos()
+    const {setearFactura,initialFactura,factura,dialogs,setDialogs,idUpdate,setLado} = usePedidos()
 
     const cancelar = ()=>{
         setearFactura(initialFactura)
         if(idUpdate.state){
             navigate('/pedidos/lista')
         }
+        setLado({derecho:false,izquierdo:false})
     }
 
     const nuevo = ()=>{
         setearFactura(initialFactura)
+        setLado({derecho:false,izquierdo:false})
         //console.log(document.getElementById('id_busca_codigo'));
     }
 
-    const receta = ()=> setDialogs({...dialogs,select_deposito_stock:true})
+    
 
     const fin = ()=> setDialogs({...dialogs,finalizar:true})
 
@@ -31,9 +33,6 @@ function Botones() {
         </Button>
         <Button onClick={cancelar} size="large" variant="outlined" color="info" fullWidth>
             CANCELAR
-        </Button>
-        <Button onClick={receta} size="large" variant="outlined" color="warning" fullWidth>
-            RECETA
         </Button>
             </>
         }

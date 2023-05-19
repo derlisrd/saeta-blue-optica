@@ -23,7 +23,7 @@ function useInitialStates() {
             laboratorio:'',
             armazon_id:'0'
         },
-        receta:{
+        /* receta:{
             lejos_derecho_esferico:'0',
             lejos_derecho_cilindrico:'0',
             lejos_izquierdo_cilindrico:'0',
@@ -48,7 +48,7 @@ function useInitialStates() {
 
             altura_derecho:'0',
             altura_izquierdo:'0'
-        }
+        } */
     }
 
     const iDialogs = {
@@ -58,7 +58,8 @@ function useInitialStates() {
         buscar_cliente:false,
         select_deposito_stock:false,
         obs:false,
-        precio:false
+        precio:false,
+        edit_receta:false
     }
 
     return { iDialogs,initialFactura}

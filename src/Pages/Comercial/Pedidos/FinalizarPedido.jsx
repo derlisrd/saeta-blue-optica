@@ -71,7 +71,10 @@ function FinalizarPedido() {
         navigate('/pedidos/lista')
     }
 
-    const close = async()=>{ 
+
+
+
+    const closeInsert = async()=>{ 
         let f = {...factura}
         setLoading(true)
         let datos = {
@@ -109,6 +112,10 @@ function FinalizarPedido() {
                 }
                 promises.push(APICALLER.insert({table:'pedidos_items',token:token_user,data:pedidos_items}))
             })
+            /**
+             * 
+             * ACA SERA LA BATALLA FINAL
+             */
             let receta_data = { ...f.receta,
                 pedido_id_receta: id_pedido
             }
@@ -139,7 +146,7 @@ function FinalizarPedido() {
 
 
     return ( <Dialog open={dialogs.finalizar} onClose={()=>{}} fullScreen >
-        <DialogTitle><ButtonTip onClick={atras} title='Atrás' icon='arrow_back' />  Imprimir pedido</DialogTitle>
+        <DialogTitle><ButtonTip id='9' onClick={atras} title='Atrás' icon='arrow_back' />  Imprimir pedido</DialogTitle>
         <DialogContent>
             {loading ? <LinearProgress /> :
             <div ref={divRef} id="print">
@@ -150,7 +157,7 @@ function FinalizarPedido() {
         <DialogActions>
             {
                 finalizado ? <Button variant="outlined" size="large" onClick={atras}>CERRAR PEDIDO</Button> :
-                <Button color="info" variant="outlined" onClick={ idUpdate.state ? actualizar : close} size="large"> {idUpdate.state ? `ACTUALIZAR` : `GRABAR PEDIDO` } </Button>
+                <Button color="info" variant="outlined" onClick={ idUpdate.state ? actualizar : closeInsert} size="large"> {idUpdate.state ? `ACTUALIZAR` : `GRABAR PEDIDO` } </Button>
             }
             <Button color="success" variant="contained" disabled={!finalizado} onClick={handlePrint} size="large"> IMPRIMIR </Button>
         </DialogActions>

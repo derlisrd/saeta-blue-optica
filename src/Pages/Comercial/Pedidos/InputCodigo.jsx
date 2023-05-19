@@ -9,7 +9,7 @@ import swal from "sweetalert";
 
 function InputCodigo() {
 
-    const {factura,setearFactura,dialogs,setDialogs,setFormDepositoStock,setCargas,cargas,setSelectProduct} = usePedidos()
+    const {factura,setearFactura,dialogs,setDialogs,setFormDepositoStock,setCargas,cargas,setSelectProduct,setSelectIndex,lado} = usePedidos()
     const [search,setSearch] = useState('')
     const [loading,setLoading] = useState(false)
     const [lista,setLista] = useState([])
@@ -20,7 +20,11 @@ function InputCodigo() {
             let tipo =  parseInt(val.tipo_producto), id_producto = val.id_producto
             let index = new_fact.items.findIndex(e => e.codigo.toLowerCase() === val.codigo_producto.toLowerCase());
             let found = new_fact.items.filter(i => i.codigo.toLowerCase() === val.codigo_producto.toLowerCase());
-            
+            setSelectIndex(new_fact.items.length)
+            if( lado.izquierdo=== true && lado.derecho===true && tipo===1){
+                swal({icon:'info', title:'Error', text:'Lados ya están completos. Elimine algunos items para insertar en el pedido'})
+                return false;
+            }
             if(tipo === 1){
                 let idCliente = new_fact.cliente.id_cliente
                 setCargas({...cargas,stock:true})
@@ -43,7 +47,7 @@ function InputCodigo() {
                 }
                 let nuevo_item = {
                     id_productos_deposito:null,
-                    cantidad:2,
+                    cantidad:1,
                     precio_normal:parseFloat(val.precio_producto),
                     precio: precio_descuento,
                     preciom: parseFloat(val.preciom_producto),
@@ -52,11 +56,13 @@ function InputCodigo() {
                     codigo:val.codigo_producto,
                     tipo,
                     editable:true,
-                    iva:parseInt(val.iva_producto)                 
+                    iva:parseInt(val.iva_producto),
+                    receta:{},
+                    lado:'ambos'               
                 }
                 new_fact.items.push(nuevo_item)
                 setCargas({...cargas,stock:false})
-                setSelectProduct(val)
+                setSelectProduct(nuevo_item)
                 setDialogs({...dialogs,select_deposito_stock:true})
 
             }
@@ -75,7 +81,9 @@ function InputCodigo() {
                         codigo:val.codigo_producto,
                         tipo,
                         editable:true,
-                        iva:parseInt(val.iva_producto)                 
+                        iva:parseInt(val.iva_producto),
+                        receta:null,
+                        lado:null                 
                     }
                     new_fact.items.push(nuevo_item)
                 }

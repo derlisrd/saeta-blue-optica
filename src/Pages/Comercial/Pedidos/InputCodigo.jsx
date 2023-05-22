@@ -21,7 +21,7 @@ function InputCodigo() {
             let index = new_fact.items.findIndex(e => e.codigo.toLowerCase() === val.codigo_producto.toLowerCase());
             let found = new_fact.items.filter(i => i.codigo.toLowerCase() === val.codigo_producto.toLowerCase());
             setSelectIndex(new_fact.items.length)
-            if( lado.izquierdo=== true && lado.derecho===true && tipo===1){
+            if( lado.izquierdo=== true && lado.derecho===true && tipo===1 && new_fact.tipo_pedido !=='4'){
                 swal({icon:'info', title:'Error', text:'Lados ya están completos. Elimine algunos items para insertar en el pedido'})
                 return false;
             }

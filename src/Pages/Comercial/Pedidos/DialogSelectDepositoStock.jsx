@@ -138,6 +138,12 @@ function DialogSelectDepositoStock() {
         if(e.key==='ArrowUp'){
             let nuevo_valor = parseFloat(value) + 0.25
             p[name] = nuevo_valor
+            if(name === 'adicion_derecho'){
+                p.cerca_derecho_esferico = nuevo_valor + parseFloat(p.lejos_derecho_esferico)
+            }
+            if(name === 'adicion_izquierdo'){
+                p.cerca_izquierdo_esferico = nuevo_valor + parseFloat(p.lejos_izquierdo_esferico)
+            }
             if(name==='cerca_derecho_esferico'){
                 p.adicion_derecho = nuevo_valor + parseFloat(p.lejos_derecho_esferico)
             }
@@ -149,6 +155,12 @@ function DialogSelectDepositoStock() {
         if(e.key==='ArrowDown'){
             let nuevo_valor = parseFloat(value) - 0.25
             p[name] = nuevo_valor
+            if(name === 'adicion_derecho'){
+                p.cerca_derecho_esferico = nuevo_valor + parseFloat(p.lejos_derecho_esferico)
+            }
+            if(name === 'adicion_izquierdo'){
+                p.cerca_izquierdo_esferico = nuevo_valor + parseFloat(p.lejos_izquierdo_esferico)
+            }
             if(name==='cerca_derecho_esferico'){
                 p.adicion_derecho = nuevo_valor + parseFloat(p.lejos_derecho_esferico)
             }

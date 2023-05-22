@@ -1,6 +1,7 @@
 import { Button, MenuItem, Menu } from "@mui/material";
 import { usePedidos } from "../PedidosProvider";
 import { useState } from "react";
+import swal from 'sweetalert'
 
 function SelectTipo() {
   const { factura, setearFactura } = usePedidos();
@@ -14,8 +15,20 @@ function SelectTipo() {
     setAnchorEl(null);
   };
 
-  const change = (e) => {
+  const change = async(e) => {
     let f = { ...factura };
+    
+    if(f.items.length>0 && e==='4'){
+      let ok = await swal({
+        title: "Cambiar?",
+        text: "Desea cambiar de tipo de venta. Puede perder su lista de items!",
+        icon: "warning",
+        buttons: ['Cancelar','Cambiar'],
+      })
+      if(ok){
+        f.items = []
+      }
+    }
     f.tipo_pedido = e;
     setearFactura(f);
     setAnchorEl(null);

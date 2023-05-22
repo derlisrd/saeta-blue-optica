@@ -97,7 +97,24 @@ function PedidosProvider({children}) {
                 setIdUpdate({state:true,id:id})
                 let f = {...factura},
                 lados = {'0':'no', '1':'ambos', '2':'derecho','3':'izquierdo'}
+                let fa  = main.first, fare = rece.first
+                delete fare.updated_at
+                delete fare.pedido_id_receta
                 items.results.forEach(elem=>{
+                    let rec = {}
+                    let ladito = lados[0];
+                    if(elem.tipo_producto==="1"){
+                        if(fare.codigo_derecho === fare.codigo_izquierdo){
+                            ladito = 'ambos'
+                            rec = fare.first
+                        }
+                        if(elem.codigo_producto === fare.codigo_izquierdo){
+                            ladito = 'izquierdo'
+                        }
+                        if(elem.codigo_product === fare.codigo_derecho){
+                            ladito = 'derecho'
+                        }
+                    }
                     let objeto = {
                         id_pedidos_item: elem.id_pedidos_item,
                         id_productos_deposito:elem.deposito_id_item,
@@ -111,12 +128,12 @@ function PedidosProvider({children}) {
                         tipo:parseInt(elem.tipo_producto),
                         iva:parseInt(elem.iva_producto),
                         editable:false,
-                        receta:{},
-                        lado: lados[elem.lado_item]
+                        receta:rec,
+                        lado: ladito
                     }
                     f.items.push(objeto)
                 })
-                let fa  = main.first, fare = rece.first
+                
                 f.cliente = {
                     id_cliente:fa.id_cliente,
                     ruc_cliente:fa.ruc_cliente,
@@ -132,8 +149,7 @@ function PedidosProvider({children}) {
                     laboratorio:fa.obs_laboratorio,
                     armazon_id:fa.armazon_id
                 }
-                delete fare.updated_at
-                delete fare.pedido_id_receta
+                
                 f.receta = fare
                 
                 setearFactura(f)

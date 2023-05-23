@@ -20,7 +20,7 @@ function Edit() {
     const {focusTo} = useFocus()    
     const [formEdit,setFormEdit] = useState({})
 
-    //console.log(formEdit,formSelect);
+    console.log(formSelect);
 
     const change = e=>{
         const {value,name} = e.target
@@ -42,8 +42,9 @@ function Edit() {
         }
         setLoading(true)
         let id = formSelect.id_cliente;
-        let check = await get({table:'clientes',where:`codigo_cliente,=,'${datas.ruc_cliente}',and,id_cliente,<>,${id}`})
-        if(check.response && check.found>0){
+        let check = await get({table:'clientes',where:`id_cliente,=,${id}`})
+        if(check.response && check.found>1){
+            console.log(check, id);
             setError({active:true,message:'Ya existe un cliente con ese doc.',code:1})
             focusTo('ruc_cliente')
             setLoading(false)
@@ -67,7 +68,7 @@ function Edit() {
   
 
   return (
-    <DialogZoom open={dialogs.edit} title={`EDITAR - ${formSelect?.codigo_cliente}`} onClose={close} fullWidth>
+    <DialogZoom open={dialogs.edit} title={`EDITAR - ${formSelect?.id_cliente}`} onClose={close} fullWidth>
       <form onSubmit={enviar}>
         <input type="hidden" name="id" value={formSelect.id_cliente} />
         <DialogContent>

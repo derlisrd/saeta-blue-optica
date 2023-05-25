@@ -1,4 +1,4 @@
-import { Dialog, DialogActions, DialogContent, DialogTitle, Grid,Autocomplete,TextField, Button, Icon, LinearProgress } from "@mui/material";
+import { Dialog, DialogActions, DialogContent, DialogTitle, Grid,Autocomplete,TextField, Button, Icon, LinearProgress, Stack } from "@mui/material";
 import { useDescuentos } from "./DescuentosProvider";
 import { APICALLER } from "../../../Services/api";
 import { useState,useEffect } from "react";
@@ -6,6 +6,7 @@ import useInitialState from "./useInitialState";
 import { useAuth } from "../../../Providers/AuthProvider";
 import NumberFormatCustom from "../../../Components/TextFields/NumberFormatCustom";
 import ListadoAgregado from "./ListadoAgregado";
+import { funciones } from "../../../App/helpers/funciones";
 
 function Agregar() {
     const {userData}  = useAuth()
@@ -13,6 +14,8 @@ function Agregar() {
     const {dialogs,setDialogs} = useDescuentos()
     const {iError,iProducto,iCliente,iForm} = useInitialState()
     const [lista,setLista]= useState([])
+    const [producto,setProducto] = useState(null)
+    const [productSelect,setProductoSelect] = useState(null)
     const [loadingSearch,setLoadingSearch] = useState(false)
     const [loading,setLoading] = useState(false)
     const [error,setError] = useState(iError)
@@ -51,23 +54,9 @@ function Agregar() {
             if(res.found>0){
                 let product_ = res.first 
                 let data_new = {cliente_id_descuento: cliente.id_cliente,producto_id_descuento: product_.id_producto, porcentaje_descuento:form.porcentaje_descuento}
-                let ins = await APICALLER.insert({table:'descuentos',data:data_new,token:token_user})
-                if(ins.response){
-                    let p = [...productos]
-                    let precio_descuento= parseFloat(product_.precio_producto) - parseFloat(product_.precio_producto)*parseFloat(form.porcentaje_descuento)/100;
-                    p.push({
-                        id_descuento:ins.last_id,
-                        nombre_producto:product_.nombre_producto,
-                        codigo_producto:product_.codigo_producto,
-                        precio_normal:product_.precio_producto,
-                        precio_descuento, 
-                        porcentaje_descuento:form.porcentaje_descuento,
-                        
-                    })
-                    setProductos(p)
-                    setForm(iForm)
-                    document.getElementById('codigo_producto').focus()
-                }else{ console.log(ins);}
+                setProducto(product_)
+                setProductoSelect(data_new)
+                
             }else{
                 setError({active:true,code:1,message:'Producto no existente.'})
             }
@@ -77,12 +66,42 @@ function Agregar() {
         setLoading(false)
         document.getElementById('codigo_producto').focus();
     }
+
+    const agregar = async()=>{
+        setLoading(true)
+        let ins = await APICALLER.insert({table:'descuentos',data:productSelect,token:token_user})
+        if(ins.response){
+
+            let p = [...productos]
+            let precio_descuento = parseFloat(producto.precio_producto) - parseFloat(producto.precio_producto)*parseFloat(form.porcentaje_descuento)/100;
+            p.push({
+                codigo_producto:producto.codigo_producto,
+                nombre_producto:producto.nombre_producto,
+                id_descuento:ins.last_id,
+                precio_normal:producto.precio_producto,
+                precio_descuento, 
+                porcentaje_descuento:form.porcentaje_descuento,
+            })
+            setProductos(p)
+            setForm(iForm)
+            document.getElementById('codigo_producto').focus()
+        }else{ console.log(ins);}
+        setProducto(null)
+        setProductoSelect(null)
+        setLoading(false)
+    }
+
+    
+
+
     const close = ()=>{
         setDialogs({...dialogs,add:false})
         setError(iError)
         setCliente(iCliente)
         setProductos(iProducto)
         setForm(iForm)
+        setProducto(null)
+        setProductoSelect(null)
     }
 
     const eliminar = async(id)=>{
@@ -132,12 +151,22 @@ function Agregar() {
                 </Grid>
                 <Grid item xs={12}>
                     {loading && <LinearProgress />}
+                    {
+                        producto &&
+                        <>
+                        <p>{producto.nombre_producto}   | COD: {producto.codigo_producto} </p>
+                        <p>PRECIO: { funciones.numberFormat( producto.precio_producto)} | CON DESCUENTO: {funciones.numberFormat( parseFloat(producto.precio_producto) - parseFloat(form.porcentaje_descuento)*parseFloat(producto.precio_producto)/100)}
+                        </p>
+                        </>
+                    }
                 </Grid>
+                
                 <Grid item xs={12} sm={4} lg={4}>
                     <TextField id='codigo_producto' size='small' name='codigo_producto' value={form.codigo_producto} onChange={change} fullWidth disabled={cliente.id_cliente===null}  label='Código de producto' helperText={error.code===1 && error.message} error={error.active && error.code===1} />
                 </Grid>
+
                 <Grid item xs={12} sm={4} lg={4}>
-                    <TextField fullWidth size='small' 
+                    <TextField fullWidth size='small'  disabled={cliente.id_cliente===null}
                     InputProps={{
                         inputProps: { min: 0},
                         inputComponent: NumberFormatCustom,
@@ -145,10 +174,13 @@ function Agregar() {
                     name='porcentaje_descuento' value={form.porcentaje_descuento} onChange={change} label='Porcentaje %' helperText={error.code===2 && error.message} error={error.active && error.code===2} />
                 </Grid>
                 <Grid item xs={12} sm={4} lg={4}>
-                    <Button size="large" onClick={consultar} color="success" startIcon={<Icon>add</Icon>} variant="outlined">Agregar</Button>
+                    <Stack direction='row' spacing={2}>
+                        <Button size="large" onClick={consultar} color="info" disabled={cliente.id_cliente===null} startIcon={<Icon>search</Icon>} variant="outlined">Consultar</Button>
+                        <Button size="large" disabled={productSelect===null} onClick={agregar} color="success" startIcon={<Icon>add</Icon>} variant="outlined">Agregar</Button>
+                    </Stack>
                 </Grid>
-                <Grid item xs={12} md={8}>
-                    <ListadoAgregado productos={productos} />
+                <Grid item xs={12} >
+                    <ListadoAgregado eliminar={eliminar} productos={productos} />
                 </Grid>
             </Grid>
         </DialogContent>

@@ -18,9 +18,13 @@ function DescuentosProvider({children}) {
     const getLista = useCallback(async()=>{
         setLoading(true)
         let res = await APICALLER.get({table:'descuentos',include:'clientes,productos',on:'id_cliente,cliente_id_descuento,id_producto,producto_id_descuento',
-        fields:'nombre_cliente,id_descuento,ruc_cliente,codigo_producto,nombre_producto,porcentaje_descuento'})
+        fields:'nombre_cliente,id_descuento,ruc_cliente,codigo_producto,nombre_producto,porcentaje_descuento,precio_producto'})
         if(res.response){
-            setListas({descuentos:res.results})
+            let desc = []
+            res.results.forEach((elm)=>{
+                desc.push({...elm, precio_descuento: parseFloat(elm.precio_producto) - parseFloat(elm.precio_producto)*parseFloat(elm.porcentaje_descuento)/100 })
+            })
+            setListas({descuentos:desc})
         }   
         else{
             console.log(res);

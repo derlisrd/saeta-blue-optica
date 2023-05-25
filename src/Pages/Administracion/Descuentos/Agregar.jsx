@@ -5,6 +5,7 @@ import { useState,useEffect } from "react";
 import useInitialState from "./useInitialState";
 import { useAuth } from "../../../Providers/AuthProvider";
 import NumberFormatCustom from "../../../Components/TextFields/NumberFormatCustom";
+import ListadoAgregado from "./ListadoAgregado";
 
 function Agregar() {
     const {userData}  = useAuth()
@@ -53,7 +54,16 @@ function Agregar() {
                 let ins = await APICALLER.insert({table:'descuentos',data:data_new,token:token_user})
                 if(ins.response){
                     let p = [...productos]
-                    p.push({id_descuento:ins.last_id,nombre_producto:product_.nombre_producto,codigo_producto:product_.codigo_producto,porcentaje_descuento:form.porcentaje_descuento})
+                    let precio_descuento= parseFloat(product_.precio_producto) - parseFloat(product_.precio_producto)*parseFloat(form.porcentaje_descuento)/100;
+                    p.push({
+                        id_descuento:ins.last_id,
+                        nombre_producto:product_.nombre_producto,
+                        codigo_producto:product_.codigo_producto,
+                        precio_normal:product_.precio_producto,
+                        precio_descuento, 
+                        porcentaje_descuento:form.porcentaje_descuento,
+                        
+                    })
                     setProductos(p)
                     setForm(iForm)
                     document.getElementById('codigo_producto').focus()
@@ -138,24 +148,7 @@ function Agregar() {
                     <Button size="large" onClick={consultar} color="success" startIcon={<Icon>add</Icon>} variant="outlined">Agregar</Button>
                 </Grid>
                 <Grid item xs={12} md={8}>
-                    <table width='100%' >
-                        <tbody>
-                            <tr style={{ background:'black',color:'white' }}>
-                                <th>COD.</th>
-                                <th>PRODUCTO</th>
-                                <th>PORCENTAJE</th>
-                                <th>ACCION</th>
-                            </tr>
-                            {productos.map((e,i)=>(
-                                <tr key={i}>
-                                    <td>{e.codigo_producto}</td>
-                                    <td>{e.nombre_producto}</td>
-                                    <td>{e.porcentaje_descuento} %</td>
-                                    <td><Button variant="outlined" color="error" startIcon={<Icon>delete_forever</Icon>} onClick={()=>{eliminar(e.id_descuento)}}>Eliminar</Button></td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                    <ListadoAgregado productos={productos} />
                 </Grid>
             </Grid>
         </DialogContent>

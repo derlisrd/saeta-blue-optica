@@ -20,6 +20,16 @@ export const  columns = [
         title:'PRODUCTO'
     },
     {
+        field:'precio_producto',
+        title:'PRECIO',
+        isNumber:true
+    },  
+    {
+        field:'precio_descuento',
+        title:'CON DESCUENTO',
+        isNumber:true
+    },  
+    {
         field:'porcentaje_descuento',
         title:'PORCENTAJE',
         after:'%'

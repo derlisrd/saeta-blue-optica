@@ -38,7 +38,7 @@ function PreImpreso() {
         fecha_factura: factura.fecha,
         fecha_cobro_factura: factura.fecha,
         nro_factura: factura.nro_factura,
-        factura_pagado: factura.tipo_factura==='2' ? '0':'1'
+        factura_pagado: '0'
       }
       //console.log(data);
       let res = await APICALLER.insert({table:'facturas',data,token:token_user})
@@ -56,7 +56,7 @@ function PreImpreso() {
           promises.push(APICALLER.insert({table:'facturas_items',data,token:token_user}))
         });
         pedidos.forEach(elem=>{
-          promises.push(APICALLER.update({table:'pedidos',token:token_user,data:{facturado_pedido:1},id:elem}))
+          promises.push(APICALLER.update({table:'pedidos',token:token_user,data:{facturado_pedido:1,factura_id:LAST_ID},id:elem}))
         })
         await Promise.all(promises)
         setGrabado(true)

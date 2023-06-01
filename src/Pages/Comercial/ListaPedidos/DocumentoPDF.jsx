@@ -2,7 +2,7 @@ import { funciones } from "../../../App/helpers/funciones";
 
 
 function DocumentoPDF({selectCliente,desde,hasta,lista,detalles}) {
-    return ( <div  id='_pdf'>
+    return ( <div id='_pdf'>
     <table width='100%' className="_pdf_detalles">
         <tbody>
             <tr>

@@ -3,11 +3,11 @@ import { useListaPedidos } from "./ListaPedidosProvider";
 import { useEffect,useState,useRef} from "react";
 import { APICALLER } from "../../../Services/api";
 import DocumentoPDF from "./DocumentoPDF";
-
+import { useReactToPrint } from 'react-to-print';
 
 function DialogPDF() {
 
-    const divRef = useRef();
+    const divRef = useRef(null);
     const {dialogs,setDialogs} = useListaPedidos()
     const [error,setError]=useState({code:0})
     const [desde,setDesde] = useState('')
@@ -20,6 +20,7 @@ function DialogPDF() {
     const [lista,setLista]=useState([])
     const [loadingSearch,setLoadingSearch]=useState(false)
     const reset = ()=>{
+        setLista([])
         setSelectCliente(null)
         setDetalles({total:0,cliente:'',fecha_inicio:'',fecha_fin:''})
         setSearch('')
@@ -119,7 +120,7 @@ function DialogPDF() {
                 </Grid>
                 {
                     lista.length>0 && 
-                    <DocumentoPDF lista={lista} detalles={detalles} desde={desde} hasta={hasta} selectCliente={selectCliente} />
+                    <div ref={divRef}><DocumentoPDF lista={lista} detalles={detalles} desde={desde} hasta={hasta} selectCliente={selectCliente} /></div>
                     
                 }
             </DialogContent>

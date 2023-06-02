@@ -4,6 +4,8 @@ import { useEffect,useState,useRef} from "react";
 import { APICALLER } from "../../../Services/api";
 import DocumentoPDF from "./DocumentoPDF";
 import { useReactToPrint } from 'react-to-print';
+import { columnsDataPDF } from "./columns";
+import xlsx from "json-as-xlsx"
 
 function DialogPDF() {
 
@@ -46,17 +48,35 @@ function DialogPDF() {
         })
         if(res.response)
         {   let total_venta = 0;
-            res.results.forEach(elem => {
-                total_venta += parseFloat(elem.precio_venta_item)
+            let lista_arreglada = []
+            res.results.forEach(elm => {
+                total_venta += parseFloat(elm.precio_venta_item)*parseFloat(elm.cantidad_pedido)
+                lista_arreglada.push({...elm,
+                    precio_venta_item: parseFloat(elm.precio_venta_item),
+                    total_pedido: parseFloat(elm.precio_venta_item)*parseFloat(elm.cantidad_pedido)
+                })
             });
             setDetalles({cliente:selectCliente.nombre_cliente,total:total_venta,fecha_inicio: desde,fecha_fin:hasta })
-            setLista(res.results)
+            setLista(lista_arreglada)
         }
         else
         {console.log(res.results);}
         setLoading(false)
     }
-
+    const downloadExcel = () => {
+        let data = [
+          {
+            sheet: "Pedidos",
+            columns: columnsDataPDF,
+            content: lista,
+          },
+          
+        ]
+        let settings = {
+          fileName: "Pedidos",
+        }
+        xlsx(data, settings)
+      }
     
     const print = useReactToPrint({
         content: () => divRef.current,
@@ -127,10 +147,13 @@ function DialogPDF() {
         <DialogActions>  
             {
                 lista.length > 0 &&
-                <Button startIcon={<Icon>picture_as_pdf</Icon>} onClick={print} variant="contained">BAJAR PDF</Button>
+                <>
+                <Button startIcon={<Icon>calculate</Icon>} onClick={downloadExcel} variant="contained">EXCEL</Button>
+                <Button startIcon={<Icon>picture_as_pdf</Icon>} onClick={print} variant="contained">PDF</Button>
+                </>
 
             }
-            <Button onClick={close}>
+            <Button onClick={close} variant="outlined">
                 CERRAR
             </Button>
         </DialogActions>

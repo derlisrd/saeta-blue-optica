@@ -9,6 +9,15 @@ export const columnsData = [
   
 ]
 
+export const columnsDataPDF = [
+  { label: 'FECHA', value:"fecha_pedido"},
+  { label: 'NRO PEDIDO', value:"id_pedido"},
+  { label: 'CODIGO', value:"codigo_producto"},
+  { label: 'PRODUCTO', value:"nombre_producto"},
+  { label: 'PRECIO', value:"precio_venta_item"},
+  { label: 'TOTAL', value:"total_pedido"},
+  
+]
 
 export const columns = [
     {

@@ -30,6 +30,7 @@ function DocumentoPDF({selectCliente,desde,hasta,lista,detalles}) {
                 <td>Codigo</td>
                 <td>Prod./Serv.</td>
                 <td>Cant</td>
+                <td>Precio</td>
                 <td>Total</td>
             </tr>
             {
@@ -40,12 +41,13 @@ function DocumentoPDF({selectCliente,desde,hasta,lista,detalles}) {
                 <td>{e.codigo_producto}</td>
                 <td>{e.nombre_producto}</td>
                 <td>{e.cantidad_pedido}</td>
-                <td>{e.precio_venta_item}</td>
+                <td>{funciones.numberFormat(e.precio_venta_item)}</td>
+                <td>{funciones.numberFormat(e.total_pedido)}</td>
             </tr>
                 ))
             }
             <tr>
-                <th colSpan={5}>
+                <th colSpan={6}>
                     TOTAL:
                 </th>
                 <th> 

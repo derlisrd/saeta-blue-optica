@@ -100,19 +100,22 @@ function PedidosProvider({children}) {
                 let fa  = main.first, fare = rece.first
                 delete fare.updated_at
                 delete fare.pedido_id_receta
+                let ladito = 'no';
                 items.results.forEach(elem=>{
                     let rec = {}
-                    let ladito = lados[0];
+                    console.log(elem);
                     if(elem.tipo_producto==="1"){
                         if(fare.codigo_derecho === fare.codigo_izquierdo){
                             ladito = 'ambos'
                             rec = fare.first
                         }
-                        if(elem.codigo_producto === fare.codigo_izquierdo){
-                            ladito = 'izquierdo'
-                        }
-                        if(elem.codigo_product === fare.codigo_derecho){
-                            ladito = 'derecho'
+                        else{
+                            if(elem.codigo_producto === fare.codigo_izquierdo){
+                                ladito = 'izquierdo'
+                            }
+                            if(elem.codigo_product === fare.codigo_derecho){
+                                ladito = 'derecho'
+                            }
                         }
                     }
                     let objeto = {

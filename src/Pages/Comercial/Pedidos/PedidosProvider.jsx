@@ -105,10 +105,15 @@ function PedidosProvider({children}) {
                     let rec = {
                         adicion_derecho:"0",adicion_izquierdo:"0",altura_derecho:"0",altura_izquierdo:"0",
                         cerca_derecho_cilindrico:"0",cerca_derecho_esferico:"0",cerca_eje_derecho:"0",cerca_eje_izquierdo:"0",
-                        cerca_izquierdo_cilindrico:"0",cerca_izquierdo_esferico:"0",codigo_derecho:"0036",codigo_izquierdo:"2638",dnp_derecho:"0",
-                        dnp_izquierdo:"0",id_receta:"754",lejos_derecho_cilindrico:"-0.5",lejos_derecho_esferico:"1",lejos_eje_derecho:"180",lejos_eje_izquierdo:"180",
-                        lejos_izquierdo_cilindrico:"-1",lejos_izquierdo_esferico:"2"
+                        cerca_izquierdo_cilindrico:"0",cerca_izquierdo_esferico:"0",
+                        codigo_derecho:fare.codigo_derecho,codigo_izquierdo:fare.codigo_izquierdo,
+                        dnp_derecho:"0",
+                        dnp_izquierdo:"0",
+                        id_receta:fare.id_receta,
+                        lejos_derecho_cilindrico:"0",lejos_derecho_esferico:"0",lejos_eje_derecho:"0",lejos_eje_izquierdo:"0",
+                        lejos_izquierdo_cilindrico:"0",lejos_izquierdo_esferico:"0"
                     }
+                    console.log(rec);
                     if(elem.tipo_producto==="1"){
                         if(fare.codigo_derecho === fare.codigo_izquierdo){
                             ladito = 'ambos'

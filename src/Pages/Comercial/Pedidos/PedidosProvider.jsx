@@ -100,21 +100,28 @@ function PedidosProvider({children}) {
                 let fa  = main.first, fare = rece.first
                 delete fare.updated_at
                 delete fare.pedido_id_receta
-                let ladito = 'no';
                 items.results.forEach(elem=>{
-                    let rec = {}
-                    console.log(elem);
+                    let ladito = 'no';
+                    let rec = {
+                        adicion_derecho:"0",adicion_izquierdo:"0",altura_derecho:"0",altura_izquierdo:"0",
+                        cerca_derecho_cilindrico:"0",cerca_derecho_esferico:"0",cerca_eje_derecho:"0",cerca_eje_izquierdo:"0",
+                        cerca_izquierdo_cilindrico:"0",cerca_izquierdo_esferico:"0",codigo_derecho:"0036",codigo_izquierdo:"2638",dnp_derecho:"0",
+                        dnp_izquierdo:"0",id_receta:"754",lejos_derecho_cilindrico:"-0.5",lejos_derecho_esferico:"1",lejos_eje_derecho:"180",lejos_eje_izquierdo:"180",
+                        lejos_izquierdo_cilindrico:"-1",lejos_izquierdo_esferico:"2"
+                    }
                     if(elem.tipo_producto==="1"){
                         if(fare.codigo_derecho === fare.codigo_izquierdo){
                             ladito = 'ambos'
-                            rec = fare.first
+                            rec = fare
                         }
                         else{
                             if(elem.codigo_producto === fare.codigo_izquierdo){
                                 ladito = 'izquierdo'
+                                console.log('entro en izquierdo');
                             }
-                            if(elem.codigo_product === fare.codigo_derecho){
+                            else{
                                 ladito = 'derecho'
+                                console.log('entro en derecho');
                             }
                         }
                     }
@@ -134,6 +141,7 @@ function PedidosProvider({children}) {
                         receta:rec,
                         lado: ladito
                     }
+                    //console.log(objeto);
                     f.items.push(objeto)
                 })
                 
@@ -154,11 +162,9 @@ function PedidosProvider({children}) {
                 }
                 
                 f.receta = fare
-                
                 setearFactura(f)
 
             }
-            //console.log(main,items);
             setCargas({main:false,stock:false})
         }
     },[])

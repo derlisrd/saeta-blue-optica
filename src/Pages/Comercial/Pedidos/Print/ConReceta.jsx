@@ -8,20 +8,26 @@ function ConReceta({items,tipo}) {
 
     useEffect(()=>{
         items.forEach(elem=>{
-            if(elem.lado==='derecho')
-            {
-                setDerecho( elem.receta )
-            }
-            if(elem.lado==='izquierdo')
-            {
-                setIzquierdo ( elem.receta )
-            }
-            if(elem.lado==='ambos')
-            {
-                setAmbos(elem.receta )
+            if(elem.tipo===1){
+                //console.log(elem);
+                if(elem.lado==='derecho')
+                {
+                    setDerecho( elem.receta )
+                }
+                if(elem.lado==='izquierdo')
+                {
+                    setIzquierdo ( elem.receta )
+                }
+                if(elem.lado==='ambos')
+                {
+                    setAmbos(elem.receta )
+                }
             }
         })
     },[items])
+    
+
+
 
     return ( <>
     <h1>{tipo==='4' ? 'SOLO CRISTAL' : 'RECETA'}</h1>

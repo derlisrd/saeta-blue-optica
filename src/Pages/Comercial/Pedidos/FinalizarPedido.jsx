@@ -33,7 +33,6 @@ function FinalizarPedido() {
     }
     const actualizar = async()=>{
         let f = {...factura}
-
         setLoading(true)
 
         let updatePedido = {
@@ -48,11 +47,28 @@ function FinalizarPedido() {
             total_iva5: f.iva5,
             total_exenta: f.exenta
         }
+        let nueva_receta = {}
+        f.items.forEach(elm =>{
+            if(elm.tipo===1){
+                if(elm.lado === 'ambos'){
+                    nueva_receta = {...elm.receta}
+                }
+                else{
+                    if(elm.lado === 'izquierdo'){
+                        //console.log('entro en izquierdo');
+                    }
+                    if(elm.lado === 'derecho'){
+                        //console.log('entro en derecho');
+                    }
+                }
+            }
+        })
+
         
 
         let promesas =  [
             APICALLER.update({table:'pedidos',token:token_user,id:idUpdate.id,data:updatePedido}),
-            APICALLER.update({table:'recetas',token:token_user,id:f.receta.id_receta,data:f.receta}),
+            APICALLER.update({table:'recetas',token:token_user,id:f.receta.id_receta,data:nueva_receta}),
         ]
 
         f.items.forEach(elem=>{
@@ -66,7 +82,13 @@ function FinalizarPedido() {
             promesas.push(APICALLER.update({table:'pedidos_items',id: elem.id_pedidos_item,data:dataItems,token:token_user}))
         })
 
-        await Promise.allSettled(promesas)
+        Promise.allSettled(promesas).
+            then((res) => {
+                //res.forEach((resp) => console.log(resp)) 
+            }
+            ).catch(e=>{
+                console.log(e);
+            })
         setLoading(false)
         navigate('/pedidos/lista')
     }

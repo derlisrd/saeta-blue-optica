@@ -22,7 +22,9 @@ function Botones() {
 
     
 
-    const fin = ()=> setDialogs({...dialogs,finalizar:true})
+    const fin = ()=> {
+        setDialogs({...dialogs,finalizar:true})
+    }
 
     return ( <Stack spacing={2} >
         {

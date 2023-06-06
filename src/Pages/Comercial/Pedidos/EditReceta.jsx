@@ -154,9 +154,10 @@ function EditReceta() {
         if(dialogs.edit_receta){
             let f = {...factura}
             if(idUpdate.state){
-                if(f.receta.codigo_derecho===f.receta.codigo_izquierdo){
+                //if(f.receta.codigo_derecho===f.receta.codigo_izquierdo){
                     setParam(f.receta)
-                }
+                //}
+                
             }
             else{
                 setParam(f.items[selectIndex].receta)

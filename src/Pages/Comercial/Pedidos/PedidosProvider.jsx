@@ -100,20 +100,25 @@ function PedidosProvider({children}) {
                 let fa  = main.first, fare = rece.first
                 delete fare.updated_at
                 delete fare.pedido_id_receta
+
+                let rec = {
+                    id_receta:fare.id_receta,
+                    codigo_izquierdo:fare.codigo_izquierdo,codigo_derecho:fare.codigo_derecho,
+                    adicion_izquierdo:"0",adicion_derecho:"0",
+                    altura_izquierdo:"0",altura_derecho:"0",
+                    dnp_izquierdo:"0", dnp_derecho:"0",
+                    cerca_eje_izquierdo:"0",cerca_eje_derecho:"0",
+                    cerca_izquierdo_cilindrico:"0",cerca_derecho_cilindrico:"0",
+                    cerca_izquierdo_esferico:"0", cerca_derecho_esferico:"0",
+                    lejos_izquierdo_cilindrico:"0",lejos_derecho_cilindrico:"0",
+                    lejos_izquierdo_esferico:"0",lejos_derecho_esferico:"0",
+                    lejos_eje_izquierdo:"0", lejos_eje_derecho:"0",
+                }
+
                 items.results.forEach(elem=>{
                     let ladito = 'no';
-                    let rec = {
-                        adicion_derecho:"0",adicion_izquierdo:"0",altura_derecho:"0",altura_izquierdo:"0",
-                        cerca_derecho_cilindrico:"0",cerca_derecho_esferico:"0",cerca_eje_derecho:"0",cerca_eje_izquierdo:"0",
-                        cerca_izquierdo_cilindrico:"0",cerca_izquierdo_esferico:"0",
-                        codigo_derecho:fare.codigo_derecho,codigo_izquierdo:fare.codigo_izquierdo,
-                        dnp_derecho:"0",
-                        dnp_izquierdo:"0",
-                        id_receta:fare.id_receta,
-                        lejos_derecho_cilindrico:"0",lejos_derecho_esferico:"0",lejos_eje_derecho:"0",lejos_eje_izquierdo:"0",
-                        lejos_izquierdo_cilindrico:"0",lejos_izquierdo_esferico:"0"
-                    }
-                    console.log(rec);
+                    
+                    //console.log(rec);
                     if(elem.tipo_producto==="1"){
                         if(fare.codigo_derecho === fare.codigo_izquierdo){
                             ladito = 'ambos'
@@ -122,11 +127,32 @@ function PedidosProvider({children}) {
                         else{
                             if(elem.codigo_producto === fare.codigo_izquierdo){
                                 ladito = 'izquierdo'
-                                console.log('entro en izquierdo');
+                                rec.adicion_izquierdo = fare.adicion_izquierdo
+                                rec.altura_izquierdo = fare.altura_izquierdo
+                                rec.dnp_izquierdo = fare.dnp_izquierdo
+                                
+                                rec.cerca_eje_izquierdo = fare.cerca_eje_izquierdo
+                                rec.cerca_izquierdo_esferico = fare.cerca_izquierdo_esferico
+                                rec.cerca_izquierdo_cilindrico = fare.cerca_izquierdo_cilindrico
+
+                                rec.lejos_eje_izquierdo = fare.lejos_eje_izquierdo
+                                rec.lejos_izquierdo_esferico = fare.lejos_izquierdo_esferico
+                                rec.lejos_izquierdo_cilindrico = fare.lejos_izquierdo_cilindrico
                             }
                             else{
                                 ladito = 'derecho'
-                                console.log('entro en derecho');
+                                rec.adicion_derecho = fare.adicion_derecho
+                                rec.altura_derecho = fare.altura_derecho
+                                rec.dnp_derecho = fare.dnp_derecho
+
+                                rec.cerca_derecho_cilindrico = fare.cerca_derecho_cilindrico
+                                rec.cerca_derecho_esferico = fare.cerca_derecho_esferico
+                                rec.cerca_eje_derecho = fare.cerca_eje_derecho
+
+                                rec.lejos_eje_derecho = fare.lejos_eje_derecho
+                                rec.lejos_derecho_cilindrico = fare.lejos_derecho_cilindrico
+                                rec.lejos_derecho_esferico = fare.lejos_derecho_esferico
+                                //console.log('entro en derecho');
                             }
                         }
                     }
@@ -146,7 +172,7 @@ function PedidosProvider({children}) {
                         receta:rec,
                         lado: ladito
                     }
-                    //console.log(objeto);
+                    console.log(objeto);
                     f.items.push(objeto)
                 })
                 

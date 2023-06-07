@@ -6,7 +6,6 @@ export const columnsData = [
   { label: 'TIPO', value:"tipo"},
   { label: 'FACTURADO', value:"facturado"},
   { label: 'TOTAL', value:"total_pedido"},
-  
 ]
 
 export const columnsDataPDF = [
@@ -77,6 +76,9 @@ export const columns = [
           "3": "GARANTIA",
           "4": "NORMAL SOLO CRISTAL"
         },
+    },{
+      field:'pago',
+      title:'PAGO'
     },
     {
         field:'estado_pedido',

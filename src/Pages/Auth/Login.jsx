@@ -1,4 +1,4 @@
-import { Icon as Icono } from "@iconify/react";
+
 import { Alert, Box, Button, FormControlLabel, Grid, Switch, TextField, Typography, Zoom,InputAdornment,IconButton, Stack,Icon } from "@mui/material";
 import { useRef,useState } from "react";
 import { Navigate } from "react-router-dom";
@@ -46,7 +46,7 @@ function Login() {
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <Stack spacing={0} justifyContent='center' alignItems='center'>
-              <p><Icono icon='emojione:lion-face' height={58} /></p>
+              <span role="img" style={{ fontSize:'3rem' }} >🦁</span>
               </Stack>
             </Grid>
             <Grid item xs={12}>

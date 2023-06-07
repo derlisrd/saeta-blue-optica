@@ -1,4 +1,5 @@
 import Add from "./Add";
+import Delete from "./Delete";
 import Edit from "./Edit";
 import Lista from "./Lista";
 import Permisos from "./Permisos";
@@ -8,6 +9,7 @@ function Usuarios() {
     return ( <UsuariosProvider>
         <Add />
         <Edit />
+        <Delete />
         <Permisos />
         <Lista />
     </UsuariosProvider> );

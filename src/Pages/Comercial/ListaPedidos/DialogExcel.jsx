@@ -4,12 +4,14 @@ import { useEffect,useState,useRef} from "react";
 import { APICALLER } from "../../../Services/api";
 import DocumentoPDF from "./DocumentoPDF";
 import { useReactToPrint } from 'react-to-print';
-import { columnsDataPDF } from "./columns";
+import { columnsData } from "./columns";
 import xlsx from "json-as-xlsx"
+import DocumentoExcel from "./DocumentoExcel";
 
-function DialogPDF() {
+function DialogExcel() {
 
     const divRef = useRef(null);
+    const [total,setTotal] = useState(0)
     const {dialogs,setDialogs} = useListaPedidos()
     const [error,setError]=useState({code:0})
     const [desde,setDesde] = useState('')
@@ -23,6 +25,7 @@ function DialogPDF() {
     const [loadingSearch,setLoadingSearch]=useState(false)
     const reset = ()=>{
         setLista([])
+        setTotal(0)
         setSelectCliente(null)
         setDetalles({total:0,cliente:'',fecha_inicio:'',fecha_fin:''})
         setSearch('')
@@ -42,22 +45,34 @@ function DialogPDF() {
         }
         setError({code:0})
         setLoading(true)
-        let res = await APICALLER.get({table:'pedidos_items',include:'pedidos,productos',on:'pedido_id,id_pedido,id_producto,producto_id_item',
-        fields:'precio_venta_item,id_pedido,cantidad_pedido,fecha_pedido,codigo_producto,nombre_producto',
+
+        let res = await APICALLER.get({table:'pedidos',include:'clientes,users',
+        on:'cliente_id_pedido,id_cliente,id_user,user_id_pedido',
+        fields:'tipo_pedido,total_pedido,facturado_pedido,id_pedido,nombre_user,nombre_cliente,fecha_pedido',
         where:`cliente_id_pedido,=,${selectCliente.id_cliente},and,fecha_pedido,between,'${desde}',and,'${hasta}'`
         })
+
+        
         if(res.response)
-        {   let total_venta = 0;
-            let lista_arreglada = []
-            res.results.forEach(elm => {
-                total_venta += parseFloat(elm.precio_venta_item)*parseFloat(elm.cantidad_pedido)
-                lista_arreglada.push({...elm,
-                    precio_venta_item: parseFloat(elm.precio_venta_item),
-                    total_pedido: parseFloat(elm.precio_venta_item)*parseFloat(elm.cantidad_pedido)
+        {   
+            let tipoPedido = {
+                "1": "NORMAL PREESCRIPCION",
+                "2": "CORTESIA",
+                "3": "GARANTIA",
+                "4": "NORMAL SOLO CRISTAL"
+              }
+            let total2 = 0
+            let pedidos = []
+            res.results.forEach(elem=>{
+                pedidos.push({...elem,
+                    total_pedido: parseFloat(elem.total_pedido), 
+                    facturado: elem.facturado_pedido==='0'? 'No' : 'Si',
+                    tipo: tipoPedido[elem.tipo_pedido]
                 })
-            });
-            setDetalles({cliente:selectCliente.nombre_cliente,total:total_venta,fecha_inicio: desde,fecha_fin:hasta })
-            setLista(lista_arreglada)
+                total2 += parseFloat(elem.total_pedido)
+            })
+            setLista(pedidos)
+            setTotal(total2)
         }
         else
         {console.log(res);}
@@ -67,7 +82,7 @@ function DialogPDF() {
         let data = [
           {
             sheet: "Pedidos",
-            columns: columnsDataPDF,
+            columns: columnsData,
             content: lista,
           },
           
@@ -83,7 +98,7 @@ function DialogPDF() {
       });
 
     const close = ()=>{
-        setDialogs({...dialogs,pdf:false})
+        setDialogs({...dialogs,excel:false})
         reset()
     }
 
@@ -108,8 +123,8 @@ function DialogPDF() {
     },[search])
 
 
-    return (<Dialog fullScreen open={dialogs.pdf} onClose={close}>
-            <DialogTitle> <IconButton onClick={close}><Icon>close</Icon></IconButton> Generar PDF por cliente</DialogTitle>
+    return (<Dialog fullScreen open={dialogs.excel} onClose={close}>
+            <DialogTitle> <IconButton onClick={close}><Icon>close</Icon></IconButton> Generar Excel por cliente</DialogTitle>
             <DialogContent>
                 <Grid spacing={2} container>
                     <Grid item xs={12}>
@@ -139,8 +154,10 @@ function DialogPDF() {
                     </Grid>
                 </Grid>
                 {
-                    lista.length>0 && 
-                    <div ref={divRef}><DocumentoPDF lista={lista} detalles={detalles} desde={desde} hasta={hasta} selectCliente={selectCliente} /></div>
+                    
+                    <div ref={divRef}>
+                        <DocumentoExcel total={total} lista={lista} />
+                    </div>
                     
                 }
             </DialogContent>
@@ -149,7 +166,7 @@ function DialogPDF() {
                 lista.length > 0 &&
                 <>
                 <Button startIcon={<Icon>calculate</Icon>} onClick={downloadExcel} variant="contained">EXCEL</Button>
-                <Button startIcon={<Icon>picture_as_pdf</Icon>} onClick={print} variant="contained">PDF</Button>
+                <Button startIcon={<Icon>print</Icon>} onClick={print} variant="contained">IMPRIMIR</Button>
                 </>
 
             }
@@ -160,4 +177,4 @@ function DialogPDF() {
     </Dialog> );
 }
 
-export default DialogPDF;
+export default DialogExcel;

@@ -40,13 +40,49 @@ function DialogSelectDepositoStock() {
     }
    const [param,setParam] = useState(initialParam)
 
+   const insertarReceta = ()=>{
+    let new_fact = {...factura}
+    new_fact.items[selectIndex].receta = {...param}
+    if(selectOjo==='ambos'){
+        new_fact.items[selectIndex].cantidad = 2 
+        new_fact.items[selectIndex].receta.codigo_derecho = selectProduct.codigo
+        new_fact.items[selectIndex].receta.codigo_izquierdo = selectProduct.codigo
+        setLado({derecho:true,izquierdo:true})
+    }
+    if(selectOjo==='izquierdo'){
+        setLado((prev)=>{
+            return {...prev, izquierdo:true}
+        })
+        setSelectOjo('derecho')
+        new_fact.items[selectIndex].receta.codigo_izquierdo = selectProduct.codigo
+    }
+    if(selectOjo==='derecho'){
+        setLado((prev)=>{
+            return {...prev, derecho:true}
+        })
+        setSelectOjo('izquierdo')
+        new_fact.items[selectIndex].receta.codigo_derecho = selectProduct.codigo
+    }
+
+    new_fact.items[selectIndex].lado = selectOjo
+    //console.log(selectIndex);
+    //new_fact.receta = {...param}
+    setearFactura(new_fact)
+    setDialogs({...dialogs,select_deposito_stock:false});
+    setParam(initialParam)
+}
+
     const change = e=>{
         const {value,name} = e.target
         let p = {...param}
 
         if( name === 'lejos_derecho_esferico' && !(parseFloat(p.cerca_derecho_esferico))==0 ){
             p.lejos_derecho_esferico = value
-            p.adicion_derecho = parseFloat(p.lejos_derecho_esferico) + parseFloat(p.cerca_derecho_esferico) 
+            if(parseFloat(value)<0){
+                p.adicion_derecho = parseFloat(p.lejos_derecho_esferico) + parseFloat(p.cerca_derecho_esferico)
+            }else{
+                p.adicion_derecho = parseFloat(p.lejos_derecho_esferico) - parseFloat(p.cerca_derecho_esferico)
+            } 
             setParam(p)
             return;
         }
@@ -55,7 +91,11 @@ function DialogSelectDepositoStock() {
 
         if( name === 'lejos_izquierdo_esferico' && !(parseFloat(p.cerca_derecho_esferico))==0 ){
             p.lejos_izquierdo_esferico = value
-            p.adicion_izquierdo = parseFloat(p.lejos_izquierdo_esferico) + parseFloat(p.cerca_izquierdo_esferico) 
+            if(parseFloat(value)<0){
+                p.adicion_izquierdo = parseFloat(p.lejos_izquierdo_esferico) + parseFloat(p.cerca_izquierdo_esferico) 
+            }else{
+                p.adicion_izquierdo = parseFloat(p.lejos_izquierdo_esferico) - parseFloat(p.cerca_izquierdo_esferico) 
+            }
             setParam(p)
             return;
         }
@@ -82,13 +122,22 @@ function DialogSelectDepositoStock() {
 
         if(name=== 'adicion_derecho'){
             p.adicion_derecho = value;
-            p.cerca_derecho_esferico = parseFloat(p.lejos_derecho_esferico) + parseFloat(p.adicion_derecho) 
+            if(parseFloat(p.lejos_derecho_esferico)>0){
+                p.cerca_derecho_esferico = parseFloat(p.lejos_derecho_esferico) - parseFloat(p.adicion_derecho) 
+            }else{
+                p.cerca_derecho_esferico = parseFloat(p.lejos_derecho_esferico) + parseFloat(p.adicion_derecho) 
+            }
             setParam(p)
             return;
         }
 
         if(name=== 'adicion_izquierdo'){
             p.adicion_izquierdo = value;
+            if(parseFloat(p.lejos_derecho_esferico)>0){
+                p.cerca_izquierdo_esferico = parseFloat(p.lejos_izquierdo_esferico) - parseFloat(p.adicion_izquierdo) 
+            }else{
+                p.cerca_izquierdo_esferico = parseFloat(p.lejos_izquierdo_esferico) + parseFloat(p.adicion_izquierdo) 
+            }
             p.cerca_izquierdo_esferico = parseFloat(p.lejos_izquierdo_esferico) + parseFloat(p.adicion_izquierdo) 
             setParam(p)
             return;
@@ -97,37 +146,7 @@ function DialogSelectDepositoStock() {
         setParam({...param, [name]:value})
     }
 
-    const insertarReceta = ()=>{
-        let new_fact = {...factura}
-        new_fact.items[selectIndex].receta = {...param}
-        if(selectOjo==='ambos'){
-            new_fact.items[selectIndex].cantidad = 2 
-            new_fact.items[selectIndex].receta.codigo_derecho = selectProduct.codigo
-            new_fact.items[selectIndex].receta.codigo_izquierdo = selectProduct.codigo
-            setLado({derecho:true,izquierdo:true})
-        }
-        if(selectOjo==='izquierdo'){
-            setLado((prev)=>{
-                return {...prev, izquierdo:true}
-            })
-            setSelectOjo('derecho')
-            new_fact.items[selectIndex].receta.codigo_izquierdo = selectProduct.codigo
-        }
-        if(selectOjo==='derecho'){
-            setLado((prev)=>{
-                return {...prev, derecho:true}
-            })
-            setSelectOjo('izquierdo')
-            new_fact.items[selectIndex].receta.codigo_derecho = selectProduct.codigo
-        }
-
-        new_fact.items[selectIndex].lado = selectOjo
-        //console.log(selectIndex);
-        //new_fact.receta = {...param}
-        setearFactura(new_fact)
-        setDialogs({...dialogs,select_deposito_stock:false});
-        setParam(initialParam)
-    }
+    
 
     
 
@@ -143,6 +162,7 @@ function DialogSelectDepositoStock() {
             }
             if(name === 'adicion_izquierdo'){
                 p.cerca_izquierdo_esferico = nuevo_valor + parseFloat(p.lejos_izquierdo_esferico)
+                p.cerca_izquierdo_esferico = nuevo_valor + parseFloat(p.lejos_izquierdo_esferico)
             }
             if(name==='cerca_derecho_esferico'){
                 p.adicion_derecho = nuevo_valor + parseFloat(p.lejos_derecho_esferico)
@@ -150,16 +170,26 @@ function DialogSelectDepositoStock() {
             if(name==='cerca_izquierdo_esferico'){
                 p.adicion_izquierdo = nuevo_valor + parseFloat(p.lejos_izquierdo_esferico)
             }
-            setParam(p) 
+            setParam(p)
+            return 
         }
         if(e.key==='ArrowDown'){
             let nuevo_valor = parseFloat(value) - 0.25
             p[name] = nuevo_valor
             if(name === 'adicion_derecho'){
-                p.cerca_derecho_esferico = nuevo_valor + parseFloat(p.lejos_derecho_esferico)
+                if(parseFloat(p.lejos_derecho_esferico) <0 )
+                {
+                    p.cerca_derecho_esferico = nuevo_valor + parseFloat(p.lejos_derecho_esferico)
+                }else{
+                    p.cerca_derecho_esferico = nuevo_valor - parseFloat(p.lejos_derecho_esferico)
+                }
             }
             if(name === 'adicion_izquierdo'){
-                p.cerca_izquierdo_esferico = nuevo_valor + parseFloat(p.lejos_izquierdo_esferico)
+                if(parseFloat(p.lejos_izquierdo_esferico)<0){
+                    p.cerca_izquierdo_esferico = nuevo_valor + parseFloat(p.lejos_izquierdo_esferico)
+                }else{
+                    p.cerca_izquierdo_esferico = nuevo_valor - parseFloat(p.lejos_izquierdo_esferico)
+                }
             }
             if(name==='cerca_derecho_esferico'){
                 p.adicion_derecho = nuevo_valor + parseFloat(p.lejos_derecho_esferico)

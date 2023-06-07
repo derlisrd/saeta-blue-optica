@@ -11,10 +11,8 @@ function Lista() {
     const {isLoading,lista,llaveDialog,getLista} = useUsuarios()
     const [inputSearch, setInputSearch] = useState("");
 
-    const FilterData = lista.users.filter(
-        (e) =>
-          e.nombre_user.toLowerCase().includes(inputSearch.toLowerCase())
-      );
+    const FilterData = lista.users.filter(e => e.nombre_user.toLowerCase().includes(inputSearch.toLowerCase()));
+    
       const Inputs = (
         <Stack spacing={2} direction="row">
           <Buscar label="Buscar" onClick={()=>{getLista(inputSearch)}}  onChange={(e) => setInputSearch(e.target.value)} />
@@ -26,7 +24,7 @@ function Lista() {
         </Stack>
       );
   
-      return (<><Tablas
+      return (<Tablas
           title="Usuarios"
           subtitle="Módulo de usuarios y credenciales"
           inputs={Inputs}
@@ -36,9 +34,7 @@ function Lista() {
           showOptions
           Accions={ListaOpciones}
           columns={ListaColumns}
-           /> 
-           </>
-           );
+           />);
 }
 
 export default Lista;

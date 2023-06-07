@@ -35,7 +35,7 @@ function Lista() {
         inputs={Inputs}
         datas={FilterData}
         loading={isLoading}
-        icon={{ name:'clarity:employee-line' }}
+        icon={{ name:'perm_contact_calendar' }}
         showOptions
         Accions={Opciones}
         columns={ListaColumns}

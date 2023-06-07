@@ -1,13 +1,12 @@
 import { Button,  Stack, TextField, Grid, Alert } from "@mui/material";
 import Tablas from "../../../Components/Tablas";
 import { useListaPedidos } from "./ListaPedidosProvider";
-import { columns, columnsData } from "./columns";
+import { columns } from "./columns";
 import { useEffect, useState } from "react";
 import ButtonTip from "../../../Components/Botones/ButtonTip";
 import useGotoNavigate from "../../../Hooks/useGotoNavigate";
 import swal from "sweetalert";
 import { funciones } from "../../../App/helpers/funciones";
-import xlsx from "json-as-xlsx"
 import SelectTipo from "./SelectTipo";
 import ButtonPermisos from "../../../Components/Botones/ButtonPermisos";
 
@@ -18,20 +17,7 @@ function Lista() {
     const [desde,setDesde] = useState('')
     const [hasta,setHasta] = useState('')
     const [filterLista,setFilterLista] = useState([])
-    const downloadExcel = () => {
-        let data = [
-          {
-            sheet: "Pedidos",
-            columns: columnsData,
-            content: listas.pedidos,
-          },
-          
-        ]
-        let settings = {
-          fileName: "Pedidos",
-        }
-        xlsx(data, settings)
-      }
+    const downloadExcel = () => { setDialogs({...dialogs,excel:true})}
 
     const changeTipo = e=>{
         const {value} = e.target

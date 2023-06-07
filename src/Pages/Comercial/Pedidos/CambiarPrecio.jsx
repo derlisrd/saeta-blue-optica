@@ -1,13 +1,16 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, TextField, Typography } from "@mui/material";
+import { Alert, Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, TextField, Typography } from "@mui/material";
 import { usePedidos } from "./PedidosProvider";
 import { useCallback, useEffect, useState } from "react";
 import NumberFormatCustom from "../../../Components/TextFields/NumberFormatCustom";
 import { funciones } from "../../../App/helpers/funciones";
+import { useAuth } from "../../../Providers/AuthProvider";
 
 function CambiarPrecio() {
 
     const {factura,dialogs,setDialogs,indexCambioPrecio,setIndexCambioPrecio,setearFactura} = usePedidos()
-
+    const {userData} = useAuth()
+    const {permisos} = userData
+    const [error,setError]=useState({active:false,msg:''})
     const [precio,setPrecio] = useState({
         precio_anterior:'',
         precio_normal:'',
@@ -18,10 +21,19 @@ function CambiarPrecio() {
     const close = ()=>{
         setDialogs({...dialogs,precio:false})
         setIndexCambioPrecio(-1)
+        setError({active:false,msg:''})
     }
 
     const cambiarPrecio = ()=>{
-        if(precio.precio_nuevo< precio.precio_minimo) return false;
+        let ID_PERMISO = '51'
+        let autorizado = permisos.some(elm=> elm.id_permiso_permiso === ID_PERMISO)
+        
+        if(precio.precio_nuevo< precio.precio_minimo && !autorizado)
+        {
+            setError({active:true,msg:"No tiene permisos para cambiar el precio"})
+            return false;
+        }
+        
         let f = {...factura}
         f.items[indexCambioPrecio].precio = precio.precio_nuevo
         setearFactura(f)
@@ -52,6 +64,9 @@ function CambiarPrecio() {
         <DialogTitle>Cambiar precio</DialogTitle>
         <DialogContent>
             <Grid container spacing={2}>
+                <Grid item xs={12}>
+                    {error.active && <Alert>{error.msg}</Alert>}
+                </Grid>
             <Grid item xs={12}>
                     <Typography variant="h5">Precio normal: {funciones.numberFormat(precio.precio_normal)}</Typography>
                 </Grid>

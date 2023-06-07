@@ -1,5 +1,6 @@
 import {  Stack } from "@mui/material";
 import { useEmpleados } from "./EmpleadosProvider";
+import ButtonTip from "../../../Components/Botones/ButtonTip";
 
 
 function Opciones({rowProps}) {
@@ -15,8 +16,8 @@ function Opciones({rowProps}) {
 
     return (
     <Stack direction="row">
-        <ButtonTip onClick={()=>{open(rowProps,'edit')}} icon='edit' title='Editar'  />
-        <ButtonTip onClick={()=>{open(rowProps,'delete')}} icon='delete_forever' title='Borrar' /> 
+        <ButtonTip id="" onClick={()=>{open(rowProps,'edit')}} icon='edit' title='Editar'  />
+        <ButtonTip id="" onClick={()=>{open(rowProps,'delete')}} icon='delete_forever' title='Borrar' /> 
     </Stack>
     )
 }

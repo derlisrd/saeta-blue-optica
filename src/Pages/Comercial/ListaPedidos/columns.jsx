@@ -1,5 +1,6 @@
 export const columnsData = [
   { label: "NRO", value: "id_pedido" },
+  { label: 'CODIGO INTERNO', value:"codigo_cliente_pedido"},
   { label: 'FECHA', value:"fecha_pedido"},
   { label: 'VENDEDOR', value:"nombre_user"},
   { label: 'CLIENTE', value:"nombre_cliente"},
@@ -11,6 +12,7 @@ export const columnsData = [
 export const columnsDataPDF = [
   { label: 'FECHA', value:"fecha_pedido"},
   { label: 'NRO PEDIDO', value:"id_pedido"},
+  { label: 'CODIGO INTERNO', value:"codigo_cliente_pedido"},
   { label: 'CODIGO', value:"codigo_producto"},
   { label: 'PRODUCTO', value:"nombre_producto"},
   { label: 'PRECIO', value:"precio_venta_item"},

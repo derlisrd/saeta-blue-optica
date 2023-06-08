@@ -8,13 +8,12 @@ function useInitialState() {
     const iError = {
         code:0,
         active:false,
-        message:''
+        msg:''
     }
 
     
     const iForm = {
-        codigo_producto:'',
-        porcentaje_descuento:'',
+        precio:'', porcentaje:''
     }
 
     const iProducto = []

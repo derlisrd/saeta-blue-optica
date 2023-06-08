@@ -7,7 +7,7 @@ function DocumentoPDF({selectCliente,desde,hasta,lista,detalles}) {
         <tbody>
             <tr>
                 <th>
-                    CLIENTE: {selectCliente.id_cliente} {selectCliente.nombre_cliente} {selectCliente.ruc_cliente}
+                    CLIENTE: {selectCliente?.id_cliente} {selectCliente?.nombre_cliente} {selectCliente?.ruc_cliente}
                 </th>
             </tr>
             <tr>
@@ -26,7 +26,9 @@ function DocumentoPDF({selectCliente,desde,hasta,lista,detalles}) {
         <tbody>
             <tr className="_pdf_head">
                 <td>Fecha</td>
-                <td>NroPedido</td>
+                <td>Nro</td>
+                <td>Codigo Int</td>
+                <td>Cliente</td>
                 <td>Codigo</td>
                 <td>Prod./Serv.</td>
                 <td>Cant</td>
@@ -36,18 +38,20 @@ function DocumentoPDF({selectCliente,desde,hasta,lista,detalles}) {
             {
                 lista.map((e,i)=>(
                     <tr key={i}>
-                <td>{e.fecha_pedido}</td>
-                <td>{e.id_pedido}</td>
-                <td>{e.codigo_producto}</td>
-                <td>{e.nombre_producto}</td>
-                <td>{e.cantidad_pedido}</td>
-                <td>{funciones.numberFormat(e.precio_venta_item)}</td>
-                <td>{funciones.numberFormat(e.total_pedido)}</td>
-            </tr>
+                        <td>{e.fecha_pedido}</td>
+                        <td>{e.id_pedido}</td>
+                        <td>{e.codigo_cliente_pedido}</td>
+                        <td>{e.nombre_cliente}</td>
+                        <td>{e.codigo_producto}</td>
+                        <td>{e.nombre_producto}</td>
+                        <td>{e.cantidad_pedido}</td>
+                        <td>{funciones.numberFormat(e.precio_venta_item)}</td>
+                        <td>{funciones.numberFormat(e.total_pedido)}</td>
+                    </tr>
                 ))
             }
             <tr>
-                <th colSpan={6}>
+                <th colSpan={6} align="right">
                     TOTAL:
                 </th>
                 <th> 

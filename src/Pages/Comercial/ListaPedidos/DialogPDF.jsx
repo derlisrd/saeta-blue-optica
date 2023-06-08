@@ -1,4 +1,4 @@
-import { Autocomplete, Button, Dialog, DialogActions, DialogContent,DialogTitle,Grid,Icon, IconButton, LinearProgress, Stack, TextField } from "@mui/material";
+import { Autocomplete, Button, Checkbox, Dialog, DialogActions, DialogContent,DialogTitle,FormControlLabel,Grid,Icon, IconButton, LinearProgress, Stack, TextField } from "@mui/material";
 import { useListaPedidos } from "./ListaPedidosProvider";
 import { useEffect,useState,useRef} from "react";
 import { APICALLER } from "../../../Services/api";
@@ -11,6 +11,7 @@ function DialogPDF() {
 
     const divRef = useRef(null);
     const {dialogs,setDialogs} = useListaPedidos()
+    const [todos,setTodos] = useState(false)
     const [error,setError]=useState({code:0})
     const [desde,setDesde] = useState('')
     const [hasta,setHasta]= useState('')
@@ -23,6 +24,7 @@ function DialogPDF() {
     const [loadingSearch,setLoadingSearch]=useState(false)
     const reset = ()=>{
         setLista([])
+        setTodos(false)
         setSelectCliente(null)
         setDetalles({total:0,cliente:'',fecha_inicio:'',fecha_fin:''})
         setSearch('')
@@ -32,6 +34,10 @@ function DialogPDF() {
 
     }
     const filtrar = async()=>{
+        if(!todos && selectCliente===null){
+            setError({code:2})
+            return false;
+        }
         if(desde===''){
             setError({code:1})
             return false;
@@ -42,9 +48,14 @@ function DialogPDF() {
         }
         setError({code:0})
         setLoading(true)
-        let res = await APICALLER.get({table:'pedidos_items',include:'pedidos,productos',on:'pedido_id,id_pedido,id_producto,producto_id_item',
-        fields:'precio_venta_item,id_pedido,cantidad_pedido,fecha_pedido,codigo_producto,nombre_producto',
-        where:`cliente_id_pedido,=,${selectCliente.id_cliente},and,fecha_pedido,between,'${desde}',and,'${hasta}'`
+        let where = `fecha_pedido,between,'${desde} 00:00:00',and,'${hasta} 23:59:59'`
+        if(!todos){
+            where =`cliente_id_pedido,=,${selectCliente.id_cliente},and,fecha_pedido,between,'${desde} 00:00:00',and,'${hasta} 23:59:59'`
+        }
+        let res = await APICALLER.get({table:'pedidos_items',include:'pedidos,productos,clientes',
+        on:'pedido_id,id_pedido,id_producto,producto_id_item,id_cliente,cliente_id_pedido,codigo',
+        fields:'precio_venta_item,id_pedido,cantidad_pedido,fecha_pedido,codigo_producto,nombre_producto,id_cliente,nombre_cliente,codigo_cliente_pedido',
+        where
         })
         if(res.response)
         {   let total_venta = 0;
@@ -56,7 +67,15 @@ function DialogPDF() {
                     total_pedido: parseFloat(elm.precio_venta_item)*parseFloat(elm.cantidad_pedido)
                 })
             });
-            setDetalles({cliente:selectCliente.nombre_cliente,total:total_venta,fecha_inicio: desde,fecha_fin:hasta })
+            if(selectCliente)
+            {
+                setDetalles({cliente:selectCliente.nombre_cliente,total:total_venta,fecha_inicio: desde,fecha_fin:hasta })
+            }
+            else{
+                setDetalles({cliente:'Generales',total:total_venta,fecha_inicio: desde,fecha_fin:hasta })
+            }
+            
+
             setLista(lista_arreglada)
         }
         else
@@ -115,25 +134,28 @@ function DialogPDF() {
                     <Grid item xs={12}>
                         {loading && <LinearProgress />}
                     </Grid>
-                    <Grid item xs={12} sm={4}>
+                    <Grid item xs={12} sm={1}>
+                        <FormControlLabel control={<Checkbox checked={todos} onChange={()=>setTodos(!todos)} />} label="Todos" />
+                    </Grid>
+                    <Grid item xs={12} sm={3}>
                     <Autocomplete
                         autoComplete autoHighlight autoSelect  selectOnFocus
                         getOptionLabel={(o) => o.id_cliente+' '+o.nombre_cliente+' - '+o.fantasia_cliente+' '+o.ruc_cliente }
                         options={listaCliente}
-                        onChange={insertarCliente}
+                        onChange={insertarCliente} disabled={todos} 
                         loadingText="Cargando..." loading={loadingSearch} noOptionsText="No existe en registro..."
                         renderInput={(params) => <TextField {...params} fullWidth size="small" onChange={e=>setSearch(e.target.value)} label="Buscar por codigo, ruc o nombre" />}
                     />
                     </Grid>
                     <Grid item xs={12} sm={6}>
                        <Stack direction='row' spacing={1}>
-                            <TextField type="date" disabled={selectCliente===null} fullWidth size="small" error={error.code===1} onChange={e=>{setDesde(e.target.value)}} helperText='Fecha desde' />
-                            <TextField type="date" disabled={selectCliente===null} fullWidth size="small" error={error.code===2} onChange={e=>{setHasta(e.target.value)}} helperText='Fecha hasta' />
+                            <TextField type="date"  fullWidth size="small" error={error.code===1} onChange={e=>{setDesde(e.target.value)}} helperText='Fecha desde' />
+                            <TextField type="date" fullWidth size="small" error={error.code===2} onChange={e=>{setHasta(e.target.value)}} helperText='Fecha hasta' />
                        </Stack>
                     </Grid>
                     <Grid item xs={12} sm={2}>
                         <Stack direction='row' spacing={1}>
-                        <Button onClick={filtrar} disabled={selectCliente===null} variant="outlined">Filtrar</Button>
+                        <Button onClick={filtrar} variant="outlined">Filtrar</Button>
                         <Button onClick={reset} variant="outlined">Reiniciar</Button>
                         </Stack>
                     </Grid>

@@ -6,6 +6,7 @@ function DocumentoExcel({lista,total}) {
         <tr className="_pdf_head">
             <td>Fecha</td>
             <td>NroPedido</td>
+            <td>Codigo interno</td>
             <td>Vendedor</td>
             <td>Cliente</td>
             <td>Tipo</td>
@@ -17,6 +18,7 @@ function DocumentoExcel({lista,total}) {
                 <tr key={i}>
             <td>{e.fecha_pedido}</td>
             <td>{e.id_pedido}</td>
+            <td>{e.codigo_cliente_pedido}</td>
             <td>{e.nombre_user}</td>
             <td>{e.nombre_cliente}</td>
             <td>{e.tipo}</td>

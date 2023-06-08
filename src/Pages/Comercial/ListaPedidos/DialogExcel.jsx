@@ -1,4 +1,4 @@
-import { Autocomplete, Button, Dialog, DialogActions, DialogContent,DialogTitle,Grid,Icon, IconButton, LinearProgress, Stack, TextField } from "@mui/material";
+import { Autocomplete, Button, Checkbox, Dialog, DialogActions, DialogContent,DialogTitle,FormControlLabel,Grid,Icon, IconButton, LinearProgress, Stack, TextField } from "@mui/material";
 import { useListaPedidos } from "./ListaPedidosProvider";
 import { useEffect,useState,useRef} from "react";
 import { APICALLER } from "../../../Services/api";
@@ -12,6 +12,7 @@ function DialogExcel() {
 
     const divRef = useRef(null);
     const [total,setTotal] = useState(0)
+    const [todos,setTodos] = useState(false)
     const {dialogs,setDialogs} = useListaPedidos()
     const [error,setError]=useState({code:0})
     const [desde,setDesde] = useState('')
@@ -35,6 +36,10 @@ function DialogExcel() {
 
     }
     const filtrar = async()=>{
+        if(!todos && selectCliente===null){
+            setError({code:2})
+            return false;
+        }
         if(desde===''){
             setError({code:1})
             return false;
@@ -45,11 +50,14 @@ function DialogExcel() {
         }
         setError({code:0})
         setLoading(true)
-
+        let where = `fecha_pedido,between,'${desde} 00:00:00',and,'${hasta} 23:59:59'`
+        if(!todos){
+            where =`cliente_id_pedido,=,${selectCliente.id_cliente},and,fecha_pedido,between,'${desde} 00:00:00',and,'${hasta} 23:59:59'`
+        }
         let res = await APICALLER.get({table:'pedidos',include:'clientes,users',
         on:'cliente_id_pedido,id_cliente,id_user,user_id_pedido',
-        fields:'tipo_pedido,total_pedido,facturado_pedido,id_pedido,nombre_user,nombre_cliente,fecha_pedido',
-        where:`cliente_id_pedido,=,${selectCliente.id_cliente},and,fecha_pedido,between,'${desde}',and,'${hasta}'`
+        fields:'tipo_pedido,total_pedido,facturado_pedido,id_pedido,nombre_user,nombre_cliente,fecha_pedido,codigo_cliente_pedido',
+        where
         })
 
         
@@ -130,11 +138,14 @@ function DialogExcel() {
                     <Grid item xs={12}>
                         {loading && <LinearProgress />}
                     </Grid>
-                    <Grid item xs={12} sm={4}>
+                    <Grid item xs={12} sm={1}>
+                        <FormControlLabel control={<Checkbox checked={todos} onChange={()=>setTodos(!todos)} />} label="Todos" />
+                    </Grid>
+                    <Grid item xs={12} sm={3}>
                     <Autocomplete
                         autoComplete autoHighlight autoSelect  selectOnFocus
                         getOptionLabel={(o) => o.id_cliente+' '+o.nombre_cliente+' - '+o.fantasia_cliente+' '+o.ruc_cliente }
-                        options={listaCliente}
+                        options={listaCliente} disabled={todos}
                         onChange={insertarCliente}
                         loadingText="Cargando..." loading={loadingSearch} noOptionsText="No existe en registro..."
                         renderInput={(params) => <TextField {...params} fullWidth size="small" onChange={e=>setSearch(e.target.value)} label="Buscar por codigo, ruc o nombre" />}
@@ -142,13 +153,13 @@ function DialogExcel() {
                     </Grid>
                     <Grid item xs={12} sm={6}>
                        <Stack direction='row' spacing={1}>
-                            <TextField type="date" disabled={selectCliente===null} fullWidth size="small" error={error.code===1} onChange={e=>{setDesde(e.target.value)}} helperText='Fecha desde' />
-                            <TextField type="date" disabled={selectCliente===null} fullWidth size="small" error={error.code===2} onChange={e=>{setHasta(e.target.value)}} helperText='Fecha hasta' />
+                            <TextField type="date"  fullWidth size="small" error={error.code===1} onChange={e=>{setDesde(e.target.value)}} helperText='Fecha desde' />
+                            <TextField type="date"  fullWidth size="small" error={error.code===2} onChange={e=>{setHasta(e.target.value)}} helperText='Fecha hasta' />
                        </Stack>
                     </Grid>
                     <Grid item xs={12} sm={2}>
                         <Stack direction='row' spacing={1}>
-                        <Button onClick={filtrar} disabled={selectCliente===null} variant="outlined">Filtrar</Button>
+                        <Button onClick={filtrar} variant="outlined">Filtrar</Button>
                         <Button onClick={reset} variant="outlined">Reiniciar</Button>
                         </Stack>
                     </Grid>

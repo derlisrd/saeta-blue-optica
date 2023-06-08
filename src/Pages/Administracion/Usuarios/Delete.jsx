@@ -17,7 +17,6 @@ function Delete() {
         }).catch(e=>{
             console.log(e);
         })
-        
     }
     return ( <DialogPregunta title='Borrar' text='Desea borrar este usuario?' open={dialogs.delete} onClose={close} icon={{ name:'error_outline' }} >
         <Button variant="contained" onClick={confirmar}>CONFIRMAR</Button>

@@ -46,7 +46,7 @@ function Login() {
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <Stack spacing={0} justifyContent='center' alignItems='center'>
-              <span role="img" style={{ fontSize:'3rem' }} >🦁</span>
+              <p>Zoom Optical</p>
               </Stack>
             </Grid>
             <Grid item xs={12}>

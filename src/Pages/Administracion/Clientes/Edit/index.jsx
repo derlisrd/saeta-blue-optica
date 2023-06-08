@@ -20,8 +20,6 @@ function Edit() {
     const {focusTo} = useFocus()    
     const [formEdit,setFormEdit] = useState({})
 
-    console.log(formSelect);
-
     const change = e=>{
         const {value,name} = e.target
         setFormEdit({...formEdit,[name]:value})

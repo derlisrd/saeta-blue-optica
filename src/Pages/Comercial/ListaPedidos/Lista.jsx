@@ -89,10 +89,12 @@ function Lista() {
             <ButtonTip id='1' onClick={()=>{ getLista('','')}} title='Actualizar' icon='sync' />
             </Stack>
             </Grid>
-            {listas.pedidos.length>0 && <Grid item xs={12} sm={3} md={2}>
+            <Grid item xs={12} sm={3} md={2}>
+                <Stack direction='row' spacing={1}>
                 <ButtonPermisos id='10' variant="outlined" fullWidth onClick={openPDF} color='primary'>PDF</ButtonPermisos>
                 <ButtonPermisos id='10' variant="outlined" fullWidth onClick={downloadExcel} color='success'>EXCEL</ButtonPermisos>
-            </Grid>}
+                </Stack>
+            </Grid>
             <Grid item xs={12} sm={4}>
                 <Alert icon={false}>Total: {listas.total}</Alert>
             </Grid>

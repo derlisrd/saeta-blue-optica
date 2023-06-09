@@ -14,9 +14,18 @@ function EditarPago() {
     const close = ()=> setDialogs({...dialogs,pago:false})
     const confirmar = async()=>{
         setLoading(true)
-        let res = await APICALLER.update({table:'facturas',data:{factura_pagado:estado,tipo_pago:tipoPago},id:formSelect.id_factura,token:token_user})
-        if(!res.response){
-            console.log(res);
+        let [res,ped] = await Promise.all([
+            APICALLER.update({table:'facturas',data:{factura_pagado:estado,tipo_pago:tipoPago},id:formSelect.id_factura,token:token_user}),
+            APICALLER.get({table:'pedidos',where:`factura_id,=,${formSelect.id_factura}`,fields:'id_pedido'})
+        ])
+        if(res.response){
+            if(ped.found>0){
+                let promesas = []
+                ped.results.forEach(elm=>{
+                    promesas.push(APICALLER.update({table:'pedidos',data:{estado_pago:1},token:token_user,id:elm.id_pedido}))
+                })
+                await Promise.all(promesas)
+            }
         }
         setLoading(false)
         close()

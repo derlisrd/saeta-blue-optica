@@ -1,10 +1,9 @@
-import { Dialog, DialogActions, DialogContent, DialogTitle, Grid,Autocomplete,TextField, Button, Icon, LinearProgress, Stack, Checkbox, Alert, IconButton } from "@mui/material";
+import { Dialog, DialogActions, DialogContent, DialogTitle, Grid, Button, Icon, LinearProgress, Stack,  Alert, IconButton } from "@mui/material";
 import { useDescuentos } from "./DescuentosProvider";
 import { APICALLER } from "../../../Services/api";
-import { useState,useEffect } from "react";
+import { useState } from "react";
 import useInitialState from "./useInitialState";
 import { useAuth } from "../../../Providers/AuthProvider";
-import NumberFormatCustom from "../../../Components/TextFields/NumberFormatCustom";
 import ListadoAgregado from "./ListadoAgregado";
 import { funciones } from "../../../App/helpers/funciones";
 import BuscarCliente from "./Components/BuscarCliente";
@@ -14,16 +13,21 @@ import PreciosDescuentos from "./Components/PreciosDescuentos";
 function Agregar() {
     const {userData}  = useAuth()
     const {token_user} = userData
+    const [loading,setLoading] = useState(false)
     const {iError,iForm} = useInitialState()
-    const {dialogs,setDialogs} = useDescuentos()
+    const {dialogs,setDialogs,getLista} = useDescuentos()
     const [selectCliente,setSelectCliente] = useState(null)
     const [expand,setExpand] = useState(false)
     const [selectProduct,setSelectProduct] = useState(null)
     const [errors,setErrors] = useState(iError)
     const [form,setForm] = useState(iForm)
+    const [listaDescuentos,setListaDescuentos] = useState([])
     const close = ()=>{
         setDialogs({...dialogs,add:false})
         reset()
+        if(listaDescuentos.length>0){
+            getLista()
+        }
     }
     const reset = ()=>{
         setSelectProduct(null)
@@ -39,8 +43,36 @@ function Agregar() {
             producto_id_descuento: selectProduct.id_producto,
             porcentaje_descuento: form.porcentaje
         }
-        
-        //let ins = await APICALLER.insert({table:'descuentos',data:descuento,token:token_user})
+        let ins = await APICALLER.insert({table:'descuentos',data:descuento,token:token_user})
+        if(ins.response){
+            let nuevo_listado = [...listaDescuentos]
+            let nuevo_descuento = {
+                codigo_producto : selectProduct.codigo_producto,
+                nombre_producto: selectProduct.nombre_producto,
+                precio_descuento: form.precio,
+                porcentaje_descuento: form.porcentaje,
+                id_descuento: ins.last_id
+            }
+            nuevo_listado.push(nuevo_descuento)
+            setListaDescuentos(nuevo_listado)
+            document.getElementById('__inputCodigo').value = ''
+            document.getElementById('__inputCodigo').focus()
+            setForm(iForm)
+            setSelectProduct(null)
+        }else{console.log(ins);}
+        setLoading(false)
+    }
+    const eliminar = async(id)=>{
+        setLoading(true)
+        let index = listaDescuentos.findIndex(elem=> elem.id_descuento === id)
+
+        let res = await APICALLER.delete({table:'descuentos',id:id,token:token_user})
+        if(res.response){
+            let p = [...listaDescuentos]
+            p.splice(index, 1);
+            setListaDescuentos(p)
+        }
+        setLoading(false)
     }
 
     return ( <Dialog onClose={close} open={dialogs.add} maxWidth='md' fullWidth={!expand} fullScreen={expand} >
@@ -72,7 +104,7 @@ function Agregar() {
                     selectCliente && 
                     <>
                         <Grid item xs={12} sm={4} >
-                            <ConsultarProducto selectCliente={selectCliente}  setProduct={setSelectProduct} setErr={setErrors} />
+                            <ConsultarProducto  selectCliente={selectCliente}  setProduct={setSelectProduct} setErr={setErrors} />
                         </Grid>
                         <Grid item xs={12} sm={8} >
                             <PreciosDescuentos form={form} setForm={setForm} selectProduct={selectProduct} />
@@ -86,6 +118,17 @@ function Agregar() {
                         </Grid>
                     </>
                 }
+                <Grid item xs={12}>
+                    {
+                        loading && <LinearProgress />
+                    }
+                </Grid>
+                <Grid item xs={12}>
+                    {
+                        listaDescuentos.length>0 &&
+                        <ListadoAgregado eliminar={eliminar} productos={listaDescuentos} />
+                    }
+                </Grid>
             </Grid>
         </DialogContent>
         <DialogActions>

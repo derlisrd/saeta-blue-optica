@@ -3,6 +3,8 @@ import { Button, Icon } from "@mui/material";
 function ListadoAgregado({productos,eliminar}) {
 
 
+    
+
 
     return ( <table width='100%' >
     <tbody>

@@ -38,7 +38,7 @@ function DocumentoPDF({selectCliente,desde,hasta,lista,detalles}) {
             {
                 lista.map((e,i)=>(
                     <tr key={i}>
-                        <td>{e.fecha_pedido}</td>
+                        <td>{funciones.fechaActualDMY( e.fecha_pedido)}</td>
                         <td>{e.id_pedido}</td>
                         <td>{e.codigo_cliente_pedido}</td>
                         <td>{e.nombre_cliente}</td>

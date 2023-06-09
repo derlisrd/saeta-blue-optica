@@ -2,7 +2,7 @@ import { InputAdornment, CircularProgress, Grid, TextField } from "@mui/material
 import { useState } from "react";
 import { APICALLER } from "../../../../Services/api";
 
-function ConsultarProducto({setErr,setProduct}) {
+function ConsultarProducto({setErr,setProduct,ref}) {
 
     const [loading,setLoading] = useState(false)
     const consultar = async (e)=>{
@@ -28,7 +28,7 @@ function ConsultarProducto({setErr,setProduct}) {
 
     return ( <Grid container spacing={0}>
         <Grid item xs={12}>
-            <TextField fullWidth helperText='Presione luego Enter' onKeyUp={(e)=>{ e.key==='Enter' && consultar(e) }} label='Codigo producto' 
+            <TextField id='__inputCodigo' fullWidth helperText='Presione luego Enter' onKeyUp={(e)=>{ e.key==='Enter' && consultar(e) }} label='Codigo producto' 
                 InputProps={{
                     endAdornment: (
                       <InputAdornment position="start">

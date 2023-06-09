@@ -9,11 +9,12 @@ function EditarPago() {
     const {userData} = useAuth()
     const {token_user} = userData
     const [estado,setEstado] = useState ('0')
+    const [tipoPago,setTipoPago] = useState('1')
     const [loading,setLoading] = useState(false)
     const close = ()=> setDialogs({...dialogs,pago:false})
     const confirmar = async()=>{
         setLoading(true)
-        let res = await APICALLER.update({table:'facturas',data:{factura_pagado:estado},id:formSelect.id_factura,token:token_user})
+        let res = await APICALLER.update({table:'facturas',data:{factura_pagado:estado,tipo_pago:tipoPago},id:formSelect.id_factura,token:token_user})
         if(!res.response){
             console.log(res);
         }
@@ -44,6 +45,18 @@ function EditarPago() {
                     >
                         <FormControlLabel value="0" control={<Radio />} label="Pendiente..." />
                         <FormControlLabel value="1" control={<Radio />} label="Pagado" />
+                       </RadioGroup>
+                </FormControl>
+                <FormControl>
+                    <FormLabel id="tipo_pago">Forma de pago</FormLabel>
+                    <RadioGroup
+                        row
+                        value={tipoPago}
+                        onChange={e=>{ setTipoPago(e.target.value)} }
+                        name="tipo_pago"
+                    >
+                        <FormControlLabel value="1" control={<Radio />} label="Efectivo" />
+                        <FormControlLabel value="2" control={<Radio />} label="Banco, transferencia" />
                        </RadioGroup>
                 </FormControl>
                 </Grid>

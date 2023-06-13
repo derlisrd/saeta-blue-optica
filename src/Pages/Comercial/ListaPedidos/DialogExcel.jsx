@@ -2,7 +2,6 @@ import { Autocomplete, Button, Checkbox, Dialog, DialogActions, DialogContent,Di
 import { useListaPedidos } from "./ListaPedidosProvider";
 import { useEffect,useState,useRef} from "react";
 import { APICALLER } from "../../../Services/api";
-import DocumentoPDF from "./DocumentoPDF";
 import { useReactToPrint } from 'react-to-print';
 import { columnsData } from "./columns";
 import xlsx from "json-as-xlsx"
@@ -19,7 +18,6 @@ function DialogExcel() {
     const [hasta,setHasta]= useState('')
     const [selectCliente,setSelectCliente]=useState(null)
     const [search,setSearch]= useState('')
-    const [detalles,setDetalles] = useState({total:0,cliente:'',fecha_inicio:'',fecha_fin:''})
     const [listaCliente,setListaCliente]=useState([])
     const [loading,setLoading] = useState(false)
     const [lista,setLista]=useState([])
@@ -28,16 +26,13 @@ function DialogExcel() {
         setLista([])
         setTotal(0)
         setSelectCliente(null)
-        setDetalles({total:0,cliente:'',fecha_inicio:'',fecha_fin:''})
         setSearch('')
     }
-    const insertarCliente = (e,value)=>{
-        setSelectCliente(value)
+    const insertarCliente = (e,value)=> setSelectCliente(value)
 
-    }
     const filtrar = async()=>{
         if(!todos && selectCliente===null){
-            setError({code:2})
+            setError({code:3})
             return false;
         }
         if(desde===''){
@@ -101,9 +96,7 @@ function DialogExcel() {
         xlsx(data, settings)
       }
     
-    const print = useReactToPrint({
-        content: () => divRef.current,
-      });
+    const print = useReactToPrint({content: () => divRef.current});
 
     const close = ()=>{
         setDialogs({...dialogs,excel:false})
@@ -134,7 +127,7 @@ function DialogExcel() {
     return (<Dialog fullScreen open={dialogs.excel} onClose={close}>
             <DialogTitle> <IconButton onClick={close}><Icon>close</Icon></IconButton> Generar Excel por cliente</DialogTitle>
             <DialogContent>
-                <Grid spacing={2} container>
+                <Grid spacing={1} container>
                     <Grid item xs={12}>
                         {loading && <LinearProgress />}
                     </Grid>

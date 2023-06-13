@@ -1,5 +1,5 @@
 import { funciones } from "../../../App/helpers/funciones";
-
+import '../../../Styles/reportes.css'
 
 function DocumentoPDF({selectCliente,desde,hasta,lista,detalles}) {
     return ( <div id='_pdf'>

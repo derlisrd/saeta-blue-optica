@@ -3,6 +3,7 @@ import { useListaFactura } from "./ListaFacturaProvider";
 import { useEffect, useState } from "react";
 import { APICALLER } from "../../../../Services/api";
 import { useAuth } from "../../../../Providers/AuthProvider";
+import { funciones } from "../../../../App/helpers/funciones";
 
 function EditarPago() {
     const {dialogs,setDialogs,formSelect,getLista} = useListaFactura()
@@ -14,8 +15,9 @@ function EditarPago() {
     const close = ()=> setDialogs({...dialogs,pago:false})
     const confirmar = async()=>{
         setLoading(true)
+        const fecha_pago = funciones.fechaActualYMD()
         let [res,ped] = await Promise.all([
-            APICALLER.update({table:'facturas',data:{factura_pagado:estado,tipo_pago:tipoPago},id:formSelect.id_factura,token:token_user}),
+            APICALLER.update({table:'facturas',data:{factura_pagado:estado,tipo_pago:tipoPago,fecha_cobro_factura:fecha_pago},id:formSelect.id_factura,token:token_user}),
             APICALLER.get({table:'pedidos',where:`factura_id,=,${formSelect.id_factura}`,fields:'id_pedido'})
         ])
         if(res.response){

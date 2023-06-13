@@ -1,4 +1,5 @@
 import { funciones } from "../../../App/helpers/funciones";
+import '../../../Styles/reportes.css'
 
 function DocumentoExcel({lista,total}) {
     return (<table width='100%'>

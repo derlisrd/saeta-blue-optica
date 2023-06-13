@@ -1,7 +1,7 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, LinearProgress } from "@mui/material";
 import { useRef } from 'react';
 import { useReactToPrint } from 'react-to-print';
-import './stylos.css'
+import '../../../Styles/reportes.css'
 import { funciones } from "../../../App/helpers/funciones";
 import { useListaPedidos } from "./ListaPedidosProvider";
 import { useCallback, useEffect, useState } from "react";

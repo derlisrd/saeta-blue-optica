@@ -66,7 +66,7 @@ function Lista() {
         setError({code:0})
         setFechas({desde:`${desde} 00:00:00`,hasta:`${hasta} 23:59:59`})
     }
-
+    const openReportes = ()=> setDialogs({...dialogs,reportes:true});
     const navegar = ()=>{ navigate('/facturas/add') }
     const print = r=>{ setFormSelect(r); setDialogs({...dialogs,print:true}) }
     const estado = r=>{ setFormSelect(r); setDialogs({...dialogs,pago:true}) }
@@ -98,7 +98,7 @@ function Lista() {
             </Stack>
             </Grid>
             {listaFiltrada.length>0 && <Grid item xs={12} sm={3} md={2}>
-                <ButtonPermisos id='21' variant="outlined" fullWidth onClick={downloadExcel} color='success'>EXCEL</ButtonPermisos>
+                <ButtonPermisos id='21' variant="outlined" onClick={openReportes} color='success'>Reportes</ButtonPermisos>
             </Grid>}
             <Grid item xs={12} sm={4} md={3}>
                 <Alert icon={false}>Total: {funciones.numberFormat(totalVenta)} </Alert>

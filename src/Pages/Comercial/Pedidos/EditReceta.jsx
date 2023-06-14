@@ -4,6 +4,7 @@ import styles from './styles.module.css'
 import { useCallback, useState,useEffect } from "react";
 import InputNumerico from "./Components/InputNumerico";
 import ButtonTip from "../../../Components/Botones/ButtonTip";
+import { Adiciones } from "./Calc/Adiciones";
 
 
 function EditReceta() {
@@ -39,62 +40,17 @@ function EditReceta() {
     }
    const [param,setParam] = useState(initialParam)
 
-    const change = e=>{
-        const {value,name} = e.target
-        let p = {...param}
-
-        if( name === 'lejos_derecho_esferico' && !(parseFloat(p.cerca_derecho_esferico))==0 ){
-            p.lejos_derecho_esferico = value
-            p.adicion_derecho = parseFloat(p.lejos_derecho_esferico) + parseFloat(p.cerca_derecho_esferico) 
-            setParam(p)
-            return;
-        }
-
-        
-
-        if( name === 'lejos_izquierdo_esferico' && !(parseFloat(p.cerca_derecho_esferico))==0 ){
-            p.lejos_izquierdo_esferico = value
-            p.adicion_izquierdo = parseFloat(p.lejos_izquierdo_esferico) + parseFloat(p.cerca_izquierdo_esferico) 
-            setParam(p)
-            return;
-        }
-
-        if(name=== 'cerca_derecho_esferico'){
-            let valor = parseFloat(value)
-            p.cerca_derecho_esferico = valor
-            if(!valor===0){
-                p.adicion_derecho = parseFloat(p.lejos_derecho_esferico) + parseFloat(p.cerca_derecho_esferico) 
-                setParam(p)
-            }
-            return;
-        }
-
-        if(name=== 'cerca_izquierdo_esferico'){
-            let valor = parseFloat(value)
-            p.cerca_izquierdo_esferico = valor
-            if(!valor===0){
-                p.adicion_izquierdo = parseFloat(p.lejos_izquierdo_esferico) + parseFloat(p.cerca_izquierdo_esferico) 
-                setParam(p)
-            }
-            return;
-        }
-
-        if(name=== 'adicion_derecho'){
-            p.adicion_derecho = value;
-            p.cerca_derecho_esferico = parseFloat(p.lejos_derecho_esferico) + parseFloat(p.adicion_derecho) 
-            setParam(p)
-            return;
-        }
-
-        if(name=== 'adicion_izquierdo'){
-            p.adicion_izquierdo = value;
-            p.cerca_izquierdo_esferico = parseFloat(p.lejos_izquierdo_esferico) + parseFloat(p.adicion_izquierdo) 
-            setParam(p)
-            return;
-        }
-
-        setParam({...param, [name]:value})
+   const change = e=>{
+        let nuevo_param = Adiciones.cambio(e,param)
+        setParam(nuevo_param)
     }
+    const key = (e)=>{
+        if(e.key==='ArrowDown' || e.key==='ArrowUp'){
+            let nuevo_param = Adiciones.flechas(e,param)
+            setParam(nuevo_param)
+        }
+    }
+
 
     const insertarReceta = ()=>{
         let new_fact = {...factura}
@@ -107,45 +63,7 @@ function EditReceta() {
 
     
 
-    const key = e=>{
-        const {value,name} = e.target
-        let p = {...param}
-        
-        if(e.key==='ArrowUp'){
-            let nuevo_valor = parseFloat(value) + 0.25
-            p[name] = nuevo_valor
-            if(name === 'adicion_derecho'){
-                p.cerca_derecho_esferico = nuevo_valor + parseFloat(p.lejos_derecho_esferico)
-            }
-            if(name === 'adicion_izquierdo'){
-                p.cerca_izquierdo_esferico = nuevo_valor + parseFloat(p.lejos_izquierdo_esferico)
-            }
-            if(name==='cerca_derecho_esferico'){
-                p.adicion_derecho = nuevo_valor + parseFloat(p.lejos_derecho_esferico)
-            }
-            if(name==='cerca_izquierdo_esferico'){
-                p.adicion_izquierdo = nuevo_valor + parseFloat(p.lejos_izquierdo_esferico)
-            }
-            setParam(p) 
-        }
-        if(e.key==='ArrowDown'){
-            let nuevo_valor = parseFloat(value) - 0.25
-            p[name] = nuevo_valor
-            if(name === 'adicion_derecho'){
-                p.cerca_derecho_esferico = nuevo_valor + parseFloat(p.lejos_derecho_esferico)
-            }
-            if(name === 'adicion_izquierdo'){
-                p.cerca_izquierdo_esferico = nuevo_valor + parseFloat(p.lejos_izquierdo_esferico)
-            }
-            if(name==='cerca_derecho_esferico'){
-                p.adicion_derecho = nuevo_valor + parseFloat(p.lejos_derecho_esferico)
-            }
-            if(name==='cerca_izquierdo_esferico'){
-                p.adicion_izquierdo = nuevo_valor + parseFloat(p.lejos_izquierdo_esferico)
-            }
-            setParam(p) 
-        }
-    }
+
 
 
 

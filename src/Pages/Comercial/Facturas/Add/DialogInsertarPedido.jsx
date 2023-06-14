@@ -16,8 +16,19 @@ function DialogInsertarPedido() {
         e.preventDefault();
         const myFormData = new FormData(e.target);
         const data = Object.fromEntries(myFormData.entries());
+        
+
+        let p = [...pedidos]
+
+        let found = p.findIndex(el=> el === data.nro_pedido)
+        if(found>=0){
+          setError({active:true,message:'Pedido ya insertado'})
+          return false;
+        }
+        
         setLoading(true)
         setError({active:false,message:''})
+
         let [res,client] = await Promise.all([APICALLER.get({table:'pedidos_items',
         fields:'precio_venta_item,nombre_producto,codigo_producto,cantidad_pedido,id_producto,iva_producto,precio_producto,preciom_producto',
         include:'productos',on:'producto_id_item,id_producto',where:`pedido_id,=,${data.nro_pedido}`}),
@@ -86,7 +97,7 @@ function DialogInsertarPedido() {
           setearFactura(f) 
         }
         setLoading(false)
-        close();
+        document.getElementById('nro_pedido').value = ''
     }
 
 
@@ -111,13 +122,13 @@ function DialogInsertarPedido() {
               }
             </Grid>
             <Grid item xs={12}>
-                <TextField required autoComplete="off" name="nro_pedido" fullWidth autoFocus />
+                <TextField required autoComplete="off" id='nro_pedido' name="nro_pedido" fullWidth autoFocus />
             </Grid>
           </Grid>
         </DialogContent>
         <DialogActions>
             <Button variant="contained" type="submit" >INSERTAR</Button>
-            <Button variant="contained" onClick={close}>Cancelar</Button>
+            <Button variant="contained" onClick={close}>CERRAR</Button>
         </DialogActions>
         </form>
       </Dialog>

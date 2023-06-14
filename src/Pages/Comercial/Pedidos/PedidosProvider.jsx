@@ -172,7 +172,7 @@ function PedidosProvider({children}) {
                         receta:rec,
                         lado: ladito
                     }
-                    console.log(objeto);
+                    //console.log(objeto);
                     f.items.push(objeto)
                 })
                 

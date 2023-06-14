@@ -55,6 +55,8 @@ function MainPages() {
           <Route path="depositos" element={<PrivateRoute id='47'><Depositos /></PrivateRoute>} />
           <Route path="categorias" element={<PrivateRoute id='39'><Categorias /></PrivateRoute>} />
           <Route path="empresa" element={<PrivateRoute id='37'><Empresa /></PrivateRoute>} />
+          <Route path="reportes/ventas" element={<PrivateRoute id='52'><ReportesVentas /></PrivateRoute>} />
+          
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>
@@ -85,6 +87,7 @@ const AddFactura = Loadable(lazy(() => import('./Comercial/Facturas/Add')));
 const Empresa = Loadable(lazy(() => import('./Administracion/Empresa')));
 const Descuentos = Loadable(lazy(() => import('./Administracion/Descuentos')));
 const RecibosPedidos = Loadable(lazy(()=> import('./Comercial/RecibosPedidos')));
+const ReportesVentas = Loadable(lazy(()=> import("./Reportes/Ventas") ));
 const NotAutorizated = Loadable(lazy(()=> import("./Status/NotAutorizated") ));
 
 export default MainPages;

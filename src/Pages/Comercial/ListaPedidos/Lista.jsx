@@ -79,20 +79,20 @@ function Lista() {
                 <ButtonPermisos id='9' onClick={navegar} variant="contained" size="large">Nuevo pedido</ButtonPermisos>
             </Grid>
             <Grid item xs={12}>
-            <Stack direction={{ xs:'column',md:'row' }} sx={{ maxWidth:{md:'1100px'} }} spacing={1} alignItems='flex-start'>
-                <SelectTipo onChange={changeTipo} />
-            <TextField size="small" fullWidth onKeyUp={e=>{ e.key==='Enter' && getLista(e.target.value,'') }} helperText='Presione Enter' label='Número de pedido' />
-            <TextField size="small" fullWidth onKeyUp={e=>{ e.key==='Enter' && getLista('',e.target.value) }} helperText='Presione Enter' label='Ruc o nombre de cliente' />
-            <TextField type="date" fullWidth size="small" error={error.code===1} onChange={e=>{setDesde(e.target.value)}} helperText='Fecha desde' />
-            <TextField type="date" fullWidth size="small" error={error.code===2} onChange={e=>{setHasta(e.target.value)}} helperText='Fecha hasta' />
-            <Button variant="outlined" size="large" onClick={filtrar}>Filtrar</Button>
-            <ButtonTip id='1' onClick={()=>{ getLista('','')}} title='Actualizar' icon='sync' />
-            </Stack>
+                <Stack direction={{ xs:'column',md:'row' }} sx={{ maxWidth:{md:'1100px'} }} spacing={1} alignItems='flex-start'>
+                    <SelectTipo onChange={changeTipo} />
+                    <TextField size="small" fullWidth onKeyUp={e=>{ e.key==='Enter' && getLista(e.target.value,'') }} helperText='Presione Enter' label='Número de pedido' />
+                    <TextField size="small" fullWidth onKeyUp={e=>{ e.key==='Enter' && getLista('',e.target.value) }} helperText='Presione Enter' label='Ruc o nombre de cliente' />
+                    <TextField type="date" fullWidth size="small" error={error.code===1} onChange={e=>{setDesde(e.target.value)}} helperText='Fecha desde' />
+                    <TextField type="date" fullWidth size="small" error={error.code===2} onChange={e=>{setHasta(e.target.value)}} helperText='Fecha hasta' />
+                    <Button variant="outlined" size="large" onClick={filtrar}>Filtrar</Button>
+                    <ButtonTip id='1' onClick={()=>{ getLista('','')}} title='Actualizar' icon='sync' />
+                </Stack>
             </Grid>
-            <Grid item xs={12} sm={3} md={2}>
+            <Grid item xs={12} sm={4} >
                 <Stack direction='row' spacing={1}>
-                <ButtonPermisos id='10' variant="outlined" fullWidth onClick={openPDF} color='primary'>PDF</ButtonPermisos>
-                <ButtonPermisos id='10' variant="outlined" fullWidth onClick={downloadExcel} color='success'>EXCEL</ButtonPermisos>
+                    <ButtonPermisos id='10' variant="outlined" fullWidth onClick={openPDF} color='primary'>PDF</ButtonPermisos>
+                    <ButtonPermisos id='10' variant="outlined" fullWidth onClick={downloadExcel} color='success'>EXCEL</ButtonPermisos>
                 </Stack>
             </Grid>
             <Grid item xs={12} sm={4}>

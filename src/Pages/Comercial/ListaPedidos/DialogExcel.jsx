@@ -10,7 +10,6 @@ import DocumentoExcel from "./DocumentoExcel";
 function DialogExcel() {
 
     const divRef = useRef(null);
-    const [total,setTotal] = useState(0)
     const [todos,setTodos] = useState(false)
     const {dialogs,setDialogs} = useListaPedidos()
     const [error,setError]=useState({code:0})
@@ -24,7 +23,6 @@ function DialogExcel() {
     const [loadingSearch,setLoadingSearch]=useState(false)
     const reset = ()=>{
         setLista([])
-        setTotal(0)
         setSelectCliente(null)
         setSearch('')
     }
@@ -66,16 +64,18 @@ function DialogExcel() {
               }
             let total2 = 0
             let pedidos = []
-            res.results.forEach(elem=>{
-                pedidos.push({...elem,
-                    total_pedido: parseFloat(elem.total_pedido), 
-                    facturado: elem.facturado_pedido==='0'? 'No' : 'Si',
-                    tipo: tipoPedido[elem.tipo_pedido]
+            res.results.forEach(elm=>{
+                pedidos.push({...elm,
+                    total_pedido: (elm.tipo_pedido==='2' || elm.tipo_pedido==='3') ? `-${elm.total_pedido}` : parseFloat(elm.total_pedido) , 
+                    facturado: elm.facturado_pedido==='0'? 'No' : 'Si',
+                    tipo: tipoPedido[elm.tipo_pedido]
                 })
-                total2 += parseFloat(elem.total_pedido)
+                total2 += (elm.tipo_pedido==='1' || elm.tipo_pedido==='4') ? parseFloat(elm.total_pedido) : 0
             })
+            pedidos.push({total_pedido:total2, facturado:'',
+            tipo:'',fecha_pedido:'',id_pedido:'',codigo_cliente_pedido:'',nombre_user:'',nombre_cliente:''})
             setLista(pedidos)
-            setTotal(total2)
+            
         }
         else
         {console.log(res);}
@@ -160,7 +160,7 @@ function DialogExcel() {
                 {
                     
                     <div ref={divRef}>
-                        <DocumentoExcel total={total} lista={lista} />
+                        <DocumentoExcel lista={lista} />
                     </div>
                     
                 }

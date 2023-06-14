@@ -105,28 +105,10 @@ export const ListaMenu = [
         open:false,
         submenu:[
             {
-                id:41,
-                title:'Generales',
-                url:'/reportes/generales',
-                icon:'tabler:report-analytics'
-            },
-            {
-                id:42,
-                title:'Productos',
-                url:'/reportes/productos',
-                icon:'ep:sell'
-            },
-            {
-                id:43,
+                id:52,
                 title:'Ventas',
                 url:'/reportes/ventas',
-                icon:'mdi:report-line'
-            },
-            {
-                id:43,
-                title:'Gráficos',
-                url:'/reportes/graficos',
-                icon:'mdi:report-bar'
+                icon:'bug_report'
             }
         ]
     }, 

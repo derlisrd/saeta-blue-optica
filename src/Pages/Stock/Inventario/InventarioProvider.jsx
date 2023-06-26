@@ -11,6 +11,7 @@ function InventarioProvider({children}) {
     const {userData} = useAuth()
     const {token_user} = userData
     const [depositos,setDepositos] = useState([])
+    const [categorias,setCategorias] = useState([])
     const [loadingLista,setLoadingLista] = useState(true)
     const [stock,setStock] = useState([])
     const [rangos,setRangos] = useState({
@@ -21,13 +22,17 @@ function InventarioProvider({children}) {
     const [formInfo,setFormInfo] = useState({})
     
     const getLista = useCallback(async()=>{
-        let res = await APICALLER.get({table:'depositos'})
-        if(res.response){
-            setDepositos(res.results)
+        let [dep,cat] = await Promise.all([
+            APICALLER.get({table:'depositos'}),
+            APICALLER.get({table:'categorias',where:`tipo_categoria,=,1`})
+        ])
+        if(dep.response){
+            setDepositos(dep.results)
+            setCategorias(cat.results)
             //console.log(res);
         }
         else{
-            console.log(res);
+            console.log(dep);
         }
         setLoadingLista(false)
     },[])
@@ -39,7 +44,7 @@ function InventarioProvider({children}) {
     }, [getLista]);
 
     const values = {
-        depositos,loadingLista,stock,setStock,token_user,formInfo,setFormInfo,rangos,setRangos,dialogs,setDialogs,formSelect,setFormSelect
+        categorias,depositos,loadingLista,stock,setStock,token_user,formInfo,setFormInfo,rangos,setRangos,dialogs,setDialogs,formSelect,setFormSelect
     }
 
     
@@ -48,8 +53,8 @@ function InventarioProvider({children}) {
 }
 
 export const useInventario = ()=>{
-    const {depositos,loadingLista,stock,setStock,token_user,formInfo,setFormInfo,rangos,setRangos,dialogs,setDialogs,formSelect,setFormSelect} = useContext(InventarioContext)
-    return {depositos,loadingLista,stock,setStock,token_user,formInfo,setFormInfo,rangos,setRangos,dialogs,setDialogs,formSelect,setFormSelect}
+    const {categorias,depositos,loadingLista,stock,setStock,token_user,formInfo,setFormInfo,rangos,setRangos,dialogs,setDialogs,formSelect,setFormSelect} = useContext(InventarioContext)
+    return {categorias,depositos,loadingLista,stock,setStock,token_user,formInfo,setFormInfo,rangos,setRangos,dialogs,setDialogs,formSelect,setFormSelect}
 }
 
 

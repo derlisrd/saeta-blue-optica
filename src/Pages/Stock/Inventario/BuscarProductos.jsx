@@ -6,12 +6,14 @@ import TableStock from "./TableStock";
 
 import { useInventario } from "./InventarioProvider";
 import SelectDeposito from "./SelectDepositos";
+import SelectCategoria from "./SelectCategoria";
 
 function BuscarProductos() {
 
-    const {setStock,formInfo,setFormInfo,setRangos,depositos} = useInventario()
+    const {setStock,formInfo,setFormInfo,setRangos,depositos,categorias} = useInventario()
     const [search,setSearch] = useState('')
     const [depositoID,setDepositoID] = useState('')
+    const [categoriaID,setCategoriaID] = useState('')
     const [lista,setLista] = useState([])
     const [loading,setLoading] = useState(false)
     const [cargando,setCargando] = useState(false)
@@ -21,11 +23,13 @@ function BuscarProductos() {
         
         if(id){
             setCargando(true)
-            let res = await APICALLER.get({table:'productos_depositos',include:'depositos',on:'deposito_id,id_deposito',where:`producto_id,=,${id},and,deposito_id,=,${depositoID}`})
+            let res = await APICALLER.get({table:'productos_depositos',
+            include:'depositos,productos',on:'deposito_id,id_deposito,id_producto,producto_id',
+            where:`producto_id,=,${id},and,deposito_id,=,${depositoID},and,id_categoria_producto,=,${categoriaID}`})
             if(res.response){
               //let categoria = val?.id_categoria_producto;
             //setStock(res.results);
-            //console.log(res.results);
+            console.log(res.results);
             let min_esferico = parseFloat(val.min_esferico), 
                 max_esferico = parseFloat(val.max_esferico),
                 min_cilindrico = parseFloat(val.min_cilindrico), 
@@ -124,6 +128,9 @@ function BuscarProductos() {
         
         <Grid item xs={12} sm={3}>
             <SelectDeposito opciones={depositos} name='deposito_id' value={depositoID} onChange={e=>{setDepositoID(e.target.value)}} />
+        </Grid>
+        <Grid item xs={12} sm={3}>
+            <SelectCategoria opciones={categorias} name='id_categoria_producto' value={categoriaID} onChange={e=>{setCategoriaID(e.target.value)}} />
         </Grid>
         {
             formInfo.id_producto &&

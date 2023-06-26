@@ -70,10 +70,11 @@ function Lista() {
     const navegar = ()=>{ navigate('/facturas/add') }
     const print = r=>{ setFormSelect(r); setDialogs({...dialogs,print:true}) }
     const estado = r=>{ setFormSelect(r); setDialogs({...dialogs,pago:true}) }
+    const anular = r=> {setFormSelect(r); setDialogs({...dialogs,anular:true}) }
     const ListaOpciones = ({rowProps})=>(
         <Stack direction='row'>
             <ButtonTip id='19' title='Estado de pago' icon='edit' onClick={()=>{estado(rowProps)}} />
-            <ButtonTip id='18' title='Anular' icon='close' onClick={()=>{}} />
+            <ButtonTip id='18' title='Anular' icon='close' onClick={()=>{anular(rowProps)}} />
             <ButtonTip id='22' title='Imprimir' icon='print' onClick={()=>{print(rowProps)}} />
         </Stack>
     )

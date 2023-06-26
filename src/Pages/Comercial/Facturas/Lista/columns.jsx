@@ -27,7 +27,7 @@ export const columns = [
     },
     {
         field:'factura_pagado',
-        title:'ESTADO DE PAGO',
+        title:'PAGO',
         compareField: "factura_pagado",
         items: {
             "1": "PAGADO",
@@ -55,7 +55,7 @@ export const columns = [
       compareField: "estado_factura",
       items: {
             "1": "NORMAL",
-            "0": "ANULADO",
+            "0": "ANULADO XXX",
           },
     },
     {

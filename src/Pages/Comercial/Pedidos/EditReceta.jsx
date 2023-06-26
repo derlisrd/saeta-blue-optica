@@ -154,7 +154,6 @@ function EditReceta() {
                         <th width='25%'>Eje</th>
                         <th width='25%'>Stock disponible</th>
                     </tr>
-                    
                     {
                         formDepositoStock.map((e,i)=>(
                         <tr key={i} className={styles.items_stock}>
@@ -165,7 +164,6 @@ function EditReceta() {
                         </tr>
                         ))
                     }
-
                 </tbody>
             </table>
             </Grid>

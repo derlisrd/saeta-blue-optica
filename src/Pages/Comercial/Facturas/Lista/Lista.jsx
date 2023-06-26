@@ -73,8 +73,11 @@ function Lista() {
     const anular = r=> {setFormSelect(r); setDialogs({...dialogs,anular:true}) }
     const ListaOpciones = ({rowProps})=>(
         <Stack direction='row'>
-            <ButtonTip id='19' title='Estado de pago' icon='edit' onClick={()=>{estado(rowProps)}} />
-            <ButtonTip id='18' title='Anular' icon='close' onClick={()=>{anular(rowProps)}} />
+            {
+                rowProps.estado_factura==='1' && <><ButtonTip id='18' title='Anular' icon='close' onClick={()=>{anular(rowProps)}} />
+                <ButtonTip id='19' title='Estado de pago' icon='edit' onClick={()=>{estado(rowProps)}} /> </>
+            }
+            
             <ButtonTip id='22' title='Imprimir' icon='print' onClick={()=>{print(rowProps)}} />
         </Stack>
     )

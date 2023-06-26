@@ -46,8 +46,8 @@ export const columns = [
           padding: "4px", fontWeight:"bold",
           borderRadius: "5px",
           color: "#000000",
-        },
-      }
+          },
+        }
     },
     {
       field:'estado_factura',
@@ -55,8 +55,23 @@ export const columns = [
       compareField: "estado_factura",
       items: {
             "1": "NORMAL",
-            "0": "ANULADO XXX",
+            "0": "ANULADO",
           },
+          styleFieldCondition: "estado_factura",  
+          styleCondition: {
+          "0": {
+            backgroundColor: "#ba1717",
+            padding: "4px",fontWeight:"bold",
+            borderRadius: "5px",
+            color: "#000000",
+          },
+          "1": {
+            backgroundColor: "#1794ba",
+            padding: "4px", fontWeight:"bold",
+            borderRadius: "5px",
+            color: "#000000",
+            },
+          }
     },
     {
         field:'tipo_factura',

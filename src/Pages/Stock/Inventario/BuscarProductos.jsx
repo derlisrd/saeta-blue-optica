@@ -78,6 +78,8 @@ function BuscarProductos() {
                 //console.log(new_stock);
                 setStock(new_stock);
             setFormInfo(val);
+
+            
           }else{console.log(res)}
             setCargando(false)
         }else{

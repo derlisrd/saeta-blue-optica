@@ -27,7 +27,11 @@ function DialogEdit() {
       iva_producto: "",
       nombre_producto: "",
       precio_producto: "",
-      preciom_producto: ""
+      preciom_producto: "",
+      base_min:"",
+      base_max:"",
+      adicion_min:"",
+      adicion_max:""
     });
     const enviar = async()=>{
         let datas = {...formEdit}
@@ -125,7 +129,7 @@ function DialogEdit() {
                     </Grid>
                     <Grid item xs={4}></Grid>
                     <Grid item xs={12}>
-                    <Rangos form={formEdit} onChange={change} />
+                        <Rangos form={formEdit} onChange={change} />
                     </Grid>
                 </Grid>
             </DialogContent>

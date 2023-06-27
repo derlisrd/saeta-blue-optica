@@ -35,6 +35,10 @@ function Add() {
     precio_producto:'',
     tipo_producto:'1',
     id_categoria_producto:'',
+    base_min:'0',
+    base_max:'0',
+    adicion_min:'0',
+    adicion_max:'0',
     iva_producto:"10"
   }
   const [form,setForm] = useState(initialForm)

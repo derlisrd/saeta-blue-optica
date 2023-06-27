@@ -28,6 +28,30 @@ function Rangos({onChange,form}) {
                  }}
             />
         </Grid>
+        <Grid item xs={12} sm={6} md={3}>
+            <TextField label='Base min' value={form.base_min} onChange={onChange} name="base_min" InputProps={{ 
+                inputComponent: NumberFormatCustom
+             }} />
+        </Grid>
+        <Grid item xs={12} sm={6} md={3}>
+            <TextField label='Base max' value={form.base_max} onChange={onChange} name="base_max" 
+                InputProps={{ 
+                    inputComponent: NumberFormatCustom
+                 }}
+            />
+        </Grid>
+        <Grid item xs={12} sm={6} md={3}>
+            <TextField label='Adición mínima' value={form.adicion_min} onChange={onChange} name="adicion_min" InputProps={{ 
+                inputComponent: NumberFormatCustom
+             }} />
+        </Grid>
+        <Grid item xs={12} sm={6} md={3}>
+            <TextField label='Adición máxima' value={form.adicion_max} onChange={onChange} name="adicion_max" 
+                InputProps={{ 
+                    inputComponent: NumberFormatCustom
+                 }}
+            />
+        </Grid>
     </Grid> );
 }
 

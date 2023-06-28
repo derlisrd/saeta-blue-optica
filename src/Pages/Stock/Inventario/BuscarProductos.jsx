@@ -43,7 +43,8 @@ function BuscarProductos() {
                 new_rangos_base= [], new_rangos_adicion= [];
 
                 
-                
+                let found,new_stock = []
+
                 if(categoriaID==='4'){
 
                     while (min_esferico <= max_esferico) {
@@ -56,7 +57,7 @@ function BuscarProductos() {
                         max_cilindrico -= 0.25
                     }
                     setRangos({esferico:new_rangos_esferico,cilindrico:new_rangos_cilindrico})
-                    let found,new_stock = []
+                    
                     new_rangos_esferico.forEach(RE=>{
                         let cil = []
                         let total= 0;
@@ -69,7 +70,8 @@ function BuscarProductos() {
                                     stock: found.stock_producto_deposito,
                                     cilindrico:RC,producto_id:id,
                                     id_productos_deposito:found.id_productos_deposito,
-                                    deposito_id:depositoID})
+                                    deposito_id:depositoID
+                                })
                             }else{
                                 cil.push({
                                     edit:false,
@@ -91,24 +93,44 @@ function BuscarProductos() {
                         adicion_min += 0.25
                     }
                     while (base_max >= base_min) {
-                        new_rangos_base.push(base_min.toString() + 'L')
-                        new_rangos_base.push(base_min.toString() + 'R')
+                        new_rangos_base.push({lado:"2",base:base_min.toString(),string:"L"})
+                        new_rangos_base.push({lado:"1",base:base_min.toString(),string:"R"})
                         base_min += 2
                     }
-                    let found,new_stock = []
+                    
+                    setRangos({adicion:new_rangos_adicion,bases:new_rangos_base})
                     new_rangos_adicion.forEach(RA=>{
                         let bas = []
                         let total= 0;
                         new_rangos_base.forEach(RB=>{
-                            found = res.results.find(ele => ele.base === RB && ele.adicion===RA);
+                            found = res.results.find(ele => (ele.base === RB.base && ele.lado === RB.lado && ele.adicion===RA) );
 
-                            
-
-
+                            if(found){
+                                bas.push({
+                                    edit:false,
+                                    stock: found.stock_producto_deposito,
+                                    base:RB,
+                                    producto_id:id,
+                                    id_productos_deposito:found.id_productos_deposito,
+                                    deposito_id:depositoID,
+                                    lado:found.lado
+                                })
+                            }else{
+                                bas.push({
+                                    edit:false,
+                                    stock: '0',
+                                    base:RB,
+                                    producto_id:id,
+                                    id_productos_deposito:null,
+                                    deposito_id:depositoID,
+                                    lado:RB.lado
+                                })
+                            }
                         })
+                        new_stock.push({adicion: RA, bases: bas,total })
                     })
                 }
-
+                //console.log(new_stock);
                 setStock(new_stock);
             setFormInfo(val);
           }else{console.log(res)}
@@ -168,8 +190,9 @@ function BuscarProductos() {
             <SelectCategoria opciones={categorias} name='id_categoria_producto' value={categoriaID} onChange={e=>{setCategoriaID(e.target.value)}} />
         </Grid>
         {
-            formInfo.id_producto && categoriaID==='4' ?
-            <Fragment>
+            formInfo.id_producto && (
+                categoriaID==='4' ?
+                <Fragment>
                 <Grid item xs={12}>
                     <TableStock />
                 </Grid>
@@ -178,7 +201,8 @@ function BuscarProductos() {
             <Grid item xs={12}>
                 <TableStockBloco />
             </Grid>
-        </Fragment>
+            </Fragment>
+            )
         }
     </Grid>);
 }

@@ -22,6 +22,10 @@ export const columns = [
         title:'NRO'
     },
     {
+      field:'nros_pedidos',
+      title:'Pedidos'
+    },
+    {
         field:'nombre_cliente',
         title:'Cliente'
     },

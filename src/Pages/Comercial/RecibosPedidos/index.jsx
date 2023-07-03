@@ -1,5 +1,10 @@
+import Lista from "./Lista";
+import RecibosProvider from "./Provider";
+
 function RecibosPedidos() {
-    return (<></>  );
+    return (<RecibosProvider>
+        <Lista />
+    </RecibosProvider>);
 }
 
 export default RecibosPedidos;

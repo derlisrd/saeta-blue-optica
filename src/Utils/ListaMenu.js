@@ -7,20 +7,6 @@ export const ListaMenu = [
         sub:false
     },
     {
-        id:98,
-        url:'/contabilidad',
-        title:'Contabilidad',
-        icon:'calculate',
-        sub:false
-    },
-    {
-        id:6,
-        url:'/memo',
-        title:'Memos',
-        icon:'question_answer',
-        sub:false
-    },
-    {
         id:78,
         url:'#',
         title:'Comercial',
@@ -43,8 +29,8 @@ export const ListaMenu = [
             {
                 id:41,
                 title:'Recibos pedido',
-                url:'/recibospedidos',
-                icon:'article'
+                url:'/pedidos/recibos',
+                icon:'view_in_ar'
             },
             {
                 id:17,
@@ -137,22 +123,16 @@ export const ListaMenu = [
         open:false,
         submenu:[
             {
-                id:41,
-                title:'Ventas',
-                url:'/ventas',
-                icon:'ic:twotone-sell'
-            },
-            {
                 id:42,
                 title:'A cobrar',
                 url:'/cuentas/cobrar',
-                icon:'tabler:pig-money'
+                icon:'work_outline'
             },
             {
                 id:43,
                 title:'A pagar',
                 url:'/cuentas/pagar',
-                icon:'ic:baseline-money'
+                icon:'tips_and_updates'
             }
         ]
     }, 

@@ -43,11 +43,11 @@ function MainPages() {
           <Route path="productos/edit/:id" element={<PrivateRoute id='29'><EditProduct /></PrivateRoute>} />
           <Route path="pedidos" element={<PrivateRoute id='9'><Pedidos /></PrivateRoute>} />
           <Route path="pedidos/lista" element={<PrivateRoute id='1'><ListaPedidos /></PrivateRoute>} />
+          <Route path="pedidos/recibos" element={<PrivateRoute id='53'><RecibosPedidos /></PrivateRoute>} />
           <Route path="facturas" element={<PrivateRoute id='16'><Facturas /></PrivateRoute>} />
           <Route path="facturas/add" element={<PrivateRoute id='17'><AddFactura /></PrivateRoute>} />
           <Route path="facturas/lista" element={<PrivateRoute id='16'><ListaFacturas /></PrivateRoute>} />
           <Route path="descuentos" element={<PrivateRoute id='33'><Descuentos /></PrivateRoute>} />
-          <Route path="recibospedidos" element={<PrivateRoute id=''><RecibosPedidos /></PrivateRoute>} />
           <Route path="proveedores" element={<Proveedores />} />
           <Route path="empleados" element={<PrivateRoute id='43'><Empleados /></PrivateRoute>} />
           <Route path="usuarios" element={<PrivateRoute id='15'><Usuarios /></PrivateRoute>} />

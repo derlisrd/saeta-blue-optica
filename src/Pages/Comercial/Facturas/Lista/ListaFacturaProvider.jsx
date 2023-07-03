@@ -36,7 +36,7 @@ function ListaFacturaProvider({children}) {
         //console.log(whereFilter);
         let [res,totales] = await Promise.all([APICALLER.get({table:'facturas',include:'clientes,users',
         on:'cliente_id,id_cliente,id_user,user_id',
-        fields:'estado_factura,id_factura,nro_factura,nombre_cliente,ruc_cliente,tipo_factura,total_factura,nombre_user,fecha_factura,tipo_factura,factura_pagado',
+        fields:'nros_pedidos,estado_factura,id_factura,nro_factura,nombre_cliente,ruc_cliente,tipo_factura,total_factura,nombre_user,fecha_factura,tipo_factura,factura_pagado',
         where:whereFilter,
         filtersSearch:`${busca_cliente}`,
         filtersField:filterField,

@@ -9,7 +9,6 @@ function Lista() {
   const { loading, lista,dialogs,setDialogs,setFormSelect } = useReciboPedido();
 
   const print = r=>{ setFormSelect(r); setDialogs({...dialogs,print:true}) }
-
   const Opciones = ({ rowProps }) => (
     <Stack spacing={1} direction='row'>
         <ButtonTip id='55' title='Imprimir' icon='print' onClick={()=>{print(rowProps)}} />
@@ -18,7 +17,7 @@ function Lista() {
   const Inputs = (
     <Grid container spacing={2} alignItems="center" justifyContent="flex-start">
       <Grid item xs={12}>
-        <ButtonPermisos id='54' onClick={()=>{}} variant="contained" size="large">CREAR RECIBO</ButtonPermisos>
+        <ButtonPermisos id='54' onClick={()=>{ setDialogs({...dialogs,add:true})}} variant="contained" size="large">CREAR RECIBO</ButtonPermisos>
       </Grid>
     </Grid>
   );

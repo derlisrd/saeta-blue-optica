@@ -8,7 +8,7 @@ const Context = createContext()
 
 function RecibosProvider({children}) {
     const [lista,setLista] = useState([])
-    const [dialogs,setDialogs] = useState({print:false})
+    const [dialogs,setDialogs] = useState({print:false,add:false})
     const [loading,setLoading] = useState(true)
     const [formSelect,setFormSelect] = useState({})
     const [fechas,setFechas] = useState({

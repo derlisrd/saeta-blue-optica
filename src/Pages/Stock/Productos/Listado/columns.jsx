@@ -1,4 +1,8 @@
 export const columns = [
+  {
+    field:'id_producto',
+    title:'ID'
+  },
     {
         field:'codigo_producto',
         title:'COD.'

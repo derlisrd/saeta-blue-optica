@@ -73,6 +73,7 @@ function DialogPDF() {
             }
             else{
                 setDetalles({cliente:'Generales',total:total_venta,fecha_inicio: desde,fecha_fin:hasta })
+                console.log('general');
             }
             
 
@@ -128,7 +129,7 @@ function DialogPDF() {
 
 
     return (<Dialog fullScreen open={dialogs.pdf} onClose={close}>
-            <DialogTitle> <IconButton onClick={close}><Icon>close</Icon></IconButton> Generar PDF por cliente</DialogTitle>
+            <DialogTitle> <IconButton onClick={close}><Icon>close</Icon></IconButton> Generar PDF</DialogTitle>
             <DialogContent>
                 <Grid spacing={2} container>
                     <Grid item xs={12}>
@@ -156,7 +157,7 @@ function DialogPDF() {
                     <Grid item xs={12} sm={2}>
                         <Stack direction='row' spacing={1}>
                         <Button onClick={filtrar} variant="outlined">Filtrar</Button>
-                        <Button onClick={reset} variant="outlined">Reiniciar</Button>
+                        <Button onClick={reset} startIcon={<Icon>cleaning_services</Icon>} variant="outlined">Limpiar</Button>
                         </Stack>
                     </Grid>
                 </Grid>

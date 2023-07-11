@@ -33,10 +33,11 @@ function DialogAdd() {
         listado.forEach(e=>{
             listado_nros += e.id_pedido+', '
         })
+        
         let data_recibo = {
             fecha_recibo: funciones.getFechaHorarioString(),
             cliente_id_recibo:cliente.id,
-            nros_pedidos: listado_nros,
+            nros_pedidos: listado_nros.slice(0, -2),
             total_recibo:total,
             generado_por: id_user
         }

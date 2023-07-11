@@ -9,11 +9,13 @@ import swal from "sweetalert";
 import { funciones } from "../../../App/helpers/funciones";
 import SelectTipo from "./SelectTipo";
 import ButtonPermisos from "../../../Components/Botones/ButtonPermisos";
+import BuscaCliente from "./Components/BuscaCliente";
 
 function Lista() {
-    const {listas,loading,setFormSelect,dialogs,setDialogs,setFechas,getLista} = useListaPedidos()
+    const {listas,loading,setFormSelect,dialogs,setDialogs,setFechas,getLista,setSelectCliente} = useListaPedidos()
     const {navigate} = useGotoNavigate()
     const [error,setError] = useState({code:0})
+    
     const [desde,setDesde] = useState('')
     const [hasta,setHasta] = useState('')
     const [filterLista,setFilterLista] = useState([])
@@ -81,12 +83,12 @@ function Lista() {
             <Grid item xs={12}>
                 <Stack direction={{ xs:'column',md:'row' }} sx={{ maxWidth:{md:'1100px'} }} spacing={1} alignItems='flex-start'>
                     <SelectTipo onChange={changeTipo} />
-                    <TextField size="small" fullWidth onKeyUp={e=>{ e.key==='Enter' && getLista(e.target.value,'') }} helperText='Presione Enter' label='Número de pedido' />
-                    <TextField size="small" fullWidth onKeyUp={e=>{ e.key==='Enter' && getLista('',e.target.value) }} helperText='Presione Enter' label='Ruc o nombre de cliente' />
+                    <TextField size="small" fullWidth onKeyUp={e=>{ e.key==='Enter' && getLista(e.target.value) }} helperText='Presione Enter' label='Número de pedido' />
+                    <BuscaCliente  setSelectCliente={setSelectCliente} />
                     <TextField type="date" fullWidth size="small" error={error.code===1} onChange={e=>{setDesde(e.target.value)}} helperText='Fecha desde' />
                     <TextField type="date" fullWidth size="small" error={error.code===2} onChange={e=>{setHasta(e.target.value)}} helperText='Fecha hasta' />
                     <Button variant="outlined" size="large" onClick={filtrar}>Filtrar</Button>
-                    <ButtonTip id='1' onClick={()=>{ getLista('','')}} title='Actualizar' icon='sync' />
+                    <ButtonTip id='1' onClick={()=>{ getLista(null,true);}} title='Actualizar' icon='sync' />
                 </Stack>
             </Grid>
             <Grid item xs={12} sm={4} >
@@ -104,15 +106,15 @@ function Lista() {
         </Grid>
     )
 
-    useEffect(()=>{
+    /* useEffect(()=>{
         setFilterLista(listas.pedidos)
-    },[listas])
+    },[listas]) */
 
     return (<Tablas
         title="Pedidos"
         subtitle="Módulo de listado de pedidos"
         inputs={Inputs}
-        datas={filterLista}
+        datas={listas.pedidos}
         loading={loading}
         icon={{ name:'receipt' }}
         showOptions

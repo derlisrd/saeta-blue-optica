@@ -7,7 +7,7 @@ const ListaPedidosContext = createContext()
 
 function ListaPedidosProvider({children}) {
 
-    
+    const [selectCliente,setSelectCliente]=useState(null)
     const [dialogs,setDialogs] = useState({imprimir:false,editar_pedido:false,cancelar:false,cambio_estado:false,pdf:false,excel:false})
     const [loading,setLoading] = useState(true)
     const [formSelect,setFormSelect] = useState({})
@@ -22,23 +22,22 @@ function ListaPedidosProvider({children}) {
     })
 
 
-    const getLista = useCallback(async(searchTxt='',cliente='')=>{
+    const getLista = useCallback(async(nro='',limpiar=false)=>{
         setLoading(true)
         let whereFilter = `fecha_pedido,between,'${fechas.desde}',and,'${fechas.hasta}'`
         
-        if(searchTxt!==''){
-            whereFilter = `id_pedido,=,${searchTxt}`
+        if(selectCliente && !limpiar ){
+            whereFilter += `,and,id_cliente,=,${selectCliente}`
         }
-        if(cliente!==''){
-            whereFilter=''
+
+        if(nro){
+            whereFilter = `id_pedido,=,${nro}`
         }
         //console.log(whereFilter);
         let [res,tot] = await Promise.all([APICALLER.get({table:'pedidos',include:'clientes,users',
         on:'cliente_id_pedido,id_cliente,id_user,user_id_pedido',
         fields:'estado_pago,factura_id,codigo_cliente_pedido,facturado_pedido,motivo_cancela,estado_pago,total_pedido,tipo_pedido,total_pedido,nombre_user,fecha_pedido,id_pedido,nombre_cliente,estado_pedido,codigo_cliente_pedido',
         where:whereFilter,
-        filtersSearch:`${cliente}`,
-        filtersField:'ruc_cliente,nombre_cliente',
         sort:'id_pedido'
         }),
         APICALLER.get({table:'pedidos',where:`fecha_pedido,between,'${fechas.desde}',and,'${fechas.hasta}'`,fields:'SUM(total_pedido) as monto_total'})
@@ -75,7 +74,7 @@ function ListaPedidosProvider({children}) {
         return () => {isActive = false; ca.abort();};
     }, [getLista]);
 
-    const values = {listas,loading,dialogs,setDialogs,formSelect,setFormSelect,setFechas,getLista}
+    const values = {setSelectCliente,listas,loading,dialogs,setDialogs,formSelect,setFormSelect,setFechas,getLista}
 
     return ( <ListaPedidosContext.Provider value={values}>{children}</ListaPedidosContext.Provider> );
 }
@@ -84,6 +83,6 @@ export default ListaPedidosProvider;
 
 
 export const useListaPedidos = ()=>{
-    const {listas,loading,dialogs,setDialogs,formSelect,setFormSelect,setFechas,getLista} = useContext(ListaPedidosContext)
-    return {listas,loading,dialogs,setDialogs,formSelect,setFormSelect,setFechas,getLista}
+    const {setSelectCliente,listas,loading,dialogs,setDialogs,formSelect,setFormSelect,setFechas,getLista} = useContext(ListaPedidosContext)
+    return {setSelectCliente,listas,loading,dialogs,setDialogs,formSelect,setFormSelect,setFechas,getLista}
 }

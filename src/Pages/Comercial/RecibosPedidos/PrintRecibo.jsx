@@ -5,7 +5,7 @@ import { useState } from "react";
 function PrintRecibo() {
     const {dialogs,setDialogs} = useReciboPedido()
     const [loading,setLoading] = useState(true)
-    
+
     const close = ()=>{ setDialogs({...dialogs,print:false})}
 
     return (<Dialog fullScreen open={dialogs.print} onClose={close}>
@@ -16,7 +16,7 @@ function PrintRecibo() {
 
         </DialogContent>
         <DialogActions>
-            <Button startIcon={<Icon>print</Icon>} variant="outlined"> IMPRIMIR</Button>
+            <Button startIcon={<Icon>print</Icon>} variant="contained">IMPRIMIR</Button>
             <Button onClick={close} variant="outlined">CERRAR</Button>
         </DialogActions>
     </Dialog>  );

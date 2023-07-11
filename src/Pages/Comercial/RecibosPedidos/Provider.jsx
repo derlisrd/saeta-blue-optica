@@ -20,7 +20,8 @@ function RecibosProvider({children}) {
         setLoading(true)
         let whereFilter = `fecha_recibo,between,'${fechas.desde}',and,'${fechas.hasta}'`
 
-        let res = await APICALLER.get({table:'recibo_pedidos',where:whereFilter})
+        let res = await APICALLER.get({table:'recibo_pedidos',fields:'id_recibo_pedido,nombre_cliente,fecha_recibo,generado_por,nros_pedidos',
+        on:'id_cliente,cliente_id_recibo',include:'clientes',where:whereFilter, sort:'id_recibo_pedido'})
         if(res.response){
             setLista(res.results)
         }else{

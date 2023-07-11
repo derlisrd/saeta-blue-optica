@@ -5,15 +5,16 @@ export const columns = [
         title:'#'
     },
     {
-        field:'pedidos_id',
-        title:'NRO PEDIDOS'
-    },
-    {
         field:'fecha_recibo',
         title:'FECHA'
     },
     {
-        field:'obs_recibo',
-        title:'OBSERVACION'
-    }
+        field:'nombre_cliente',
+        title:'CLIENTE'
+    },
+    {
+        field:'nros_pedidos',
+        title:'NRO PEDIDOS'
+    },
+    
 ]

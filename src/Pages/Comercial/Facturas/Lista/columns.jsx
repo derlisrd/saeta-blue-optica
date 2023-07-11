@@ -23,7 +23,8 @@ export const columns = [
     },
     {
       field:'nros_pedidos',
-      title:'Pedidos'
+      title:'Pedidos',
+      substr:20
     },
     {
         field:'nombre_cliente',

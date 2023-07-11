@@ -19,20 +19,6 @@ function Lista() {
     const [desde,setDesde] = useState('')
     const [hasta,setHasta] = useState('')
 
-    const downloadExcel = () => {
-        let data = [
-          {
-            sheet: "Facturas",
-            columns: columnsData,
-            content: listaFiltrada,
-          },
-          
-        ]
-        let settings = {
-          fileName: "Facturas",
-        }
-        xlsx(data, settings)
-    }
     const filtarCondicion = (e)=>{
         let old_list = [...listas.facturas]
         
@@ -71,6 +57,7 @@ function Lista() {
     const print = r=>{ setFormSelect(r); setDialogs({...dialogs,print:true}) }
     const estado = r=>{ setFormSelect(r); setDialogs({...dialogs,pago:true}) }
     const anular = r=> {setFormSelect(r); setDialogs({...dialogs,anular:true}) }
+    const pedidos = r=>{ setFormSelect(r); setDialogs({...dialogs,pedidos:true})}
     const ListaOpciones = ({rowProps})=>(
         <Stack direction='row'>
             {
@@ -79,6 +66,7 @@ function Lista() {
             }
             
             <ButtonTip id='22' title='Imprimir' icon='print' onClick={()=>{print(rowProps)}} />
+            <ButtonTip id='56' title="Pedidos" icon='assignment_turned_in' onClick={()=>{ pedidos(rowProps)}} />
         </Stack>
     )
 

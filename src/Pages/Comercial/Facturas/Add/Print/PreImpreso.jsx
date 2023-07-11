@@ -39,7 +39,7 @@ function PreImpreso() {
         fecha_cobro_factura: factura.fecha,
         nro_factura: factura.nro_factura,
         factura_pagado: '0',
-        nros_pedidos: pedidos.length > 0 ? pedidos.join(',') : '_'
+        nros_pedidos: pedidos.length > 0 ? pedidos.join(', ') : '_'
       }
       //console.log(data);
       let res = await APICALLER.insert({table:'facturas',data,token:token_user})

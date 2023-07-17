@@ -133,6 +133,12 @@ export const ListaMenu = [
                 title:'A pagar',
                 url:'/cuentas/pagar',
                 icon:'tips_and_updates'
+            },
+            {
+                id:57,
+                title:'Recibos',
+                url:'/financiero/recibos',
+                icon:'receipt'
             }
         ]
     }, 

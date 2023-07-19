@@ -139,7 +139,14 @@ export const ListaMenu = [
                 title:'Recibos',
                 url:'/financiero/recibos',
                 icon:'receipt'
-            }
+            },
+            {
+                id:58,
+                title:'Aciertos',
+                url:'/financiero/aciertos',
+                icon:'assignment'
+            },
+
         ]
     }, 
     {

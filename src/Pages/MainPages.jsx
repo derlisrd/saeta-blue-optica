@@ -57,6 +57,7 @@ function MainPages() {
           <Route path="empresa" element={<PrivateRoute id='37'><Empresa /></PrivateRoute>} />
           <Route path="reportes/ventas" element={<PrivateRoute id='52'><ReportesVentas /></PrivateRoute>} />
           <Route path="financiero/recibos" element={<PrivateRoute id='57'><FinancieroRecibo /></PrivateRoute>} />
+          <Route path="financiero/aciertos" element={<PrivateRoute id='57'><Aciertos /></PrivateRoute>} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>
@@ -89,6 +90,7 @@ const Descuentos = Loadable(lazy(() => import('./Administracion/Descuentos')));
 const RecibosPedidos = Loadable(lazy(()=> import('./Comercial/RecibosPedidos')));
 const ReportesVentas = Loadable(lazy(()=> import("./Reportes/Ventas") ));
 const FinancieroRecibo = Loadable(lazy(()=> import("./Financiero/Recibos") ));
+const Aciertos = Loadable(lazy(()=> import("./Financiero/Aciertos") ));
 
 const NotAutorizated = Loadable(lazy(()=> import("./Status/NotAutorizated") ));
 

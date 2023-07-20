@@ -7,7 +7,7 @@ const Context = createContext()
 function RecibosProvider({children}) {
     const [listas,setListas] = useState([])
     const [formSelect,setFormSelect] = useState({})
-    const [dialogs,setDialogs] = useState({add:false,print:false})
+    const [dialogs,setDialogs] = useState({add:false,addfecha:false,print:false})
     const [loading,setLoading] = useState(true)
     const getLista = useCallback(async()=>{
         setLoading(true)

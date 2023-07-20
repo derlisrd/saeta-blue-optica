@@ -66,6 +66,7 @@ function TablasDatos({factura}) {
                         </tr>
                     </tbody>
                 </table>
+                <div className="spacing_bottom"></div>
                 </>
  );
 }

@@ -7,9 +7,12 @@ import ButtonTip from "../../../Components/Botones/ButtonTip";
 function Lista() {
     const {dialogs,setDialogs,listas,loading,setFormSelect} = useRecibosProvider()
     const add = ()=>setDialogs({...dialogs,add:true})
+    const addfecha = ()=>setDialogs({...dialogs,addfecha:true})
+
     const inputs =(
         <Stack direction='row' spacing={2}>
             <Button onClick={add} variant="contained">AGREGAR</Button>
+            <Button onClick={addfecha} variant="contained">AGREGAR POR CLIENTE</Button>
         </Stack>
     )
 

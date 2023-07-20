@@ -65,16 +65,20 @@ function Add() {
         })
         setTotal(copytotal)
     }
-    const borrar = index=>{
+    const borrar = id=>{
         let copy = [...lista]
-        copy.splice(index, 1);
-        setLista(copy)
-        if(copy.length<1){
+
+       let nueva = copy.filter(elem=> elem.id_factura !== id );
+        /* copy.splice(index, 1);*/
+        setLista(nueva) 
+        if(nueva.length<1){
             setCliente(initialCliente)
         }
         hacerSumaTotal()
-        document.getElementById('_facturanro').focus()
+        document.getElementById('_facturanro').focus() 
     }
+
+
     const pressEnter = (e)=>{ if(e.key==='Enter'){  agregar()} }
     const agregar = async()=>{
         const nro = document.getElementById('_facturanro')
@@ -143,7 +147,7 @@ function Add() {
             <Button variant="contained" onClick={finalizar}>FINALIZAR</Button>
             <Button variant="outlined" onClick={close}>CERRAR</Button>
         </DialogActions>
-    </Dialog>  );
+    </Dialog>);
 }
 
 export default Add;

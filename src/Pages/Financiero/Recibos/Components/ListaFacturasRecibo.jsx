@@ -21,7 +21,7 @@ function ListaFacturasRecibo({ listado,borrar }) {
             <td>{e.nro_factura}</td>
             <td>{funciones.numberFormat(e.total_factura)}</td>
             <td>{e.fecha_factura}</td>
-            <td><Button variant="outlined" onClick={()=>{borrar(i)}} color="error" >ELIMINAR</Button></td>
+            <td><Button variant="outlined" onClick={()=>{borrar(e.id_factura)}} color="error" >ELIMINAR</Button></td>
           </tr>
         ))}
       </tbody>

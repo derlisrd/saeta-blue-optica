@@ -5,6 +5,7 @@
     margin-left: auto;
     margin-right: auto;
     font-weight: bold;
+    padding-top: 10mm;
 }
 
 .tablas{
@@ -13,10 +14,9 @@
 
 }
 .nro_factura{
-    height: 19mm;
+    height: 20mm;
     font-size: 12px;
     font-weight: bold;
-    margin-top: 2mm;
 }
 .info_cliente{
     font-size: 10px;
@@ -27,26 +27,25 @@
     line-height: 2px;
 }
 .descripciones{
-    margin: 8mm 2mm 0;
-    font-size: 10px;
+    margin: 8mm 2mm 0 8mm;
     text-align: center;
-    height: 38mm;
+    height: 29mm;
     width: 100%;
     vertical-align: top;
 }
 .items_descripciones{
     display: flex;
     flex-direction: row;
-    font-size: 11px;
+    font-size: 8px;
 }
 .cod{
-    width: 13mm;
+    width: 15mm;
 }
 .cant{
     width: 10mm;
 }
 .nombre_des{
-    width: 90mm;
+    width: 80mm;
 }
 .precio_uni{
     width: 18mm;
@@ -60,14 +59,9 @@
 .iva10{
     width: 25mm;
 }
-.descripciones tr{
-    padding: 0;
-}
-.descripciones tr td{
-    margin:0; padding: 0;
-    font-size: 10px;
-    vertical-align: top;
-}
+
+
+
 .subtotales{
     font-size: 8px;
     text-align: center;
@@ -75,5 +69,8 @@
 .liquidacion_iva{
     font-size: 8px;
     text-align: center;
-    margin-bottom: 9mm;
+}
+.spacing_bottom{
+    width: 100%;
+    height: 5mm;
 }

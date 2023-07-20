@@ -81,6 +81,26 @@ export const funciones = {
         date.getFullYear(),
       ].join('-');
     },
+    get2lastYear : (datetime)=>{
+      var fecha = new Date(datetime);
+      // Obtiene el año
+      var año = fecha.getFullYear();
+      // Obtiene los últimos dos dígitos del año
+      var ultimosDosDigitos = año.toString().slice(-2);
+      return ultimosDosDigitos
+    },
+    getDiaString : (datetime)=>{
+      var fecha = new Date(datetime);
+      // Obtiene el día del mes
+      var dia = fecha.getDate();
+      return dia;
+    },
+    getMesString: (datetime)=>{
+      var datetime = '2023-07-19 15:30:00';
+      var fecha = new Date(datetime);
+      var nombreMes = fecha.toLocaleString('es-ES', { month: 'long' });
+      return (nombreMes);
+    },
 
     getFechaHorarioString: (date = new Date())=>{
         let fecha =

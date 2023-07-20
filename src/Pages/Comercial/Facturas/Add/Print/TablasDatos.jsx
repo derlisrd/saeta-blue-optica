@@ -29,22 +29,19 @@ function TablasDatos({factura}) {
                 </tr>
               </tbody>
             </table>
-            <table className='tablas descripciones' >
-                    <tbody>{
-                        factura.items.map((e,i)=>(
-                            <tr key={i}>
-                            <td width='7%' valign="top" align="left">{e.codigo_producto}</td>
-                            <td width='5%' valign="top"  align="left">{e.cantidad}</td>
-                            <td width='40%' valign="top" >{e.nombre_producto}</td>
-                            <td width='12%' valign="top" >{funciones.numberFormat(e.precio)}</td>
-                            <td width='12%' valign="top" >{e.iva===0 ? funciones.numberFormat(e.precio * e.cantidad) : 0}</td>
-                            <td width='12%' valign="top" >{e.iva===5 ? funciones.numberFormat(e.precio * e.cantidad) : 0}</td>
-                            <td width='12%' valign="top" >{e.iva===10 ? funciones.numberFormat(e.precio * e.cantidad) : 0}</td>
-                        </tr>
-                        ))
-                     }
-                    </tbody>
-                </table>
+            <div className="descripciones">
+            {factura.items.map((e,i)=>(
+              <div key={i} className="items_descripciones">
+                  <div className="cod">{e.codigo_producto}</div>
+                  <div className="cant">{e.cantidad}</div>
+                  <div className="nombre_des">{e.nombre_producto}</div>
+                  <div className="precio_uni">{funciones.numberFormat(e.precio)}</div>
+                  <div className="exenta">{e.iva===0 ? funciones.numberFormat(e.precio * e.cantidad) : 0}</div>
+                  <div className="iva5">{e.iva===5 ? funciones.numberFormat(e.precio * e.cantidad) : 0}</div>
+                  <div className="iva10">{e.iva===10 ? funciones.numberFormat(e.precio * e.cantidad) : 0}</div>
+              </div>
+            )) }
+            </div>
                 <table className='tablas subtotales' >
                     <tbody>
                         <tr>

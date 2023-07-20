@@ -12,7 +12,7 @@ function RecibosProvider({children}) {
     const getLista = useCallback(async()=>{
         setLoading(true)
         let res = await APICALLER.get({table:'recibos',sort:'id_recibo',include:'clientes',on:'id_cliente,cliente_id_recibo',
-        fields:'nombre_cliente,ruc_cliente,id_recibo,total_recibo,fecha_recibo,efectivo_recibo,transferencia_recibo,cheque_recibo,banco_recibo'});
+        fields:'nombre_cliente,ruc_cliente,id_recibo,total_recibo,fecha_recibo,efectivo_recibo,transferencia_recibo,cheque_recibo,banco_recibo,cheque_nro_recibo,nro_recibo'});
         if(res.response){
             setListas(res.results)
         }else{

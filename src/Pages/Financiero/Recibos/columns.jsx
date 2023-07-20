@@ -1,7 +1,11 @@
 export const columns = [
     {
         field:'id_recibo',
-        title:'nro'
+        title:'#'
+    },
+    {
+        field:'nro_recibo',
+        title:'NRO'
     },
     {
         field:'fecha_recibo',

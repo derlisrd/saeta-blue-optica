@@ -15,14 +15,6 @@ const ListaColumns= [
         field:'fantasia_cliente',
         title:'Fantasia'
     },
-    {
-        field:'direccion_cliente',
-        title:'Direccion'
-    },
-    {
-        field:'telefono_cliente',
-        title:'Tel.'
-    },
     
     {
         field:'tipo_pago',

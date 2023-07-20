@@ -37,8 +37,11 @@ function BuscaCliente({setSelectCliente}) {
             if(o){
                 return o.id_cliente+' '+o.nombre_cliente+' - '+o.fantasia_cliente+' '+o.ruc_cliente
             }
+            else{
+                return null;
+            }
         } }
-        options={listaCliente}
+        options={listaCliente || []}
         onChange={insertarCliente}
         fullWidth
         loadingText="Cargando..." loading={loadingSearch} noOptionsText="No existe en registro..."

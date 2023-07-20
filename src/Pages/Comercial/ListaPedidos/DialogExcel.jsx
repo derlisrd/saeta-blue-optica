@@ -43,9 +43,9 @@ function DialogExcel() {
         }
         setError({code:0})
         setLoading(true)
-        let where = `fecha_pedido,between,'${desde} 00:00:00',and,'${hasta} 23:59:59'`
+        let where = `fecha_pedido,between,'${desde} 00:00:00',and,'${hasta} 23:59:59',and,estado_pedido,<>,0`
         if(!todos){
-            where =`cliente_id_pedido,=,${selectCliente.id_cliente},and,fecha_pedido,between,'${desde} 00:00:00',and,'${hasta} 23:59:59'`
+            where =`cliente_id_pedido,=,${selectCliente.id_cliente},and,fecha_pedido,between,'${desde} 00:00:00',and,'${hasta} 23:59:59',and,estado_pedido,<>,0`
         }
         let res = await APICALLER.get({table:'pedidos',include:'clientes,users',
         on:'cliente_id_pedido,id_cliente,id_user,user_id_pedido',

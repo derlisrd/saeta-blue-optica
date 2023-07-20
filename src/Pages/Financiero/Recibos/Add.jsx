@@ -15,7 +15,7 @@ function Add() {
     const [lista,setLista] = useState([])
     const today = funciones.getFechaHorarioString()
     const [total,setTotal] = useState(0)
-    const initialPagos = {efectivo_recibo:0,transferencia_recibo:0,banco_recibo:'',cheque_nro_recibo:'',cheque_recibo:0}
+    const initialPagos = {efectivo_recibo:0,transferencia_recibo:0,banco_recibo:'',cheque_nro_recibo:'',cheque_recibo:0,fecha_recibo:'',nro_recibo:''}
     const [pagos,setPagos] = useState(initialPagos)
     const [loading,setLoading]=useState(false)
     const initialCliente = {id_cliente:null,nombre_cliente:'',ruc_cliente:''}
@@ -31,9 +31,13 @@ function Add() {
         setTotal(0)
     }
     const finalizar = async()=>{
+        if(pagos.fecha_recibo==='' || pagos.nro_recibo===''){
+            setError({active:true, msg:'Complete todos los datos'})
+            return false;
+        }
         let suma_total_pagos = parseFloat(pagos.efectivo_recibo) + parseFloat(pagos.transferencia_recibo) + parseFloat(pagos.cheque_recibo)
-
-        if(suma_total_pagos!==total){
+        
+        if(suma_total_pagos<total){
             setError({active:true,msg:"El pago debe ser igual al total"})
             return false;
         }
@@ -71,7 +75,7 @@ function Add() {
         hacerSumaTotal()
         document.getElementById('_facturanro').focus()
     }
-    
+    const pressEnter = (e)=>{ if(e.key==='Enter'){  agregar()} }
     const agregar = async()=>{
         const nro = document.getElementById('_facturanro')
         if(nro.value === ''){ return false;}
@@ -119,7 +123,7 @@ function Add() {
                     {error.active && <Alert icon={false} severity="error"> {error.msg}</Alert>}
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                    <TextField size="small" helperText='Ingrese la factura' autoComplete="off" id="_facturanro" label="Factura nro" fullWidth />
+                    <TextField size="small" onKeyUp={pressEnter} helperText='Ingrese la factura' autoComplete="off" id="_facturanro" label="Factura nro" fullWidth />
                 </Grid>
                 <Grid item xs={12} sm={6}>
                     <Button onClick={agregar} variant="contained">AGREGAR</Button>

@@ -13,7 +13,7 @@ function Lista() {
         </Stack>
     )
 
-    const print = (f)=>{ setFormSelect(f); setDialogs({...dialogs,print:true}); console.log(f);}
+    const print = (f)=>{ setFormSelect(f); setDialogs({...dialogs,print:true});}
     const Accions = ({rowProps})=>(
         <Stack direction='row' spacing={1}>
             <ButtonTip id='57' onClick={()=>{print(rowProps)}} icon='print' title="Imprimir" /> 

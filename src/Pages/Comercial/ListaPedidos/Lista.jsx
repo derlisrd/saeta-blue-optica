@@ -12,7 +12,7 @@ import ButtonPermisos from "../../../Components/Botones/ButtonPermisos";
 import BuscaCliente from "./Components/BuscaCliente";
 
 function Lista() {
-    const {listas,loading,setFormSelect,dialogs,setDialogs,setFechas,getLista,setSelectCliente} = useListaPedidos()
+    const {listas,loading,setFormSelect,dialogs,setDialogs,setFechas,getLista,setSelectCliente,selectCliente,getFiltrar} = useListaPedidos()
     const {navigate} = useGotoNavigate()
     const [error,setError] = useState({code:0})
     
@@ -84,11 +84,12 @@ function Lista() {
                 <Stack direction={{ xs:'column',md:'row' }} sx={{ maxWidth:{md:'1100px'} }} spacing={1} alignItems='flex-start'>
                     <SelectTipo onChange={changeTipo} />
                     <TextField size="small" fullWidth onKeyUp={e=>{ e.key==='Enter' && getLista(e.target.value) }} helperText='Presione Enter' label='Número de pedido' />
-                    <BuscaCliente  setSelectCliente={setSelectCliente} />
+                    <BuscaCliente  setSelectCliente={setSelectCliente} /> 
+                    {/* <TextField size="small" fullWidth onKeyUp={e=>{ e.key==='Enter' && getLista('',e.target.value) }} label="Cliente" helperText="RUC o nombre" /> */}
                     <TextField type="date" fullWidth size="small" error={error.code===1} onChange={e=>{setDesde(e.target.value)}} helperText='Fecha desde' />
                     <TextField type="date" fullWidth size="small" error={error.code===2} onChange={e=>{setHasta(e.target.value)}} helperText='Fecha hasta' />
-                    <Button variant="outlined" size="large" onClick={filtrar}>Filtrar</Button>
-                    <ButtonTip id='1' onClick={()=>{ getLista(null,true);}} title='Actualizar' icon='sync' />
+                    <Button variant="outlined" size="large" onClick={()=>getFiltrar(selectCliente,desde,hasta)}>Filtrar</Button>
+                    <ButtonTip id='1' onClick={()=>{ getLista('');}} title='Actualizar' icon='sync' />
                 </Stack>
             </Grid>
             <Grid item xs={12} sm={4} >
@@ -98,23 +99,23 @@ function Lista() {
                 </Stack>
             </Grid>
             <Grid item xs={12} sm={4}>
-                <Alert icon={false}>Total: {listas.total}</Alert>
+                <Alert icon={false}>Pedidos: {listas.total}</Alert>
             </Grid>
             <Grid item xs={12} sm={4}>
-            <Alert icon={false}>Entrada: {funciones.numberFormat(listas.entrada)}</Alert>
+                <Alert icon={false}>Entrada hoy: {funciones.numberFormat(listas.entrada )}</Alert>
             </Grid>
         </Grid>
     )
 
-    /* useEffect(()=>{
+    useEffect(()=>{
         setFilterLista(listas.pedidos)
-    },[listas]) */
+    },[listas]) 
 
     return (<Tablas
         title="Pedidos"
         subtitle="Módulo de listado de pedidos"
         inputs={Inputs}
-        datas={listas.pedidos}
+        datas={filterLista}
         loading={loading}
         icon={{ name:'receipt' }}
         showOptions

@@ -42,9 +42,9 @@ function Print() {
             {
                 loading ? <LoadingPage /> :
                 <div ref={ref} className={style.print}>
-                    <PrintDatos datos={datos}  />
-                    <PrintDatos datos={datos}  />
-                    <PrintDatos datos={datos}  />
+                    <PrintDatos datos={datos} styles={{ paddingBottom:'11mm' }} />
+                    <PrintDatos datos={datos} styles={{ paddingBottom:'10mm' }}  />
+                    <PrintDatos datos={datos} styles={{ marginBottom:'0' }}  />
                 </div>
             }
         </DialogContent>

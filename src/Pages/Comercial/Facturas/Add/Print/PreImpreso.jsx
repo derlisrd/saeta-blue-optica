@@ -77,9 +77,9 @@ function PreImpreso() {
         <DialogContent>
           {
             loading ? <LoadingPage /> : <div id="id_print_preimpreso" className="print_main" ref={divRef}>
-            <TablasDatos factura={factura} />
-            <TablasDatos factura={factura} />
-            <TablasDatos factura={factura} />
+            <TablasDatos factura={factura} style={{ marginBottom:'9mm' }} />
+            <TablasDatos factura={factura} style={{ marginBottom:'9mm' }} />
+            <TablasDatos factura={factura} style={{ marginBottom:'-2mm' }} />
           </div>
           }
         </DialogContent>

@@ -44,7 +44,7 @@ function Add() {
         setError({active:false,msg:''})
         let promises =[];
         setLoading(true)
-        let data_recibos = {...pagos,total_recibo:total,fecha_recibo:today,cliente_id_recibo:cliente.id_cliente}
+        let data_recibos = {...pagos,total_recibo:total,cliente_id_recibo:cliente.id_cliente}
         let res = await APICALLER.insert({table:'recibos',data:data_recibos,token:token_user})
         if(res.response){
             let last_id = res.last_id;

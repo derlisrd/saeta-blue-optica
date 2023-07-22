@@ -1,9 +1,8 @@
 import { funciones } from "../../../../../App/helpers/funciones";
 
-function TablasDatos({factura}) {
-
-    return ( <>
-            <table className="tablas nro_factura">
+function TablasDatos({factura,style}) {
+    return ( <div style={style ? style : null}>
+            <table className="tablas nro_factura" >
               <tbody>
                 <tr>
                   <td width="70%"></td>
@@ -67,7 +66,7 @@ function TablasDatos({factura}) {
                     </tbody>
                 </table>
                 <div className="spacing_bottom"></div>
-                </>
+                </div>
  );
 }
 

@@ -5,13 +5,12 @@
     margin-left: auto;
     margin-right: auto;
     font-weight: bold;
-    padding-top: 10mm;
+    padding-top: 14mm;
 }
 
 .tablas{
-    width: 192mm;
+    width: 195mm;
     margin:0 auto;
-
 }
 .nro_factura{
     height: 20mm;
@@ -27,9 +26,9 @@
     line-height: 2px;
 }
 .descripciones{
-    margin: 5mm 2mm 0 8mm;
+    margin: 7mm 2mm 0 2mm;
     text-align: center;
-    height: 32mm;
+    height: 38mm;
     width: 100%;
     vertical-align: top;
 }
@@ -45,7 +44,7 @@
     width: 10mm;
 }
 .nombre_des{
-    width: 80mm;
+    width: 90mm;
 }
 .precio_uni{
     width: 18mm;
@@ -63,7 +62,7 @@
 
 
 .subtotales{
-    font-size: 8px;
+    font-size: 9px;
     text-align: center;
 }
 .liquidacion_iva{
@@ -72,5 +71,5 @@
 }
 .spacing_bottom{
     width: 100%;
-    height: 5mm;
+    margin-bottom: 0mm;
 }

@@ -1,8 +1,8 @@
 import { funciones } from '../../../../App/helpers/funciones';
 import style from '../print.module.css'
 
-function PrintDatos({datos}) {
-    return (<div className={style.print_container}>
+function PrintDatos({datos,styles}) {
+    return (<div className={style.print_container} style={styles ? styles : null}>
         <div className={style.cabeza}></div>
         <div className={style.cuerpo}>
             <div className={style.facturas}>
@@ -27,13 +27,13 @@ function PrintDatos({datos}) {
             <div className={style.datos}>
                 <div className={style.fecha}>
                     <div className={style.dia}>
-                        <p>{funciones.getDiaString(datos.fecha_recibo)}</p>
+                        <p>{funciones.getDiaString(datos.fecha_recibo + " 00:00:01")}</p>
                     </div>
                     <div className={style.mes}>
-                        <p>{funciones.getMesString(datos.fecha_recibo)}</p>
+                        <p>{funciones.getMesString(datos.fecha_recibo + " 00:00:01")}</p>
                     </div>
                     <div className={style.year}>
-                        <p>{funciones.get2lastYear(datos.fecha_recibo)}</p>
+                        <p>{funciones.get2lastYear(datos.fecha_recibo + " 00:00:01")}</p>
                     </div>
                     <div className={style.monto}>
                         <p>{funciones.numberFormat(datos.total_recibo)}</p>

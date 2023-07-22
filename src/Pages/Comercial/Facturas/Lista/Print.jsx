@@ -57,10 +57,13 @@ function Print() {
                 exenta: parseFloat(factu.total_exenta),
                 iva5: parseFloat(factu.total_iva5),
                 iva10: parseFloat(factu.total_iva10),
-                items: itemsArray
+                items: itemsArray,
+                liquiiva10: parseFloat(factu.total_iva10)/11,
+                liquiiva5: parseFloat(factu.total_iva5)/21,
+                liquiivatotal: (parseFloat(factu.total_iva5)/21) + parseFloat(factu.total_iva10)/11 
               }
               setFactura(f)
-
+              	//console.log(f);
             }
             
             setLoading(false)
@@ -77,9 +80,9 @@ function Print() {
     <DialogContent>
       {
         loading ? <LoadingPage /> : <div id="id_print_preimpreso" className="print_main" ref={divRef}>
-        <TablasDatos factura={factura} />
-        <TablasDatos factura={factura} />
-        <TablasDatos factura={factura} />
+        <TablasDatos factura={factura}  style={{ paddingBottom:'25px' }}/>
+        <TablasDatos factura={factura}  style={{ marginBottom:'25px' }}/>
+        <TablasDatos factura={factura}  style={{ marginBottom:'-2mm' }}/>
       </div>
       }
     </DialogContent>

@@ -10,7 +10,7 @@
 .print_container{
     width: 200mm;
     height: 87mm;
-    margin: 0 5mm 16mm 0mm;
+    margin: 2mm 5mm 16mm 0mm;
 }
 .cabeza{
     width: 100%;
@@ -43,7 +43,9 @@
     text-align: center;
     height: 4mm;
 }
+
 .factura_importe, .factura_nro{
+    margin-top: 3mm;
     width: 21mm;
 }
 .datos{
@@ -80,7 +82,7 @@
 .pagos{
     width: 100%;
     margin-left: 50mm;
-    margin-top: 22mm;
+    margin-top: 23mm;
     font-size: 10px;
 }
 .efectivo, .transferencia, .cheque{
